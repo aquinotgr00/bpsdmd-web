@@ -1,0 +1,104 @@
+.page-invoice .invoice-header::after, .page-invoice .invoice-header::before { content: " "; display: table; }
+.page-invoice .invoice-header::after { clear: both; }
+.page-invoice .invoice-info::after, .page-invoice .invoice-info::before, .page-invoice .invoice-table::after, .page-invoice .invoice-table::before { content: " "; display: table; }
+.page-invoice .invoice-info::after, .page-invoice .invoice-table::after { clear: both; }
+.page-invoice .invoice-recipient::before { background: rgb(247, 247, 247) none repeat scroll 0% 0%; border-radius: 999px; color: rgb(136, 136, 136); content: "TO"; display: block; font-size: 14px; font-weight: 600; height: 52px; line-height: 52px; margin: 4px 0px 0px -70px; position: absolute; text-align: center; width: 52px; }
+.page-invoice.page-invoice-print .invoice-recipient::before { color: rgb(0, 0, 0); background: transparent none repeat scroll 0px 0px; }
+.page-pricing .plans-container::after, .page-pricing .plans-container::before { content: " "; display: table; }
+.page-pricing .plans-container::after { clear: both; }
+html body.page-signin { 
+  /*background: rgb(102, 102, 102) none repeat scroll 0% 0% ! important; */
+  background: transparent url('../img/loginbg.jpg') 50% 50% no-repeat;
+  font-family: 'Roboto', sans-serif;
+}
+#page-signin-bg { height: 100%; left: 0px; overflow: hidden; position: fixed; top: 0px; width: 100%; z-index: 20; }
+#page-signin-bg img { width: 100%; background-repeat: repeat;}
+#page-signin-bg .overlay { background: rgba(0, 0, 0, 0.5) none repeat scroll 0% 0%; bottom: 0px; left: 0px; position: absolute; right: 0px; top: 0px; }
+.page-signin .signin-container { border-radius: 2px; display: block; margin: 20px 14px; position: relative; z-index: 999; }
+.page-signin .signin-info { background: #3C8DBC none repeat scroll 0% 0%;; display: block; overflow: hidden; padding: 20px 30px; text-align: center; opacity: 0.8;}
+.page-signin .signin-info .logo { color: rgb(255, 255, 255); font-size: 30px; font-weight: 700; }
+.page-signin .signin-info .logo[href]:hover { opacity: 0.7; }
+.page-signin .signin-info .slogan { color: rgb(255, 255, 255); font-size: 16px; font-weight: 300; margin-top: 5px; }
+.page-signin .signin-info ul { display: none; }
+.page-signin .signin-form { background: rgb(255, 255, 255) none repeat scroll 0% 0%; display: block; padding: 30px; position: relative; }
+.page-signin .signin-form img { width: 100px; }
+.page-signin .password-reset-form { background: rgb(255, 255, 255) none repeat scroll 0% 0%; bottom: 0px; display: none; left: 0px; padding: 30px; position: absolute; right: 0px; top: 0px; z-index: 1020; }
+.page-signin .password-reset-form .header { background: rgb(244, 244, 244) none repeat scroll 0% 0%; border-bottom: 1px solid rgb(221, 221, 221); margin: -30px -30px 30px; padding: 20px; }
+.page-signin .password-reset-form .header .signin-text { margin: 0px; }
+.page-signin .password-reset-form .header .signin-text span { background: rgb(244, 244, 244) none repeat scroll 0% 0%; }
+.page-signin .password-reset-form .header .signin-text::before { display: none; }
+.page-signin .password-reset-form .header .close { margin-top: 2px; }
+.page-signin .password-reset-form .form-group.w-icon .signin-form-icon { z-index: 1025; }
+.page-signin .form-actions { margin-top: 15px; }
+.page-signin .form-actions .signin-btn { background-color: #3c8dbc; border: medium none; border-radius: 999999px; font-size: 13px; font-weight: 600; line-height: 19px; outline: 0px none ! important; padding: 10px 0px; text-align: center; width: 100%; transition: all 0.3s ease 0s; color: #fff;}
+.page-signin .form-actions .signin-btn:hover { background: rgb(68, 68, 68) none repeat scroll 0% 0% ! important; }
+.page-signin .form-actions a.forgot-password { border-bottom: 1px dashed rgb(187, 187, 187); color: rgb(153, 153, 153); display: inline-block; font-size: 11px; margin-left: 10px; padding-bottom: 1px; }
+.page-signin .form-actions a.forgot-password:hover { color: rgb(85, 85, 85); text-decoration: none; }
+.page-signin .form-group { margin: 0px; position: relative; }
+.page-signin .form-group + .form-group { margin: 10px 0px 0px; }
+.page-signin .form-group.w-icon .signin-form-icon { border-right: 1px solid rgb(214, 214, 214); bottom: 9px; color: rgb(214, 214, 214); display: block; font-size: 14px; left: 0px; line-height: 27px; position: absolute; text-align: center; top: 9px; width: 40px; z-index: 1002; transition: all 0.3s ease 0s; }
+.page-signin .form-group.w-icon input[type="password"], .page-signin .form-group.w-icon input[type="text"] { font-size: 15px; padding-left: 56px; }
+.page-signin .form-group.w-icon input[type="password"]:focus + .signin-form-icon, .page-signin .form-group.w-icon input[type="text"]:focus + .signin-form-icon { color: rgb(136, 136, 136); }
+.page-signin .signin-text { color: rgb(119, 119, 119); display: block; font-size: 15px; font-style: italic; margin-bottom: 25px; position: relative; text-align: center; }
+.page-signin .signin-text span { background: rgb(255, 255, 255) none repeat scroll 0% 0%; display: inline-block; padding: 0px 20px; position: relative; }
+.page-signin .signin-text::before { background: rgb(228, 228, 228) none repeat scroll 0% 0%; content: ""; display: block; height: 1px; left: 0px; position: absolute; right: 0px; top: 50%; }
+.page-signin .signin-with { background: rgb(244, 244, 244) none repeat scroll 0% 0%; border-top: 1px solid rgb(221, 221, 221); margin: 30px -30px -30px; padding: 20px 30px; }
+.page-signin .signin-with-btn { border-radius: 2px; color: rgb(255, 255, 255); display: block; font-weight: 300; padding: 10px 0px; text-align: center; transition: all 0.3s ease 0s; }
+.page-signin .signin-with-btn span { font-weight: 600; }
+.page-signin .signin-with-btn:hover { background: rgb(68, 68, 68) none repeat scroll 0% 0% ! important; }
+.page-signin .not-a-member { color: rgb(255, 255, 255); display: block; font-size: 14px; margin: -20px 0px 0px; padding: 20px 0px; position: relative; text-align: center; z-index: 999; }
+.page-signin .not-a-member a { color: rgb(255, 255, 255); text-decoration: underline; transition: all 0.3s ease 0s; }
+.page-signin .not-a-member a:hover { opacity: 0.6; }
+.fail_login { 
+  margin-bottom: 20px; 
+  background-color: #f56954;
+  color: #fff;
+  padding: 10px; 
+}
+@media (min-width: 480px) {
+  .page-signin .form-actions { margin-top: 15px; }
+  .page-signin .form-actions .signin-btn { padding-left: 40px; padding-right: 40px; width: auto; }
+}
+@media (min-width: 768px) {
+  .page-signin .signin-container { display: table; margin: 110px auto; width: 650px; table-layout: fixed; }
+  .page-signin .signin-info { display: table-cell; padding: 30px; text-align: left; vertical-align: top; width: 40%; }
+  .page-signin .signin-info ul { color: rgb(255, 255, 255); display: block; font-size: 13px; font-weight: 300; margin: 30px 0px 0px; padding: 0px; }
+  .page-signin .signin-info ul li { list-style: outside none none; margin: 0px; padding: 7px 0px; }
+  .page-signin .signin-info ul .signin-icon { display: block; float: left; font-size: 14px; line-height: 18px; margin-right: 6px; text-align: center; width: 24px; }
+  .page-signin .signin-form { display: table-cell; vertical-align: top; width: 60%; }
+  .page-signin .not-a-member { margin: -80px 0px 80px; }
+}
+.page-signup .signup-text::before { background: rgb(228, 228, 228) none repeat scroll 0% 0%; content: ""; display: block; height: 1px; left: 0px; position: absolute; right: 0px; top: 50%; }
+.page-search .search-tabs::after, .page-search .search-tabs::before { content: " "; display: table; }
+.page-search .search-tabs::after { clear: both; }
+.page-search .search-classic .search-tags::after, .page-search .search-classic .search-tags::before { content: " "; display: table; }
+.page-search .search-classic .search-tags::after { clear: both; }
+.timeline::after, .timeline::before { content: ""; display: block; position: absolute; left: 30px; bottom: 0px; }
+.timeline::before { width: 4px; top: 0px; margin-left: -2px; }
+.timeline::after { width: 12px; height: 12px; margin-left: -6px; border-radius: 999999px; }
+.tl-entry::after, .tl-entry::before { content: " "; display: table; }
+.tl-entry::after { clear: both; }
+.tl-entry::before { content: ""; display: block; position: absolute; width: 6px; height: 6px; left: -3px; right: auto; border-radius: 999999px; top: 20px; }
+.tl-body::before { content: ""; display: block; width: 0px; height: 0px; border-style: solid; border-width: 8px 9px 8px 0px; position: absolute; left: -9px; right: auto; top: 15px; }
+.tl-body::after { content: ""; display: block; width: 0px; height: 0px; border-style: solid; border-width: 7px 8px 7px 0px; border-color: transparent rgb(255, 255, 255) transparent transparent; position: absolute; left: -8px; right: auto; top: 16px; }
+@media (min-width: 768px) {
+  .timeline::after, .timeline::before { left: 100px; }
+  .timeline.centered .tl-header, .timeline.centered::after, .timeline.centered::before { left: 50%; right: auto; }
+  .timeline.centered .tl-entry.left::before { left: auto; right: -3px; }
+  .timeline.centered .tl-entry.left .tl-body::before { border-width: 8px 0px 8px 9px; left: auto; right: -9px; }
+  .timeline.centered .tl-entry.left .tl-body::after { border-width: 7px 0px 7px 8px; border-color: transparent transparent transparent rgb(255, 255, 255); left: auto; right: -8px; }
+}
+.page-mail .mail-nav .navigation.open li.active::after { transform: rotate(90deg); }
+.page-mail .mail-nav .sections li.active::after { content: ""; font-family: FontAwesome; position: absolute; display: block; right: 16px; top: 8px; font-size: 20px; transition: all 0.2s ease 0s; }
+@media (min-width: 992px) {
+  .page-mail .mail-nav.fixed::before { display: none ! important; }
+  .page-mail .mail-nav::before { content: ""; display: block; top: 0px; bottom: 0px; position: fixed; width: 200px; border-right: 1px solid; z-index: -1; }
+  .page-mail .mail-nav .navigation li::after { display: none ! important; }
+}
+.page-mail .mail-item:nth-child(2n-1) { background: rgb(246, 246, 246) none repeat scroll 0% 0%; }
+.page-mail .m-star a::before { content: ""; font-family: FontAwesome; }
+.page-mail .mail-item.starred .m-star a::before { content: ""; color: rgb(255, 171, 0); }
+.page-mail .mail-info::after, .page-mail .mail-info::before { content: " "; display: table; }
+.page-mail .mail-info::after { clear: both; }
+.page-mail .mail-attachments li:nth-child(2n-1) { background: rgb(246, 246, 246) none repeat scroll 0% 0%; }
+.page-profile .tl-entry::before, .page-profile .tl-header, .page-profile .tl-icon { box-shadow: 0px 0px 0px 4px rgb(255, 255, 255) ! important; }

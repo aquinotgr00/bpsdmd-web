@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts_items/Roboto/Roboto-Regular-webfont.eot');
+    src: url('fonts_items/Roboto/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts_items/Roboto/Roboto-Regular-webfont.woff') format('woff'),
+         url('fonts_items/Roboto/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('fonts_items/Roboto/Roboto-Regular-webfont.svg#RobotoRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('fonts_items/Oswald/Oswald-Regular.eot');
+    src: url('fonts_items/Oswald/Oswald-Regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts_items/Oswald/Oswald-Regular.woff') format('woff'),
+         url('fonts_items/Oswald/Oswald-Regular.ttf') format('truetype'),
+         url('fonts_items/Oswald/Oswald-Regular.svg#Oswald-Regular') format('svg');
+}
+
+@font-face {
+    font-family: 'Slabo27px';
+    src: url('fonts_items/Slabo_27px/Slabo27px-Regular.eot');
+    src: url('fonts_items/Slabo_27px/Slabo27px-Regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts_items/Slabo_27px/Slabo27px-Regular.woff') format('woff'),
+         url('fonts_items/Slabo_27px/Slabo27px-Regular.ttf') format('truetype'),
+         url('fonts_items/Slabo_27px/Slabo27px-Regular.svg#Slabo27px-Regular') format('svg');
+}
+
+@font-face {
+    font-family: 'Copse';
+    src: url('fonts_items/Copse/Copse-Regular.eot');
+    src: url('fonts_items/Copse/Copse-Regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts_items/Copse/Copse-Regular.woff') format('woff'),
+         url('fonts_items/Copse/Copse-Regular.ttf') format('truetype'),
+         url('fonts_items/Copse/Copse-Regular.svg#Copse-Regular') format('svg');
+}
+
+@font-face {
+    font-family: 'DroidSans';
+    src: url('fonts_items/DroidSans/DroidSans.eot');
+    src: url('fonts_items/DroidSans/DroidSans.eot?#iefix') format('embedded-opentype'),
+         url('fonts_items/DroidSans/DroidSans.woff') format('woff'),
+         url('fonts_items/DroidSans/DroidSans.ttf') format('truetype'),
+         url('fonts_items/DroidSans/DroidSans.svg#DroidSans') format('svg');
+}
