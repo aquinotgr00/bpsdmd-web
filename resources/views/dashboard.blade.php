@@ -1,5 +1,5 @@
 @extends('layout.main')
 
 @section('content')
-ini adalah login
+    Welcome to dashboard page!
 @endsection
