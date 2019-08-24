@@ -31,7 +31,8 @@
 
 
     <link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
-
+    @yield('style')
+    
 </head>
 
 <body class="skin-blue">
@@ -138,6 +139,6 @@
 
 	<!-- gsStudentDashboard dashboard -->
 	<script src="{{ asset('js/gsStudentDashboard/dashboard.js') }}" type="text/javascript"></script>
-
+    @yield('script')
 </body>
 </html>

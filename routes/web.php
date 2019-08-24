@@ -12,10 +12,10 @@
 */
 
 Route::group(['middleware' => ['authenticated']], function() {
+
     Route::get('/', 'UserController@dashboard')->name('dashboard');
 
     Route::group(['prefix' => 'org', 'middleware' => ['only_admin']], function() {
-
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
@@ -23,7 +23,9 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::group(['prefix' => 'feeder', 'middleware' => ['only_supply']], function() {
-
+        Route::match(['get', 'post'], 'upload', [
+            'uses' => 'Feeder@upload',
+        ])->name('feeder.upload');
     });
 
     Route::group(['prefix' => 'validate', 'middleware' => ['only_supply']], function() {

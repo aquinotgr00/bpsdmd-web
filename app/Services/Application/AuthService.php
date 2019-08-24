@@ -34,8 +34,8 @@ class AuthService
         if ($user instanceof UserInterface) {
             if (\Hash::check($password, $user->getPassword())) {
                 session()->put('logged', [
-                    'id' => $user->getId(),
-                    'authority' => $user->getAuthority()
+                    'id'        => $user->getId(),
+                    'authority' => $user->getAuthority(),
                 ]);
 
                 return true;
