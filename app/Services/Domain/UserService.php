@@ -2,12 +2,13 @@
 
 namespace App\Services\Domain;
 
-use App\Entities\Test;
+use App\Entities\User;
+use App\Interfaces\UserInterface;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
 
-class TestService
+class UserService
 {
     use PaginatesFromParams;
 
@@ -20,7 +21,7 @@ class TestService
     {
         return EntityManager::createQueryBuilder()
             ->select($alias)
-            ->from(Test::class, $alias, $indexBy);
+            ->from(User::class, $alias, $indexBy);
     }
 
     /**
@@ -30,14 +31,6 @@ class TestService
      */
     public function getRepository()
     {
-        return EntityManager::getRepository(Test::class);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAll()
-    {
-        return $this->getRepository()->findAll();
+        return EntityManager::getRepository(User::class);
     }
 }
