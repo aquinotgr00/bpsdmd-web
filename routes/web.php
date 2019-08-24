@@ -11,9 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['authenticated']], function() {
+    Route::get('/', 'UserController@dashboard')->name('dashboard');
+
+    Route::group(['prefix' => 'org', 'middleware' => ['only_admin']], function() {
+
+    });
+
+    Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
+
+    });
+
+    Route::group(['prefix' => 'feeder', 'middleware' => ['only_supply']], function() {
+
+    });
+
+    Route::group(['prefix' => 'validate', 'middleware' => ['only_supply']], function() {
+
+    });
+
+    Route::group(['prefix' => 'matchmaking', 'middleware' => ['only_demand']], function() {
+
+    });
 });
-Route::get('/login', function () {
-    return view('users.login');
-});
+
+Route::get('/logout', 'AuthController@logout')->name('logout');
+Route::any('/login', 'AuthController@login')->name('login');

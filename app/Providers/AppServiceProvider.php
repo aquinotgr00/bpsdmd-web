@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Application\AuthService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
+
+        $this->app->singleton(AuthService::class, function ($app) {
+            return new AuthService;
+        });
     }
 
     /**

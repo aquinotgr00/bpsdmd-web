@@ -66,32 +66,34 @@
 
 		<!-- Right side -->
 		<div class="signin-form">
-
-			<center>
+			<div style="text-align: center;">
 				<img src="assets/img/bpsdmp.png" alt="" style="margin-top: -5px;">
-			</center>
+			</div>
 
 			<!-- Form -->
-			<form name="form_login" id="form-login" action="">
-				<input type="hidden" id="salt" name="salt" value="" />
+			<form name="form_login" id="form-login" method="post">
+                @csrf
+
 				<div class="signin-text">
 					<span>Sign In to your account</span>
 				</div> <!-- / .signin-text -->
 
-				<div class="form-group w-icon">
+				<div class="form-group w-icon {{ $errors->has('username') ? 'has-error' : '' }}">
 					<input name="username" id="username_id" class="form-control input-lg" placeholder="Username" type="text">
 					<span class="fa fa-user signin-form-icon"></span>
-				</div> <!-- / Username -->
+                    <span class="help-block ">{!! implode('', $errors->get('username')) !!}</span>
+                </div> <!-- / Username -->
 
-				<div class="form-group w-icon">
+				<div class="form-group w-icon {{ $errors->has('password') ? 'has-error' : '' }}">
 					<input name="password" id="password_id" class="form-control input-lg" placeholder="Password" type="password">
 					<span class="fa fa-lock signin-form-icon"></span>
+                    <span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
 				</div> <!-- / Password -->
 
 				<div class="form-actions">
-					<center>
+					<div style="text-align: center;">
 						<input type="submit" value="Sign In" class="signin-btn bg-primary" />
-					</center>
+					</div>
 				</div> <!-- / .form-actions -->
 			</form>
 			<!-- / Form -->
