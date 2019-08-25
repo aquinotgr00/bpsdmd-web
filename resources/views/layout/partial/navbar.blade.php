@@ -6,12 +6,16 @@
             <span>Dashboard</span>
         </a>
     </li>
+
+    @if(check_authorization(\App\Entities\User::ROLE_ADMIN))
     <li>
         <a href="{{ url(route('org.index')) }}">
             <i class="fa fa-building"></i>
             <span>Instansi</span>
         </a>
     </li>
+    @endif
+
     @if(check_authorization(\App\Entities\User::ROLE_SUPPLY))
     <li class="{CLASS_ACTIVE_SC}">
         <a href="{{ route('feeder.upload') }}">
