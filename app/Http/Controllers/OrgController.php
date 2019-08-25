@@ -27,13 +27,15 @@ class OrgController extends Controller
 
             try {
                 $orgService->create(collect($request->input()));
+                $alert = 'alert_success';
                 $message = 'Instansi berhasil ditambahkan.';
             } catch (\Exception $e) {
                 report($e);
+                $alert = 'alert_error';
                 $message = 'Tidak dapat menambah instansi. Silakan kontak web administrator!';
             }
 
-            return redirect()->route('org.index')->with('alert', $message);
+            return redirect()->route('org.index')->with($alert, $message);
         }
 
         return view('org.create');
@@ -49,12 +51,14 @@ class OrgController extends Controller
 
             try {
                 $orgService->update($data, collect($request->input()));
+                $alert = 'alert_success';
                 $message = 'Instansi berhasil diubah.';
             } catch (\Exception $e) {
+                $alert = 'alert_error';
                 $message = 'Tidak dapat mengubah instansi. Silakan kontak web administrator!';
             }
 
-            return redirect()->route('org.index')->with('alert', $message);
+            return redirect()->route('org.index')->with($alert, $message);
         }
 
         return view('org.update', compact('data'));
@@ -64,15 +68,18 @@ class OrgController extends Controller
     {
         try {
             $orgService->delete($data);
+            $alert = 'alert_success';
             $message = 'Instansi berhasil dihapus.';
         } catch (OrgDeleteException $e) {
             report($e);
+            $alert = 'alert_error';
             $message = 'Tidak dapat menghapus instansi karena masih terdapat user instansi!';
         } catch (\Exception $e) {
             report($e);
+            $alert = 'alert_error';
             $message = 'Tidak dapat menghapus instansi. Silakan kontak web administrator!';
         }
 
-        return redirect()->route('org.index')->with('alert', $message);
+        return redirect()->route('org.index')->with($alert, $message);
     }
 }
