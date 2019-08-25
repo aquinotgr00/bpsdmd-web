@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entities\SupplyFiles;
-use App\Entities\User;
-use Doctrine\ORM\QueryBuilder;
 use EntityManager;
-use Illuminate\Support\Facades\Auth;
+use App\Services\Application\AuthService;
 
 class Feeder extends Controller
 {
@@ -22,14 +20,15 @@ class Feeder extends Controller
         //
     }
 
-    public function upload(Request $request)
+    public function upload(Request $request,AuthService $authwervice)
     {
         if ($request->has('file')) {
             $request->validate([
                 'file' => 'required|mimes:xls,xlsx|max:1240',
             ]);
 
-            $user = EntityManager::getRepository(User::class)->findOneBy(['id' => $request->session()->get('logged')['id']]);
+            // $user = EntityManager::getRepository(User::class)->findOneBy(['id' => $request->session()->get('logged')['id']]);
+            $user = $authwervice->user();
 
             $file = $request->file('file');
             $uploadedFileName = str_replace(' ', '_', $file->getClientOriginalName());
