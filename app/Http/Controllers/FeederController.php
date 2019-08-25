@@ -9,26 +9,15 @@ use App\Services\Application\AuthService;
 
 class FeederController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
-    {
-        //
-    }
-
-    public function upload(Request $request,AuthService $authwervice)
+    public function upload(Request $request, AuthService $authService)
     {
         if ($request->has('file')) {
+            $uploadPath = 'test';
             $request->validate([
                 'file' => 'required|mimes:xls,xlsx|max:1240',
             ]);
 
-            // $user = EntityManager::getRepository(User::class)->findOneBy(['id' => $request->session()->get('logged')['id']]);
-            $user = $authwervice->user();
+            $user = $authService->user();
 
             $file = $request->file('file');
             $uploadedFileName = str_replace(' ', '_', $file->getClientOriginalName());
@@ -42,27 +31,23 @@ class FeederController extends Controller
                 $uploadedFileName= date('dmY').'_test.'.$file->getClientOriginalExtension();
             }
 
-            $uploadpath = 'test';
-            if ($file->move($uploadpath,$uploadedFileName)) {
-
+            if ($file->move($uploadPath, $uploadedFileName)) {
                 $supply_files = new SupplyFiles();
                 $supply_files->setId(rand(1, 1000000));
                 $supply_files->setFileName($uploadedFileName);
-                $supply_files->setUploadedBy($request->session()->get('logged')['id']);
+                $supply_files->setUploadedBy($authService->check()['id']);
                 $supply_files->setCreatedAt($request->post('created_at').'-01');
-                $supply_files->setPath( $uploadpath);
+                $supply_files->setPath( $uploadPath);
                 $supply_files->setOrgId($user->getOrg());
 
                 EntityManager::persist($supply_files);
                 EntityManager::flush();
 
                 $request->session()->flash('success', 'File Berhasil Disimpan');
-            }
-            else{
+            } else {
                 $request->session()->flash('error', 'File gagal Disimpan');
             }
         }
-
 
         return view('upload');
     }

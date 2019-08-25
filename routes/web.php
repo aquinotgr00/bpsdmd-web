@@ -27,9 +27,7 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::group(['prefix' => 'feeder', 'middleware' => ['only_supply']], function() {
-        Route::match(['get', 'post'], 'upload', [
-            'uses' => 'Feeder@upload',
-        ])->name('feeder.upload');
+        Route::any('/upload', 'FeederController@upload')->name('feeder.upload');
     });
 
     Route::group(['prefix' => 'validate', 'middleware' => ['only_supply']], function() {
