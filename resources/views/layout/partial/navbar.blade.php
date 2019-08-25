@@ -17,7 +17,7 @@
     @endif
 
     @if(check_authorization(\App\Entities\User::ROLE_SUPPLY))
-    <li class="{CLASS_ACTIVE_SC}">
+    <li>
         <a href="{{ route('feeder.upload') }}">
             <i class="fa fa-file"></i>
             <span>Feeder</span>

@@ -6,7 +6,7 @@ use App\Interfaces\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User
+ * SupplyFiles
  *
  * @ORM\Table(name="supply_files")
  * @ORM\Entity
@@ -18,6 +18,7 @@ class SupplyFiles
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -43,9 +44,12 @@ class SupplyFiles
     private $created_at = 'NULL';
 
     /**
-     * @var integer
+     * @var Organization
      *
-     * @ORM\Column(name="org_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="idorg", onDelete="RESTRICT")
+     * })
      */
     private $org_id;
 
@@ -123,15 +127,20 @@ class SupplyFiles
     /**
      * @return int
      */
-    public function getOrgId(): int
+    public function getOrg(): Organization
     {
+        if (is_null($this->org_id)) {
+            return new Organization;
+        }
+
         return $this->org_id;
     }
+
 
     /**
      * @param int $org_id
      */
-    public function setOrgId(int $org_id): void
+    public function setOrg(Organization $org_id): void
     {
         $this->org_id = $org_id;
     }

@@ -37,8 +37,8 @@ class RouteServiceProvider extends ServiceProvider
             };
         };
 
+        Route::bind('user', $bindToEntityOr404(Entities\User::class));
         Route::bind('org', $bindToEntityOr404(Entities\Organization::class));
-
         parent::boot();
     }
 
