@@ -21,7 +21,7 @@ class AuthController extends Controller
                 return redirect(route('dashboard'));
             } catch (\Exception $e) {
                 report($e);
-                $request->session()->flash('message', 'Username atau password salah.');
+                $request->session()->flash('alert', 'Username atau password salah.');
             }
         }
 

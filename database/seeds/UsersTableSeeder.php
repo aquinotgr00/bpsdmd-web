@@ -11,15 +11,41 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        /** @var \App\Services\Domain\UserService $userService */
+        $userService = app(\App\Services\Domain\UserService::class);
+        /** @var \App\Services\Domain\OrgService $orgService */
+        $orgService = app(\App\Services\Domain\OrgService::class);
         DB::table('datauser')->truncate();
 
-        $user = new \App\Entities\User;
-        $user->setId(1);
-        $user->setUsername('bpsdm');
-        $user->setPassword('bpsdm');
-        $user->setAuthority(\App\Entities\User::ROLE_ADMIN);
+        $data = [
+            [
+                'username' => 'bpsdm',
+                'password' => 'bpsdm',
+                'authority' => \App\Entities\User::ROLE_ADMIN,
+                'org' => false
+            ],
+            [
+                'username' => 'supply',
+                'password' => 'supply',
+                'authority' => \App\Entities\User::ROLE_SUPPLY,
+                'org' => $orgService->getRepository()->find(1)
+            ],
+            [
+                'username' => 'demand',
+                'password' => 'demand',
+                'authority' => \App\Entities\User::ROLE_DEMAND,
+                'org' => $orgService->getRepository()->find(2)
+            ],
+        ];
 
-        EntityManager::persist($user);
+        foreach ($data as $item) {
+            $org = $item['org'];
+            unset($item['org']);
+
+            $collection = new \Illuminate\Support\Collection($item);
+            $userService->create($collection, $org, false);
+        }
+
         EntityManager::flush();
     }
 }

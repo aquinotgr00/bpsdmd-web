@@ -76,6 +76,13 @@
 
 				<div class="signin-text">
 					<span>Sign In to your account</span>
+
+                    @if(session('alert') ?? false)
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            {{ session('alert') }}
+                        </div>
+                    @endif
 				</div> <!-- / .signin-text -->
 
 				<div class="form-group w-icon {{ $errors->has('username') ? 'has-error' : '' }}">

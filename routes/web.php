@@ -13,9 +13,13 @@
 
 Route::group(['middleware' => ['authenticated']], function() {
 
-    Route::get('/', 'UserController@dashboard')->name('dashboard');
+    Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 
     Route::group(['prefix' => 'org', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'OrgController@create')->name('org.create');
+        Route::any('/{org}/update', 'OrgController@update')->name('org.update');
+        Route::get('/{org}/delete', 'OrgController@delete')->name('org.delete');
+        Route::get('/', 'OrgController@index')->name('org.index');
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
