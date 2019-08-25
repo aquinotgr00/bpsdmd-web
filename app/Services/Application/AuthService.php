@@ -32,19 +32,19 @@ class AuthService
         $user = $this->userService->getRepository()->findOneBy(['username' => $username]);
 
         if ($user instanceof UserInterface) {
-            if (\Hash::check($password, $user->getPassword())) {
+            if (Hash::check($password, $user->getPassword())) {
                 session()->put('logged', [
-                    'id'        => $user->getId(),
+                    'id' => $user->getId(),
                     'authority' => $user->getAuthority(),
                 ]);
 
                 return true;
             }
 
-            throw new InvalidLogin('Invalid login for '.$username);
+            throw new InvalidLogin('Invalid login for ' . $username);
         }
 
-        throw new LoginException('Cannot logging in for '.$username);
+        throw new LoginException('Cannot logging in for ' . $username);
     }
 
     /**

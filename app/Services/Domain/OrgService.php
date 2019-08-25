@@ -4,6 +4,7 @@ namespace App\Services\Domain;
 
 use App\Entities\Organization;
 use App\Exceptions\OrgDeleteException;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -29,7 +30,7 @@ class OrgService
     /**
      * Instance repository
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {
@@ -42,7 +43,7 @@ class OrgService
      * @param int $page
      * @return LengthAwarePaginator
      */
-    public function paginateOrg($page) : LengthAwarePaginator
+    public function paginateOrg($page): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('o')
@@ -111,6 +112,6 @@ class OrgService
             return true;
         }
 
-        throw new OrgDeleteException('Cannot delete organization due to existing '.$count.' users!');
+        throw new OrgDeleteException('Cannot delete organization due to existing ' . $count . ' users!');
     }
 }

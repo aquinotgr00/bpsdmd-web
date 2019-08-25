@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Interfaces\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Hash;
 
 /**
  * User
@@ -109,7 +110,7 @@ class User implements UserInterface
      */
     public function setPassword(string $password): void
     {
-        $this->password = \Hash::make($password);
+        $this->password = Hash::make($password);
     }
 
     /**

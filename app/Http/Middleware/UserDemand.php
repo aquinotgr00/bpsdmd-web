@@ -5,14 +5,15 @@ namespace App\Http\Middleware;
 use App\Entities\User;
 use App\Services\Application\AuthService;
 use Closure;
+use Illuminate\Http\Request;
 
 class UserDemand
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)

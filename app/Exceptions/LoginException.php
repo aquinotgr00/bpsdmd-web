@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
-class LoginException extends \Exception
+use Exception;
+use Log;
+
+class LoginException extends Exception
 {
     /**
      * Report or log an exception.
@@ -11,6 +14,6 @@ class LoginException extends \Exception
      */
     public function report()
     {
-        \Log::debug($this->getMessage());
+        Log::debug($this->getMessage());
     }
 }

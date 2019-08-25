@@ -7,7 +7,7 @@ use App\Entities\SupplyFiles;
 use EntityManager;
 use App\Services\Application\AuthService;
 
-class Feeder extends Controller
+class FeederController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -37,11 +37,11 @@ class Feeder extends Controller
             $day = !empty($fileName[0]) ? (Int) substr($fileName[0],0,2) :99;
             $month = !empty($fileName[0]) ? (Int) substr($fileName[0],2,2) :99;
             $year = !empty($fileName[0]) ? (Int) substr($fileName[0],4,4) : 9999;
-            
+
             if (!checkdate($month,$day,$year) || empty($fileName[0])) {
                 $uploadedFileName= date('dmY').'_test.'.$file->getClientOriginalExtension();
             }
-            
+
             $uploadpath = 'test';
             if ($file->move($uploadpath,$uploadedFileName)) {
 
@@ -52,10 +52,10 @@ class Feeder extends Controller
                 $supply_files->setCreatedAt($request->post('created_at').'-01');
                 $supply_files->setPath( $uploadpath);
                 $supply_files->setOrgId($user->getOrg());
-                
+
                 EntityManager::persist($supply_files);
                 EntityManager::flush();
-             
+
                 $request->session()->flash('success', 'File Berhasil Disimpan');
             }
             else{

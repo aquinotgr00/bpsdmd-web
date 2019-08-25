@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
-class OrgDeleteException extends \Exception
+use Exception;
+use Log;
+
+class OrgDeleteException extends Exception
 {
     /**
      * Report or log an exception.
@@ -11,6 +14,6 @@ class OrgDeleteException extends \Exception
      */
     public function report()
     {
-        \Log::debug($this->getMessage());
+        Log::debug($this->getMessage());
     }
 }

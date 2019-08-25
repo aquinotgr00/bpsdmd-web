@@ -4,6 +4,7 @@ namespace App\Services\Domain;
 
 use App\Entities\Organization;
 use App\Entities\User;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
 use Illuminate\Support\Collection;
@@ -28,7 +29,7 @@ class UserService
     /**
      * Instance repository
      *
-     * @return \Doctrine\ORM\EntityRepository
+     * @return EntityRepository
      */
     public function getRepository()
     {

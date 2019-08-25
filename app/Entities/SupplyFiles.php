@@ -11,9 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="supply_files")
  * @ORM\Entity
  */
-class SupplyFiles 
+class SupplyFiles
 {
-
     /**
      * @var integer
      *
