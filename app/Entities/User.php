@@ -22,6 +22,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="iduser", type="integer", nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -47,18 +48,21 @@ class User implements UserInterface
     private $authority = 'NULL';
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="org", type="integer", nullable=true)
-     */
-    private $org;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="photo", type="string", nullable=true)
      */
     private $photo = 'NULL';
+
+    /**
+     * @var Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org", referencedColumnName="idorg", onDelete="RESTRICT")
+     * })
+     */
+    private $org;
 
     /**
      * @return int
@@ -79,7 +83,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -95,7 +99,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -111,7 +115,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getAuthority(): string
+    public function getAuthority(): ?string
     {
         return $this->authority;
     }
@@ -125,25 +129,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return int
-     */
-    public function getOrg(): int
-    {
-        return $this->org;
-    }
-
-    /**
-     * @param int $org
-     */
-    public function setOrg(int $org): void
-    {
-        $this->org = $org;
-    }
-
-    /**
      * @return string
      */
-    public function getPhoto(): string
+    public function getPhoto(): ?string
     {
         return $this->photo;
     }
@@ -154,6 +142,26 @@ class User implements UserInterface
     public function setPhoto(string $photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return Organization
+     */
+    public function getOrg(): Organization
+    {
+        if (is_null($this->org)) {
+            return new Organization;
+        }
+
+        return $this->org;
+    }
+
+    /**
+     * @param Organization $org
+     */
+    public function setOrg(Organization $org): void
+    {
+        $this->org = $org;
     }
 
     public function getAvailableRoles()

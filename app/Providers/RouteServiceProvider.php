@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Entities;
+use EntityManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,7 +25,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $bindToEntityOr404 = function ($class, $findKey = 'id') {
+            return function ($value) use ($class, $findKey) {
+                $entity = EntityManager::getRepository($class)->findOneBy([$findKey => $value]);
+
+                if ($entity instanceof $class) {
+                    return $entity;
+                }
+
+                return abort(404);
+            };
+        };
+
+        Route::bind('org', $bindToEntityOr404(Entities\Organization::class));
 
         parent::boot();
     }
