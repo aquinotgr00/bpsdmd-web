@@ -19,12 +19,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
-                        @if(session('alert') ?? false)
-                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                {{ session('alert') }}
-                            </div>
-                        @endif
+                        @include('layout.partial.alert')
 
                         <table class="table table-bordered">
                             <thead>
