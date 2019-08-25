@@ -18,7 +18,7 @@
             <span>{NAME_MENU_SEARCH}</span>
         </a>
     </li>
-    @if(Session::has('logged') && Session::get('logged')['authority'] == \App\Entities\User::ROLE_SUPPLY)
+    @if(check_authorization(\App\Entities\User::ROLE_SUPPLY))
     <li class="{CLASS_ACTIVE_SC}">
         <a href="{{ route('feeder.upload') }}">
             <i class="fa fa-file"></i>

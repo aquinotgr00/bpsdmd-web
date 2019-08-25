@@ -179,6 +179,7 @@ return [
          * Additional Package
          */
         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*
