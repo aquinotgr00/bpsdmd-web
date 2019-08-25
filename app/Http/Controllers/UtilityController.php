@@ -17,10 +17,8 @@ class UtilityController extends Controller
         return view('dashboard');
     }
 
-    public function updateProfile($id = null, Request $request, AuthService $authservice, User $user, UserService $userservice)
+    public function updateProfile(Request $request, User $user, UserService $userservice)
     {
-        // dd($user);
-        $currentuser = $authservice->user();
         if ($request->post()) {
             if (!Hash::check($request->post('old_password'), $currentuser->getPassword())) {
                 $request->session()->flash('old_password', 'Password lama salah');
@@ -43,14 +41,14 @@ class UtilityController extends Controller
                         $requestData['uploaded_img'] = $this->upload_path .'/'. $photoname;
                     }
                 }
-                $request->session()->flash('success', 'File Berhasil Disimpan');
-                $currentuser = $userservice->update($currentuser, collect($requestData));
+                $request->session()->flash('success', 'Profil Berhasil Disimpan');
+                $user = $userservice->update($user, collect($requestData));
 
             } catch (Exception $e) {
-                $request->session()->flash('error', 'File gagal Disimpan');
+                $request->session()->flash('error', 'Profil Gagal Disimpan');
             }
 
         }
-        return view('user/update_profile', ['user' => $currentuser]);
+        return view('user/update_profile', ['user' => $user]);
     }
 }
