@@ -9,7 +9,7 @@ function check_authorization($role = null)
 
     if ($currentUser && $currentUser['authority'] == $role) {
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
