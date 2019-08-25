@@ -22,8 +22,8 @@ class UserService
     public function createQueryBuilder($alias, $indexBy = null)
     {
         return EntityManager::createQueryBuilder()
-            ->select($alias)
-            ->from(User::class, $alias, $indexBy);
+        ->select($alias)
+        ->from(User::class, $alias, $indexBy);
     }
 
     /**
@@ -50,7 +50,11 @@ class UserService
         $user->setUsername($data->get('username'));
         $user->setPassword($data->get('password'));
         $user->setAuthority($data->get('authority'));
+        $user->setName($data->get('name'));
 
+        if (!empty($data->get('uploaded_img'))) {
+            $user->setPhoto('uploaded_img');            
+        }
         if ($org instanceof Organization) {
             $user->setOrg($org);
         }
@@ -60,6 +64,42 @@ class UserService
         if ($flush) {
             EntityManager::flush();
 
+            return $user;
+        }
+    }
+
+    /**
+     * Update user
+     *
+     * @param User $user
+     * @param Collection $data
+     * @param bool $org
+     * @param bool $flush
+     * @return User
+     */
+
+    public function update(User $user, Collection $data, $org = false, $flush = true)
+    {
+        $user->setUsername($data->get('username'));
+        $user->setName($data->get('name'));
+        $user->setPassword($data->get('password'));
+
+        if ($org instanceof Organization) {
+            $user->setOrg($org);
+        }
+
+        if (!empty($data->get('uploaded_img'))) {
+            $user->setPhoto($data->get('uploaded_img'));            
+        }
+
+        if (!empty($data->get('authority'))) {
+            $user->setAuthority($data->get('authority'));
+        }
+
+        EntityManager::persist($user);
+
+        if ($flush) {
+            EntityManager::flush();
             return $user;
         }
     }
