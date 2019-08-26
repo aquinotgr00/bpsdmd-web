@@ -11,12 +11,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-	public static $uploadPath         = 'users/img';
 
 	public function index(UserService $userService)
 	{
 		$page = request()->get('page');
-		$data = $userService->paginateorg(request()->get('page'));
+		$data = $userService->paginateUser(request()->get('page'));
 
 		return view('user.index', compact('data', 'page'));
 	}
@@ -33,6 +32,7 @@ class UserController extends Controller
 				$request->session()->flash('username', 'Username sudah digunakan');
 				return redirect()->route('user.create',['type' => $type]);
 			}
+			
 			$request->validate([
 				'name' 					=> 'required',
 				'username' 				=> 'required',
@@ -40,13 +40,14 @@ class UserController extends Controller
 				'password_confirmation' => 'required|same:password',
 				'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
 			]);
+
 			try {
 				$requestData = $request->all();
 				if ($request->hasFile('photo')) {
 					$photo = $request->file('photo');
 					$photoName = $photo->hashName();
-					if ($photo->move(self::$uploadPath, $photoName)) {
-						$requestData['uploaded_img'] = self::$uploadPath .'/'. $photoName;
+					if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+						$requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
 					}
 				}
 
@@ -109,8 +110,8 @@ class UserController extends Controller
 				if ($request->hasFile('photo')) {
 					$photo = $request->file('photo');
 					$photoName = $photo->hashName();
-					if ($photo->move(self::$uploadPath, $photoName)) {
-						$requestData['uploaded_img'] = self::$uploadPath .'/'. $photoName;
+					if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+						$requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
 					}
 				}
 				$requestData['authority'] = $user->getAuthority();
@@ -120,6 +121,7 @@ class UserController extends Controller
 
 				$alert = 'alert_success';
 				$message 	= 'User '.$user->getName().' berhasil diubah.';
+
 			} catch (Exception $e) {
 				$alert = 'alert_error';
 				$message = 'Tidak dapat mengubah user '.$user->getName().'. Silakan kontak web administrator!';

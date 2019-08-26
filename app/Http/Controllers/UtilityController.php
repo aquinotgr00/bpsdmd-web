@@ -49,8 +49,8 @@ class UtilityController extends Controller
                 if ($request->hasFile('photo')) {
                     $photo = $request->file('photo');
                     $photoName = $photo->hashName();
-                    if ($photo->move(\App\Http\Controllers\UserController::$uploadPath, $photoName)) {
-                        $requestData['uploaded_img'] = \App\Http\Controllers\UserController::$uploadPath .'/'. $photoName;
+                    if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+                        $requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
                     }
                 }
                 $request->session()->flash('success', 'Profil Berhasil Disimpan');
