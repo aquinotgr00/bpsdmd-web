@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="content-header">
-	<h1>Update Profile</h1>
+	<h1>Tambah User</h1>
 </section>
 
 <!-- Main content -->
@@ -13,46 +13,47 @@
 		<div class="col-md-12">
 			<div class="box">
 				<div class="box-body">
-					@if ($message = Session::get('success'))
-					<div class="alert alert-success alert-block">
-						<button type="button" class="close" data-dismiss="alert">×</button> 
-						<strong>{{ $message }}</strong>
-					</div>
-					@endif
-
-					@if ($message = Session::get('error'))
-					<div class="alert alert-danger alert-block">
-						<button type="button" class="close" data-dismiss="alert">×</button> 
-						<strong>{{ $message }}</strong>
-					</div>
-					@endif
 					<form method="post" enctype="multipart/form-data">
 						@csrf
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 							<label for="name">name :</label>
-							<input type="text" class="form-control" id="username" name="name" required="" value="{{ $user->getName() }}">
+							<input type="text" class="form-control" id="username" name="name" required="">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
 						<div class="form-group {{ Session::has('username') ? 'has-error' : '' }}">
 							<label for="username">Username :</label>
-							<input type="text" class="form-control" id="username" name="username" value="{{ $user->getUserName() }}">
+							<input type="text" class="form-control" id="username" name="username" required="">
 							<span class="help-block ">{!! Session::get('username') !!}</span>
-						</div>
-						<div class="form-group {{ Session::has('old_password') ? 'has-error' : '' }}">
-							<label for="password">Password Lama:</label>
-							<input type="text" class="form-control" id="old_password" name="old_password">
-							<span class="help-block ">{!! Session::get('old_password') !!}</span>
 						</div>
 						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 							<label for="password">Password :</label>
-							<input type="password" class="form-control" id="password" name="password">
+							<input type="password" class="form-control" id="password" name="password" required="">
 							<span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
 						</div>
 						<div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
 							<label for="password_confirmation">Konfirmasi Password :</label>
-							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required="">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
+						@if( $type <> \App\Entities\User::ROLE_ADMIN)
+						<div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
+							<label for="sel1">Instansi</label>
+							<select class="form-control" id="sel1" name="org" required="">
+								<option value="">Pilih Instansi</option>
+								@if(!empty($dataOrg))
+
+								@foreach($dataOrg as $org)
+								<option value="{{ $org->getId() }}">{{ $org->getName() }}</option>
+								@endforeach
+
+								@endif
+
+							</select>
+							<span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
+
+						</div>
+						@endif
+
 						<div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
 							<img src="">
 							<div class="input-group-prepend">
@@ -66,9 +67,6 @@
 								aria-describedby="inputGroupFileAddon01" name="photo">
 								<span class="help-block ">{!! implode('', $errors->get('photo')) !!}</span>
 							</div>
-						</div>
-						<div class="form-group">
-							<img src="{{ url($user->getPhoto()) }}" width="100px" height="100px">
 						</div>
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Submit</button>

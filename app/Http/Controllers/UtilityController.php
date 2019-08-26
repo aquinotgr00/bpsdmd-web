@@ -10,24 +10,36 @@ use Hash;
 
 class UtilityController extends Controller
 {
-    public $upload_path         = 'users/img';
-    public $upload_path_thumb   = 'users/img/thumb';
+
     public function dashboard()
     {
         return view('dashboard');
     }
 
-    public function updateProfile(Request $request, User $user, UserService $userservice)
+    public function updateProfile(Request $request, User $user, UserService $userService, AuthService $authService)
     {
+        $currentUser = $authService->user(); 
         if ($request->post()) {
-            if (!Hash::check($request->post('old_password'), $currentuser->getPassword())) {
+            $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
+            ->setParameters([
+                'id'        => $currentUser->getId(), 
+                'username'  =>  $request->get('username')
+            ])->getQuery()->getResult();
+
+            if (!empty($checkUserName)) {
+                $request->session()->flash('username', 'Username sudah digunakan');
+                return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
+            }
+
+            if (!\Hash::check($request->post('old_password'), $currentUser->getPassword())) {
                 $request->session()->flash('old_password', 'Password lama salah');
-                return redirect()->route('update.profile',['id'=>$currentuser->getId()]);
+                return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
             }
 
             $request->validate([
                 'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
                 'name'                  => 'required',
+                'username'              => 'required',
                 'password'              => 'required||confirmed',
                 'password_confirmation' => 'required|same:password',
             ]);
@@ -36,19 +48,19 @@ class UtilityController extends Controller
                 $requestData = $request->all();
                 if ($request->hasFile('photo')) {
                     $photo = $request->file('photo');
-                    $photoname = $photo->hashName();
-                    if ($photo->move($this->upload_path, $photoname)) {
-                        $requestData['uploaded_img'] = $this->upload_path .'/'. $photoname;
+                    $photoName = $photo->hashName();
+                    if ($photo->move(\App\Http\Controllers\UserController::$uploadPath, $photoName)) {
+                        $requestData['uploaded_img'] = \App\Http\Controllers\UserController::$uploadPath .'/'. $photoName;
                     }
                 }
                 $request->session()->flash('success', 'Profil Berhasil Disimpan');
-                $user = $userservice->update($user, collect($requestData));
+                $user = $userService->updateProfile($user, collect($requestData));
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $request->session()->flash('error', 'Profil Gagal Disimpan');
             }
 
         }
-        return view('user/update_profile', ['user' => $user]);
+        return view('user/update_profile', ['user' => $currentUser]);
     }
 }
