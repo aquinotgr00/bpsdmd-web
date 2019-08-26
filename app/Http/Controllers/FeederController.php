@@ -10,7 +10,7 @@ use App\Services\Domain\OrgService;
 
 class FeederController extends Controller
 {
-    public function upload(Request $request, AuthService $authService, OrgService $orgservice)
+    public function upload(Request $request, AuthService $authService, OrgService $orgService)
     {
         if ($request->has('file')) {
             $request->validate([
@@ -18,7 +18,7 @@ class FeederController extends Controller
             ]);
 
             $user   = $authService->user();
-            $org    = $orgservice->getRepository()->findOneBy(['id' => $user->getOrg()->getId()]);
+            $org    = $orgService->getRepository()->findOneBy(['id' => $user->getOrg()->getId()]);
 
             $uploadPath = $org->getName();
             $file = $request->file('file');
@@ -35,14 +35,14 @@ class FeederController extends Controller
             }
 
             if ($file->move($uploadPath, $uploadedFileName)) {
-                $supply_files = new SupplyFiles();
-                $supply_files->setFileName($uploadedFileName);
-                $supply_files->setUploadedBy($authService->check()['id']);
-                $supply_files->setCreatedAt($request->post('created_at').'-01');
-                $supply_files->setPath( $uploadPath);
-                $supply_files->setOrg($user->getOrg());
+                $supplyFiles = new SupplyFiles();
+                $supplyFiles->setFileName($uploadedFileName);
+                $supplyFiles->setUploadedBy($user);
+                $supplyFiles->setCreatedAt($request->post('created_at').date('d'));
+                $supplyFiles->setPath( $uploadPath);
+                $supplyFiles->setOrg($user->getOrg());
 
-                EntityManager::persist($supply_files);
+                EntityManager::persist($supplyFiles);
                 EntityManager::flush();
 
                 $request->session()->flash('success', 'File Berhasil Disimpan');

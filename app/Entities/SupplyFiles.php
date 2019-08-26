@@ -30,10 +30,14 @@ class SupplyFiles
     private $file_name = 'NULL';
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="uploaded_by", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uploaded_by", referencedColumnName="iduser", onDelete="RESTRICT")
+     * })
      */
+
     private $uploaded_by = 'NULL';
 
     /**
@@ -93,17 +97,21 @@ class SupplyFiles
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getUploadedBy(): string
+    public function getUploadedBy(): User
     {
+        if (is_null($this->uploaded_by)) {
+            return new User;
+        }
+
         return $this->uploaded_by;
     }
 
     /**
      * @param string $uploaded_by
      */
-    public function setUploadedBy(string $uploaded_by): void
+    public function setUploadedBy(User $uploaded_by): void
     {
         $this->uploaded_by = $uploaded_by;
     }
@@ -160,4 +168,13 @@ class SupplyFiles
     {
         $this->path = $path;
     }
+
+    /**
+     * @return User[]|ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
 }
