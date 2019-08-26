@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SupplyFiles
 {
+    const UPLOAD_PATH = 'files/';
+
     /**
      * @var integer
      *

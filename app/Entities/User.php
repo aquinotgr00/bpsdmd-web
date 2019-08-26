@@ -18,6 +18,7 @@ class User implements UserInterface
     const ROLE_ADMIN = 'administrator';
     const ROLE_SUPPLY = 'supply';
     const ROLE_DEMAND = 'demand';
+    const UPLOAD_PATH = 'users/img';
 
     /**
      * @var integer

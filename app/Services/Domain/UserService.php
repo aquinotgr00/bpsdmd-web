@@ -43,7 +43,7 @@ class UserService
      * @param int $page
      * @return LengthAwarePaginator
      */
-    public function paginateOrg($page): LengthAwarePaginator
+    public function paginateUser($page): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('u')

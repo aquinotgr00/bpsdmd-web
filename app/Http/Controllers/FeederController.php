@@ -21,10 +21,11 @@ class FeederController extends Controller
             $org    = $orgService->getRepository()->findOneBy(['id' => $user->getOrg()->getId()]);
 
             $uploadPath = $org->getName();
+            $uploadPath = SupplyFiles::UPLOAD_PATH.$uploadPath;
+
             $file = $request->file('file');
             $uploadedFileName = str_replace(' ', '_', $file->getClientOriginalName());
             $fileName = explode("_",$uploadedFileName);
-
 
             $day = !empty($fileName[0]) ? (Int) substr($fileName[0],0,2) :99;
             $month = !empty($fileName[0]) ? (Int) substr($fileName[0],2,2) :99;
