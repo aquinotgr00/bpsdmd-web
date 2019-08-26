@@ -3,7 +3,6 @@
 namespace App\Entities;
 
 use App\Interfaces\UserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Hash;
 
@@ -32,23 +31,30 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", nullable=true)
+     * @ORM\Column(name="name", type="string", nullable=false)
      */
-    private $username = 'NULL';
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", nullable=true)
+     * @ORM\Column(name="username", type="string", nullable=false)
      */
-    private $password = 'NULL';
+    private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="authority", type="string", nullable=true)
+     * @ORM\Column(name="password", type="string", nullable=false)
      */
-    private $authority = 'NULL';
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="authority", type="string", nullable=false)
+     */
+    private $authority;
 
     /**
      * @var string
@@ -56,13 +62,6 @@ class User implements UserInterface
      * @ORM\Column(name="photo", type="string", nullable=true)
      */
     private $photo = 'NULL';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", nullable=true)
-     */
-    private $name = 'NULL';
 
     /**
      * @var Organization

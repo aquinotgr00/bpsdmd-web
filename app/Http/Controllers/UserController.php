@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
 	public function index(UserService $userService)
 	{
 		$page = request()->get('page');
@@ -32,7 +31,7 @@ class UserController extends Controller
 				$request->session()->flash('username', 'Username sudah digunakan');
 				return redirect()->route('user.create',['type' => $type]);
 			}
-			
+
 			$request->validate([
 				'name' 					=> 'required',
 				'username' 				=> 'required',
@@ -57,7 +56,6 @@ class UserController extends Controller
 
 				$alert 		= 'alert_success';
 				$message 	= 'User '.$type.' berhasil ditambahkan.';
-
 			} catch (Exception $e) {
 				report($e);
 				$alert = 'alert_error';
@@ -68,10 +66,10 @@ class UserController extends Controller
 		}
 
 		$dataOrg = array();
+
 		if ($type == User::ROLE_SUPPLY) {
 			$dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
-		}
-		elseif ($type == User::ROLE_SUPPLY) {
+		} elseif ($type == User::ROLE_SUPPLY) {
 			$dataOrg = $orgService->getRepository()->findBy(['type' =>Organization::TYPE_DEMAND]);
 		}
 
@@ -110,18 +108,17 @@ class UserController extends Controller
 				if ($request->hasFile('photo')) {
 					$photo = $request->file('photo');
 					$photoName = $photo->hashName();
+
 					if ($photo->move(User::UPLOAD_PATH, $photoName)) {
 						$requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
 					}
 				}
+
 				$requestData['authority'] = $user->getAuthority();
-				$org 		= $user->getAuthority() <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
-
+				$org = $user->getAuthority() <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
 				$userService->update($user, collect($requestData), $org);
-
 				$alert = 'alert_success';
 				$message 	= 'User '.$user->getName().' berhasil diubah.';
-
 			} catch (Exception $e) {
 				$alert = 'alert_error';
 				$message = 'Tidak dapat mengubah user '.$user->getName().'. Silakan kontak web administrator!';
@@ -129,6 +126,7 @@ class UserController extends Controller
 
 			return redirect()->route('user.index')->with($alert, $message);
 		}
+
 		$dataOrg = array();
 		if ($user->getAuthority() <> User::ROLE_ADMIN) {
 			$dataOrg = $orgService->getRepository()->findBy(['type' => $user->getOrg()->getType()]);
@@ -144,7 +142,6 @@ class UserController extends Controller
 			$alert = 'alert_success';
 			$message = 'User berhasil dihapus.';
 		} catch (Exception $e) {
-			dd($e->getMessage());
 			report($e);
 			$alert = 'alert_error';
 			$message = 'Tidak dapat menghapus user. Silakan kontak web administrator!';

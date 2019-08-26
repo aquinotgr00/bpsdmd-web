@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use App\Interfaces\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,6 +44,12 @@ class Organization
      * @ORM\OneToMany(targetEntity="User", mappedBy="org")
      */
     private $users;
+
+    /**
+     * @var ArrayCollection|SupplyFiles[]
+     * @ORM\OneToMany(targetEntity="SupplyFiles", mappedBy="org_id")
+     */
+    private $files;
 
     /**
      * @return int
@@ -108,6 +113,22 @@ class Organization
     public function setUsers($users): void
     {
         $this->users = $users;
+    }
+
+    /**
+     * @return SupplyFiles[]|ArrayCollection
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * @param SupplyFiles[]|ArrayCollection $files
+     */
+    public function setFiles($files): void
+    {
+        $this->files = $files;
     }
 
     public function getAvailableTypes()

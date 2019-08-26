@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use App\Interfaces\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -99,7 +99,7 @@ class SupplyFiles
     }
 
     /**
-     * @return int
+     * @return User
      */
     public function getUploadedBy(): User
     {
@@ -111,7 +111,7 @@ class SupplyFiles
     }
 
     /**
-     * @param string $uploaded_by
+     * @param User $uploaded_by
      */
     public function setUploadedBy(User $uploaded_by): void
     {
@@ -135,7 +135,7 @@ class SupplyFiles
     }
 
     /**
-     * @return int
+     * @return Organization
      */
     public function getOrg(): Organization
     {
@@ -146,9 +146,8 @@ class SupplyFiles
         return $this->org_id;
     }
 
-
     /**
-     * @param int $org_id
+     * @param Organization $org_id
      */
     public function setOrg(Organization $org_id): void
     {
@@ -170,13 +169,4 @@ class SupplyFiles
     {
         $this->path = $path;
     }
-
-    /**
-     * @return User[]|ArrayCollection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
 }

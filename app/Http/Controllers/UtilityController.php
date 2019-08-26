@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 use App\Entities\User;
 use App\Services\Application\AuthService;
 use App\Services\Domain\UserService;
-use Hash;
 
 class UtilityController extends Controller
 {
-
     public function dashboard()
     {
         return view('dashboard');
@@ -18,11 +16,11 @@ class UtilityController extends Controller
 
     public function updateProfile(Request $request, User $user, UserService $userService, AuthService $authService)
     {
-        $currentUser = $authService->user(); 
+        $currentUser = $authService->user();
         if ($request->post()) {
             $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
             ->setParameters([
-                'id'        => $currentUser->getId(), 
+                'id'        => $currentUser->getId(),
                 'username'  =>  $request->get('username')
             ])->getQuery()->getResult();
 
@@ -53,14 +51,14 @@ class UtilityController extends Controller
                         $requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
                     }
                 }
-                $request->session()->flash('success', 'Profil Berhasil Disimpan');
-                $user = $userService->updateProfile($user, collect($requestData));
 
+                $request->session()->flash('success', 'Profil Berhasil Disimpan');
+                $userService->updateProfile($user, collect($requestData));
             } catch (\Exception $e) {
                 $request->session()->flash('error', 'Profil Gagal Disimpan');
             }
-
         }
+
         return view('user/update_profile', ['user' => $currentUser]);
     }
 }
