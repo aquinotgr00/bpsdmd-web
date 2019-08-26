@@ -68,7 +68,9 @@
 							</div>
 						</div>
 						<div class="form-group">
+							@if(is_null($user->getPhoto()))
 							<img src="{{ url($user->getPhoto()) }}" width="100px" height="100px">
+							@endif
 						</div>
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Submit</button>
