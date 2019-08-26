@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Log;
 
-class LoginException extends Exception
+class OrgDeleteException extends Exception
 {
     /**
      * Report or log an exception.

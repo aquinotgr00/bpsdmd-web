@@ -31,7 +31,8 @@
 
 
     <link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
-
+    @yield('style')
+    
 </head>
 
 <body class="skin-blue">
@@ -92,25 +93,7 @@
 
     <!-- Right side column. Contains the navbar and content of the page -->
     <aside class="right-side">
-        <section class="content-header">
-            <h1>
-                Dashboard
-                <small>Ini adalah nama company</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-user"></i> {FAK_LABEL_USER}
-                    </a>
-                </li>
-            </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            @yield('content')
-        </section><!-- /.content -->
-
+        @yield('content')
     </aside><!-- /.right-side -->
 </div><!-- ./wrapper -->
 
@@ -138,6 +121,6 @@
 
 	<!-- gsStudentDashboard dashboard -->
 	<script src="{{ asset('js/gsStudentDashboard/dashboard.js') }}" type="text/javascript"></script>
-
+    @yield('script')
 </body>
 </html>

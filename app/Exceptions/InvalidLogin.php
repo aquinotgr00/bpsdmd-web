@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Log;
+
 class InvalidLogin extends LoginException
 {
     /**
@@ -11,6 +13,6 @@ class InvalidLogin extends LoginException
      */
     public function report()
     {
-        \Log::debug($this->getMessage());
+        Log::debug($this->getMessage());
     }
 }
