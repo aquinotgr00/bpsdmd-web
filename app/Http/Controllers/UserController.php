@@ -82,13 +82,14 @@ class UserController extends Controller
 			$checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
 			->setParameters([
 				'id'        => $user->getId(), 
-				'username'  =>  $request->get('username')
+				'username'  => $request->get('username')
 			])->getQuery()->getResult();
 
 			if (!empty($checkUserName)) {
 				$request->session()->flash('username', 'Username sudah digunakan');
-				return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
+				return redirect()->route('update.profile',['id' => $user->getId()]);
 			}
+			
 			$validate = [
 				'name' 					=> 'required',
 				'username' 				=> 'required',

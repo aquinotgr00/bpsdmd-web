@@ -14,6 +14,12 @@
             <span>Instansi</span>
         </a>
     </li>
+    <li>
+        <a href="{{ url(route('user.index')) }}">
+            <i class="fa fa-group"></i>
+            <span>User Management</span>
+        </a>
+    </li>
     @endif
 
     @if(check_authorization(\App\Entities\User::ROLE_SUPPLY))
