@@ -6,6 +6,7 @@ use App\Entities\User;
 use App\Entities\Organization;
 use App\Services\Domain\UserService;
 use App\Services\Domain\OrgService;
+use Exception;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -20,7 +21,7 @@ class UserController extends Controller
 		return view('user.index', compact('data', 'page'));
 	}
 
-	public function create($type = null, Request $request, UserService $userService, OrgService $orgService)
+	public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
 	{
 		if ($request->method() == 'POST') {
 			$checkUserName = $userService->createQueryBuilder('u')->where('u.username = :username')
@@ -48,7 +49,7 @@ class UserController extends Controller
 						$requestData['uploaded_img'] = self::$uploadPath .'/'. $photoName;
 					}
 				}
-				
+
 				$requestData['authority'] = $type;
 				$org 		= $type <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
 				$userService->create(collect($requestData), $org);
@@ -56,7 +57,7 @@ class UserController extends Controller
 				$alert 		= 'alert_success';
 				$message 	= 'User '.$type.' berhasil ditambahkan.';
 
-			} catch (\Exception $e) {
+			} catch (Exception $e) {
 				report($e);
 				$alert = 'alert_error';
 				$message = 'Tidak dapat menambah user '.$type.'. Silakan kontak web administrator!';
@@ -81,7 +82,7 @@ class UserController extends Controller
 		if ($request->method() == 'POST') {
 			$checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
 			->setParameters([
-				'id'        => $user->getId(), 
+				'id'        => $user->getId(),
 				'username'  => $request->get('username')
 			])->getQuery()->getResult();
 
@@ -89,16 +90,18 @@ class UserController extends Controller
 				$request->session()->flash('username', 'Username sudah digunakan');
 				return redirect()->route('update.profile',['id' => $user->getId()]);
 			}
-			
+
 			$validate = [
 				'name' 					=> 'required',
 				'username' 				=> 'required',
 				'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
 			];
+
 			if (!empty($request->get('pass'))) {
 				$validate['password']              = 'required||confirmed';
 				$validate['password_confirmation'] = 'required_with:password|required|same:password';
 			}
+
 			$request->validate($validate);
 
 			try {
@@ -114,10 +117,10 @@ class UserController extends Controller
 				$org 		= $user->getAuthority() <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
 
 				$userService->update($user, collect($requestData), $org);
-				
+
 				$alert = 'alert_success';
 				$message 	= 'User '.$user->getName().' berhasil diubah.';
-			} catch (\Exception $e) {
+			} catch (Exception $e) {
 				$alert = 'alert_error';
 				$message = 'Tidak dapat mengubah user '.$user->getName().'. Silakan kontak web administrator!';
 			}
@@ -138,7 +141,7 @@ class UserController extends Controller
 			$userService->delete($user);
 			$alert = 'alert_success';
 			$message = 'User berhasil dihapus.';
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			dd($e->getMessage());
 			report($e);
 			$alert = 'alert_error';
