@@ -20,23 +20,12 @@
 							<input type="text" class="form-control" id="username" name="name" required="" value="{{ $user->getName() }}">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
-						<div class="form-group {{ Session::has('username') ? 'has-error' : '' }}">
+						<div class="form-group {{  $errors->has('username') ? 'has-error' : '' }}">
 							<label for="username">Username :</label>
 							<input type="text" class="form-control" id="username" name="username" value="{{ $user->getUsername() }}">
-							<span class="help-block ">{!! Session::get('username') !!}</span>
+							<span class="help-block ">{!! implode('', $errors->get('username')) !!}</span>
 						</div>
-						<span class="help-block">Kosongkan password dan konfirmasi password jika tidak ingin diganti</span>
-
-						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-							<label for="password">Password :</label>
-							<input type="password" class="form-control" id="password" name="password" >
-							<span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
-						</div>
-						<div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-							<label for="password_confirmation">Konfirmasi Password :</label>
-							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
-						</div>
+						
 						@if( $user->getAuthority() <> \App\Entities\User::ROLE_ADMIN)
 						<div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
 							<label for="sel1">Instansi</label>
@@ -74,6 +63,18 @@
 							@if(is_null($user->getPhoto()))
 							<img src="{{ url($user->getPhoto()) }}" width="100px" height="100px">
 							@endif
+						</div>
+						<span class="help-block" style="color:red">Kosongkan password dan konfirmasi password jika tidak ingin diganti</span>
+
+						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+							<label for="password">Password :</label>
+							<input type="password" class="form-control" id="password" name="password" >
+							<span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
+						</div>
+						<div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+							<label for="password_confirmation">Konfirmasi Password :</label>
+							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Submit</button>
