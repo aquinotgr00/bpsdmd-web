@@ -16,6 +16,33 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE ONLY public.supply_files DROP CONSTRAINT supply_files_pkey;
+ALTER TABLE public.supply_files ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE public.supply_files_id_seq;
+DROP TABLE public.supply_files;
+DROP TABLE public.datauser;
+DROP SEQUENCE public.dataorg_idorg_seq;
+DROP TABLE public.dataorg;
+
+SET default_tablespace = '';
+SET default_with_oids = false;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -61,10 +88,11 @@ ALTER SEQUENCE public.dataorg_idorg_seq OWNED BY public.dataorg.idorg;
 
 CREATE TABLE public.datauser (
     iduser integer NOT NULL,
+    name character varying(100) NOT NULL,
     username character varying(100) NOT NULL,
     password character varying(100) NOT NULL,
-    authority character varying(13) NOT NULL,
-    photo character varying(100),
+    authority character varying(100) NOT NULL,
+    photo character varying(200),
     org integer
 );
 
@@ -72,10 +100,26 @@ CREATE TABLE public.datauser (
 ALTER TABLE public.datauser OWNER TO postgres;
 
 --
--- Name: datauser_iduser_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: supply_files; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.datauser_iduser_seq
+CREATE TABLE public.supply_files (
+    id integer NOT NULL,
+    file_name character varying(255),
+    uploaded_by integer,
+    created_at date,
+    org_id integer,
+    path character varying(255)
+);
+
+
+ALTER TABLE public.supply_files OWNER TO postgres;
+
+--
+-- Name: supply_files_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.supply_files_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -84,27 +128,20 @@ CREATE SEQUENCE public.datauser_iduser_seq
     CACHE 1;
 
 
-ALTER TABLE public.datauser_iduser_seq OWNER TO postgres;
+ALTER TABLE public.supply_files_id_seq OWNER TO postgres;
 
 --
--- Name: datauser_iduser_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: supply_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.datauser_iduser_seq OWNED BY public.datauser.iduser;
-
-
---
--- Name: dataorg idorg; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.dataorg ALTER COLUMN idorg SET DEFAULT nextval('public.dataorg_idorg_seq'::regclass);
+ALTER SEQUENCE public.supply_files_id_seq OWNED BY public.supply_files.id;
 
 
 --
--- Name: datauser iduser; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: supply_files id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.datauser ALTER COLUMN iduser SET DEFAULT nextval('public.datauser_iduser_seq'::regclass);
+ALTER TABLE ONLY public.supply_files ALTER COLUMN id SET DEFAULT nextval('public.supply_files_id_seq'::regclass);
 
 
 --
@@ -121,10 +158,10 @@ COPY public.dataorg (idorg, name, type) FROM stdin;
 -- Data for Name: datauser; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.datauser (iduser, username, password, authority, photo, org) FROM stdin;
-1	bpsdm	$2y$10$Js9k4Py85tVJxfdc/IPLxOlpQ/YbyQjlHlBgoWtlOWEEJAER52YVy	administrator	NULL	\N
-2	supply	$2y$10$mlNvPePmSQPjLH7PDrOwNunbfI.6rs8WndIZhxCqSACjEucEwgcfu	supply	NULL	1
-3	demand	$2y$10$HAx40TtTUo6i/QuzZOL4AOZwFCkwjjme.SGxmeRYVbY2/OeuXSsIS	demand	NULL	2
+COPY public.datauser (iduser, name, username, password, authority, photo, org) FROM stdin;
+1	BPSDM	bpsdm	$2y$10$Js9k4Py85tVJxfdc/IPLxOlpQ/YbyQjlHlBgoWtlOWEEJAER52YVy	administrator	NULL	\N
+2	Supply	supply	$2y$10$mlNvPePmSQPjLH7PDrOwNunbfI.6rs8WndIZhxCqSACjEucEwgcfu	supply	NULL	1
+3	Demand	demand	$2y$10$HAx40TtTUo6i/QuzZOL4AOZwFCkwjjme.SGxmeRYVbY2/OeuXSsIS	demand	NULL	2
 \.
 
 
@@ -132,30 +169,22 @@ COPY public.datauser (iduser, username, password, authority, photo, org) FROM st
 -- Name: dataorg_idorg_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.dataorg_idorg_seq', 7, true);
+SELECT pg_catalog.setval('public.dataorg_idorg_seq', 1, false);
 
 
 --
--- Name: datauser_iduser_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: supply_files_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.datauser_iduser_seq', 6, true);
-
-
---
--- Name: dataorg dataorg_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.dataorg
-    ADD CONSTRAINT dataorg_pkey PRIMARY KEY (idorg);
+SELECT pg_catalog.setval('public.supply_files_id_seq', 3, true);
 
 
 --
--- Name: datauser datauser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: supply_files supply_files_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.datauser
-    ADD CONSTRAINT datauser_pkey PRIMARY KEY (iduser);
+ALTER TABLE ONLY public.supply_files
+    ADD CONSTRAINT supply_files_pkey PRIMARY KEY (id);
 
 
 --
