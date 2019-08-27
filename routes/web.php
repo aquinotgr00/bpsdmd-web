@@ -12,9 +12,6 @@
 */
 
 Route::group(['middleware' => ['authenticated']], function() {
-
-    Route::get('/', 'UtilityController@dashboard')->name('dashboard');
-
     Route::group(['prefix' => 'org', 'middleware' => ['only_admin']], function() {
         Route::any('/create', 'OrgController@create')->name('org.create');
         Route::any('/{org}/update', 'OrgController@update')->name('org.update');
@@ -41,11 +38,10 @@ Route::group(['middleware' => ['authenticated']], function() {
     Route::group(['prefix' => 'matchmaking', 'middleware' => ['only_demand']], function() {
 
     });
+
+    Route::any('/user/update-profile', 'UtilityController@updateProfile')->name('update.profile');
+    Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 });
 
 Route::get('/logout', 'AuthController@logout')->name('logout');
 Route::any('/login', 'AuthController@login')->name('login');
-
-Route::any('/user/update-profile', [
-    'uses' => 'UtilityController@updateProfile',
-])->where('user', '[0-9]+')->name('update.profile');

@@ -32,7 +32,7 @@
 
     <link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
     @yield('style')
-    
+
 </head>
 
 <body class="skin-blue">
@@ -71,6 +71,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div>
+                                <a href="{{ url(route('')) }}" class="btn btn-default btn-flat" style="margin-right: 15px;">Update profile</a>
                                 <a href="{{ url(route('logout')) }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
