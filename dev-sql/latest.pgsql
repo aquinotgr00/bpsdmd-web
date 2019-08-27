@@ -23,26 +23,6 @@ DROP TABLE public.supply_files;
 DROP TABLE public.datauser;
 DROP SEQUENCE public.dataorg_idorg_seq;
 DROP TABLE public.dataorg;
-
-SET default_tablespace = '';
-SET default_with_oids = false;
-
---
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO postgres;
-
---
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -162,6 +142,14 @@ COPY public.datauser (iduser, name, username, password, authority, photo, org) F
 1	BPSDM	bpsdm	$2y$10$Js9k4Py85tVJxfdc/IPLxOlpQ/YbyQjlHlBgoWtlOWEEJAER52YVy	administrator	NULL	\N
 2	Supply	supply	$2y$10$mlNvPePmSQPjLH7PDrOwNunbfI.6rs8WndIZhxCqSACjEucEwgcfu	supply	NULL	1
 3	Demand	demand	$2y$10$HAx40TtTUo6i/QuzZOL4AOZwFCkwjjme.SGxmeRYVbY2/OeuXSsIS	demand	NULL	2
+\.
+
+
+--
+-- Data for Name: supply_files; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.supply_files (id, file_name, uploaded_by, created_at, org_id, path) FROM stdin;
 \.
 
 
