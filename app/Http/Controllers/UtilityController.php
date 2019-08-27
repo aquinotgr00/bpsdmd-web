@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Entities\User;
 use App\Services\Application\AuthService;
 use App\Services\Domain\UserService;
+use Illuminate\Support\MessageBag;
 
 class UtilityController extends Controller
 {
@@ -18,6 +19,9 @@ class UtilityController extends Controller
     {
         $currentUser = $authService->user();
         if ($request->post()) {
+            
+            $messageBag = new MessageBag;
+
             $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
             ->setParameters([
                 'id'        => $currentUser->getId(),
@@ -25,22 +29,27 @@ class UtilityController extends Controller
             ])->getQuery()->getResult();
 
             if (!empty($checkUserName)) {
-                $request->session()->flash('username', 'Username sudah digunakan');
+                $messageBag->add('username', 'Username sudah digunakan');
                 return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
             }
 
             if (!\Hash::check($request->post('old_password'), $currentUser->getPassword())) {
-                $request->session()->flash('old_password', 'Password lama salah');
+                $messageBag->add('old_password', 'Password lama salah');
                 return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
             }
 
-            $request->validate([
-                'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
+            $validate = [
                 'name'                  => 'required',
                 'username'              => 'required',
-                'password'              => 'required||confirmed',
-                'password_confirmation' => 'required|same:password',
-            ]);
+                'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
+            ];
+
+            if (!empty($request->get('password'))) {
+                $validate['password']              = 'required||confirmed';
+                $validate['password_confirmation'] = 'required_with:password|required|same:password';
+            }
+
+            $request->validate($validate);
 
             try {
                 $requestData = $request->all();

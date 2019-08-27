@@ -8,6 +8,7 @@ use App\Services\Domain\UserService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class UserController extends Controller
 {
@@ -21,14 +22,18 @@ class UserController extends Controller
 
 	public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
 	{
+
 		if ($request->method() == 'POST') {
+
+			$messageBag = new MessageBag;
+
 			$checkUserName = $userService->createQueryBuilder('u')->where('u.username = :username')
 			->setParameters([
 				'username'  =>  $request->get('username')
 			])->getQuery()->getResult();
 
 			if (!empty($checkUserName)) {
-				$request->session()->flash('username', 'Username sudah digunakan');
+				$messageBag->add('username', 'Username sudah digunakan');
 				return redirect()->route('user.create',['type' => $type]);
 			}
 
@@ -79,6 +84,9 @@ class UserController extends Controller
 	public function update(Request $request, UserService $userService, User $user, OrgService $orgService)
 	{
 		if ($request->method() == 'POST') {
+			
+			$messageBag = new MessageBag;
+
 			$checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
 			->setParameters([
 				'id'        => $user->getId(),
@@ -86,7 +94,7 @@ class UserController extends Controller
 			])->getQuery()->getResult();
 
 			if (!empty($checkUserName)) {
-				$request->session()->flash('username', 'Username sudah digunakan');
+				$messageBag->add('username', 'Username sudah digunakan');
 				return redirect()->route('update.profile',['id' => $user->getId()]);
 			}
 
@@ -96,7 +104,7 @@ class UserController extends Controller
 				'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
 			];
 
-			if (!empty($request->get('pass'))) {
+			if (!empty($request->get('password'))) {
 				$validate['password']              = 'required||confirmed';
 				$validate['password_confirmation'] = 'required_with:password|required|same:password';
 			}

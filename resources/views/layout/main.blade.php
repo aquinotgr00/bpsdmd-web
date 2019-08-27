@@ -38,10 +38,13 @@
 <body class="skin-blue">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
+    @php
+        $loggedUser = get_user_data();
+    @endphp
     <a href="" class="logo">
         <img src="{{ asset('img/logo.png') }}">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        Nama Aplikasi
+        {{ config('app.name') }}
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -58,14 +61,14 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span>Ini adalah company short name <i class="caret"></i></span>
+                        <span>{{ $loggedUser->getOrg()->getName() }}<i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
                             <img src="{{ asset('img/bpsdmp.png') }}" class="img-circle" alt="Logo" />
                             <p>
-                                Ini adalah nama company
+                                {{ $loggedUser->getOrg()->getName() }}
                             </p>
                         </li>
                         <!-- Menu Footer-->
