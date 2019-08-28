@@ -23,6 +23,7 @@ class OrgController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
+                'short_name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
             ]);
 
@@ -47,6 +48,7 @@ class OrgController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
+                'short_name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
             ]);
 

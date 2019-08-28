@@ -34,6 +34,7 @@ SET default_with_oids = false;
 CREATE TABLE public.dataorg (
     idorg integer NOT NULL,
     name character varying(100) NOT NULL,
+    short_name character varying(100) NOT NULL,
     type character varying(6) NOT NULL
 );
 
@@ -131,8 +132,8 @@ ALTER TABLE ONLY public.supply_files ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 COPY public.dataorg (idorg, name, type) FROM stdin;
-1	Supplier	supply
-2	Demand	demand
+1	Supplier	spl	supply
+2	Demand	dm	demand
 \.
 
 

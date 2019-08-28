@@ -35,6 +35,13 @@ class Organization
     /**
      * @var string
      *
+     * @ORM\Column(name="short_name", type="string", nullable=false)
+     */
+    private $shortName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="type", type="string", nullable=false)
      */
     private $type;
@@ -113,6 +120,22 @@ class Organization
     public function setUsers($users): void
     {
         $this->users = $users;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortName(): string
+    {
+        return $this->shortName;
+    }
+
+    /**
+     * @param string $shortName
+     */
+    public function setShortName(string $shortName): void
+    {
+        $this->shortName = $shortName;
     }
 
     /**
