@@ -61,7 +61,7 @@
 						<span class="help-block" style="color:red">Kosongkan password, password lama dan konfirmasi password jika tidak ingin diganti</span>
 						<div class="form-group {{  $errors->has('old_password') ? 'has-error' : '' }}">
 							<label for="password">Password Lama:</label>
-							<input type="text" class="form-control" id="old_password" name="old_password">
+							<input type="password" class="form-control" id="old_password" name="old_password">
 							<span class="help-block ">{!! implode('', $errors->get('old_password')) !!}</span>
 						</div>
 						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
