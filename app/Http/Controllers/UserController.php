@@ -101,6 +101,7 @@ class UserController extends Controller
 			$validate = [
 				'name' 					=> 'required',
 				'username' 				=> 'required',
+				'isactive' 				=> 'required',
 				'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
 			];
 

@@ -76,6 +76,15 @@
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
+						<div class="form-group {{ $errors->has('isactive') ? 'has-error' : '' }}">
+							<label for="sel2">Status</label>
+							<select class="form-control" id="sel2" name="isactive" required="">
+								<option value="1" {{ $user->getIsActive() == 1 ? 'selected':'' }}>Aktif</option>
+								<option value="0" {{ $user->getIsActive() == 0 ? 'selected':'' }}>Tidak Aktif</option>
+							</select>
+							<span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
+
+						</div>
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Submit</button>
 						</div>

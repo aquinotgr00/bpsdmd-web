@@ -179,3 +179,6 @@ ALTER TABLE ONLY public.supply_files
 -- PostgreSQL database dump complete
 --
 
+ALTER TABLE "public"."datauser" 
+  ADD COLUMN "isactive" int2,
+  ADD COLUMN "isdelete" int2

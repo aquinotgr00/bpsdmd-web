@@ -74,6 +74,20 @@ class User implements UserInterface
     private $org;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="isactive", type="integer", nullable=false)
+     */
+    private $isActive = 1;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="isdelete", type="integer", nullable=false)
+     */
+    private $isDelete = 0;
+
+    /**
      * @return int
      */
     public function getId()
@@ -191,5 +205,37 @@ class User implements UserInterface
     public function getAvailableRoles()
     {
         return [self::ROLE_ADMIN, self::ROLE_SUPPLY, self::ROLE_DEMAND];
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param int $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsDelete()
+    {
+        return $this->isDelete;
+    }
+
+    /**
+     * @param int $isActicve
+     */
+    public function setIsDelete($isDelete)
+    {
+        $this->isDelete = $isDelete;
     }
 }

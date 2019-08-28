@@ -47,7 +47,11 @@ class UserService
     {
         $limit = 10;
         $query = $this->createQueryBuilder('u')
-        ->getQuery();
+        ->where('u.isActive = :isActive')->andWhere('u.isDelete = :isDelete')
+        ->setParameters([
+            'isActive'  => 1,
+            'isDelete'  => 0
+        ])->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
     }
@@ -98,6 +102,7 @@ class UserService
         $user->setUsername($data->get('username'));
         $user->setName($data->get('name'));
         $user->setAuthority($data->get('authority'));
+        $user->setIsActive($data->get('isactive'));
         
         if (!is_null($data->get('password'))) {
             $user->setPassword($data->get('password'));
@@ -160,7 +165,9 @@ class UserService
      */
     public function delete(User $user)
     {
-        EntityManager::remove($user);
+        $user->setIsActive(0);
+        $user->setIsDelete(1);
+        EntityManager::persist($user);
         if (EntityManager::flush()) {
             return true;
         }            
