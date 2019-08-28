@@ -29,7 +29,11 @@ class AuthService
         $username = request()->get('username');
         $password = request()->get('password');
 
-        $user = $this->userService->getRepository()->findOneBy(['username' => $username]);
+        $user = $this->userService->getRepository()->findOneBy([
+            'username' => $username, 
+            'isActive' => 1, 
+            'isDelete' => 0, 
+        ]);
 
         if ($user instanceof UserInterface) {
             if (Hash::check($password, $user->getPassword())) {
