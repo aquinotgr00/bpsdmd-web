@@ -15,19 +15,30 @@
                     @csrf
 
                     <div class="box-body">
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label for="name" class="col-sm-2 control-label">Name</label>
                             <div class="col-sm-10">
                                 <input id="name" type="text" name="name" class="form-control" placeholder="Nama Instansi" value="{{ $data->getName() }}">
+                                <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group {{ $errors->has('short_name') ? 'has-error' : '' }}">
+                            <label for="short_name" class="col-sm-2 control-label">Short Name</label>
+                            <div class="col-sm-10">
+                                <input id="short_name" name="short_name" type="text" class="form-control" placeholder="Nama Pendek" value="{{ $data->getShortName() }}">
+                                <span class="help-block">{!! implode('', $errors->get('short_name')) !!}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label for="type" class="col-sm-2 control-label">Type</label>
                             <div class="col-sm-10">
                                 <select id="type" name="type" class="form-control">
                                     <option value="{{ \App\Entities\Organization::TYPE_SUPPLY }}" {{ $data->getType() == \App\Entities\Organization::TYPE_SUPPLY ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_SUPPLY) }}</option>
                                     <option value="{{ \App\Entities\Organization::TYPE_DEMAND }}" {{ $data->getType() == \App\Entities\Organization::TYPE_DEMAND ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_DEMAND) }}</option>
                                 </select>
+                                <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
                             </div>
                         </div>
                     </div><!-- /.box-body -->

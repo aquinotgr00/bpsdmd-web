@@ -18,8 +18,16 @@
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label for="name" class="col-sm-2 control-label">Name</label>
                             <div class="col-sm-10">
-                                <input id="name" name="name" type="text" class="form-control" placeholder="Nama Instansi">
+                                <input id="name" name="name" type="text" class="form-control" placeholder="Nama Instansi" value="{{ old('name') }}">
                                 <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('short_name') ? 'has-error' : '' }}">
+                            <label for="short_name" class="col-sm-2 control-label">Short Name</label>
+                            <div class="col-sm-10">
+                                <input id="short_name" name="short_name" type="text" class="form-control" placeholder="Nama Pendek" value="{{ old('short_name') }}">
+                                <span class="help-block">{!! implode('', $errors->get('short_name')) !!}</span>
                             </div>
                         </div>
 
