@@ -4,23 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entities\SupplyFiles;
-use EntityManager;
 use App\Services\Application\AuthService;
-use App\Services\Domain\OrgService;
-
+use App\Services\Domain\FeederService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Expression;
 class FeederController extends Controller
 {
-    public function upload(Request $request, AuthService $authService, OrgService $orgService)
+    public function upload(Request $request, AuthService $authService, FeederService $feederService, $year = null)
     {
+        $files = [];
+
+        for ($i=1; $i <= 12; $i++) { 
+        $files[] = DB::table('supply_files AS sf')
+        ->select('*')
+        ->having(new Expression("to_char( sf.created_at, 'MM')"), sprintf('%02s', $i))
+        ->groupBy('sf.id')->first();
+        }
+        
         if ($request->has('file')) {
             $request->validate([
                 'file' => 'required|mimes:xls,xlsx|max:1240',
             ]);
 
-            $user   = $authService->user();
-            $org    = $orgService->getRepository()->findOneBy(['id' => $user->getOrg()->getId()]);
+            $user = $authService->user();
 
-            $uploadPath = $org->getName();
+            $uploadPath = $user->getOrg()->getName();
             $uploadPath = SupplyFiles::UPLOAD_PATH.$uploadPath;
 
             $file = $request->file('file');
@@ -36,15 +44,19 @@ class FeederController extends Controller
             }
 
             if ($file->move($uploadPath, $uploadedFileName)) {
-                $supplyFiles = new SupplyFiles();
-                $supplyFiles->setFileName($uploadedFileName);
-                $supplyFiles->setUploadedBy($user);
-                $supplyFiles->setCreatedAt($request->post('created_at').date('d'));
-                $supplyFiles->setPath( $uploadPath);
-                $supplyFiles->setOrg($user->getOrg());
+                $requestData = $request->all();
+                $requestData['fileName']    = $uploadedFileName;
+                $requestData['user']        = $user;
+                $requestData['created_at']  = $user;
+                $requestData['org']         = $user->getOrg();
 
-                EntityManager::persist($supplyFiles);
-                EntityManager::flush();
+                // $supplyFiles = new SupplyFiles();
+                // $supplyFiles->setFileName($uploadedFileName);
+                // $supplyFiles->setUploadedBy($user);
+                // $supplyFiles->setCreatedAt($request->post('created_at').date('d'));
+                // $supplyFiles->setPath( $uploadPath);
+                // $supplyFiles->setOrg($user->getOrg());
+
 
                 $request->session()->flash('success', 'File Berhasil Disimpan');
             } else {
@@ -52,6 +64,6 @@ class FeederController extends Controller
             }
         }
 
-        return view('upload');
+        return view('upload',['files'=>$files]);
     }
 }

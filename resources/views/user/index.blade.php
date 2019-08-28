@@ -38,7 +38,8 @@
                                 <th>Name</th>
                                 <th>Username</th>
                                 <th>Hak Akses</th>
-                                <th>Action</th>
+                                <th style="text-align: center;">Status</th>
+                                <th style="text-align: center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,8 +52,15 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ $item->getUserName() }}</td>
-                                    <td>{{ $item->getAuthority() }}</td>
-                                    <td>
+                                    <td>{{ ucfirst($item->getAuthority()) }}</td>
+                                    <td style="text-align: center;">
+                                        @if($item->getIsactive())
+                                        <span class="label label-success">Aktif</span>
+                                        @else
+                                        <span class="label label-danger">Tidak Aktif</span>
+                                        @endif
+                                    </td>
+                                    <td style="text-align: center;">
                                         <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> |
                                         <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> Hapus</a>
                                     </td>
