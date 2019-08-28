@@ -50,11 +50,12 @@
 		<!-- Left side -->
 		<div class="signin-info">
 			<a href="#" class="logo">
-				Applivation name
+				{{ config('app.name') }}
 			</a> <!-- / .logo -->
-			<div class="slogan">
+			{{-- <div class="slogan">
 				Company name
-			</div> <!-- / .slogan -->
+			</div> --}} 
+			<!-- / .slogan -->
 			<ul>
 				<li><i class="fa fa-dashboard signin-icon"></i> Dashboard</li>
 				<li><i class="fa fa-bar-chart-o signin-icon"></i> Grafik</li>
@@ -67,7 +68,7 @@
 		<!-- Right side -->
 		<div class="signin-form">
 			<div style="text-align: center;">
-				<img src="assets/img/bpsdmp.png" alt="" style="margin-top: -5px;">
+				<img src="{{ asset('img/bpsdmp.png') }}" alt="" style="margin-top: -5px;">
 			</div>
 
 			<!-- Form -->

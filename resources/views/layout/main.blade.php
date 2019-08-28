@@ -61,14 +61,25 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span>{{ $loggedUser->getOrg()->getName() }}<i class="caret"></i></span>
+                        <span>
+                            @if(!empty($loggedUser->getOrg()))
+                                {{ $loggedUser->getOrg()->getName() }}
+                            @else
+                                {{ $loggedUser->getName() }}
+                            @endif
+                            <i class="caret"></i>
+                        </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
                             <img src="{{ asset('img/bpsdmp.png') }}" class="img-circle" alt="Logo" />
                             <p>
-                                {{ $loggedUser->getOrg()->getName() }}
+                                @if(!empty($loggedUser->getOrg()))
+                                    {{ $loggedUser->getOrg()->getName() }}
+                                @else
+                                    {{ $loggedUser->getName() }}
+                                @endif
                             </p>
                         </li>
                         <!-- Menu Footer-->
