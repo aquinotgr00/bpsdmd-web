@@ -163,7 +163,7 @@ class SupplyFiles
     }
 
     /**
-     * @param int $path
+     * @param string $path
      */
     public function setPath(string $path): void
     {

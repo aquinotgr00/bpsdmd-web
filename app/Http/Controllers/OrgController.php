@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Organization;
 use App\Services\Domain\OrgService;
+use Exception;
 use Illuminate\Http\Request;
 use App\Exceptions\OrgDeleteException;
 
@@ -22,14 +23,14 @@ class OrgController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
-                'type' => 'required|in:'.Organization::TYPE_SUPPLY.','.Organization::TYPE_DEMAND
+                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
             ]);
 
             try {
                 $orgService->create(collect($request->input()));
                 $alert = 'alert_success';
                 $message = 'Instansi berhasil ditambahkan.';
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
                 $message = 'Tidak dapat menambah instansi. Silakan kontak web administrator!';
@@ -46,14 +47,14 @@ class OrgController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
-                'type' => 'required|in:'.Organization::TYPE_SUPPLY.','.Organization::TYPE_DEMAND
+                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
             ]);
 
             try {
                 $orgService->update($data, collect($request->input()));
                 $alert = 'alert_success';
                 $message = 'Instansi berhasil diubah.';
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $alert = 'alert_error';
                 $message = 'Tidak dapat mengubah instansi. Silakan kontak web administrator!';
             }
@@ -74,7 +75,7 @@ class OrgController extends Controller
             report($e);
             $alert = 'alert_error';
             $message = 'Tidak dapat menghapus instansi karena masih terdapat user instansi!';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
             $message = 'Tidak dapat menghapus instansi. Silakan kontak web administrator!';

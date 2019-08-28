@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Application\AuthService;
+use Exception;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -19,7 +20,7 @@ class AuthController extends Controller
                 $authService->authenticate();
 
                 return redirect(route('dashboard'));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 report($e);
                 $request->session()->flash('alert', 'Username atau password salah.');
             }

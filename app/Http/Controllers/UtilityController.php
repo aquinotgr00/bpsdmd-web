@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Hash;
 use Illuminate\Http\Request;
 use App\Entities\User;
 use App\Services\Application\AuthService;
@@ -19,33 +21,33 @@ class UtilityController extends Controller
     {
         $currentUser = $authService->user();
         if ($request->post()) {
-            
+
             $messageBag = new MessageBag;
 
             $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
-            ->setParameters([
-                'id'        => $currentUser->getId(),
-                'username'  =>  $request->get('username')
-            ])->getQuery()->getResult();
+                ->setParameters([
+                    'id' => $currentUser->getId(),
+                    'username' => $request->get('username')
+                ])->getQuery()->getResult();
 
             if (!empty($checkUserName)) {
                 $messageBag->add('username', 'Username sudah digunakan');
-                return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
+                return redirect()->route('update.profile', ['id' => $currentUser->getId()]);
             }
 
-            if (!\Hash::check($request->post('old_password'), $currentUser->getPassword())) {
+            if (!Hash::check($request->post('old_password'), $currentUser->getPassword())) {
                 $messageBag->add('old_password', 'Password lama salah');
-                return redirect()->route('update.profile',['id'=>$currentUser->getId()]);
+                return redirect()->route('update.profile', ['id' => $currentUser->getId()]);
             }
 
             $validate = [
-                'name'                  => 'required',
-                'username'              => 'required',
-                'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'name' => 'required',
+                'username' => 'required',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
             ];
 
             if (!empty($request->get('password'))) {
-                $validate['password']              = 'required||confirmed';
+                $validate['password'] = 'required||confirmed';
                 $validate['password_confirmation'] = 'required_with:password|required|same:password';
             }
 
@@ -57,13 +59,13 @@ class UtilityController extends Controller
                     $photo = $request->file('photo');
                     $photoName = $photo->hashName();
                     if ($photo->move(User::UPLOAD_PATH, $photoName)) {
-                        $requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
+                        $requestData['uploaded_img'] = User::UPLOAD_PATH . '/' . $photoName;
                     }
                 }
 
                 $request->session()->flash('success', 'Profil Berhasil Disimpan');
                 $userService->updateProfile($user, collect($requestData));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $request->session()->flash('error', 'Profil Gagal Disimpan');
             }
         }

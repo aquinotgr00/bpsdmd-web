@@ -12,150 +12,150 @@ use Illuminate\Support\MessageBag;
 
 class UserController extends Controller
 {
-	public function index(UserService $userService)
-	{
-		$page = request()->get('page');
-		$data = $userService->paginateUser(request()->get('page'));
+    public function index(UserService $userService)
+    {
+        $page = request()->get('page');
+        $data = $userService->paginateUser(request()->get('page'));
 
-		return view('user.index', compact('data', 'page'));
-	}
+        return view('user.index', compact('data', 'page'));
+    }
 
-	public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
-	{
+    public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
+    {
 
-		if ($request->method() == 'POST') {
+        if ($request->method() == 'POST') {
 
-			$messageBag = new MessageBag;
+            $messageBag = new MessageBag;
 
-			$checkUserName = $userService->createQueryBuilder('u')->where('u.username = :username')
-			->setParameters([
-				'username'  =>  $request->get('username')
-			])->getQuery()->getResult();
+            $checkUserName = $userService->createQueryBuilder('u')->where('u.username = :username')
+                ->setParameters([
+                    'username' => $request->get('username')
+                ])->getQuery()->getResult();
 
-			if (!empty($checkUserName)) {
-				$messageBag->add('username', 'Username sudah digunakan');
-				return redirect()->route('user.create',['type' => $type]);
-			}
+            if (!empty($checkUserName)) {
+                $messageBag->add('username', 'Username sudah digunakan');
+                return redirect()->route('user.create', ['type' => $type]);
+            }
 
-			$request->validate([
-				'name' 					=> 'required',
-				'username' 				=> 'required',
-				'password'              => 'required||confirmed',
-				'password_confirmation' => 'required|same:password',
-				'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
-			]);
+            $request->validate([
+                'name' => 'required',
+                'username' => 'required',
+                'password' => 'required||confirmed',
+                'password_confirmation' => 'required|same:password',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+            ]);
 
-			try {
-				$requestData = $request->all();
-				if ($request->hasFile('photo')) {
-					$photo = $request->file('photo');
-					$photoName = $photo->hashName();
-					if ($photo->move(User::UPLOAD_PATH, $photoName)) {
-						$requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
-					}
-				}
+            try {
+                $requestData = $request->all();
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+                        $requestData['uploaded_img'] = User::UPLOAD_PATH . '/' . $photoName;
+                    }
+                }
 
-				$requestData['authority'] = $type;
-				$org 		= $type <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
-				$userService->create(collect($requestData), $org);
+                $requestData['authority'] = $type;
+                $org = $type <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
+                $userService->create(collect($requestData), $org);
 
-				$alert 		= 'alert_success';
-				$message 	= 'User '.$type.' berhasil ditambahkan.';
-			} catch (Exception $e) {
-				report($e);
-				$alert = 'alert_error';
-				$message = 'Tidak dapat menambah user '.$type.'. Silakan kontak web administrator!';
-			}
+                $alert = 'alert_success';
+                $message = 'User ' . $type . ' berhasil ditambahkan.';
+            } catch (Exception $e) {
+                report($e);
+                $alert = 'alert_error';
+                $message = 'Tidak dapat menambah user ' . $type . '. Silakan kontak web administrator!';
+            }
 
-			return redirect()->route('user.index')->with($alert, $message);
-		}
+            return redirect()->route('user.index')->with($alert, $message);
+        }
 
-		$dataOrg = array();
+        $dataOrg = array();
 
-		if ($type == User::ROLE_SUPPLY) {
-			$dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
-		} elseif ($type == User::ROLE_SUPPLY) {
-			$dataOrg = $orgService->getRepository()->findBy(['type' =>Organization::TYPE_DEMAND]);
-		}
+        if ($type == User::ROLE_SUPPLY) {
+            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+        } elseif ($type == User::ROLE_SUPPLY) {
+            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+        }
 
-		return view('user.create',['type' => $type, 'dataOrg' => $dataOrg]);
-	}
+        return view('user.create', ['type' => $type, 'dataOrg' => $dataOrg]);
+    }
 
-	public function update(Request $request, UserService $userService, User $user, OrgService $orgService)
-	{
-		if ($request->method() == 'POST') {
-			
-			$messageBag = new MessageBag;
+    public function update(Request $request, UserService $userService, User $user, OrgService $orgService)
+    {
+        if ($request->method() == 'POST') {
 
-			$checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
-			->setParameters([
-				'id'        => $user->getId(),
-				'username'  => $request->get('username')
-			])->getQuery()->getResult();
+            $messageBag = new MessageBag;
 
-			if (!empty($checkUserName)) {
-				$messageBag->add('username', 'Username sudah digunakan');
-				return redirect()->route('update.profile',['id' => $user->getId()]);
-			}
+            $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
+                ->setParameters([
+                    'id' => $user->getId(),
+                    'username' => $request->get('username')
+                ])->getQuery()->getResult();
 
-			$validate = [
-				'name' 					=> 'required',
-				'username' 				=> 'required',
-				'isactive' 				=> 'required',
-				'photo'                 => 'mimes:jpeg,jpg,png,bmp|max:540',
-			];
+            if (!empty($checkUserName)) {
+                $messageBag->add('username', 'Username sudah digunakan');
+                return redirect()->route('update.profile', ['id' => $user->getId()]);
+            }
 
-			if (!empty($request->get('password'))) {
-				$validate['password']              = 'required||confirmed';
-				$validate['password_confirmation'] = 'required_with:password|required|same:password';
-			}
+            $validate = [
+                'name' => 'required',
+                'username' => 'required',
+                'isactive' => 'required',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+            ];
 
-			$request->validate($validate);
+            if (!empty($request->get('password'))) {
+                $validate['password'] = 'required||confirmed';
+                $validate['password_confirmation'] = 'required_with:password|required|same:password';
+            }
 
-			try {
-				$requestData = $request->all();
-				if ($request->hasFile('photo')) {
-					$photo = $request->file('photo');
-					$photoName = $photo->hashName();
+            $request->validate($validate);
 
-					if ($photo->move(User::UPLOAD_PATH, $photoName)) {
-						$requestData['uploaded_img'] = User::UPLOAD_PATH .'/'. $photoName;
-					}
-				}
+            try {
+                $requestData = $request->all();
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
 
-				$requestData['authority'] = $user->getAuthority();
-				$org = $user->getAuthority() <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
-				$userService->update($user, collect($requestData), $org);
-				$alert = 'alert_success';
-				$message 	= 'User '.$user->getName().' berhasil diubah.';
-			} catch (Exception $e) {
-				$alert = 'alert_error';
-				$message = 'Tidak dapat mengubah user '.$user->getName().'. Silakan kontak web administrator!';
-			}
+                    if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+                        $requestData['uploaded_img'] = User::UPLOAD_PATH . '/' . $photoName;
+                    }
+                }
 
-			return redirect()->route('user.index')->with($alert, $message);
-		}
+                $requestData['authority'] = $user->getAuthority();
+                $org = $user->getAuthority() <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
+                $userService->update($user, collect($requestData), $org);
+                $alert = 'alert_success';
+                $message = 'User ' . $user->getName() . ' berhasil diubah.';
+            } catch (Exception $e) {
+                $alert = 'alert_error';
+                $message = 'Tidak dapat mengubah user ' . $user->getName() . '. Silakan kontak web administrator!';
+            }
 
-		$dataOrg = array();
-		if ($user->getAuthority() <> User::ROLE_ADMIN) {
-			$dataOrg = $orgService->getRepository()->findBy(['type' => $user->getOrg()->getType()]);
-		}
+            return redirect()->route('user.index')->with($alert, $message);
+        }
 
-		return view('user.update', compact('user','dataOrg'));
-	}
+        $dataOrg = array();
+        if ($user->getAuthority() <> User::ROLE_ADMIN) {
+            $dataOrg = $orgService->getRepository()->findBy(['type' => $user->getOrg()->getType()]);
+        }
 
-	public function delete(userService $userService, user $user)
-	{
-		try {
-			$userService->delete($user);
-			$alert = 'alert_success';
-			$message = 'User berhasil dihapus.';
-		} catch (Exception $e) {
-			report($e);
-			$alert = 'alert_error';
-			$message = 'Tidak dapat menghapus user. Silakan kontak web administrator!';
-		}
+        return view('user.update', compact('user', 'dataOrg'));
+    }
 
-		return redirect()->route('user.index')->with($alert, $message);
-	}
+    public function delete(userService $userService, user $user)
+    {
+        try {
+            $userService->delete($user);
+            $alert = 'alert_success';
+            $message = 'User berhasil dihapus.';
+        } catch (Exception $e) {
+            report($e);
+            $alert = 'alert_error';
+            $message = 'Tidak dapat menghapus user. Silakan kontak web administrator!';
+        }
+
+        return redirect()->route('user.index')->with($alert, $message);
+    }
 }
