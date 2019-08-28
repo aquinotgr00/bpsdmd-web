@@ -4,6 +4,10 @@
 @endsection
 
 @section('content')
+@php
+$loggedUser = get_user_data();
+$year = date('Y');
+@endphp
 <section class="content-header">
 	<h1>Upload File</h1>
 </section>
@@ -38,6 +42,7 @@
 							<div class="input-group-prepend">
 								<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
 								<span class="help-block">Ketentuan nama file : ddmmyyyy_nama_file.xls</span>
+								<span class="help-block">Ketentuan maksimal Ukuran file : 1Mb</span>
 
 							</div>
 							<div class="custom-file">
@@ -51,60 +56,69 @@
 							<button class="btn btn-primary pull-right">Simpan</button>
 						</div>
 					</form>
-					<div class="page-header">
-						<h2>Sekolah Tinggi Transportasi Darat (STTD) Bekasi.</h2>
-						<div class="col-md-4 pull-right">
-							<div class="col-xs-6 col-sm-6 pilih-ta">
-								<h5>Pilih tahun ajaran:</h5>
+					<form method="post" enctype="multipart/form-data">
+
+						<div class="page-header">
+							<h2>{{$loggedUser->getOrg()->getName()}}.</h2>
+							<div class="col-md-4 pull-right">
+								<div class="col-xs-6 col-sm-6 pilih-ta">
+									<h5>Pilih tahun ajaran:</h5>
+								</div>
+								<div class="col-xs-6 col-sm-6">
+									<select class="form-control" name="year">
+										@for($i=0; $i <= 5; $i++)
+										<option value="{{ ($year-$i) }}" {{ ($year-$i) == Request::segment(3) ? 'selected' : '' }}>{{ ($year-$i) }}</option>
+										@endfor
+									</select>
+								</div>
 							</div>
-							<div class="col-xs-6 col-sm-6">
-								<select class="form-control">
-									<option>2019</option>
-									<option>2018</option>
-									<option>2017</option>
-								</select>
-							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="clearfix"></div>
-					</div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Judul Upload</th>
-								<th>Nama File</th>
-								<th>Aksi</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Suplai data bulan Januari</td>
-								<td>16012019_STTD_Bekasi.xlsx</td>
-								<td>
-									<label class="btn btn-primary" for="my-file-selector">
-										<input id="my-file-selector" type="file" style="display:none" 
-										onchange="$(this).parents('label').next('.file-name').html(this.files[0].name)">
-										Button Text Here
-									</label>
-									<span class='file-name' ></span>
-								</td>
-								{{-- <td><button type="button" class="btn btn-success btn-sm">Update file</button></td> --}}
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Suplai data bulan Februari</td>
-								<td>16022019_STTD_Bekasi.xlsx</td>
-								<td><button type="button" class="btn btn-success btn-sm">Update file</button></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Suplai data bulan Februari</td>
-								<td><span class="text-red">- File belum tersedia -</span></td>
-								<td><input type="file" class="" /></td>
-							</tr>
-						</tbody>
-					</table>
+						<span class="help-block">Ketentuan nama file : ddmmyyyy_nama_file.xls</span>
+						<span class="help-block">Ketentuan maksimal ukuran file : 1MB</span>
+						<table class="table">
+							<thead>
+								<tr>
+									<th width="10%">#</th>
+									<th width="20%">Judul Upload</th>
+									<th style="text-align: center;width: 30%">Nama File</th>
+									<th style="text-align: center;width: 40%">Aksi</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if(!empty($files))
+									@foreach($files as $key => $file)
+									<tr>
+										<td>{{ $key+1 }}</td>
+										<td>Suplai data bulan {{ date('F',mktime(0, 0, 0, ($key+1), 10)) }}</td>
+										<td style="text-align: center;width: 30%">
+											{!! !empty($file->file_name) ? $file->file_name :'<span class="text-red">- File belum tersedia -</span>' !!}
+										</td>
+										<td style="text-align: center;width: 40%">
+											@if(!empty($file))
+											<label class="btn btn-primary" for="my-file-selector{{ $key+1 }}">
+												<input id="my-file-selector{{ $key+1 }}" type="file" style="display:none" name="files[]" 
+												onchange="$(this).parents('label').next('.file-name').html(this.files[0].name)" accept=".xls,.xlsx">
+												Update File
+											</label>
+											<span class='file-name' ></span>
+											@else
+											<label class="btn btn-success" for="my-file-selector{{ $key+1 }}">
+												<input id="my-file-selector{{ $key+1 }}" type="file" style="display:none" name="files[]"
+												onchange="$(this).parents('label').next('.file-name').html(this.files[0].name)" accept=".xls,.xlsx">
+												Upload File
+											</label>
+											<span class='file-name' ></span>
+											@endif
+										</td>
+										{{-- <td><button type="button" class="btn btn-success btn-sm">Update file</button></td> --}}
+									</tr>
+									@endforeach
+								@endif
+								
+							</tbody>
+						</table>
+					</form>
 					<div class="box-body"></div>
 				</div>
 			</div>
@@ -116,16 +130,11 @@
 	@section('script')
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" name>
 		$(function() {
-			$('.datepicker').datepicker( {
-				changeMonth: true,
-				changeYear: true,
-				showButtonPanel: true,
-				dateFormat: 'yy-mm',
-				onClose: function(dateText, inst) { 
-					$(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-				}
+			$(document).on('change', 'select[name=year]', function(event) {
+				event.preventDefault();
+				window.location.replace("/feeder/upload/"+$(this).val())
 			});
 		});
 	</script>

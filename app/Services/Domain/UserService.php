@@ -47,9 +47,9 @@ class UserService
     {
         $limit = 10;
         $query = $this->createQueryBuilder('u')
-        ->where('u.isActive = :isActive')->andWhere('u.isDelete = :isDelete')
+        ->where('u.isActive IN (:isActive)')->andWhere('u.isDelete = :isDelete')
         ->setParameters([
-            'isActive'  => 1,
+            'isActive'  => [1,0],
             'isDelete'  => 0
         ])->getQuery();
 
