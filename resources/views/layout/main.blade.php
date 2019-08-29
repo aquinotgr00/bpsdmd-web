@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>@yield('title')</title>
+	<title>@yield('title', "Student Dashboard
+        -
+        BADAN PENGEMBANGAN SDM PERHUBUNGAN")</title>
 
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<!-- bootstrap 3.0.2 -->
@@ -38,10 +40,13 @@
 <body class="skin-blue">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
+    @php
+        $loggedUser = get_user_data();
+    @endphp
     <a href="" class="logo">
         <img src="{{ asset('img/logo.png') }}">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        Nama Aplikasi
+        {{ config('app.name') }}
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -58,14 +63,25 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span>Ini adalah company short name <i class="caret"></i></span>
+                        <span>
+                            @if(!empty($loggedUser->getOrg()))
+                                {{ $loggedUser->getOrg()->getName() }}
+                            @else
+                                {{ $loggedUser->getName() }}
+                            @endif
+                            <i class="caret"></i>
+                        </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
                             <img src="{{ asset('img/bpsdmp.png') }}" class="img-circle" alt="Logo" />
                             <p>
-                                Ini adalah nama company
+                                @if(!empty($loggedUser->getOrg()))
+                                    {{ $loggedUser->getOrg()->getName() }}
+                                @else
+                                    {{ $loggedUser->getName() }}
+                                @endif
                             </p>
                         </li>
                         <!-- Menu Footer-->

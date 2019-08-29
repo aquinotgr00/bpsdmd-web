@@ -24,7 +24,7 @@
 
     @if(check_authorization(\App\Entities\User::ROLE_SUPPLY))
     <li>
-        <a href="{{ route('feeder.upload') }}">
+        <a href="{{ route('feeder.upload',['year'=>date('Y')]) }}">
             <i class="fa fa-file"></i>
             <span>Feeder</span>
         </a>

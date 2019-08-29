@@ -34,6 +34,7 @@ SET default_with_oids = false;
 CREATE TABLE public.dataorg (
     idorg integer NOT NULL,
     name character varying(100) NOT NULL,
+    short_name character varying(100) NOT NULL,
     type character varying(6) NOT NULL
 );
 
@@ -73,7 +74,9 @@ CREATE TABLE public.datauser (
     password character varying(100) NOT NULL,
     authority character varying(100) NOT NULL,
     photo character varying(200),
-    org integer
+    org integer,
+    isactive int2 NOT NULL,
+    isdelete int2 NOT NULL
 );
 
 
@@ -129,8 +132,8 @@ ALTER TABLE ONLY public.supply_files ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 COPY public.dataorg (idorg, name, type) FROM stdin;
-1	Supplier	supply
-2	Demand	demand
+1	Supplier	spl	supply
+2	Demand	dm	demand
 \.
 
 
@@ -138,10 +141,10 @@ COPY public.dataorg (idorg, name, type) FROM stdin;
 -- Data for Name: datauser; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.datauser (iduser, name, username, password, authority, photo, org) FROM stdin;
-1	BPSDM	bpsdm	$2y$10$Js9k4Py85tVJxfdc/IPLxOlpQ/YbyQjlHlBgoWtlOWEEJAER52YVy	administrator	NULL	\N
-2	Supply	supply	$2y$10$mlNvPePmSQPjLH7PDrOwNunbfI.6rs8WndIZhxCqSACjEucEwgcfu	supply	NULL	1
-3	Demand	demand	$2y$10$HAx40TtTUo6i/QuzZOL4AOZwFCkwjjme.SGxmeRYVbY2/OeuXSsIS	demand	NULL	2
+COPY public.datauser (iduser, name, username, password, authority, photo, org, isactive, isdelete) FROM stdin;
+1	BPSDM	bpsdm	$2y$10$Js9k4Py85tVJxfdc/IPLxOlpQ/YbyQjlHlBgoWtlOWEEJAER52YVy	administrator	NULL	\N	1	0
+2	Supply	supply	$2y$10$mlNvPePmSQPjLH7PDrOwNunbfI.6rs8WndIZhxCqSACjEucEwgcfu	supply	NULL	1	1	0
+3	Demand	demand	$2y$10$HAx40TtTUo6i/QuzZOL4AOZwFCkwjjme.SGxmeRYVbY2/OeuXSsIS	demand	NULL	2	1	0
 \.
 
 
@@ -178,4 +181,3 @@ ALTER TABLE ONLY public.supply_files
 --
 -- PostgreSQL database dump complete
 --
-

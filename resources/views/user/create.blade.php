@@ -20,10 +20,10 @@
 							<input type="text" class="form-control" id="username" name="name" required="">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
-						<div class="form-group {{ Session::has('username') ? 'has-error' : '' }}">
+						<div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
 							<label for="username">Username :</label>
 							<input type="text" class="form-control" id="username" name="username" required="">
-							<span class="help-block ">{!! Session::get('username') !!}</span>
+							<span class="help-block ">{!! implode('', $errors->get('username')) !!}</span>
 						</div>
 						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 							<label for="password">Password :</label>
@@ -35,6 +35,7 @@
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required="">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
+
 						@if( $type <> \App\Entities\User::ROLE_ADMIN)
 						<div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
 							<label for="sel1">Instansi</label>
@@ -47,10 +48,8 @@
 								@endforeach
 
 								@endif
-
 							</select>
 							<span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
-
 						</div>
 						@endif
 

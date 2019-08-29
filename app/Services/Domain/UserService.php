@@ -23,8 +23,8 @@ class UserService
     public function createQueryBuilder($alias, $indexBy = null)
     {
         return EntityManager::createQueryBuilder()
-        ->select($alias)
-        ->from(User::class, $alias, $indexBy);
+            ->select($alias)
+            ->from(User::class, $alias, $indexBy);
     }
 
     /**
@@ -47,10 +47,15 @@ class UserService
     {
         $limit = 10;
         $query = $this->createQueryBuilder('u')
-        ->getQuery();
+            ->where('u.isActive IN (:isActive)')->andWhere('u.isDelete = :isDelete')
+            ->setParameters([
+                'isActive' => [1, 0],
+                'isDelete' => 0
+            ])->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
     }
+
     /**
      * Create new user
      *
@@ -68,7 +73,7 @@ class UserService
         $user->setName($data->get('name'));
 
         if (!empty($data->get('uploaded_img'))) {
-            $user->setPhoto($data->get('uploaded_img'));            
+            $user->setPhoto($data->get('uploaded_img'));
         }
         if ($org instanceof Organization) {
             $user->setOrg($org);
@@ -92,13 +97,13 @@ class UserService
      * @param bool $flush
      * @return User
      */
-
     public function update(User $user, Collection $data, $org = false, $flush = true)
     {
         $user->setUsername($data->get('username'));
         $user->setName($data->get('name'));
         $user->setAuthority($data->get('authority'));
-        
+        $user->setIsActive($data->get('isactive'));
+
         if (!is_null($data->get('password'))) {
             $user->setPassword($data->get('password'));
 
@@ -108,7 +113,7 @@ class UserService
         }
 
         if (!empty($data->get('uploaded_img'))) {
-            $user->setPhoto($data->get('uploaded_img'));            
+            $user->setPhoto($data->get('uploaded_img'));
         }
 
         EntityManager::persist($user);
@@ -128,7 +133,6 @@ class UserService
      * @param bool $flush
      * @return User
      */
-
     public function updateProfile(User $user, Collection $data, $org = false, $flush = true)
     {
         $user->setUsername($data->get('username'));
@@ -140,9 +144,8 @@ class UserService
         }
 
         if (!empty($data->get('uploaded_img'))) {
-            $user->setPhoto($data->get('uploaded_img'));            
+            $user->setPhoto($data->get('uploaded_img'));
         }
-
 
         EntityManager::persist($user);
 
@@ -160,10 +163,9 @@ class UserService
      */
     public function delete(User $user)
     {
-        EntityManager::remove($user);
-        if (EntityManager::flush()) {
-            return true;
-        }            
-        return false;
+        $user->setIsActive(0);
+        $user->setIsDelete(1);
+        EntityManager::persist($user);
+        EntityManager::flush();
     }
 }

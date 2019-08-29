@@ -28,11 +28,7 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::group(['prefix' => 'feeder', 'middleware' => ['only_supply']], function() {
-        Route::any('/upload', 'FeederController@upload')->name('feeder.upload');
-    });
-
-    Route::group(['prefix' => 'validate', 'middleware' => ['only_supply']], function() {
-
+        Route::any('/upload/{year}', 'FeederController@upload')->name('feeder.upload');
     });
 
     Route::group(['prefix' => 'matchmaking', 'middleware' => ['only_demand']], function() {
@@ -40,6 +36,14 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::any('/user/update-profile', 'UtilityController@updateProfile')->name('update.profile');
+
+    Route::group(['prefix' => 'data'], function() {
+        Route::get('/school', 'UtilityController@dataSchool')->name('data.school');
+        Route::get('/lecturer', 'UtilityController@dataLecturer')->name('data.lecturer');
+        Route::get('/cadet', 'UtilityController@dataCadet')->name('data.cadet');
+        Route::get('/course', 'UtilityController@dataCourse')->name('data.course');
+    });
+
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 });
 
