@@ -131,7 +131,7 @@ ALTER TABLE ONLY public.supply_files ALTER COLUMN id SET DEFAULT nextval('public
 -- Data for Name: dataorg; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.dataorg (idorg, name, type) FROM stdin;
+COPY public.dataorg (idorg, name, short_name, type) FROM stdin;
 1	Supplier	spl	supply
 2	Demand	dm	demand
 \.
