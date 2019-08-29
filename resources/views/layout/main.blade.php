@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>@yield('title')</title>
+	<title>@yield('title', "Student Dashboard
+        -
+        BADAN PENGEMBANGAN SDM PERHUBUNGAN")</title>
 
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<!-- bootstrap 3.0.2 -->
