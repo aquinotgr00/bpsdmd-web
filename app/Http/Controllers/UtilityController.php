@@ -14,7 +14,27 @@ class UtilityController extends Controller
 {
     public function dashboard()
     {
-        return view('dashboard');
+        return view('dashboard.index');
+    }
+
+    public function dataSchool()
+    {
+        return view('dashboard.school');
+    }
+
+    public function dataLecturer()
+    {
+        return view('dashboard.lecturer');
+    }
+
+    public function dataCadet()
+    {
+        return view('dashboard.cadet');
+    }
+
+    public function dataCourse()
+    {
+        return view('dashboard.course');
     }
 
     public function updateProfile(Request $request, User $user, UserService $userService, AuthService $authService)
