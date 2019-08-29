@@ -13,19 +13,18 @@ class FeederController extends Controller
 {
     public function upload(Request $request, AuthService $authService, FeederService $feederService, $year = null)
     {
-
         if ($request->post()) {
             $request->validate([
                 'months' => 'required',
                 'files' => 'required',
                 'files.*' => 'mimes:xls,xlsx|max:1048'
             ]);
-            $user = $authService->user();
 
+            $user = $authService->user();
             $uploadPath = $user->getOrg()->getName();
             $uploadPath = SupplyFiles::UPLOAD_PATH . $uploadPath;
             $files = $request->file('files');
-            
+
             try {
                 foreach ($request->get('months') as $key => $month) {
                     if (!empty($files[$key])) {
@@ -48,11 +47,10 @@ class FeederController extends Controller
                             $requestData['created_at'] =  $year.'-'.$month.'-01';
                             $requestData['org'] = $user->getOrg();
                             $requestData['path'] = $uploadPath;
-                            
+
                             if (empty($request->get('file_id')[$key])) {
                                 $feederService->create(collect($requestData));
-                            }
-                            else{
+                            } else {
                                 $supplyFiles = $feederService->getRepository()->find($request->get('file_id')[$key]);
                                 $feederService->update($supplyFiles, collect($requestData));
                             }
@@ -66,7 +64,8 @@ class FeederController extends Controller
                 $request->session()->flash('error', 'File Gagal Disimpan');
 
             }
-        } 
+        }
+
         $files = [];
 
         for ($i = 1; $i <= 12; $i++) {
@@ -78,5 +77,4 @@ class FeederController extends Controller
 
         return view('upload', ['files' => $files]);
     }
-
 }

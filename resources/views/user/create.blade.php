@@ -35,6 +35,7 @@
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required="">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
+
 						@if( $type <> \App\Entities\User::ROLE_ADMIN)
 						<div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
 							<label for="sel1">Instansi</label>
@@ -47,10 +48,8 @@
 								@endforeach
 
 								@endif
-
 							</select>
 							<span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
-
 						</div>
 						@endif
 

@@ -61,10 +61,11 @@ class FeederService
     /**
      * Update Feeder
      *
-     * @param SupplyFiles $org
+     * @param SupplyFiles $supplyFiles
      * @param Collection $data
      * @param bool $flush
      * @return SupplyFiles
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function update(SupplyFiles $supplyFiles, Collection $data, $flush = true)
     {

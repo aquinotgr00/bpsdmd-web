@@ -22,9 +22,7 @@ class UserController extends Controller
 
     public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
     {
-
         if ($request->method() == 'POST') {
-
             $messageBag = new MessageBag;
 
             $checkUserName = $userService->createQueryBuilder('u')->where('u.username = :username')
@@ -84,7 +82,6 @@ class UserController extends Controller
     public function update(Request $request, UserService $userService, User $user, OrgService $orgService)
     {
         if ($request->method() == 'POST') {
-
             $messageBag = new MessageBag;
 
             $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
