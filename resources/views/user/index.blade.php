@@ -1,5 +1,9 @@
 @extends('layout.main')
 
+@php
+$currentUser = get_user_data();
+@endphp
+
 @section('content')
 <section class="content-header">
     <h1>Data User</h1>
@@ -61,8 +65,11 @@
                                         @endif
                                     </td>
                                     <td style="text-align: center;">
-                                        <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> |
+                                        <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> 
+                                        @if($currentUser->getId() <> $item->getId())
+                                        |
                                         <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> Hapus</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <?php
