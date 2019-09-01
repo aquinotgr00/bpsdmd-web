@@ -71,9 +71,9 @@ class UserController extends Controller
         $dataOrg = array();
 
         if ($type == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['tipe' => Organization::TYPE_SUPPLY,'parentunit' => null]);
+            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY,'levelunit' => 2]);
         } elseif ($type == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['tipe' => Organization::TYPE_DEMAND,'parentunit' => null]);
+            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND,'parentunit' => null]);
         }
 
         return view('user.create', ['type' => $type, 'dataOrg' => $dataOrg]);
@@ -134,9 +134,15 @@ class UserController extends Controller
         }
 
         $dataOrg = array();
-        if ($user->getAuthority() <> User::ROLE_ADMIN) {
-            $dataOrg = $orgService->getRepository()->findBy(['tipe' => $user->getOrg()->getType(),'parentunit' => null]);
+        if ($user->getAuthority() == User::ROLE_SUPPLY) {
+            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY,'levelunit' => 2]);
+        } elseif ($user->getAuthority() == User::ROLE_SUPPLY) {
+            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND,'parentunit' => null]);
         }
+        
+        // if ($user->getAuthority() <> User::ROLE_ADMIN) {
+        //     $dataOrg = $orgService->getRepository()->findBy(['tipe' => $user->getOrg()->getType(),'parentunit' => null]);
+        // }
 
         return view('user.update', compact('user', 'dataOrg'));
     }
