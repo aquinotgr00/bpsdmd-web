@@ -52,12 +52,12 @@ class UtilityController extends Controller
 
             if (!empty($checkUserName)) {
                 $messageBag->add('username', 'Username sudah digunakan');
-                return redirect()->route('update.profile', ['id' => $currentUser->getId()]);
+                return redirect()->route('update.profile')->withErrors($messageBag);
             }
 
             if (!Hash::check($request->post('old_password'), $currentUser->getPassword())) {
                 $messageBag->add('old_password', 'Password lama salah');
-                return redirect()->route('update.profile', ['id' => $currentUser->getId()]);
+                return redirect()->route('update.profile')->withErrors($messageBag);
             }
 
             $validate = [

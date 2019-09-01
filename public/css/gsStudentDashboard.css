@@ -56,7 +56,7 @@ body > .header {
 /*right side - contins main content*/
 .right-side {
   background-color: #f9f9f9;
-  margin-left: 220px;
+  margin-left: 250px;
 }
 /*left side - contains sidebar*/
 .left-side {
@@ -649,7 +649,7 @@ body > .header .logo img {
     left: 0px;
   }
 }
-/* 
+/*
     Dropdown menus
 ----------------------------
 */
@@ -1031,7 +1031,7 @@ body > .header .logo img {
     left: auto;
   }
 }
-/* 
+/*
    All form elements including input, select, textarea etc.
 -----------------------------------------------------------------
 */
@@ -1081,7 +1081,7 @@ body > .header .logo img {
 .radio {
   padding-left: 0;
 }
-/* 
+/*
     Compenent: Progress bars
 --------------------------------
 */
@@ -1948,7 +1948,7 @@ Component: timeline
   -moz-border-radius: 50%;
   border-radius: 50%;
 }
-/* 
+/*
     Component: callout
 ------------------------
 */
@@ -1988,7 +1988,7 @@ Component: timeline
 .callout.callout-info h4 {
   color: #3A87AD;
 }
-/* 
+/*
     Component: alert
 ------------------------
 */
@@ -2293,7 +2293,7 @@ Component: timeline
   margin-top: 30px;
   text-align: center;
 }
-/* 
+/*
     Page: register and login
 */
 .form-box {
@@ -2359,7 +2359,7 @@ Component: timeline
     width: 90%;
   }
 }
-/* 
+/*
     Page: 404 and 500 error pages
 ------------------------------------
 */
@@ -2409,7 +2409,7 @@ Component: timeline
 .error-page:after {
   clear: both;
 }
-/* 
+/*
     Page: Invoice
 */
 .invoice {
@@ -2442,12 +2442,12 @@ Component: timeline
     white-space: normal!important;
   }
 }
-/* 
+/*
     Skins
     -----
 */
-/* 
-    Skin Blue 
+/*
+    Skin Blue
     ---------
 */
 /* skin-blue navbar */
@@ -3464,4 +3464,104 @@ fieldset[disabled] .btn-vk.active {
 
 .modal-dialog{
   /*width: 60% !important;*/
+}
+
+.pilih-ta {
+  padding: 0;
+  text-align: right;
+}
+
+.demand-page--demand-column .panel-body {
+    padding: 0;
+}
+
+.demand-page--demand-column .panel-body ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.demand-page--demand-column .white-box {
+    padding: 0;
+}
+
+.demand-page--demand-column .panel-body ul li a {
+    padding: 10px 15px;
+    display: block;
+}
+.demand-page--demand-column .panel-body .chatonline img {
+    width: 50px!important;
+}
+.demand-page--demand-column .panel-body ul li h3 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.demand-page--demand-column .white-box .box-title {
+    padding: 10px;
+    margin: 0;
+}
+.demand-page--demand-column .panel-body ul li.active {
+    background: #777777;
+    color: white;
+}
+
+.demand-page--demand-column .panel-body ul li a.active h3 {
+    color: white;
+}
+.supply-item .sales-report {
+    margin-bottom: 0;
+}
+
+.supply-item .sales-report h2, .supply-item .sales-report p {
+    padding: 0;
+    margin: 0;
+}
+.demand-page--demand-column .panel-body ul li.active a {
+    color: white;
+}
+.white-box {
+    background: white;
+    padding: 0 25px 25px;
+}
+
+h3.box-title {
+    padding: 10px;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+element.style {
+}
+.supply-item .sales-report {
+    margin-bottom: 0;
+}
+.sales-report {
+    background: #f7fafc;
+    margin: 12px -25px;
+    padding: 15px;
+}
+.sales-report h3 {
+    margin-top: 0;
+}
+.right-side.link-match {
+    margin-top: 30px;
+}
+.btn-group .btn-default {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.btn-group {
+    width: 100%;
+    padding: 10px;
+}
+.btn .caret {
+    margin-left: 0;
+    right: 8px;
+    position: absolute;
+    top: 15px;
 }

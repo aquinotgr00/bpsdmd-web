@@ -28,3 +28,19 @@ if (!function_exists("get_user_data")) {
 		return false;
 	}
 }
+if (!function_exists('buildTree')) {
+	function buildTree(array $elements, $parentId = null) {
+        $branch = array();
+        foreach ($elements as $element) {
+        	$element['parent_id'] = $element['parent_id'] == 'NULL' ? NULL : $element['parent_id'] ; 
+            if ($element['parent_id'] == $parentId) {
+                $children = buildTree($elements, $element['id']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+        return $branch;
+    }
+}
