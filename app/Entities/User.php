@@ -68,7 +68,7 @@ class User implements UserInterface
      *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org", referencedColumnName="idorg", onDelete="RESTRICT")
+     *   @ORM\JoinColumn(name="org", referencedColumnName="idunit", onDelete="RESTRICT")
      * })
      */
     private $org;

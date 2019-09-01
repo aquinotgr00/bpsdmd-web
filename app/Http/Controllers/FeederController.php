@@ -60,6 +60,7 @@ class FeederController extends Controller
                 }
                 $request->session()->flash('success', 'File Berhasil Disimpan');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 report($e);
                 $request->session()->flash('error', 'File Gagal Disimpan');
 
@@ -70,9 +71,9 @@ class FeederController extends Controller
 
         for ($i = 1; $i <= 12; $i++) {
             $files[] = DB::table('supply_files AS sf')
-            ->select('*')
+            ->selectRaw('sf.id, sf.file_name')
             ->having(new Expression("to_char( sf.created_at, 'MM')"), sprintf('%02s', $i))
-            ->groupBy('sf.id')->first();
+            ->groupBy('sf.id','sf.file_name','sf.created_at')->first();
         }
 
         return view('upload', ['files' => $files]);
