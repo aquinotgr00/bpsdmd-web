@@ -17,7 +17,15 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{org}/update', 'OrgController@update')->name('org.update');
         Route::get('/{org}/delete', 'OrgController@delete')->name('org.delete');
         Route::get('/', 'OrgController@index')->name('org.index');
+
     });
+    
+    Route::group(['prefix' => 'link-and-match', 'middleware' => ['only_admin']], function() {
+        Route::any('/{type}/index', 'LinkAndMatchController@indexAdmin')->name('linknmatch.admin.index')
+        ->where('type', \App\Entities\User::ROLE_ADMIN);
+    
+    });
+
 
     Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
         Route::any('/create/{type}', 'UserController@create')->name('user.create')
@@ -43,7 +51,10 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/cadet', 'UtilityController@dataCadet')->name('data.cadet');
         Route::get('/course', 'UtilityController@dataCourse')->name('data.course');
     });
-
+    Route::any('/link-and-match/prodi-by-instansi', 'LinkAndMatchController@getProdiByInstansi')->name('linknmatch.getProdiByInstansi');
+    Route::any('/link-and-match/kompetensi-by-supply', 'LinkAndMatchController@getKompetensiByProdi')->name('linknmatch.getKompetensiByProdi');
+    Route::any('/link-and-match/demand-by-kompetensi', 'LinkAndMatchController@getDemandByKompetensi')->name('linknmatch.getDemandByKompetensi');
+    
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 });
 

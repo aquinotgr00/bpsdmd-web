@@ -43,7 +43,7 @@
                         </div>
                     </div><!-- /.box-body -->
 
-                    <div class="box-footer">
+                    <div class="box-footer" style="text-align: right">
                         <input type="submit" value="Tambah" class="btn btn-primary">
                     </div>
                 </form>

@@ -19,7 +19,7 @@ $currentUser = get_user_data();
 					<form method="post" enctype="multipart/form-data">
 						@csrf
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-							<label for="name">name :</label>
+							<label for="name">Name :</label>
 							<input type="text" class="form-control" id="username" name="name" required="" value="{{ $user->getName() }}">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
@@ -63,7 +63,7 @@ $currentUser = get_user_data();
 							</div>
 						</div>
 						<div class="form-group">
-							@if(is_null($user->getPhoto()))
+							@if(!empty($user->getPhoto()))
 							<img src="{{ url($user->getPhoto()) }}" width="100px" height="100px">
 							@endif
 						</div>
@@ -79,15 +79,13 @@ $currentUser = get_user_data();
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
-						@if($currentUser->getId() <> $user->getId())
-						<div class="form-group {{ $errors->has('isactive') ? 'has-error' : '' }}">
+						<div class="form-group {{ $errors->has('isactive') ? 'has-error' : '' }} {{ $currentUser->getId() == $user->getId() ? 'hide':'' }}">
 							<label for="sel2">Status</label>
 							<select class="form-control" id="sel2" name="isactive" required="">
 								<option value="1" {{ $user->getIsActive() == 1 ? 'selected':'' }}>Aktif</option>
 								<option value="0" {{ $user->getIsActive() == 0 ? 'selected':'' }}>Tidak Aktif</option>
 							</select>
 							<span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
-						@endif
 						</div>
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Submit</button>

@@ -29,7 +29,7 @@
 					<form method="post" enctype="multipart/form-data">
 						@csrf
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-							<label for="name">name :</label>
+							<label for="name">Name :</label>
 							<input type="text" class="form-control" id="username" name="name" required="" value="{{ $user->getName() }}">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
@@ -54,7 +54,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							@if(is_null($user->getPhoto()))
+							@if(!empty($user->getPhoto()))
 							<img src="{{ url($user->getPhoto()) }}" width="100px" height="100px">
 							@endif
 						</div>

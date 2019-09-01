@@ -20,6 +20,12 @@
             <span>User Management</span>
         </a>
     </li>
+    <li>
+        <a href="{{ url(route('linknmatch.admin.index',[ 'type'=> \App\Entities\User::ROLE_ADMIN ])) }}">
+            <i class="fa fa-link"></i>
+            <span>Link And Match</span>
+        </a>
+    </li>
     @endif
 
     @if(check_authorization(\App\Entities\User::ROLE_SUPPLY))

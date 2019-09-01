@@ -54,7 +54,7 @@ class SupplyFiles
      *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="idorg", onDelete="RESTRICT")
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="idunit", onDelete="RESTRICT")
      * })
      */
     private $org_id;
