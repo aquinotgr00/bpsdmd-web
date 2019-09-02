@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Services\Domain\matchService;
+use App\Services\Domain\MatchService;
 use Illuminate\Database\Query\Expression;
 
 class LinkAndMatchController extends Controller
@@ -61,7 +61,7 @@ class LinkAndMatchController extends Controller
 		return response()->json(['status' => 404,'message' => 'Kompetensi Tidak Ditemukan']);
 
 	}
-	public function getDemandByKompetensi(Request $request, matchService $matchService)
+	public function getDemandByKompetensi(Request $request, MatchService $matchService)
 	{
 		$lisensi = $matchService->getChildLisensi(collect($request->all()));
 		
