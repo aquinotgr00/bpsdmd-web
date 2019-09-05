@@ -60,3 +60,5 @@ Route::group(['middleware' => ['authenticated']], function() {
 
 Route::get('/logout', 'AuthController@logout')->name('logout');
 Route::any('/login', 'AuthController@login')->name('login');
+
+Route::any('/register', 'UserController@register')->name('register');

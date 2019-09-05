@@ -71,6 +71,7 @@ class UserService
         $user->setPassword($data->get('password'));
         $user->setAuthority($data->get('authority'));
         $user->setName($data->get('name'));
+        $user->setEmail($data->get('email'));
 
         if (!empty($data->get('uploaded_img'))) {
             $user->setPhoto($data->get('uploaded_img'));

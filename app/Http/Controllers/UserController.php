@@ -10,6 +10,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 
+use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     public function index(UserService $userService)
@@ -145,6 +147,39 @@ class UserController extends Controller
         // }
 
         return view('user.update', compact('user', 'dataOrg'));
+    }
+
+    public function register(Request $request, UserService $userService, OrgService $orgService)
+    {
+        if ($request->method() === 'POST') {
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email',
+                'org' => 'required',
+                'image_file' => 'image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+            if ($request->hasFile('image_file')) {
+                $photo = $request->file('image_file');
+                $photoName = $photo->hashName();
+                if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+                    $request->merge([
+                        'uploaded_image' => User::UPLOAD_PATH . '/' . $photoName
+                    ]);
+                }
+            }
+            $username = strtolower(preg_replace('/\s+/', '_', $request->name));
+            $request->merge([
+                'username' => $username,
+                'password' => Hash::make('password'),
+                'authority' => 'supply',
+                'isActive' => 0
+            ]);
+            $org = $request->authority <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
+            $userService->create(collect($request->all()), $org);
+            return redirect()->route('login')->with('alert_success', 'Silahkan cek email anda untuk aktivasi.');
+        }
+
+        return view('user.register');
     }
 
     public function delete(userService $userService, user $user)

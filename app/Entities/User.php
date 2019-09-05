@@ -86,6 +86,13 @@ class User implements UserInterface
      * @ORM\Column(name="isdelete", type="integer", nullable=false)
      */
     private $isDelete = 0;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", nullable=false)
+     */
+    private $email;
 
     /**
      * @return int
@@ -238,5 +245,13 @@ class User implements UserInterface
     public function setIsDelete($isDelete)
     {
         $this->isDelete = $isDelete;
+    }
+    
+    /**
+     * @param int $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 }
