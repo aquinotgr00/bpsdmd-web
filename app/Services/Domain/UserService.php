@@ -72,6 +72,7 @@ class UserService
         $user->setAuthority($data->get('authority'));
         $user->setName($data->get('name'));
         $user->setEmail($data->get('email'));
+        $user->setIsActive($data->get('isActive'));
 
         if (!empty($data->get('uploaded_img'))) {
             $user->setPhoto($data->get('uploaded_img'));
@@ -139,6 +140,7 @@ class UserService
         $user->setUsername($data->get('username'));
         $user->setName($data->get('name'));
         $user->setPassword($data->get('password'));
+        $user->setIsActive($data->get('isActive'));
 
         if ($org instanceof Organization) {
             $user->setOrg($org);

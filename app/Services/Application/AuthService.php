@@ -48,7 +48,7 @@ class AuthService
             throw new InvalidLogin('Invalid login for ' . $username);
         }
 
-        throw new LoginException('Cannot logging in for ' . $username);
+        throw new LoginException('Cannot logging in for ' . $username . '. Please check your email.');
     }
 
     /**

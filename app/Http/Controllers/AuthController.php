@@ -12,8 +12,9 @@ class AuthController extends Controller
     {
         if ($request->method() == 'POST') {
             $request->validate([
-                'username' => 'required',
-                'password' => 'required'
+                'username' => 'string',
+                'password' => 'required',
+                'email' => 'string'
             ]);
 
             try {
