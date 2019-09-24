@@ -12,9 +12,8 @@ class AuthController extends Controller
     {
         if ($request->method() == 'POST') {
             $request->validate([
-                'username' => 'string',
-                'password' => 'required',
-                'email' => 'string'
+                'email' => 'required|email',
+                'password' => 'required'
             ]);
 
             try {
@@ -22,9 +21,8 @@ class AuthController extends Controller
 
                 return redirect(route('dashboard'));
             } catch (Exception $e) {
-                dd($e->getMessage());
                 report($e);
-                $request->session()->flash('alert', 'Username atau password salah.');
+                $request->session()->flash('alert', 'Email atau password salah.');
             }
         }
 

@@ -26,11 +26,11 @@ class AuthService
      */
     public function authenticate()
     {
-        $username = request()->get('username');
+        $email = request()->get('email');
         $password = request()->get('password');
 
         $user = $this->userService->getRepository()->findOneBy([
-            'username' => $username,
+            'email' => $email,
             'isActive' => 1,
             'isDelete' => 0,
         ]);
@@ -45,10 +45,10 @@ class AuthService
                 return true;
             }
 
-            throw new InvalidLogin('Invalid login for ' . $username);
+            throw new InvalidLogin('Invalid login for ' . $email);
         }
 
-        throw new LoginException('Cannot logging in for ' . $username . '. Please check your email.');
+        throw new LoginException('Cannot logging in for ' . $email);
     }
 
     /**

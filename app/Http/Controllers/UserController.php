@@ -144,7 +144,7 @@ class UserController extends Controller
         } elseif ($user->getAuthority() == User::ROLE_SUPPLY) {
             $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND,'parentunit' => null]);
         }
-        
+
         // if ($user->getAuthority() <> User::ROLE_ADMIN) {
         //     $dataOrg = $orgService->getRepository()->findBy(['tipe' => $user->getOrg()->getType(),'parentunit' => null]);
         // }
@@ -167,12 +167,10 @@ class UserController extends Controller
 			if ($request->hasFile('image_file')) {          // if the request has image file in it
 				$request->image_file->store(User::UPLOAD_PATH, 'public');
                 $photoName = $request->file('image_file')->hashName();
-                // $photoName = $photo->hashName();
-                // if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+
 				$request->merge([
 					'uploaded_img' => User::UPLOAD_PATH . '/' . $photoName
 				]);
-                // }
             }
 
             $username = strtolower(preg_replace('/\s+/', '_', $request->name));     // create username

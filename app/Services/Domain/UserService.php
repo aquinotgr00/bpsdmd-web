@@ -67,7 +67,7 @@ class UserService
     public function create(Collection $data, $org = false, $flush = true)
     {
         $user = new User;
-        $user->setUsername($data->get('username'));
+        $user->setEmail($data->get('username'));
         $user->setPassword($data->get('password'));
         $user->setAuthority($data->get('authority'));
         $user->setName($data->get('name'));
@@ -101,7 +101,7 @@ class UserService
      */
     public function update(User $user, Collection $data, $org = false, $flush = true)
     {
-        $user->setUsername($data->get('username'));
+        $user->setEmail($data->get('username'));
         $user->setName($data->get('name'));
         $user->setAuthority($data->get('authority'));
         $user->setIsActive($data->get('isactive'));
@@ -137,7 +137,7 @@ class UserService
      */
     public function updateProfile(User $user, Collection $data, $org = false, $flush = true)
     {
-        $user->setUsername($data->get('username'));
+        $user->setEmail($data->get('username'));
         $user->setName($data->get('name'));
         $user->setPassword($data->get('password'));
         $user->setIsActive($data->get('isActive'));
@@ -167,7 +167,7 @@ class UserService
     public function delete(User $user)
     {
         $user->setIsActive(0);
-        $user->setIsDelete(1);
+        $user->setIsDeleted(1);
         EntityManager::persist($user);
         EntityManager::flush();
     }

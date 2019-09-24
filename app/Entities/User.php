@@ -9,7 +9,7 @@ use Hash;
 /**
  * User
  *
- * @ORM\Table(name="datauser")
+ * @ORM\Table(name="pengguna")
  * @ORM\Entity
  */
 class User implements UserInterface
@@ -22,25 +22,28 @@ class User implements UserInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="iduser", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var string
+     * @var Organization
      *
-     * @ORM\Column(name="name", type="string", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
      */
-    private $name;
+    private $org;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", nullable=false)
+     * @ORM\Column(name="email", type="string", nullable=false)
      */
-    private $username;
+    private $email;
 
     /**
      * @var string
@@ -52,52 +55,42 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="authority", type="string", nullable=false)
+     * @ORM\Column(name="otoritas", type="string", nullable=false)
      */
     private $authority;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="aktif", type="integer", nullable=false)
+     */
+    private $isActive = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="hapus", type="integer", nullable=false)
+     */
+    private $isDeleted = 0;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="string", nullable=true)
+     * @ORM\Column(name="nama", type="string", nullable=true)
+     */
+    private $name = 'NULL';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
      */
     private $photo = 'NULL';
 
     /**
-     * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Organization")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org", referencedColumnName="idunit", onDelete="RESTRICT")
-     * })
-     */
-    private $org;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="isactive", type="integer", nullable=false)
-     */
-    private $isActive = 1;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="isdelete", type="integer", nullable=false)
-     */
-    private $isDelete = 0;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", nullable=false)
-     */
-    private $email;
-
-    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -105,31 +98,47 @@ class User implements UserInterface
     /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
     /**
-     * @return string
+     * @return Organization
      */
-    public function getUsername(): ?string
+    public function getOrg(): Organization
     {
-        return $this->username;
+        return $this->org;
     }
 
     /**
-     * @param string $username
+     * @param Organization $org
      */
-    public function setUsername(string $username): void
+    public function setOrg(Organization $org): void
     {
-        $this->username = $username;
+        $this->org = $org;
     }
 
     /**
      * @return string
      */
-    public function getPassword(): ?string
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -139,13 +148,13 @@ class User implements UserInterface
      */
     public function setPassword(string $password): void
     {
-        $this->password = Hash::make($password);
+        $this->password = $password;
     }
 
     /**
      * @return string
      */
-    public function getAuthority(): ?string
+    public function getAuthority(): string
     {
         return $this->authority;
     }
@@ -159,25 +168,41 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getPhoto(): ?string
+    public function getIsActive(): int
     {
-        return $this->photo;
+        return $this->isActive;
     }
 
     /**
-     * @param string $photo
+     * @param int $isActive
      */
-    public function setPhoto(string $photo): void
+    public function setIsActive(int $isActive): void
     {
-        $this->photo = $photo;
+        $this->isActive = $isActive;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsDeleted(): int
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param int $isDeleted
+     */
+    public function setIsDeleted(int $isDeleted): void
+    {
+        $this->isDeleted = $isDeleted;
     }
 
     /**
      * @return string
      */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -191,67 +216,18 @@ class User implements UserInterface
     }
 
     /**
-     * @return Organization
+     * @return string
      */
-    public function getOrg(): Organization
+    public function getPhoto(): string
     {
-        if (is_null($this->org)) {
-            return new Organization;
-        }
-
-        return $this->org;
+        return $this->photo;
     }
 
     /**
-     * @param Organization $org
+     * @param string $photo
      */
-    public function setOrg(Organization $org): void
+    public function setPhoto(string $photo): void
     {
-        $this->org = $org;
-    }
-
-    public function getAvailableRoles()
-    {
-        return [self::ROLE_ADMIN, self::ROLE_SUPPLY, self::ROLE_DEMAND];
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @param int $isActive
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsDelete()
-    {
-        return $this->isDelete;
-    }
-
-    /**
-     * @param int $isActicve
-     */
-    public function setIsDelete($isDelete)
-    {
-        $this->isDelete = $isDelete;
-    }
-    
-    /**
-     * @param int $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+        $this->photo = $photo;
     }
 }
