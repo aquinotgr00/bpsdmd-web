@@ -29,7 +29,7 @@ class SupplyFiles
      *
      * @ORM\Column(name="file_name", type="string", nullable=true)
      */
-    private $file_name = 'NULL';
+    private $file_name = NULL;
 
     /**
      * @var User
@@ -40,14 +40,14 @@ class SupplyFiles
      * })
      */
 
-    private $uploaded_by = 'NULL';
+    private $uploaded_by = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="created_at", type="string", nullable=true)
      */
-    private $created_at = 'NULL';
+    private $created_at = NULL;
 
     /**
      * @var Organization
@@ -93,7 +93,7 @@ class SupplyFiles
     /**
      * @param string $file_name
      */
-    public function setFileName(string $file_name): void
+    public function setFileName($file_name): void
     {
         $this->file_name = $file_name;
     }
@@ -129,7 +129,7 @@ class SupplyFiles
     /**
      * @param string $created_at
      */
-    public function setCreatedAt(string $created_at): void
+    public function setCreatedAt($created_at): void
     {
         $this->created_at = $created_at;
     }
@@ -165,7 +165,7 @@ class SupplyFiles
     /**
      * @param string $path
      */
-    public function setPath(string $path): void
+    public function setPath($path): void
     {
         $this->path = $path;
     }

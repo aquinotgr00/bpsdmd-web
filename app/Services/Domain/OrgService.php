@@ -63,7 +63,7 @@ class OrgService
     {
         $org = new Organization;
         $org->setName($data->get('name'));
-        $org->setName($data->get('short_name'));
+        $org->setShortName($data->get('short_name'));
         $org->setType($data->get('type'));
         EntityManager::persist($org);
 
@@ -85,7 +85,7 @@ class OrgService
     public function update(Organization $org, Collection $data, $flush = true)
     {
         $org->setName($data->get('name'));
-        $org->setName($data->get('short_name'));
+        $org->setShortName($data->get('short_name'));
         $org->setType($data->get('type'));
         EntityManager::persist($org);
 

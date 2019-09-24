@@ -139,7 +139,7 @@ class UserController extends Controller
         } elseif ($user->getAuthority() == User::ROLE_SUPPLY) {
             $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND,'parentunit' => null]);
         }
-        
+
         // if ($user->getAuthority() <> User::ROLE_ADMIN) {
         //     $dataOrg = $orgService->getRepository()->findBy(['tipe' => $user->getOrg()->getType(),'parentunit' => null]);
         // }
