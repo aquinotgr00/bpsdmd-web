@@ -34,6 +34,7 @@
             </div>
         </div> <!-- / .form-actions -->
     </form>
+    <hr />
     <div style="margin-top:1em;">
         <a href="{{ route('register') }}">Daftar</a>
     </div>

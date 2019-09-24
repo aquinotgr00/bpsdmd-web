@@ -4,7 +4,7 @@
     <!-- Form -->
     <form name="form_register" id="form-register" method="POST" enctype="multipart/form-data">@csrf
         <div class="signin-text">
-            <span>Sign Up</span>
+            <span>Daftar</span>
 
             @if(session('alert') ?? false)
                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -14,38 +14,59 @@
             @endif
         </div> <!-- / .signin-text -->
         
-        <label for="photo">Nama Organisasi</label>
-        <div class="form-group w-icon {{ $errors->has('org') ? 'has-error' : '' }}">
-            <input name="org" id="org_id" class="form-control input-lg" placeholder="Nama Organisasi" type="text">
-            <span class="fa fa-user signin-form-icon"></span>
+        <div class="form-group required required-asterisk {{ $errors->has('org') ? 'has-error' : '' }}">
+            <label>Nama Organisasi</label>
+            <input name="org" id="org_id" class="form-control" type="text" required>
+            <span class="help-block">Nama resmi perusahaan Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
         </div> <!-- / Org -->
         
-        <label for="photo">Nama</label>
-        <div class="form-group w-icon {{ $errors->has('name') ? 'has-error' : '' }}">
-            <input name="name" id="name_id" class="form-control input-lg" placeholder="Nama" type="text">
-            <span class="fa fa-user signin-form-icon"></span>
+        <div class="form-group required required-asterisk {{ $errors->has('org_type') ? 'has-error' : '' }}">
+            <label>Jenis Organisasi</label>
+            <select name="org_type" id="org_type" class="form-control">
+              <option value="null"></option>
+              <option value="pelni">PELNI</option>
+              <option value="kai">KAI</option>
+            </select>
+            <span class="help-block">Jenis perusahaan Anda.</span>
+            <span class="help-block ">{!! implode('', $errors->get('org_type')) !!}</span>
+        </div> <!-- / Org -->
+        
+        <div class="form-group required required-asterisk {{ $errors->has('org_address') ? 'has-error' : '' }}">
+            <label>Alamat Lengkap Organisasi</label>
+            <textarea name="org_address" id="org_address" cols="30" rows="2" class="form-control"></textarea>
+            <span class="help-block">Alangkap lengkap perusahaan Anda.</span>
+            <span class="help-block ">{!! implode('', $errors->get('org_address')) !!}</span>
+        </div> <!-- / Org -->
+
+        <hr />
+        
+        <div class="form-group required required-asterisk {{ $errors->has('name') ? 'has-error' : '' }}">
+            <label>Nama</label>
+            <input name="name" id="name_id" class="form-control" type="text">
+            <span class="help-block">Nama lengkap Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
         </div> <!-- / Name -->
         
-        <label for="photo">Email</label>
-        <div class="form-group w-icon {{ $errors->has('email') ? 'has-error' : '' }}">
-            <input name="email" id="email_id" class="form-control input-lg" placeholder="Email" type="text">
-            <span class="fa fa-user signin-form-icon"></span>
+        <div class="form-group required required-asterisk {{ $errors->has('email') ? 'has-error' : '' }}">
+            <label>Email</label>
+            <input name="email" id="email_id" class="form-control" type="text">
+            <span class="help-block">Email Anda. Harap menggunakan email resmi penanggung jawab ber-akhir-an @pelni.com atau @kai.com</span>
             <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
         </div> <!-- / Email -->
         
-        <label for="photo">Foto</label>
-        <div class="form-group w-icon {{ $errors->has('image_file') ? 'has-error' : '' }}">
+        <div class="form-group required required-asterisk {{ $errors->has('image_file') ? 'has-error' : '' }}">
+            <label>Foto</label>
             <input name="image_file" type="file">
+            <span class="help-block">Foto Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('image_file')) !!}</span>
         </div> <!-- / photo -->
 
         <div class="form-group required required-asterisk">
             <div class="checkbox">
                 <label for="supAgreement">
-                        <input type="checkbox" name="agreement" id="supAgreement" required>
-                        Dengan ini saya menyatakan bahwa data yang saya isikan adalah benar.
+                    <input type="checkbox" name="agreement" id="supAgreement" required>
+                    Dengan ini saya menyatakan bahwa data yang saya isikan adalah benar.
                 </label>
             </div>
         </div>
@@ -60,7 +81,8 @@
             </div>
         </div> <!-- / .form-actions -->
     </form>
-    <div class="text-center" style="margin-top: 1em;">
+    <hr />
+    <div style="margin-top: 1em;">
         <a href="{{ route('login') }}">Login</a>
     </div>
     <!-- / Form -->

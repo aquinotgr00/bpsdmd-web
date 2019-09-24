@@ -158,25 +158,28 @@ class UserController extends Controller
             $request->validate([                            // validate the request
                 'name' => 'required|string',
                 'email' => ['required', 'email', new IsAllowedDomain],
-                'org' => 'required',
+				'org' => 'required',
+				'org_type' => 'required',
+				'org_address' => 'required',
                 'image_file' => 'image|mimes:jpeg,png,jpg|max:2048',
-            ]);
+			]);
 
-            if ($request->hasFile('image_file')) {          // if the request has image file in it
-                $photo = $request->file('image_file');
-                $photoName = $photo->hashName();
-                if ($photo->move(User::UPLOAD_PATH, $photoName)) {
-                    $request->merge([
-                        'uploaded_img' => User::UPLOAD_PATH . '/' . $photoName
-                    ]);
-                }
+			if ($request->hasFile('image_file')) {          // if the request has image file in it
+				$request->image_file->store(User::UPLOAD_PATH, 'public');
+                $photoName = $request->file('image_file')->hashName();
+                // $photoName = $photo->hashName();
+                // if ($photo->move(User::UPLOAD_PATH, $photoName)) {
+				$request->merge([
+					'uploaded_img' => User::UPLOAD_PATH . '/' . $photoName
+				]);
+                // }
             }
 
             $username = strtolower(preg_replace('/\s+/', '_', $request->name));     // create username
             $request->merge([                               // merge request
                 'username' => $username,
                 'password' => substr(str_shuffle(md5(time())), 0, 8),
-                'authority' => 'supply',
+                'authority' => 'demand',
                 'isActive' => 0
             ]);
             $org = $request->authority <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;

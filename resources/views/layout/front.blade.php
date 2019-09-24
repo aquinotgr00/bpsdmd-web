@@ -33,7 +33,22 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
-    <link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
+	<link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
+	
+	<style>
+		.signin-form .form-group.required-asterisk > label::after, .signin-form .form-group.required-asterisk > div > label::after {
+			content: " *";
+			display: inline;
+			font-size: 1.2em;
+			color: red;
+		}
+		.signin-form .form-group .help-block {
+			margin-top: 2px;
+			margin-bottom: 0;
+			font-size: 0.85em;
+			font-style: italic;
+		}
+	</style>
 
 </head>
 <body class="theme-default page-signin">
@@ -70,7 +85,7 @@
         @endif
 
 		<!-- Right side -->
-		<div class="signin-form text-center">
+		<div class="signin-form">
 			<div style="text-align: center;">
 				<img src="{{ asset('img/bpsdmp.png') }}" alt="" style="margin-top: -5px;">
 			</div>
@@ -78,7 +93,6 @@
             <!-- Content -->
             @yield('content')
             <!-- / Content -->
-
 		</div>
 		<!-- Right side -->
 	</div>
