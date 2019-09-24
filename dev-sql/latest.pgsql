@@ -44,7 +44,8 @@ CREATE TABLE public.organisasi (
     nama character varying NOT NULL,
     singkatan character varying,
     tipe character varying NOT NULL,
-    moda character varying
+    moda character varying,
+    alamat character varying
 );
 
 
@@ -172,7 +173,7 @@ ALTER TABLE ONLY public.program_studi ALTER COLUMN id SET DEFAULT nextval('publi
 -- Data for Name: organisasi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.organisasi (id, kode, nama, singkatan, tipe, moda) FROM stdin;
+COPY public.organisasi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdin;
 \.
 
 

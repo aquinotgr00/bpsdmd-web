@@ -13,14 +13,14 @@
                 </div>
             @endif
         </div> <!-- / .signin-text -->
-        
+
         <div class="form-group required required-asterisk {{ $errors->has('org') ? 'has-error' : '' }}">
             <label>Nama Organisasi</label>
             <input name="org" id="org_id" class="form-control" type="text" required>
             <span class="help-block">Nama resmi perusahaan Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
         </div> <!-- / Org -->
-        
+
         <div class="form-group required required-asterisk {{ $errors->has('org_type') ? 'has-error' : '' }}">
             <label>Jenis Organisasi</label>
             <select name="org_type" id="org_type" class="form-control">
@@ -31,30 +31,30 @@
             <span class="help-block">Jenis perusahaan Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('org_type')) !!}</span>
         </div> <!-- / Org -->
-        
+
         <div class="form-group required required-asterisk {{ $errors->has('org_address') ? 'has-error' : '' }}">
             <label>Alamat Lengkap Organisasi</label>
             <textarea name="org_address" id="org_address" cols="30" rows="2" class="form-control"></textarea>
-            <span class="help-block">Alangkap lengkap perusahaan Anda.</span>
+            <span class="help-block">Alamat lengkap perusahaan Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('org_address')) !!}</span>
         </div> <!-- / Org -->
 
         <hr />
-        
+
         <div class="form-group required required-asterisk {{ $errors->has('name') ? 'has-error' : '' }}">
             <label>Nama</label>
             <input name="name" id="name_id" class="form-control" type="text">
             <span class="help-block">Nama lengkap Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
         </div> <!-- / Name -->
-        
+
         <div class="form-group required required-asterisk {{ $errors->has('email') ? 'has-error' : '' }}">
             <label>Email</label>
             <input name="email" id="email_id" class="form-control" type="text">
             <span class="help-block">Email Anda. Harap menggunakan email resmi penanggung jawab ber-akhir-an @pelni.com atau @kai.com</span>
             <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
         </div> <!-- / Email -->
-        
+
         <div class="form-group required required-asterisk {{ $errors->has('image_file') ? 'has-error' : '' }}">
             <label>Foto</label>
             <input name="image_file" type="file">
