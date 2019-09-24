@@ -106,7 +106,7 @@ class User implements UserInterface
     /**
      * @return Organization
      */
-    public function getOrg(): Organization
+    public function getOrg()
     {
         return $this->org;
     }
@@ -122,7 +122,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -138,7 +138,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -148,13 +148,13 @@ class User implements UserInterface
      */
     public function setPassword($password): void
     {
-        $this->password = $password;
+        $this->password = Hash::make($password);
     }
 
     /**
      * @return string
      */
-    public function getAuthority(): string
+    public function getAuthority(): ?string
     {
         return $this->authority;
     }
@@ -202,7 +202,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -218,7 +218,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPhoto(): string
+    public function getPhoto(): ?string
     {
         return $this->photo;
     }

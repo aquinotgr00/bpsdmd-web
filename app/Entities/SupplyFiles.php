@@ -85,7 +85,7 @@ class SupplyFiles
     /**
      * @return string
      */
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
         return $this->file_name;
     }
@@ -121,7 +121,7 @@ class SupplyFiles
     /**
      * @return string
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->created_at;
     }
@@ -157,7 +157,7 @@ class SupplyFiles
     /**
      * @return string
      */
-    public function getPath(): string
+    public function getPath(): ?string
     {
         return $this->path;
     }

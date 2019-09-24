@@ -19,25 +19,28 @@ class UsersTableSeeder extends Seeder
 
         $data = [
             [
-                'email' => 'admin@bpsdm',
+                'email' => 'admin@bpsdm.com',
                 'password' => 'bpsdm',
                 'authority' => \App\Entities\User::ROLE_ADMIN,
                 'isActive' => 1,
-                'org' => false
+                'org' => false,
+                'name' => 'Admin BPSDM'
             ],
             [
-                'email' => 'admin@pelni.com',
+                'email' => 'user@pelni.com',
                 'password' => 'pelni',
                 'authority' => \App\Entities\User::ROLE_DEMAND,
                 'isActive' => 1,
-                'org' => $orgService->getRepository()->find(1)
+                'org' => $orgService->getRepository()->find(1),
+                'name' => 'User PELNI'
             ],
             [
-                'email' => 'admin@kai.com',
+                'email' => 'user@kai.com',
                 'password' => 'kai',
                 'authority' => \App\Entities\User::ROLE_DEMAND,
                 'isActive' => 1,
-                'org' => $orgService->getRepository()->find(2)
+                'org' => $orgService->getRepository()->find(2),
+                'name' => 'User KAI'
             ],
         ];
 

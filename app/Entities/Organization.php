@@ -70,7 +70,7 @@ class Organization
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -86,7 +86,7 @@ class Organization
     /**
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -102,7 +102,7 @@ class Organization
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -118,7 +118,7 @@ class Organization
     /**
      * @return string
      */
-    public function getShortName(): string
+    public function getShortName(): ?string
     {
         return $this->shortName;
     }
@@ -134,7 +134,7 @@ class Organization
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -150,7 +150,7 @@ class Organization
     /**
      * @return string
      */
-    public function getModa(): string
+    public function getModa(): ?string
     {
         return $this->moda;
     }

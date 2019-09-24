@@ -16,10 +16,10 @@
             @endif
         </div> <!-- / .signin-text -->
 
-        <div class="form-group w-icon {{ $errors->has('username') ? 'has-error' : '' }}">
-            <input name="username" id="username_id" class="form-control input-lg" placeholder="Username" type="text">
+        <div class="form-group w-icon {{ $errors->has('email') ? 'has-error' : '' }}">
+            <input name="email" id="email_id" class="form-control input-lg" placeholder="Email" type="text">
             <span class="fa fa-user signin-form-icon"></span>
-            <span class="help-block ">{!! implode('', $errors->get('username')) !!}</span>
+            <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
         </div> <!-- / Username -->
 
         <div class="form-group w-icon {{ $errors->has('password') ? 'has-error' : '' }}">

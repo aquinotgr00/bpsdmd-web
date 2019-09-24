@@ -32,7 +32,7 @@ class AuthService
         $user = $this->userService->getRepository()->findOneBy([
             'email' => $email,
             'isActive' => 1,
-            'isDelete' => 0,
+            'isDeleted' => 0,
         ]);
 
         if ($user instanceof UserInterface) {
