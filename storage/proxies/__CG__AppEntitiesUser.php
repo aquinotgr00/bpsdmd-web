@@ -64,10 +64,10 @@ class User extends \App\Entities\User implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entities\\User' . "\0" . 'id', '' . "\0" . 'App\\Entities\\User' . "\0" . 'username', '' . "\0" . 'App\\Entities\\User' . "\0" . 'password', '' . "\0" . 'App\\Entities\\User' . "\0" . 'authority', '' . "\0" . 'App\\Entities\\User' . "\0" . 'photo', '' . "\0" . 'App\\Entities\\User' . "\0" . 'org'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entities\\User' . "\0" . 'id', '' . "\0" . 'App\\Entities\\User' . "\0" . 'org', '' . "\0" . 'App\\Entities\\User' . "\0" . 'email', '' . "\0" . 'App\\Entities\\User' . "\0" . 'password', '' . "\0" . 'App\\Entities\\User' . "\0" . 'authority', '' . "\0" . 'App\\Entities\\User' . "\0" . 'isActive', '' . "\0" . 'App\\Entities\\User' . "\0" . 'isDeleted', '' . "\0" . 'App\\Entities\\User' . "\0" . 'name', '' . "\0" . 'App\\Entities\\User' . "\0" . 'photo'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entities\\User' . "\0" . 'id', '' . "\0" . 'App\\Entities\\User' . "\0" . 'username', '' . "\0" . 'App\\Entities\\User' . "\0" . 'password', '' . "\0" . 'App\\Entities\\User' . "\0" . 'authority', '' . "\0" . 'App\\Entities\\User' . "\0" . 'photo', '' . "\0" . 'App\\Entities\\User' . "\0" . 'org'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entities\\User' . "\0" . 'id', '' . "\0" . 'App\\Entities\\User' . "\0" . 'org', '' . "\0" . 'App\\Entities\\User' . "\0" . 'email', '' . "\0" . 'App\\Entities\\User' . "\0" . 'password', '' . "\0" . 'App\\Entities\\User' . "\0" . 'authority', '' . "\0" . 'App\\Entities\\User' . "\0" . 'isActive', '' . "\0" . 'App\\Entities\\User' . "\0" . 'isDeleted', '' . "\0" . 'App\\Entities\\User' . "\0" . 'name', '' . "\0" . 'App\\Entities\\User' . "\0" . 'photo'];
     }
 
     /**
@@ -176,7 +176,7 @@ class User extends \App\Entities\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getId()
+    public function getId(): int
     {
         if ($this->__isInitialized__ === false) {
             return (int)  parent::getId();
@@ -191,100 +191,12 @@ class User extends \App\Entities\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
-        return parent::setId($id);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getUsername(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUsername', []);
-
-        return parent::getUsername();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setUsername(string $username): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUsername', [$username]);
-
-        parent::setUsername($username);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getPassword(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPassword', []);
-
-        return parent::getPassword();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setPassword(string $password): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassword', [$password]);
-
-        parent::setPassword($password);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAuthority(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAuthority', []);
-
-        return parent::getAuthority();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setAuthority(string $authority): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAuthority', [$authority]);
-
-        parent::setAuthority($authority);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getPhoto(): string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhoto', []);
-
-        return parent::getPhoto();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setPhoto(string $photo): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPhoto', [$photo]);
-
-        parent::setPhoto($photo);
+        parent::setId($id);
     }
 
     /**
@@ -312,12 +224,155 @@ class User extends \App\Entities\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getAvailableRoles()
+    public function getEmail(): string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAvailableRoles', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', []);
 
-        return parent::getAvailableRoles();
+        return parent::getEmail();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setEmail($email): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', [$email]);
+
+        parent::setEmail($email);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPassword(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPassword', []);
+
+        return parent::getPassword();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPassword($password): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassword', [$password]);
+
+        parent::setPassword($password);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAuthority(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAuthority', []);
+
+        return parent::getAuthority();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAuthority($authority): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAuthority', [$authority]);
+
+        parent::setAuthority($authority);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIsActive(): int
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
+
+        return parent::getIsActive();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsActive(int $isActive): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
+
+        parent::setIsActive($isActive);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIsDeleted(): int
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsDeleted', []);
+
+        return parent::getIsDeleted();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIsDeleted(int $isDeleted): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsDeleted', [$isDeleted]);
+
+        parent::setIsDeleted($isDeleted);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
+
+        return parent::getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setName($name): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
+
+        parent::setName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPhoto(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhoto', []);
+
+        return parent::getPhoto();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPhoto($photo): void
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPhoto', [$photo]);
+
+        parent::setPhoto($photo);
     }
 
 }
