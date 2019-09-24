@@ -30,7 +30,7 @@ class Organization
      *
      * @ORM\Column(name="kode", type="string", nullable=true)
      */
-    private $code = 'NULL';
+    private $code = NULL;
 
     /**
      * @var string
@@ -44,7 +44,7 @@ class Organization
      *
      * @ORM\Column(name="singkatan", type="string", nullable=true)
      */
-    private $shortName = 'NULL';
+    private $shortName = NULL;
 
     /**
      * @var string
@@ -58,7 +58,14 @@ class Organization
      *
      * @ORM\Column(name="moda", type="string", nullable=true)
      */
-    private $moda = 'NULL';
+    private $moda = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alamat", type="string", nullable=true)
+     */
+    private $address = NULL;
 
     /**
      * @return string
@@ -71,7 +78,7 @@ class Organization
     /**
      * @param string $id
      */
-    public function setId(string $id): void
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -87,7 +94,7 @@ class Organization
     /**
      * @param string $code
      */
-    public function setCode(string $code): void
+    public function setCode($code): void
     {
         $this->code = $code;
     }
@@ -103,7 +110,7 @@ class Organization
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -119,7 +126,7 @@ class Organization
     /**
      * @param string $shortName
      */
-    public function setShortName(string $shortName): void
+    public function setShortName($shortName): void
     {
         $this->shortName = $shortName;
     }
@@ -135,7 +142,7 @@ class Organization
     /**
      * @param string $type
      */
-    public function setType(string $type): void
+    public function setType($type): void
     {
         $this->type = $type;
     }
@@ -151,7 +158,7 @@ class Organization
     /**
      * @param string $moda
      */
-    public function setModa(string $moda): void
+    public function setModa($moda): void
     {
         $this->moda = $moda;
     }

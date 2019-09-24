@@ -33,7 +33,7 @@ class User implements UserInterface
      *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id", onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
     private $org;
@@ -78,14 +78,14 @@ class User implements UserInterface
      *
      * @ORM\Column(name="nama", type="string", nullable=true)
      */
-    private $name = 'NULL';
+    private $name = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="foto", type="string", nullable=true)
      */
-    private $photo = 'NULL';
+    private $photo = NULL;
 
     /**
      * @return int
@@ -130,7 +130,7 @@ class User implements UserInterface
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -146,7 +146,7 @@ class User implements UserInterface
     /**
      * @param string $password
      */
-    public function setPassword(string $password): void
+    public function setPassword($password): void
     {
         $this->password = $password;
     }
@@ -162,7 +162,7 @@ class User implements UserInterface
     /**
      * @param string $authority
      */
-    public function setAuthority(string $authority): void
+    public function setAuthority($authority): void
     {
         $this->authority = $authority;
     }
@@ -210,7 +210,7 @@ class User implements UserInterface
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -226,7 +226,7 @@ class User implements UserInterface
     /**
      * @param string $photo
      */
-    public function setPhoto(string $photo): void
+    public function setPhoto($photo): void
     {
         $this->photo = $photo;
     }

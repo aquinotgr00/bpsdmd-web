@@ -77,6 +77,7 @@ class UserService
         if (!empty($data->get('uploaded_img'))) {
             $user->setPhoto($data->get('uploaded_img'));
         }
+
         if ($org instanceof Organization) {
             $user->setOrg($org);
         }

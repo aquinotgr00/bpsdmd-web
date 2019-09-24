@@ -78,7 +78,7 @@ ALTER SEQUENCE public.organisasi_id_seq OWNED BY public.organisasi.id;
 
 CREATE TABLE public.pengguna (
     id bigint NOT NULL,
-    org_id bigint NOT NULL,
+    org_id bigint,
     email character varying NOT NULL,
     password character varying NOT NULL,
     otoritas character varying NOT NULL,
