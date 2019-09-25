@@ -15,30 +15,32 @@
 				<div class="box-body">
 					@if ($message = Session::get('success'))
 					<div class="alert alert-success alert-block">
-						<button type="button" class="close" data-dismiss="alert">×</button> 
+						<button type="button" class="close" data-dismiss="alert">×</button>
 						<strong>{{ $message }}</strong>
 					</div>
 					@endif
 
 					@if ($message = Session::get('error'))
 					<div class="alert alert-danger alert-block">
-						<button type="button" class="close" data-dismiss="alert">×</button> 
+						<button type="button" class="close" data-dismiss="alert">×</button>
 						<strong>{{ $message }}</strong>
 					</div>
 					@endif
 					<form method="post" enctype="multipart/form-data">
 						@csrf
+
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 							<label for="name">Name :</label>
-							<input type="text" class="form-control" id="username" name="name" required="" value="{{ $user->getName() }}">
+							<input type="text" class="form-control" id="username" name="name" value="{{ $user->getName() }}">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
-						<div class="form-group {{  $errors->has('username') ? 'has-error' : '' }}">
-							<label for="username">Username :</label>
-							<input type="text" class="form-control" id="username" name="username" value="{{ $user->getUserName() }}">
-							<span class="help-block ">{!! implode('', $errors->get('username')) !!}</span>
+
+						<div class="form-group {{  $errors->has('email') ? 'has-error' : '' }}">
+							<label for="email">Email :</label>
+							<input type="text" class="form-control" id="email" name="email" value="{{ $user->getEmail() }}">
+							<span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
 						</div>
-						
+
 						<div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
 							<img src="">
 							<div class="input-group-prepend">
@@ -53,36 +55,36 @@
 								<span class="help-block ">{!! implode('', $errors->get('photo')) !!}</span>
 							</div>
 						</div>
-						<div class="form-group">
-							@if(!empty($user->getPhoto()))
-							<img src="{{ url($user->getPhoto()) }}" width="100px" height="100px">
-							@endif
-						</div>
+                        <div class="form-group">
+                            <img src="{{ $user->getPhoto() ? url($user->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
+                        </div>
+
 						<span class="help-block" style="color:red">Kosongkan password, password lama dan konfirmasi password jika tidak ingin diganti</span>
 						<div class="form-group {{  $errors->has('old_password') ? 'has-error' : '' }}">
 							<label for="password">Password Lama:</label>
 							<input type="password" class="form-control" id="old_password" name="old_password">
 							<span class="help-block ">{!! implode('', $errors->get('old_password')) !!}</span>
 						</div>
+
 						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 							<label for="password">Password :</label>
 							<input type="password" class="form-control" id="password" name="password">
 							<span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
 						</div>
+
 						<div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
 							<label for="password_confirmation">Konfirmasi Password :</label>
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
+
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Submit</button>
 						</div>
 					</form>
-					<div class="box-body">
-					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-	@endsection
+</section>
+@endsection

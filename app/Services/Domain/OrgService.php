@@ -116,4 +116,15 @@ class OrgService
 
         throw new OrgDeleteException('Cannot delete organization due to existing ' . $count . ' users!');
     }
+
+    /**
+     * Find organization by id
+     *
+     * @param $id
+     * @return Organization
+     */
+    public function findById($id)
+    {
+        return $this->getRepository()->find($id);
+    }
 }

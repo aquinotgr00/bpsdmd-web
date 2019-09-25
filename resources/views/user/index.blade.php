@@ -49,13 +49,13 @@ $currentUser = get_user_data();
                         <tbody>
                             <?php
                             $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
-                            /** @var \App\Entities\Organization $item */
+                            /** @var \App\Entities\User $item */
                             foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $item->getName() }}</td>
-                                    <td>{{ $item->getUserName() }}</td>
+                                    <td>{{ $item->getEmail() }}</td>
                                     <td>{{ ucfirst($item->getAuthority()) }}</td>
                                     <td style="text-align: center;">
                                         @if($item->getIsactive())
@@ -65,7 +65,7 @@ $currentUser = get_user_data();
                                         @endif
                                     </td>
                                     <td style="text-align: center;">
-                                        <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> 
+                                        <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a>
                                         @if($currentUser->getId() <> $item->getId())
                                         |
                                         <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> Hapus</a>

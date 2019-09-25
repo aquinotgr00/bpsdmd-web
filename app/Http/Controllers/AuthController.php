@@ -56,7 +56,7 @@ class AuthController extends Controller
             ]);
 
             if ($request->hasFile('image_file')) {          // if the request has image file in it
-                $request->image_file->store(User::UPLOAD_PATH, 'public');
+                $request->get('image_file')->store(User::UPLOAD_PATH, 'public');
                 $photoName = $request->file('image_file')->hashName();
 
                 $request->merge([
@@ -64,19 +64,19 @@ class AuthController extends Controller
                 ]);
             }
 
-            $username = strtolower(preg_replace('/\s+/', '_', $request->name));     // create username
+            $username = strtolower(preg_replace('/\s+/', '_', $request->get('name')));     // create username
             $request->merge([                               // merge request
                 'username' => $username,
                 'password' => substr(str_shuffle(md5(time())), 0, 8),
                 'authority' => 'demand',
                 'isActive' => 0
             ]);
-            $org = $request->authority <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
+            $org = $request->get('authority') <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
             $user = $userService->create(collect($request->all()), $org);                   // create user
 
             $randomString = substr(str_shuffle(md5(time())), 0, 15);
             $url = env('APP_URL') . '/verify/' . $randomString . '/' . $user->getId();
-            Mail::to($request->email)->send(new VerificationMail($url, $request));                // send verification email
+            Mail::to($request->get('email'))->send(new VerificationMail($url, $request));                // send verification email
 
             return redirect()->route('login')->with('alert', 'Silahkan cek email anda untuk aktivasi.');
         }
@@ -84,16 +84,16 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function verifyUser(Request $request, $any, $id, UserService $userService)
+    public function verifyUser(Request $request, $id, UserService $userService)
     {
         if ($request->method() === 'POST') {
             $user = $userService->getRepository()->findOneBy([ 'id' => $id ]);
-            if (Hash::check($request->old_password, $user->getPassword())) {
+            if (Hash::check($request->get('old_password'), $user->getPassword())) {
                 if ($user->getIsActive() == 0) {
                     $userArr = [
-                        'username' => $user->getUsername(),
+                        'email' => $user->getEmail(),
                         'name' => $user->getName(),
-                        'password' => $request->password,
+                        'password' => $request->get('password'),
                         'isActive' => 1
                     ];
                     $userService->updateProfile($user, collect($userArr));
@@ -101,8 +101,10 @@ class AuthController extends Controller
 
                 return redirect()->route('login')->with('alert', 'Your account has been confirmed, go ahead and login.');
             }
+
             return redirect()->back()->with('alert', 'Your password is wrong.');
         }
+
         return view('auth.verify-form');
     }
 }
