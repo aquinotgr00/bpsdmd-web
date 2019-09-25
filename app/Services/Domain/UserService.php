@@ -47,11 +47,9 @@ class UserService
     {
         $limit = 10;
         $query = $this->createQueryBuilder('u')
-            ->where('u.isActive IN (:isActive)')->andWhere('u.isDelete = :isDelete')
-            ->setParameters([
-                'isActive' => [1, 0],
-                'isDelete' => 0
-            ])->getQuery();
+            ->andWhere('u.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', 0)
+            ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
     }
@@ -72,9 +70,14 @@ class UserService
         $user->setAuthority($data->get('authority'));
         $user->setName($data->get('name'));
         $user->setEmail($data->get('email'));
-        $user->setIsActive($data->get('isActive'));
 
-        if (!empty($data->get('uploaded_img'))) {
+        if ($data->get('authority') != User::ROLE_ADMIN) {
+            $user->setIsActive(0);
+        } else {
+            $user->setIsActive(1);
+        }
+
+        if ($data->get('uploaded_img')) {
             $user->setPhoto($data->get('uploaded_img'));
         }
 
@@ -102,20 +105,20 @@ class UserService
      */
     public function update(User $user, Collection $data, $org = false, $flush = true)
     {
-        $user->setEmail($data->get('username'));
+        $user->setEmail($data->get('email'));
         $user->setName($data->get('name'));
-        $user->setAuthority($data->get('authority'));
-        $user->setIsActive($data->get('isactive'));
+        $user->setIsActive($data->get('active'));
 
         if (!is_null($data->get('password'))) {
             $user->setPassword($data->get('password'));
-
         }
+
         if ($org instanceof Organization) {
             $user->setOrg($org);
         }
 
-        if (!empty($data->get('uploaded_img'))) {
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(User::UPLOAD_PATH).'/'.$user->getPhoto());
             $user->setPhoto($data->get('uploaded_img'));
         }
 
@@ -138,7 +141,7 @@ class UserService
      */
     public function updateProfile(User $user, Collection $data, $org = false, $flush = true)
     {
-        $user->setEmail($data->get('username'));
+        $user->setEmail($data->get('email'));
         $user->setName($data->get('name'));
         $user->setPassword($data->get('password'));
         $user->setIsActive($data->get('isActive'));
@@ -169,7 +172,41 @@ class UserService
     {
         $user->setIsActive(0);
         $user->setIsDeleted(1);
+
         EntityManager::persist($user);
         EntityManager::flush();
+    }
+
+    /**
+     * Check if email exist
+     *
+     * @param $email
+     * @param bool $id
+     * @return bool
+     */
+    public function checkEmailExist($email, $id = false)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.email = :email')
+            ->setParameter('email', $email)
+            ->andWhere('u.isDeleted = :deleted')
+            ->setParameter('deleted', 0);
+
+        if ($id) {
+            $qb->AndWhere('u.id != :id')
+                ->setParameter('id', $id);
+        }
+
+        try {
+            $user = $qb->getQuery()->getSingleResult();
+
+            if ($user instanceof User) {
+                return true;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return false;
     }
 }
