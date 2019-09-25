@@ -50,6 +50,6 @@ class IsAllowedDomain implements Rule
      */
     public function message()
     {
-        return 'Sorry, you are currently cannot register with your current domain.';
+        return 'You only allowed using email with domain @pelni.com or kai.com!';
     }
 }

@@ -1,3 +1,4 @@
+.idea/
 /node_modules
 /public/hot
 /public/storage
@@ -5,9 +6,10 @@
 /storage/proxies/
 /vendor
 .env
-.phpunit.result.cache
+.phpunit.result.cacheG
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-.idea/
+public/users/img/*
+!public/users/img/.gitkeep
