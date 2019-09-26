@@ -50,6 +50,8 @@
 		}
 	</style>
 
+	{!! NoCaptcha::renderJs('id') !!}
+
 </head>
 <body class="theme-default page-signin">
 	<!-- Page background -->

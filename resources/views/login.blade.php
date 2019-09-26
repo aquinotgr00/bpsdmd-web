@@ -26,7 +26,15 @@
             <input name="password" id="password_id" class="form-control input-lg" placeholder="Password" type="password">
             <span class="fa fa-lock signin-form-icon"></span>
             <span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
-        </div> <!-- / Password -->
+		</div> <!-- / Password -->
+		
+		{!! NoCaptcha::display() !!}
+
+		@if ($errors->has('g-recaptcha-response'))
+			<span class="help-block">
+				<strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+			</span>
+		@endif
 
         <div class="form-actions">
             <div style="text-align: center;">

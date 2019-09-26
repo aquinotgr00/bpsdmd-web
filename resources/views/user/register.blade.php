@@ -61,6 +61,14 @@
             <span class="help-block">Foto Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('image_file')) !!}</span>
         </div> <!-- / photo -->
+        
+        {!! NoCaptcha::display() !!}
+
+        @if ($errors->has('g-recaptcha-response'))
+          <span class="help-block">
+            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+          </span>
+        @endif
 
         <div class="form-group required required-asterisk">
             <div class="checkbox">
