@@ -15,26 +15,32 @@ class UsersTableSeeder extends Seeder
         $userService = app(\App\Services\Domain\UserService::class);
         /** @var \App\Services\Domain\OrgService $orgService */
         $orgService = app(\App\Services\Domain\OrgService::class);
-        DB::table('datauser')->truncate();
+        DB::table('pengguna')->truncate();
 
         $data = [
             [
-                'username' => 'bpsdm',
+                'email' => 'admin@bpsdm.com',
                 'password' => 'bpsdm',
                 'authority' => \App\Entities\User::ROLE_ADMIN,
-                'org' => false
+                'isActive' => 1,
+                'org' => false,
+                'name' => 'Admin BPSDM'
             ],
             [
-                'username' => 'supply',
-                'password' => 'supply',
-                'authority' => \App\Entities\User::ROLE_SUPPLY,
-                'org' => $orgService->getRepository()->find(1)
-            ],
-            [
-                'username' => 'demand',
-                'password' => 'demand',
+                'email' => 'user@pelni.com',
+                'password' => 'pelni',
                 'authority' => \App\Entities\User::ROLE_DEMAND,
-                'org' => $orgService->getRepository()->find(2)
+                'isActive' => 1,
+                'org' => $orgService->getRepository()->find(1),
+                'name' => 'User PELNI'
+            ],
+            [
+                'email' => 'user@kai.com',
+                'password' => 'kai',
+                'authority' => \App\Entities\User::ROLE_DEMAND,
+                'isActive' => 1,
+                'org' => $orgService->getRepository()->find(2),
+                'name' => 'User KAI'
             ],
         ];
 

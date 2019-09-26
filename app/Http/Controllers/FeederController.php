@@ -60,7 +60,6 @@ class FeederController extends Controller
                 }
                 $request->session()->flash('success', 'File Berhasil Disimpan');
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 report($e);
                 $request->session()->flash('error', 'File Gagal Disimpan');
 
