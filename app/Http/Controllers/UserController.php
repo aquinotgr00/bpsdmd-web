@@ -26,13 +26,20 @@ class UserController extends Controller
     public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
     {
         if ($request->method() == 'POST') {
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'email' => ['required', 'email', new IsAllowedDomain],
                 'password' => 'required||confirmed',
                 'password_confirmation' => 'required|same:password',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
-            ]);
+            ];
+
+            if ($type == User::ROLE_DEMAND) {
+                $validation['email'] = ['required', 'email', new IsAllowedDomain];
+            } else {
+                $validation['email'] = 'required|email';
+            }
+
+            $request->validate($validation);
 
             $messageBag = new MessageBag;
             $checkEmail = $userService->checkEmailExist($request->get('email'));
@@ -82,9 +89,9 @@ class UserController extends Controller
         }
 
         if ($type == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
         } elseif ($type == User::ROLE_DEMAND) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
         } else {
             $dataOrg = [];
         }
@@ -97,10 +104,15 @@ class UserController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
-                'email' => ['required', 'email', new IsAllowedDomain],
                 'active' => 'required',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
             ];
+
+            if ($user->getAuthority() == User::ROLE_DEMAND) {
+                $validation['email'] = ['required', 'email', new IsAllowedDomain];
+            } else {
+                $validation['email'] = 'required|email';
+            }
 
             if (!empty($request->get('password'))) {
                 $validation['password'] = 'required||confirmed';
@@ -155,9 +167,9 @@ class UserController extends Controller
         }
 
         if ($user->getAuthority() == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
         } elseif ($user->getAuthority() == User::ROLE_DEMAND) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
         } else {
             $dataOrg = [];
         }
@@ -185,5 +197,51 @@ class UserController extends Controller
         }
 
         return redirect()->route('user.index')->with($alert, $message);
+    }
+
+    public function enable(AuthService $authService, UserService $userService, User $user)
+    {
+        if ($authService->user()->getId() != $user->getId()) {
+            $userService->enableUser($user);
+
+            $alert = 'alert_success';
+            $message = 'User ' . $user->getName() . ' berhasil diubah.';
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function disable(AuthService $authService, UserService $userService, User $user)
+    {
+        if ($authService->user()->getId() != $user->getId()) {
+            $userService->disableUser($user);
+
+            $alert = 'alert_success';
+            $message = 'User ' . $user->getName() . ' berhasil diubah.';
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function ajaxDetailUser(Request $request, User $user)
+    {
+        if ($request->ajax()) {
+            $data = [
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'photo' => $user->getPhoto() ? url(url(User::UPLOAD_PATH.'/'.$user->getPhoto())) : url('img/avatar.png'),
+                'org' => ($user->getOrg() instanceof Organization) ? $user->getOrg()->getName() : false,
+                'authority' => $user->getAuthority(),
+                'active' => $user->getIsActive()
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }

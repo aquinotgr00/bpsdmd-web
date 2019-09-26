@@ -11,6 +11,8 @@
 |
 */
 
+use App\Entities\User;
+
 Route::group(['middleware' => ['authenticated']], function() {
     Route::group(['prefix' => 'org', 'middleware' => ['only_admin']], function() {
         Route::any('/create', 'OrgController@create')->name('org.create');
@@ -20,10 +22,12 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
-        Route::any('/create/{type}', 'UserController@create')->name('user.create')
-        ->where('type', \App\Entities\User::ROLE_ADMIN."|".\App\Entities\User::ROLE_SUPPLY."|".\App\Entities\User::ROLE_DEMAND);
+        Route::any('/create/{type}', 'UserController@create')->name('user.create')->where('type', User::ROLE_ADMIN."|". User::ROLE_SUPPLY."|". User::ROLE_DEMAND);
         Route::any('/{user}/update', 'UserController@update')->name('user.update');
         Route::get('/{user}/delete', 'UserController@delete')->name('user.delete');
+        Route::get('/{user}/enable', 'UserController@enable')->name('user.enable');
+        Route::get('/{user}/disable', 'UserController@disable')->name('user.disable');
+        Route::get('/{user}', 'UserController@ajaxDetailUser')->name('user.view');
         Route::get('/', 'UserController@index')->name('user.index');
     });
 
