@@ -20,6 +20,12 @@
             <span>User Management</span>
         </a>
     </li>
+    <li>
+        <a href="{{ url(route('org.index')) }}">
+            <i class="fa fa-sitemap"></i>
+            <span>Organisasi</span>
+        </a>
+    </li>
 {{--    <li>--}}
 {{--        <a href="{{ url(route('linknmatch.admin.index',[ 'type'=> \App\Entities\User::ROLE_ADMIN ])) }}">--}}
 {{--            <i class="fa fa-link"></i>--}}

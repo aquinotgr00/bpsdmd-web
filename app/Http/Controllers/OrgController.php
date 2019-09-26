@@ -30,11 +30,11 @@ class OrgController extends Controller
             try {
                 $orgService->create(collect($request->input()));
                 $alert = 'alert_success';
-                $message = 'Instansi berhasil ditambahkan.';
+                $message = 'Organisasi berhasil ditambahkan.';
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah instansi. Silakan kontak web administrator!';
+                $message = 'Tidak dapat menambah organisasi. Silakan kontak web administrator!';
             }
 
             return redirect()->route('org.index')->with($alert, $message);
@@ -55,10 +55,10 @@ class OrgController extends Controller
             try {
                 $orgService->update($data, collect($request->input()));
                 $alert = 'alert_success';
-                $message = 'Instansi berhasil diubah.';
+                $message = 'Organisasi berhasil diubah.';
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah instansi. Silakan kontak web administrator!';
+                $message = 'Tidak dapat mengubah organisasi. Silakan kontak web administrator!';
             }
 
             return redirect()->route('org.index')->with($alert, $message);
@@ -72,15 +72,15 @@ class OrgController extends Controller
         try {
             $orgService->delete($data);
             $alert = 'alert_success';
-            $message = 'Instansi berhasil dihapus.';
+            $message = 'Organisasi berhasil dihapus.';
         } catch (OrgDeleteException $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus instansi karena masih terdapat user instansi!';
+            $message = 'Tidak dapat menghapus organisasi karena masih terdapat user organisasi!';
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus instansi. Silakan kontak web administrator!';
+            $message = 'Tidak dapat menghapus organisasi. Silakan kontak web administrator!';
         }
 
         return redirect()->route('org.index')->with($alert, $message);

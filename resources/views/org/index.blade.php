@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data Instansi</h1>
+        <h1>Data Organisasi</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url(route('org.create')) }}">
-                    <i class="fa fa-plus-circle"></i> Tambah instansi
+                    <i class="fa fa-plus-circle"></i> Tambah Organisasi
                 </a>
             </li>
         </ol>
@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Tipe</th>
                                     <th>Action</th>
@@ -38,11 +39,13 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}</td>
+                                    <td>{{ $item->getCode() }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getType()) }}</td>
                                     <td>
                                         <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> |
-                                        <a href="{{ url(route('org.delete', [$item->getId()])) }}"><i class="fa fa-trash"></i> Hapus</a>
+                                        <a href="{{ url(route('org.delete', [$item->getId()])) }}"><i class="fa fa-trash"></i> Hapus</a> |
+                                        <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-sliders"></i> Program Studi</a>
                                     </td>
                                 </tr>
                                 <?php
