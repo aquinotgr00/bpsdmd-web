@@ -127,4 +127,20 @@ class OrgService
     {
         return $this->getRepository()->find($id);
     }
+
+    /**
+     * Get organization by type
+     * @param string $type
+     * @return Organization[]
+     */
+    public function getOrgByType($type = 'all')
+    {
+        if ($type == Organization::TYPE_DEMAND) {
+            return $this->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+        } elseif ($type == Organization::TYPE_SUPPLY) {
+            return $this->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+        }
+
+        return $this->getRepository()->findAll();
+    }
 }

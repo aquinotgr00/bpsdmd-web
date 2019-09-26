@@ -17,7 +17,7 @@
     <li>
         <a href="{{ url(route('user.index')) }}">
             <i class="fa fa-group"></i>
-            <span>User Management</span>
+            <span>Manajemen Pengguna</span>
         </a>
     </li>
 {{--    <li>--}}

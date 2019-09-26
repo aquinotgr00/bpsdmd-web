@@ -59,12 +59,13 @@ $currentUser = get_user_data();
                                     <td>{{ ucfirst($item->getAuthority()) }}</td>
                                     <td style="text-align: center;">
                                         @if($item->getIsactive())
-                                        <span class="label label-success">Aktif</span>
+                                            <a href="{{ url(route('user.disable', [$item->getId()])) }}"><span class="label label-success">Aktif</span></a>
                                         @else
-                                        <span class="label label-danger">Tidak Aktif</span>
+                                            <a href="{{ url(route('user.enable', [$item->getId()])) }}"><span class="label label-danger">Tidak Aktif</span></a>
                                         @endif
                                     </td>
                                     <td style="text-align: center;">
+                                        <a href="javascript:void(0)" class="viewUser" data-user="{{ $item->getId() }}"><i class="fa fa-eye"></i> Lihat</a> |
                                         <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a>
                                         @if($currentUser->getId() <> $item->getId())
                                         |
@@ -90,5 +91,96 @@ $currentUser = get_user_data();
             </div><!-- /.box -->
         </div>
     </div>
+
+    <div id="modalDetailUser" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                    <h4 class="modal-title">Informasi User</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center; margin-bottom: 22px">
+                        <img class="userPhoto" src="" width="100px" height="100px">
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th width="30%">Nama</th>
+                            <td width="5%">:</td>
+                            <td class="userName"></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>:</td>
+                            <td class="userEmail"></td>
+                        </tr>
+                        <tr class="userOrgInfo">
+                            <th>Instansi</th>
+                            <td>:</td>
+                            <td class="userOrg"></td>
+                        </tr>
+                        <tr>
+                            <th>Otoritas</th>
+                            <td>:</td>
+                            <td class="userAuthority"></td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>:</td>
+                            <td class="userStatus"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section><!-- /.content -->
+@endsection
+
+@section('script')
+<script>
+    $('a.viewUser').on('click', function () {
+        let user = $(this).data('user'),
+            modalHtml = $('#modalDetailUser');
+
+        modalHtml.modal('hide');
+
+        $.get('/user/'+user, function(user, status){
+            if (status === 'success') {
+                if (user.org === false) {
+                    modalHtml.find('.userOrgInfo').hide();
+                } else {
+                    modalHtml.find('.userOrgInfo').show();
+                    modalHtml.find('.userOrg').html(user.org);
+                }
+
+                modalHtml.find('.userPhoto').attr("src",user.photo);
+                modalHtml.find('.userName').html(user.name);
+                modalHtml.find('.userEmail').html(user.email);
+                modalHtml.find('.userAuthority').html(user.authority);
+
+                if (user.active === 1) {
+                    modalHtml.find('.userStatus').html('<span class="label label-success">Aktif</span>');
+                } else {
+                    modalHtml.find('.userStatus').html('<span class="label label-danger">Tidak Aktif</span>');
+                }
+
+                modalHtml.modal('show');
+            }
+        });
+    });
+
+    $('#modalDetailUser').on('hidden.bs.modal', function (e) {
+        modalHtml.find('.userPhoto').attr('src','');
+        modalHtml.find('.userName').html('');
+        modalHtml.find('.userEmail').html('');
+        modalHtml.find('.userOrgInfo').show();
+        modalHtml.find('.userOrg').html('');
+        modalHtml.find('.userAuthority').html('');
+        modalHtml.find('.userStatus').html('');
+    })
+</script>
 @endsection
