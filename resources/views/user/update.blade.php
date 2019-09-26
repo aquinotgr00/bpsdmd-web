@@ -18,11 +18,13 @@ $currentUser = get_user_data();
 				<div class="box-body">
 					<form method="post" enctype="multipart/form-data">
 						@csrf
+
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 							<label for="name">Name :</label>
 							<input type="text" class="form-control" id="username" name="name" value="{{ $user->getName() }}">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
+
 						<div class="form-group {{  $errors->has('email') ? 'has-error' : '' }}">
 							<label for="email">Email :</label>
 							<input type="text" class="form-control" id="email" name="email" value="{{ $user->getEmail() }}">
@@ -82,6 +84,7 @@ $currentUser = get_user_data();
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
+
 						<div class="box-footer">
 							<button class="btn btn-primary pull-right">Ubah</button>
 						</div>
