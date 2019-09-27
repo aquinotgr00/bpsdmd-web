@@ -62,12 +62,9 @@ class OrgService
     public function create(Collection $data, $flush = true)
     {
         $org = new Organization;
-        $org->setCode($data->get('code'));
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
         $org->setType($data->get('type'));
-        $org->setModa($data->get('moda'));
-        $org->setAddress($data->get('address'));
         EntityManager::persist($org);
 
         if ($flush) {
@@ -87,12 +84,9 @@ class OrgService
      */
     public function update(Organization $org, Collection $data, $flush = true)
     {
-        $org->setCode($data->get('code'));
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
         $org->setType($data->get('type'));
-        $org->setModa($data->get('moda'));
-        $org->setAddress($data->get('address'));
         EntityManager::persist($org);
 
         if ($flush) {

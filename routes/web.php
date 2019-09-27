@@ -20,6 +20,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{org}/delete', 'OrgController@delete')->name('org.delete');
         Route::get('/{org}', 'OrgController@ajaxDetailOrg')->name('org.view');
         Route::get('/', 'OrgController@index')->name('org.index');
+
+        Route::group(['prefix' => '{org}/program/', 'middleware' => ['only_admin']], function() {
+            Route::any('/create', 'ProgramController@create')->name('program.create');
+            Route::any('/{program}/update', 'ProgramController@update')->name('program.update');
+            Route::get('/{program}/delete', 'ProgramController@delete')->name('program.delete');
+            Route::get('/', 'ProgramController@index')->name('program.index');
+        });
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
