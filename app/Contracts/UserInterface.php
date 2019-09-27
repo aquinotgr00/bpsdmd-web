@@ -8,4 +8,5 @@ interface UserInterface
     public function getEmail();
     public function getPassword();
     public function getAuthority();
+    public function getLocale();
 }

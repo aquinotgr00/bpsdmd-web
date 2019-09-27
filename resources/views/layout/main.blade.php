@@ -41,7 +41,7 @@
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     @php
-        $loggedUser = get_user_data();
+        $loggedUser = currentUser();
     @endphp
     <a href="" class="logo">
         <img src="{{ asset('img/logo.png') }}">
@@ -87,8 +87,8 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div>
-                                <a href="{{ url(route('update.profile')) }}" class="btn btn-default btn-flat" style="margin-right: 15px;">Update profile</a>
-                                <a href="{{ url(route('logout')) }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ url(route('update.profile')) }}" class="btn btn-default btn-flat" style="margin-right: 15px;">{{ ucwords(trans('common.update_profile')) }}</a>
+                                <a href="{{ url(route('logout')) }}" class="btn btn-default btn-flat">{{ ucfirst(trans('common.sign_out')) }}</a>
                             </div>
                         </li>
                     </ul>

@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-$loggedUser = get_user_data();
+$loggedUser = currentUser();
 $year = date('Y');
 @endphp
 
@@ -20,14 +20,14 @@ $year = date('Y');
 				<div class="box-body">
 					@if ($message = Session::get('success'))
 					<div class="alert alert-success alert-block">
-						<button type="button" class="close" data-dismiss="alert">×</button> 
+						<button type="button" class="close" data-dismiss="alert">×</button>
 						<strong>{{ $message }}</strong>
 					</div>
 					@endif
 
 					@if ($message = Session::get('error'))
 					<div class="alert alert-danger alert-block">
-						<button type="button" class="close" data-dismiss="alert">×</button> 
+						<button type="button" class="close" data-dismiss="alert">×</button>
 						<strong>{{ $message }}</strong>
 					</div>
 					@endif
@@ -77,7 +77,7 @@ $year = date('Y');
 										<td style="text-align: center;width: 40%">
 											@if(!empty($file))
 											<label class="btn btn-success" for="my-file-selector{{ $key+1 }}">
-												<input id="my-file-selector{{ $key+1 }}" type="file" style="display:none" name="files[]" 
+												<input id="my-file-selector{{ $key+1 }}" type="file" style="display:none" name="files[]"
 												onchange="$(this).parents('label').next('.file-name').html(this.files[0].name)" accept=".xls,.xlsx">
 												Update File
 											</label>
@@ -95,7 +95,7 @@ $year = date('Y');
 									</tr>
 									@endforeach
 								@endif
-								
+
 							</tbody>
 						</table>
 						<div class="box-footer">
