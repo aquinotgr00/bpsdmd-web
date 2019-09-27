@@ -31,6 +31,7 @@ class UserController extends Controller
                 'password' => 'required||confirmed',
                 'password_confirmation' => 'required|same:password',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
             ];
 
             if ($type == User::ROLE_DEMAND) {
@@ -106,6 +107,7 @@ class UserController extends Controller
                 'name' => 'required',
                 'active' => 'required',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
             ];
 
             if ($user->getAuthority() == User::ROLE_DEMAND) {

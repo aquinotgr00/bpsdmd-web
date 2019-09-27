@@ -64,6 +64,7 @@ class UtilityController extends Controller
                 'name' => 'required',
                 'username' => 'required',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
             ];
 
             if (!empty($request->get('password'))) {

@@ -18,6 +18,8 @@ class User implements UserInterface
     const ROLE_SUPPLY = 'supply';
     const ROLE_DEMAND = 'demand';
     const UPLOAD_PATH = 'users/img';
+    const LOCALE_ID = 'id';
+    const LOCALE_EN = 'en';
 
     /**
      * @var integer
@@ -86,6 +88,13 @@ class User implements UserInterface
      * @ORM\Column(name="foto", type="string", nullable=true)
      */
     private $photo = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bahasa", type="string", nullable=true)
+     */
+    private $locale = 'id';
 
     /**
      * @return int
@@ -229,5 +238,21 @@ class User implements UserInterface
     public function setPhoto($photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale($locale): void
+    {
+        $this->locale = $locale;
     }
 }
