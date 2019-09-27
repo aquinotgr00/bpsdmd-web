@@ -39,13 +39,12 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $item->getCode() }}</td>
+                                    <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getType()) }}</td>
                                     <td>
                                         <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> |
-                                        <a href="{{ url(route('org.delete', [$item->getId()])) }}"><i class="fa fa-trash"></i> Hapus</a> |
-                                        <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-sliders"></i> Program Studi</a>
+                                        <a href="{{ url(route('org.delete', [$item->getId()])) }}"><i class="fa fa-trash"></i> Hapus</a> 
                                     </td>
                                 </tr>
                                 <?php
