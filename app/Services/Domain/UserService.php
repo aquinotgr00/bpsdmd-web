@@ -2,6 +2,7 @@
 
 namespace App\Services\Domain;
 
+use App;
 use App\Entities\Organization;
 use App\Entities\User;
 use Doctrine\ORM\EntityRepository;
@@ -48,6 +49,7 @@ class UserService
         $limit = 10;
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.isDeleted = :isDeleted')
+            ->orderBy('u.id')
             ->setParameter('isDeleted', 0)
             ->getQuery();
 
@@ -89,6 +91,8 @@ class UserService
             $user->setOrg($org);
         }
 
+        $user->setLocale($data->get('language'));
+
         EntityManager::persist($user);
 
         if ($flush) {
@@ -126,6 +130,8 @@ class UserService
             $user->setPhoto($data->get('uploaded_img'));
         }
 
+        $user->setLocale($data->get('language'));
+
         EntityManager::persist($user);
 
         if ($flush) {
@@ -157,6 +163,8 @@ class UserService
         if (!empty($data->get('uploaded_img'))) {
             $user->setPhoto($data->get('uploaded_img'));
         }
+
+        $user->setLocale($data->get('language'));
 
         EntityManager::persist($user);
 

@@ -2,12 +2,12 @@
 
 use App\Services\Application\AuthService;
 
-if (!function_exists("check_authorization")) {
+if (!function_exists("checkAuthorization")) {
     /**
      * @param null $role
      * @return bool
      */
-	function check_authorization($role = null) {
+	function checkAuthorization($role = null) {
 		$userAccess = new AuthService();
 		$currentUser = $userAccess->check();
 
@@ -19,11 +19,11 @@ if (!function_exists("check_authorization")) {
 	}
 }
 
-if (!function_exists("get_user_data")) {
+if (!function_exists("currentUser")) {
     /**
      * @return \App\Entities\User|bool
      */
-	function get_user_data() {
+	function currentUser() {
 		$userAccess = new AuthService();
 		$currentUser = $userAccess->user();
 		if ($currentUser) {

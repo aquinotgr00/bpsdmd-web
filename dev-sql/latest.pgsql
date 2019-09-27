@@ -85,7 +85,8 @@ CREATE TABLE public.pengguna (
     aktif character varying NOT NULL,
     hapus character varying NOT NULL,
     nama character varying,
-    foto character varying
+    foto character varying,
+    bahasa character varying
 );
 
 
@@ -174,6 +175,8 @@ ALTER TABLE ONLY public.program_studi ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 COPY public.organisasi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdin;
+1	\N	PELNI	\N	demand	\N	\N
+2	\N	KAI	\N	demand	\N	\N
 \.
 
 
@@ -181,7 +184,7 @@ COPY public.organisasi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdi
 -- Data for Name: pengguna; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.pengguna (id, org_id, email, password, otoritas, aktif, hapus, nama, foto) FROM stdin;
+COPY public.pengguna (id, org_id, email, password, otoritas, aktif, hapus, nama, foto, bahasa) FROM stdin;
 \.
 
 
@@ -197,7 +200,7 @@ COPY public.program_studi (id, org_id, kode, nama, jenjang) FROM stdin;
 -- Name: organisasi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.organisasi_id_seq', 5, true);
+SELECT pg_catalog.setval('public.organisasi_id_seq', 1, true);
 
 
 --

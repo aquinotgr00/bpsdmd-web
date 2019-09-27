@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="content-header">
-	<h1>Tambah User</h1>
+	<h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.user')) }}</h1>
 </section>
 
 <!-- Main content -->
@@ -17,34 +17,34 @@
 						@csrf
 
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-							<label for="name">Name :</label>
+							<label for="name">{{ ucfirst(trans('common.name')) }} :</label>
 							<input type="text" class="form-control" id="username" name="name">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
 
 						<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-							<label for="email">Email :</label>
+							<label for="email">{{ ucfirst(trans('common.email')) }} :</label>
 							<input type="text" class="form-control" id="email" name="email">
 							<span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
 						</div>
 
 						<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-							<label for="password">Password :</label>
+							<label for="password">{{ ucfirst(trans('common.password')) }} :</label>
 							<input type="password" class="form-control" id="password" name="password">
 							<span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
 						</div>
 
 						<div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-							<label for="password_confirmation">Konfirmasi Password :</label>
+							<label for="password_confirmation">{{ ucwords(trans('common.confirm_password')) }} :</label>
 							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
 
 						@if( $type <> \App\Entities\User::ROLE_ADMIN)
 						<div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
-							<label for="org">Instansi</label>
+							<label for="org">{{ ucfirst(trans('common.institute')) }}</label>
 							<select class="form-control" id="org" name="org">
-								<option value="">Pilih Instansi</option>
+								<option value="">{{ ucwords(trans('common.choose_institute')) }}</option>
 								@if(!empty($dataOrg))
                                     @foreach($dataOrg as $org)
                                     <option value="{{ $org->getId() }}">{{ $org->getName() }}</option>
@@ -57,9 +57,9 @@
 
 						<div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
 							<div class="input-group-prepend">
-								<label class="custom-file-label" for="inputGroupFile01">Foto</label>
-								<span class="help-block">File yang boleh diupload berformat : jpg, png, bmp</span>
-								<span class="help-block">Ukuran maksimal file 500KB</span>
+								<label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.photo')) }}</label>
+								<span class="help-block">{{ trans('common.allowed_photo') }}</span>
+								<span class="help-block">{{ __('common.max_photo', ['max' => '500KB']) }}</span>
 							</div>
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" name="photo">
@@ -67,8 +67,17 @@
 							</div>
 						</div>
 
+                        <div class="form-group {{ $errors->has('language') ? 'has-error' : '' }}">
+                            <label for="language">{{ ucfirst(trans('common.language')) }}</label>
+                            <select class="form-control" id="language" name="language">
+                                <option value="{{ \App\Entities\User::LOCALE_ID }}" selected>{{ ucfirst(trans('common.locale_id')) }}</option>
+                                <option value="{{ \App\Entities\User::LOCALE_EN }}">{{ ucfirst(trans('common.locale_en')) }}</option>
+                            </select>
+                            <span class="help-block ">{!! implode('', $errors->get('language')) !!}</span>
+                        </div>
+
 						<div class="box-footer">
-							<button class="btn btn-primary pull-right">Tambah</button>
+							<button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
 						</div>
 					</form>
 				</div>

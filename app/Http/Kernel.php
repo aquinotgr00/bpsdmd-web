@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticated;
+use App\Http\Middleware\Localization;
 use App\Http\Middleware\UserAdmin;
 use App\Http\Middleware\UserDemand;
 use App\Http\Middleware\UserSupply;
@@ -38,6 +39,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            Localization::class,
         ],
 
         'api' => [
