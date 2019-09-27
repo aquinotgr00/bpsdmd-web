@@ -68,6 +68,12 @@ class Organization
     private $address = NULL;
 
     /**
+     * @var ArrayCollection|User[]
+     * @ORM\OneToMany(targetEntity="User", mappedBy="org")
+     */
+    private $users;
+
+    /**
      * @return string
      */
     public function getId(): ?string
