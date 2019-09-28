@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="box-footer" style="text-align: right">
-                            <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
+                                <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
                         </form>
                     </div><!-- /.box-body -->

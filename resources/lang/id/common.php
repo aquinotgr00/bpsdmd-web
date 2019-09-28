@@ -54,4 +54,7 @@ return [
     'moda' => 'moda',
     'address' => 'alamat',
 
+    //manage program
+    'study_program' => 'program studi',
+    'degree' => 'jenjang',
 ];

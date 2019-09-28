@@ -5,93 +5,82 @@ namespace App\Http\Controllers;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Services\Domain\OrgService;
+use App\Services\Domain\ProgramService;
 use Exception;
 use Illuminate\Http\Request;
-use App\Exceptions\OrgDeleteException;
+use Illuminate\Support\MessageBag;
 
 class ProgramController extends Controller
 {
-    public function index(OrgService $orgService)
+    public function index(ProgramService $programService, $org)
     {
         $page = request()->get('page');
-        $data = $orgService->paginateorg(request()->get('page'));
+        $data = $programService->paginateProgram(request()->get('page'), $org);
 
-        return view('prodi.index', compact('data', 'page'));
+        return view('program.index', compact('data', 'page', 'org'));
     }
 
-    public function detail(OrgService $orgService, Organization $data)
-    {
-        $page = request()->get('page');
-        $data = $orgService->paginateorg(request()->get('page'));
-
-        return view('prodi.detail', compact('data', 'page'));
-    }
-
-    public function create(Request $request, OrgService $orgService)
+    public function create(Request $request, ProgramService $programService, OrgService $orgService, $org)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $orgService->findById($org)]);
             $request->validate([
-                'name' => 'required',
-                'short_name' => 'required',
-                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
+                'org' => 'required',
             ]);
 
             try {
-                $orgService->create(collect($request->input()));
+                $requestData = $request->all();
+                $programService->create(collect($requestData));
                 $alert = 'alert_success';
-                $message = 'Instansi berhasil ditambahkan.';
+                $message = 'Program studi berhasil ditambahkan.';
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah instansi. Silakan kontak web administrator!';
+                $message = 'Tidak dapat menambah program studi. Silakan kontak web administrator!';
             }
 
-            return redirect()->route('prodi.index')->with($alert, $message);
+            return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
-        return view('prodi.create');
+        return view('program.create');
     }
 
-    public function update(Request $request, OrgService $orgService, Organization $data)
+    public function update(Request $request, ProgramService $programService, OrgService $orgService, $org, StudyProgram $data)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $orgService->findById($org)]);
             $request->validate([
-                'name' => 'required',
-                'short_name' => 'required',
-                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
+                'org' => 'required',
             ]);
 
             try {
-                $orgService->update($data, collect($request->input()));
+                $requestData = $request->all();
+                $programService->update($data, collect($request->input()));
                 $alert = 'alert_success';
-                $message = 'Instansi berhasil diubah.';
+                $message = 'Program studi berhasil diubah.';
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah instansi. Silakan kontak web administrator!';
+                $message = 'Tidak dapat mengubah program studi. Silakan kontak web administrator!';
             }
 
-            return redirect()->route('prodi.index')->with($alert, $message);
+            return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
-        return view('prodi.update', compact('data'));
+        return view('program.update', compact('data'));
     }
 
-    public function delete(OrgService $orgService, Organization $data)
+    public function delete(ProgramService $programService, $org, StudyProgram $data)
     {
         try {
-            $orgService->delete($data);
+            $programService->delete($data);
             $alert = 'alert_success';
-            $message = 'Instansi berhasil dihapus.';
-        } catch (OrgDeleteException $e) {
-            report($e);
-            $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus instansi karena masih terdapat user instansi!';
+            $message = 'Program studi berhasil dihapus.';
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus instansi. Silakan kontak web administrator!';
+            $message = 'Tidak dapat menghapus program studi. Silakan kontak web administrator!';
         }
 
-        return redirect()->route('prodi.index')->with($alert, $message);
+        return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
     }
 }

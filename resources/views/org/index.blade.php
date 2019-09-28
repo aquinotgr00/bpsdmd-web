@@ -6,7 +6,7 @@
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url(route('org.create')) }}">
-                    <i class="fa fa-plus-circle"></i> Tambah {{ ucfirst(trans('common.institute')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.institute')) }}
                 </a>
             </li>
         </ol>
@@ -45,7 +45,8 @@
                                     <td>
                                         <a href="javascript:void(0)" class="viewOrg" data-org="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a> |
+                                        <a href="{{ url(route('program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucfirst(trans('common.study_program')) }}</a> 
                                     </td>
                                 </tr>
                                 <?php
@@ -54,7 +55,7 @@
 
                                 @if(!count($data))
                                     <tr class="even pointer">
-                                        <td colspan="5">{{ ucfirst(trans('common.nodata')) }}</td>
+                                        <td colspan="5">{{ ucfirst(trans('common.no_data')) }}</td>
                                     </tr>
                                 @endif
                             </tbody>

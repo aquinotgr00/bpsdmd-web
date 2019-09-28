@@ -54,4 +54,7 @@ return [
     'moda' => 'moda',
     'address' => 'address',
 
+    //manage program
+    'study_program' => 'study program',
+    'degree' => 'degree',
 ];

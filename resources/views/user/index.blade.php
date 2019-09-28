@@ -77,7 +77,7 @@
 
                             @if(!count($data))
                             <tr class="even pointer">
-                                <td colspan="4">{{ ucfirst(trans('common.nodata')) }}</td>
+                                <td colspan="4">{{ ucfirst(trans('common.no_data')) }}</td>
                             </tr>
                             @endif
                         </tbody>
