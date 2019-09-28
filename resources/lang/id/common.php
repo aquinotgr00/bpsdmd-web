@@ -46,4 +46,12 @@ return [
     'locale_en' => 'english',
     'locale_id' => 'bahasa',
 
+    //manage org
+    'institute_information' => 'informasi instansi',
+    'code' => 'kode',
+    'type' => 'tipe',
+    'short_name' => 'nama pendek',
+    'moda' => 'moda',
+    'address' => 'alamat',
+
 ];

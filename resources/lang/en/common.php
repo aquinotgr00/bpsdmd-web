@@ -46,4 +46,12 @@ return [
     'locale_en' => 'english',
     'locale_id' => 'bahasa',
 
+    //manage org
+    'institute_information' => 'institute information',
+    'code' => 'code',
+    'type' => 'type',
+    'short_name' => 'short name',
+    'moda' => 'moda',
+    'address' => 'address',
+
 ];
