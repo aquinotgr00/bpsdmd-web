@@ -13,7 +13,7 @@ class OrgController extends Controller
     public function index(OrgService $orgService)
     {
         $page = request()->get('page');
-        $data = $orgService->paginateorg(request()->get('page'));
+        $data = $orgService->paginateOrg(request()->get('page'));
 
         return view('org.index', compact('data', 'page'));
     }

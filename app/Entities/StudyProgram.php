@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class StudyProgram
 {
+    const DEGREE_D1 = 'd1';
+    const DEGREE_D2 = 'd2';
+    const DEGREE_D3 = 'd3';
+    const DEGREE_S1 = 's1';
+    const DEGREE_S2 = 's2';
+
     /**
      * @var string
      *
@@ -21,13 +27,16 @@ class StudyProgram
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+    
     /**
-     * @var string
+     * @var Organization
      *
-     * @ORM\Column(name="org_id", type="string", nullable=false)
-     * @ORM\org_id
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     * })
      */
-    private $org_id;
+    private $org;
 
     /**
      * @var string
@@ -48,7 +57,7 @@ class StudyProgram
      *
      * @ORM\Column(name="jenjang", type="string", nullable=false)
      */
-    private $jenjang;
+    private $degree;
 
     /**
      * @return string
@@ -65,20 +74,21 @@ class StudyProgram
     {
         $this->id = $id;
     }
+
     /**
-     * @return string
+     * @return Organization
      */
-    public function getOrg_id(): ?string
+    public function getOrg()
     {
-        return $this->org_id;
+        return $this->org;
     }
 
     /**
-     * @param string $org_id
+     * @param Organization $org
      */
-    public function setOrg_id($org_id): void
+    public function setOrg(Organization $org): void
     {
-        $this->org_id = $org_id;
+        $this->org = $org;
     }
 
     /**
@@ -116,16 +126,16 @@ class StudyProgram
     /**
      * @return string
      */
-    public function getJenjang(): ?string
+    public function getDegree(): ?string
     {
-        return $this->jenjang;
+        return $this->degree;
     }
 
     /**
-     * @param string $jenjang
+     * @param string $degree
      */
-    public function setJenjang($jenjang): void
+    public function setDegree($degree): void
     {
-        $this->jenjang = $jenjang;
+        $this->degree = $degree;
     }
 }

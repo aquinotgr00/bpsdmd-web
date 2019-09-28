@@ -77,6 +77,12 @@ class Organization
     private $users;
 
     /**
+     * @var ArrayCollection|StudyProgram[]
+     * @ORM\OneToMany(targetEntity="StudyProgram", mappedBy="org")
+     */
+    private $programs;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -202,5 +208,21 @@ class Organization
     public function setUsers($users): void
     {
         $this->users = $users;
+    }
+
+    /**
+     * @return StudyProgram[]|ArrayCollection
+     */
+    public function getPrograms()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param StudyProgram[]|ArrayCollection $programs
+     */
+    public function setPrograms($programs): void
+    {
+        $this->programs = $programs;
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Tambah Program Studi</h1>
+        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.study_program')) }}</h1>
     </section>
 
     <!-- Main content -->
@@ -11,32 +11,39 @@
             <!-- left column -->
             <div class="col-md-12">
                 <div class="box">
-                    <form class="form-horizontal" method="post">
-                    @csrf
-
                     <div class="box-body">
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
-                            <div class="col-sm-10">
-                                <input id="name" name="name" type="text" class="form-control" placeholder="Nama Program Studi" value="{{ old('name') }}">
-                                <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
-                            </div>
-                        </div>
+                        <form method="post">
+                            @csrf
 
-                        <div class="form-group {{ $errors->has('jenjang') ? 'has-error' : '' }}">
-                            <label for="jenjang" class="col-sm-2 control-label">Jenjang</label>
-                            <div class="col-sm-10">
-                                <input id="jenjang" name="jenjang" type="text" class="form-control" placeholder="Nama Jenjang" value="{{ old('jenjang') }}">
-                                <span class="help-block">{!! implode('', $errors->get('jenjang')) !!}</span>
+                            <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
+                                <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
+                                <input type="text" class="form-control" id="code" name="code">
+                                <span class="help-block ">{!! implode('', $errors->get('code')) !!}</span>
                             </div>
-                        </div>
 
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                                <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('degree') ? 'has-error' : '' }}">
+                                <label for="degree">{{ ucfirst(trans('common.degree')) }} :</label>
+                                <select id="degree" name="degree" class="form-control">
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_D1 }}" selected>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D1) }}</option>
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_D2 }}">{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D2) }}</option>
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_D3 }}">{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D3) }}</option>
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_S1 }}">{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S1) }}</option>
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_S2 }}">{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S2) }}</option>
+                                </select>
+                                <span class="help-block">{!! implode('', $errors->get('degree')) !!}</span>
+                            </div>
+
+                            <div class="box-footer" style="text-align: right">
+                                <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
+                            </div>
+                        </form>
                     </div><!-- /.box-body -->
-
-                    <div class="box-footer" style="text-align: right">
-                        <input type="submit" value="Tambah" class="btn btn-primary">
-                    </div>
-                </form>
                 </div><!-- /.box -->
             </div>
         </div>

@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data Instansi</h1>
+        <h1>Data {{ ucfirst(trans('common.study_program')) }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ url(route('prodi.create')) }}">
-                    <i class="fa fa-plus-circle"></i> Tambah instansi
+                <a href="{{ url(route('program.create', [$org->getId()])) }}">
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.study_program')) }}
                 </a>
             </li>
         </ol>
@@ -25,8 +25,9 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Nama</th>
-                                    <th>Tipe</th>
+                                    <th>{{ ucfirst(trans('common.code')) }}</th>
+                                    <th>{{ ucfirst(trans('common.name')) }}</th>
+                                    <th>{{ ucfirst(trans('common.degree')) }}</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,10 +39,12 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}</td>
+                                    <td>{{ $item->getCode() }}</td>
                                     <td>{{ $item->getName() }}</td>
-                                    <td>{{ ucfirst($item->getType()) }}</td>
+                                    <td>{{ ucfirst($item->getDegree()) }}</td>
                                     <td>
-                                        <a href="{{ url(route('prodi.detail', [$item->getId()])) }}"><i class="fa fa-user"></i> Program Studi</a>
+                                        <a href="{{ url(route('program.update', [$org->getId(), $item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('program.delete', [$org->getId(), $item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -50,7 +53,7 @@
 
                                 @if(!count($data))
                                     <tr class="even pointer">
-                                        <td colspan="4">Tidak ada data.</td>
+                                        <td colspan="5">{{ ucfirst(trans('common.no_data')) }}</td>
                                     </tr>
                                 @endif
                             </tbody>
