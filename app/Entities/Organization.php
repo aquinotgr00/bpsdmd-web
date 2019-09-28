@@ -15,6 +15,9 @@ class Organization
 {
     const TYPE_SUPPLY = 'supply';
     const TYPE_DEMAND = 'demand';
+    const MODA_AIR = 'air';
+    const MODA_UDARA = 'udara';
+    const MODA_DARAT = 'darat';
 
     /**
      * @var string

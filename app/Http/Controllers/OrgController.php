@@ -24,17 +24,18 @@ class OrgController extends Controller
             $request->validate([
                 'name' => 'required',
                 'short_name' => 'required',
-                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
+                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
+                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT
             ]);
 
             try {
                 $orgService->create(collect($request->input()));
                 $alert = 'alert_success';
-                $message = 'Organisasi berhasil ditambahkan.';
+                $message = 'Instansi berhasil ditambahkan.';
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah organisasi. Silakan kontak web administrator!';
+                $message = 'Tidak dapat menambah instansi. Silakan kontak web administrator!';
             }
 
             return redirect()->route('org.index')->with($alert, $message);
@@ -49,16 +50,17 @@ class OrgController extends Controller
             $request->validate([
                 'name' => 'required',
                 'short_name' => 'required',
-                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
+                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
+                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT
             ]);
 
             try {
                 $orgService->update($data, collect($request->input()));
                 $alert = 'alert_success';
-                $message = 'Organisasi berhasil diubah.';
+                $message = 'Instansi berhasil diubah.';
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah organisasi. Silakan kontak web administrator!';
+                $message = 'Tidak dapat mengubah instansi. Silakan kontak web administrator!';
             }
 
             return redirect()->route('org.index')->with($alert, $message);
@@ -72,17 +74,36 @@ class OrgController extends Controller
         try {
             $orgService->delete($data);
             $alert = 'alert_success';
-            $message = 'Organisasi berhasil dihapus.';
+            $message = 'Instansi berhasil dihapus.';
         } catch (OrgDeleteException $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus organisasi karena masih terdapat user organisasi!';
+            $message = 'Tidak dapat menghapus instansi karena masih terdapat user instansi!';
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus organisasi. Silakan kontak web administrator!';
+            $message = 'Tidak dapat menghapus instansi. Silakan kontak web administrator!';
         }
 
         return redirect()->route('org.index')->with($alert, $message);
+    }
+
+    public function ajaxDetailOrg(Request $request, Organization $org)
+    {
+        if ($request->ajax()) {
+            $data = [
+                'code' => $org->getCode(),
+                'name' => $org->getName(),
+                'short_name' => $org->getShortName(),
+                // 'photo' => $org->getPhoto() ? url(url(User::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
+                'type' => $org->getType(),
+                'moda' => $org->getModa(),
+                'address' => $org->getAddress()
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }

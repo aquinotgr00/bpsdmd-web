@@ -18,6 +18,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/create', 'OrgController@create')->name('org.create');
         Route::any('/{org}/update', 'OrgController@update')->name('org.update');
         Route::get('/{org}/delete', 'OrgController@delete')->name('org.delete');
+        Route::get('/{org}', 'OrgController@ajaxDetailOrg')->name('org.view');
         Route::get('/', 'OrgController@index')->name('org.index');
     });
 

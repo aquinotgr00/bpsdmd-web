@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data Organisasi</h1>
+        <h1>Data {{ ucfirst(trans('common.institute')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url(route('org.create')) }}">
-                    <i class="fa fa-plus-circle"></i> Tambah Organisasi
+                    <i class="fa fa-plus-circle"></i> Tambah {{ ucfirst(trans('common.institute')) }}
                 </a>
             </li>
         </ol>
@@ -25,10 +25,10 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Kode</th>
-                                    <th>Nama</th>
-                                    <th>Tipe</th>
-                                    <th>Action</th>
+                                    <th>{{ ucfirst(trans('common.code')) }}</th>
+                                    <th>{{ ucfirst(trans('common.name')) }}</th>
+                                    <th>{{ ucfirst(trans('common.type')) }}</th>
+                                    <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,8 +43,9 @@
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getType()) }}</td>
                                     <td>
-                                        <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> Ubah</a> |
-                                        <a href="{{ url(route('org.delete', [$item->getId()])) }}"><i class="fa fa-trash"></i> Hapus</a> 
+                                        <a href="javascript:void(0)" class="viewOrg" data-org="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
+                                        <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -53,7 +54,7 @@
 
                                 @if(!count($data))
                                     <tr class="even pointer">
-                                        <td colspan="4">Tidak ada data.</td>
+                                        <td colspan="5">{{ ucfirst(trans('common.nodata')) }}</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -65,5 +66,90 @@
                 </div><!-- /.box -->
             </div>
         </div>
+
+    <div id="modalDetailOrg" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                    <h4 class="modal-title">{{ ucfirst(trans('common.institute_information')) }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center; margin-bottom: 22px">
+                        <img class="orgPhoto" src="" width="100px" height="100px">
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
+                            <td width="5%">:</td>
+                            <td class="orgCode"></td>
+                        </tr>
+                        <tr>
+                            <th>{{ ucwords(trans('common.name')) }}</th>
+                            <td>:</td>
+                            <td class="orgName"></td>
+                        </tr>
+                        <tr>
+                            <th>{{ ucfirst(trans('common.short_name')) }}</th>
+                            <td>:</td>
+                            <td class="orgShortName"></td>
+                        </tr>
+                        <tr>
+                            <th>{{ ucfirst(trans('common.type')) }}</th>
+                            <td>:</td>
+                            <td class="orgType"></td>
+                        </tr>
+                        <tr>
+                            <th>{{ ucfirst(trans('common.moda')) }}</th>
+                            <td>:</td>
+                            <td class="orgModa"></td>
+                        </tr>
+                        <tr>
+                            <th>{{ ucfirst(trans('common.address')) }}</th>
+                            <td>:</td>
+                            <td class="orgAddress"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     </section><!-- /.content -->
+@endsection
+
+@section('script')
+<script>
+    $('a.viewOrg').on('click', function () {
+        let org = $(this).data('org'),
+            modalHtml = $('#modalDetailOrg');
+
+        modalHtml.modal('hide');
+
+        $.get('/org/'+org, function(org, status){
+            if (status === 'success') {
+                // modalHtml.find('.orgPhoto').attr("src",org.photo);
+                modalHtml.find('.orgCode').html(org.code);
+                modalHtml.find('.orgName').html(org.name);
+                modalHtml.find('.orgShortName').html(org.short_name);
+                modalHtml.find('.orgType').html(org.type);
+                modalHtml.find('.orgModa').html(org.moda);
+                modalHtml.find('.orgAddress').html(org.address);
+                modalHtml.modal('show');
+            }
+        });
+    });
+
+    $('#modalDetailOrg').on('hidden.bs.modal', function (e) {
+        // modalHtml.find('.orgPhoto').attr('src','');
+        modalHtml.find('.orgCode').html('');
+        modalHtml.find('.orgName').html('');
+        modalHtml.find('.orgShortName').html('');
+        modalHtml.find('.orgType').html('');
+        modalHtml.find('.orgModa').html('');
+        modalHtml.find('.orgAddress').html('');
+    })
+</script>
 @endsection
