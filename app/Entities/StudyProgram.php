@@ -27,13 +27,13 @@ class StudyProgram
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
+
     /**
      * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
     private $org;

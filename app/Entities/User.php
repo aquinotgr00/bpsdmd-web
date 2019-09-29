@@ -35,7 +35,7 @@ class User implements UserInterface
      *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
     private $org;
@@ -92,7 +92,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="bahasa", type="string", nullable=true)
+     * @ORM\Column(name="bahasa", type="string", nullable=false)
      */
     private $locale = 'id';
 

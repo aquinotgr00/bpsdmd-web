@@ -17,4 +17,13 @@ Aplikasi ini menggunakan framework [Laravel](https://laravel.com/docs/5.8) dan m
 4. Lakukan commit hanya jika perubahan file tidak `breaking the app`
 5. Jangan lupa test dahulu sebelum melakukan push 
 
+**Database standard:**
+1. Prevent use table prefix, we don't want mix all database in one schema.
+2. 3rd party database use new schema instead.
+3. Always use underscore "_" for more than 1 word.
+4. Foreign key use table1.id and table2.table1_id
+5. Priority columns to move: columns with data
+6. Always consider to implement 3NF
+7. Update sql file from branch database/redesign
+
 Merge ke branch master akan auto-deploy ke server staging. Jika ada pertanyaan, hubungi: [https://t.me/roeswb](https://t.me/roeswb)

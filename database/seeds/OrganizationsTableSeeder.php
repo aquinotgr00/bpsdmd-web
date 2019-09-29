@@ -13,16 +13,18 @@ class OrganizationsTableSeeder extends Seeder
     {
         /** @var \App\Services\Domain\OrgService $orgService */
         $orgService = app(\App\Services\Domain\OrgService::class);
-        DB::table('organisasi')->truncate();
+        DB::table('instansi')->truncate();
 
         $data = [
             [
                 'name' => 'PELNI',
-                'type' => \App\Entities\Organization::TYPE_DEMAND
+                'type' => \App\Entities\Organization::TYPE_DEMAND,
+                'moda' => \App\Entities\Organization::MODA_AIR
             ],
             [
                 'name' => 'KAI',
-                'type' => \App\Entities\Organization::TYPE_DEMAND
+                'type' => \App\Entities\Organization::TYPE_DEMAND,
+                'moda' => \App\Entities\Organization::MODA_DARAT
             ]
         ];
 

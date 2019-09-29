@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Organization
  *
- * @ORM\Table(name="organisasi")
+ * @ORM\Table(name="instansi")
  * @ORM\Entity
  */
 class Organization
@@ -59,7 +59,7 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="moda", type="string", nullable=true)
+     * @ORM\Column(name="moda", type="string", nullable=false)
      */
     private $moda = NULL;
 

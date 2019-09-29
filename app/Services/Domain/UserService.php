@@ -91,7 +91,9 @@ class UserService
             $user->setOrg($org);
         }
 
-        $user->setLocale($data->get('language'));
+        if ($data->get('language')) {
+            $user->setLocale($data->get('language'));
+        }
 
         EntityManager::persist($user);
 
