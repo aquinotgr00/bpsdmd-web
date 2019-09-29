@@ -153,8 +153,10 @@ class UserService
     {
         $user->setEmail($data->get('email'));
         $user->setName($data->get('name'));
-        $user->setPassword($data->get('password'));
-        $user->setIsActive($data->get('isActive'));
+
+        if ($data->get('password')) {
+            $user->setPassword($data->get('password'));
+        }
 
         if ($org instanceof Organization) {
             $user->setOrg($org);

@@ -3,7 +3,7 @@
     <li >
         <a href="{{ url(route('dashboard')) }}">
             <i class="fa fa-dashboard"></i>
-            <span>Dashboard</span>
+            <span>{{ ucfirst(trans('common.dashboard')) }}</span>
         </a>
     </li>
 
@@ -21,7 +21,7 @@
             <span>{{ ucwords(trans('common.user_management')) }}</span>
         </a>
     </li>
-    
+
 {{--    <li>--}}
 {{--        <a href="{{ url(route('linknmatch.admin.index',[ 'type'=> \App\Entities\User::ROLE_ADMIN ])) }}">--}}
 {{--            <i class="fa fa-link"></i>--}}

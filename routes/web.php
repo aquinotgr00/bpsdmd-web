@@ -57,7 +57,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/course', 'UtilityController@dataCourse')->name('data.course');
     });
 
-    Route::any('/user/update-profile', 'UtilityController@updateProfile')->name('update.profile');
+    Route::any('/update-profile', 'UtilityController@updateProfile')->name('update.profile');
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 });
 
