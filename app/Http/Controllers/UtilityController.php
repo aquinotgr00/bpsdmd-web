@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Rules\IsAllowedDomain;
+use App\Services\Application\UtilityService;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
@@ -13,9 +14,11 @@ use Illuminate\Support\MessageBag;
 
 class UtilityController extends Controller
 {
-    public function dashboard()
+    public function dashboard(UtilityService $utilityService)
     {
-        return view('dashboard.index');
+        list($countSchools, $countTeachers, $countStudents, $countShortCourses, $dataGraphTrend) = $utilityService->getDataForDashboard();
+
+        return view('dashboard.index', compact('countSchools', 'countTeachers', 'countStudents', 'countShortCourses', 'dataGraphTrend'));
     }
 
     public function dataSchool()

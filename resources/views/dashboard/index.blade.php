@@ -12,7 +12,7 @@
                 <div class="small-box bg-red">
                     <div class="inner">
                         <p> Jumlah Sekolah </p>
-                        <h3> 0 </h3>
+                        <h3> {{ $countSchools }} </h3>
                     </div>
                     <div class="icon">
                         <i class="fa fa-area-chart"></i>
@@ -28,7 +28,7 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <p> Total Dosen </p>
-                        <h3> 0 </h3>
+                        <h3> {{ $countTeachers }} </h3>
                     </div>
                     <div class="icon">
                         <i class="fa fa-users"></i>
@@ -39,45 +39,12 @@
                     </a>
                 </div>
             </div>
-            <!--  -->
-            <div class="col-lg-6 col-xs-6" style="display:none;">
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <p> Total Taruna </p>
-                        <h3> 3.814 </h3>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-bar-chart-o"></i>
-                    </div>
-                    <a class="small-box-footer" href="{{url(route('data.cadet'))}}" title="Info Lebih Lanjut">
-                        Info Lebih Lanjut
-                        <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <!--  -->
-            <div class="col-lg-6 col-xs-6" style="display:none;">
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <p> Total Alumni </p>
-                        <h3> 408 </h3>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-pie-chart"></i>
-                    </div>
-                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
-                        Info Lebih Lanjut
-                        <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <!--  -->
             <div class="col-lg-6 col-xs-6">
                 <div class="small-box bg-green">
                     <div class="inner">
                         <p> Jumlah Taruna</p>
                         <div class="gsSeparatorIdle"></div>
-                        <h3> 0 </h3>
+                        <h3> {{ $countStudents }} </h3>
                     </div>
                     <div class="icon">
                         <i class="fa fa-pie-chart"></i>
@@ -93,7 +60,7 @@
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <p> Jumlah Peserta Short Course </p>
-                        <h3> 0 </h3>
+                        <h3> {{ $countShortCourses }} </h3>
                     </div>
                     <div class="icon">
                         <i class="fa fa-bar-chart"></i>

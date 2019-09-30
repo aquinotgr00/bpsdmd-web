@@ -150,4 +150,22 @@ class OrgService
 
         return $this->getRepository()->findAll();
     }
+
+    /**
+     * Get count school
+     *
+     * @return int
+     */
+    public function getCountSchool()
+    {
+        try {
+            $qb = $this->createQueryBuilder('org')
+                ->where('org.type = :type')
+                ->setParameter('type', Organization::TYPE_SUPPLY);
+
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
 }
