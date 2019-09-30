@@ -38,7 +38,7 @@ class User implements UserInterface
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
-    private $org;
+    private $org = NULL;
 
     /**
      * @var string
