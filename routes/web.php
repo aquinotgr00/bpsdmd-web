@@ -11,19 +11,31 @@
 |
 */
 
+use App\Entities\User;
+
 Route::group(['middleware' => ['authenticated']], function() {
     Route::group(['prefix' => 'org', 'middleware' => ['only_admin']], function() {
         Route::any('/create', 'OrgController@create')->name('org.create');
         Route::any('/{org}/update', 'OrgController@update')->name('org.update');
         Route::get('/{org}/delete', 'OrgController@delete')->name('org.delete');
+        Route::get('/{org}', 'OrgController@ajaxDetailOrg')->name('org.view');
         Route::get('/', 'OrgController@index')->name('org.index');
+
+        Route::group(['prefix' => '{org}/program/', 'middleware' => ['only_admin']], function() {
+            Route::any('/create', 'ProgramController@create')->name('program.create');
+            Route::any('/{program}/update', 'ProgramController@update')->name('program.update');
+            Route::get('/{program}/delete', 'ProgramController@delete')->name('program.delete');
+            Route::get('/', 'ProgramController@index')->name('program.index');
+        });
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['only_admin']], function() {
-        Route::any('/create/{type}', 'UserController@create')->name('user.create')
-        ->where('type', \App\Entities\User::ROLE_ADMIN."|".\App\Entities\User::ROLE_SUPPLY."|".\App\Entities\User::ROLE_DEMAND);
+        Route::any('/create/{type}', 'UserController@create')->name('user.create')->where('type', User::ROLE_ADMIN."|". User::ROLE_SUPPLY."|". User::ROLE_DEMAND);
         Route::any('/{user}/update', 'UserController@update')->name('user.update');
         Route::get('/{user}/delete', 'UserController@delete')->name('user.delete');
+        Route::get('/{user}/enable', 'UserController@enable')->name('user.enable');
+        Route::get('/{user}/disable', 'UserController@disable')->name('user.disable');
+        Route::get('/{user}', 'UserController@ajaxDetailUser')->name('user.view');
         Route::get('/', 'UserController@index')->name('user.index');
     });
 
@@ -45,7 +57,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/course', 'UtilityController@dataCourse')->name('data.course');
     });
 
-    Route::any('/user/update-profile', 'UtilityController@updateProfile')->name('update.profile');
+    Route::any('/update-profile', 'UtilityController@updateProfile')->name('update.profile');
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 });
 

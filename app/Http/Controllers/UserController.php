@@ -26,27 +26,46 @@ class UserController extends Controller
     public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
     {
         if ($request->method() == 'POST') {
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'email' => ['required', 'email', new IsAllowedDomain],
                 'password' => 'required||confirmed',
                 'password_confirmation' => 'required|same:password',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
+            ];
+
+            if ($type == User::ROLE_DEMAND) {
+                $validation['email'] = ['required', 'email', new IsAllowedDomain];
+            } else {
+                $validation['email'] = 'required|email';
+            }
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'email' => ucfirst(trans('common.email')),
+                'password' => ucfirst(trans('common.password')),
+                'password_confirmation' => ucfirst(trans('common.confirm_password')),
+                'photo' => ucfirst(trans('common.photo')),
+                'language' => ucfirst(trans('common.language')),
             ]);
 
             $messageBag = new MessageBag;
             $checkEmail = $userService->checkEmailExist($request->get('email'));
 
             if ($checkEmail) {
-                $messageBag->add('email', 'Email is already used!');
+                $messageBag->add('email', trans('common.email_used'));
                 return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
             }
 
             if ($type != User::ROLE_ADMIN) {
-                $org = $orgService->findById($request->get('org'));
+                $org = false;
+
+                if ($request->get('org')) {
+                    $org = $orgService->findById($request->get('org'));
+                }
 
                 if (!$org) {
-                    $messageBag->add('org', 'Organisasi tidak valid!');
+                    $messageBag->add('org', trans('common.invalid_institute'));
                     return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
                 }
             } else {
@@ -71,20 +90,20 @@ class UserController extends Controller
                 $userService->create(collect($requestData), $org, true);
 
                 $alert = 'alert_success';
-                $message = 'User ' . $type . ' berhasil ditambahkan.';
+                $message = trans('common.create_success', ['object' => 'User']);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah user. Silakan kontak web administrator!';
+                $message = trans('common.create_failed', ['object' => 'User']);
             }
 
             return redirect()->route('user.index')->with($alert, $message);
         }
 
         if ($type == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
         } elseif ($type == User::ROLE_DEMAND) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
         } else {
             $dataOrg = [];
         }
@@ -97,31 +116,48 @@ class UserController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
-                'email' => ['required', 'email', new IsAllowedDomain],
                 'active' => 'required',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
             ];
+
+            if ($user->getAuthority() == User::ROLE_DEMAND) {
+                $validation['email'] = ['required', 'email', new IsAllowedDomain];
+            } else {
+                $validation['email'] = 'required|email';
+            }
 
             if (!empty($request->get('password'))) {
                 $validation['password'] = 'required||confirmed';
                 $validation['password_confirmation'] = 'required_with:password|required|same:password';
             }
 
-            $request->validate($validation);
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'email' => ucfirst(trans('common.email')),
+                'password' => ucfirst(trans('common.password')),
+                'password_confirmation' => ucfirst(trans('common.confirm_password')),
+                'photo' => ucfirst(trans('common.photo')),
+                'language' => ucfirst(trans('common.language')),
+            ]);
 
             $messageBag = new MessageBag;
             $checkEmail = $userService->checkEmailExist($request->get('email'), $user->getId());
 
             if ($checkEmail) {
-                $messageBag->add('email', 'Email is already used!');
+                $messageBag->add('email', trans('common.email_used'));
                 return redirect()->route('user.update', ['id' => $user->getId()])->withErrors($messageBag);
             }
 
             if ($user->getAuthority() != User::ROLE_ADMIN) {
-                $org = $orgService->findById($request->get('org'));
+                $org = false;
+
+                if ($request->get('org')) {
+                    $org = $orgService->findById($request->get('org'));
+                }
 
                 if (!$org) {
-                    $messageBag->add('org', 'Organisasi tidak valid!');
+                    $messageBag->add('org', trans('common.invalid_institute'));
                     return redirect()->route('user.update', ['id' => $user->getId()])->withErrors($messageBag);
                 }
             } else {
@@ -145,19 +181,19 @@ class UserController extends Controller
                 $userService->update($user, collect($requestData), $org, true);
 
                 $alert = 'alert_success';
-                $message = 'User ' . $user->getName() . ' berhasil diubah.';
+                $message = trans('common.update_success', ['object' => 'User']);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah user ' . $user->getName() . '. Silakan kontak web administrator!';
+                $message = trans('common.update_failed', ['object' => 'User']);
             }
 
             return redirect()->route('user.index')->with($alert, $message);
         }
 
         if ($user->getAuthority() == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
         } elseif ($user->getAuthority() == User::ROLE_DEMAND) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
         } else {
             $dataOrg = [];
         }
@@ -169,7 +205,7 @@ class UserController extends Controller
     {
         if ($user->getId() == $authService->user()->getId()) {
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus diri sendiri.';
+            $message = trans('common.self_delete_failed');
 
             return redirect()->route('user.index')->with($alert, $message);
         }
@@ -177,13 +213,59 @@ class UserController extends Controller
         try {
             $userService->delete($user);
             $alert = 'alert_success';
-            $message = 'User berhasil dihapus.';
+            $message = trans('common.delete_success', ['object' => 'User']);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus user. Silakan kontak web administrator!';
+            $message = trans('common.delete_failed', ['object' => 'User']);
         }
 
         return redirect()->route('user.index')->with($alert, $message);
+    }
+
+    public function enable(AuthService $authService, UserService $userService, User $user)
+    {
+        if ($authService->user()->getId() != $user->getId()) {
+            $userService->enableUser($user);
+
+            $alert = 'alert_success';
+            $message = trans('common.update_success', ['object' => 'User']);
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function disable(AuthService $authService, UserService $userService, User $user)
+    {
+        if ($authService->user()->getId() != $user->getId()) {
+            $userService->disableUser($user);
+
+            $alert = 'alert_success';
+            $message = trans('common.update_success', ['object' => 'User']);
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function ajaxDetailUser(Request $request, User $user)
+    {
+        if ($request->ajax()) {
+            $data = [
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'photo' => $user->getPhoto() ? url(url(User::UPLOAD_PATH.'/'.$user->getPhoto())) : url('img/avatar.png'),
+                'org' => ($user->getOrg() instanceof Organization) ? $user->getOrg()->getName() : false,
+                'authority' => $user->getAuthority(),
+                'active' => $user->getIsActive()
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }

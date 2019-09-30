@@ -2,6 +2,7 @@
 
 namespace App\Services\Domain;
 
+use App;
 use App\Entities\Organization;
 use App\Entities\User;
 use Doctrine\ORM\EntityRepository;
@@ -48,6 +49,7 @@ class UserService
         $limit = 10;
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.isDeleted = :isDeleted')
+            ->orderBy('u.id')
             ->setParameter('isDeleted', 0)
             ->getQuery();
 
@@ -71,10 +73,14 @@ class UserService
         $user->setName($data->get('name'));
         $user->setEmail($data->get('email'));
 
-        if ($data->get('authority') != User::ROLE_ADMIN) {
-            $user->setIsActive(0);
+        if (!$data->get('isActive')) {
+            if ($data->get('authority') != User::ROLE_ADMIN) {
+                $user->setIsActive(0);
+            } else {
+                $user->setIsActive(1);
+            }
         } else {
-            $user->setIsActive(1);
+            $user->setIsActive($data->get('isActive'));
         }
 
         if ($data->get('uploaded_img')) {
@@ -83,6 +89,10 @@ class UserService
 
         if ($org instanceof Organization) {
             $user->setOrg($org);
+        }
+
+        if ($data->get('language')) {
+            $user->setLocale($data->get('language'));
         }
 
         EntityManager::persist($user);
@@ -122,6 +132,8 @@ class UserService
             $user->setPhoto($data->get('uploaded_img'));
         }
 
+        $user->setLocale($data->get('language'));
+
         EntityManager::persist($user);
 
         if ($flush) {
@@ -143,8 +155,10 @@ class UserService
     {
         $user->setEmail($data->get('email'));
         $user->setName($data->get('name'));
-        $user->setPassword($data->get('password'));
-        $user->setIsActive($data->get('isActive'));
+
+        if ($data->get('password')) {
+            $user->setPassword($data->get('password'));
+        }
 
         if ($org instanceof Organization) {
             $user->setOrg($org);
@@ -153,6 +167,8 @@ class UserService
         if (!empty($data->get('uploaded_img'))) {
             $user->setPhoto($data->get('uploaded_img'));
         }
+
+        $user->setLocale($data->get('language'));
 
         EntityManager::persist($user);
 
@@ -208,5 +224,31 @@ class UserService
         }
 
         return false;
+    }
+
+    /**
+     * Enable User
+     *
+     * @param User $user
+     */
+    public function enableUser(User $user)
+    {
+        $user->setIsActive(1);
+
+        EntityManager::persist($user);
+        EntityManager::flush();
+    }
+
+    /**
+     * Disable User
+     *
+     * @param User $user
+     */
+    public function disableUser(User $user)
+    {
+        $user->setIsActive(0);
+
+        EntityManager::persist($user);
+        EntityManager::flush();
     }
 }

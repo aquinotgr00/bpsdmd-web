@@ -8,13 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Organization
  *
- * @ORM\Table(name="organisasi")
+ * @ORM\Table(name="instansi")
  * @ORM\Entity
  */
 class Organization
 {
     const TYPE_SUPPLY = 'supply';
     const TYPE_DEMAND = 'demand';
+    const MODA_AIR = 'air';
+    const MODA_UDARA = 'udara';
+    const MODA_DARAT = 'darat';
 
     /**
      * @var string
@@ -56,7 +59,7 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="moda", type="string", nullable=true)
+     * @ORM\Column(name="moda", type="string", nullable=false)
      */
     private $moda = NULL;
 
@@ -66,6 +69,18 @@ class Organization
      * @ORM\Column(name="alamat", type="string", nullable=true)
      */
     private $address = NULL;
+
+    /**
+     * @var ArrayCollection|User[]
+     * @ORM\OneToMany(targetEntity="User", mappedBy="org")
+     */
+    private $users;
+
+    /**
+     * @var ArrayCollection|StudyProgram[]
+     * @ORM\OneToMany(targetEntity="StudyProgram", mappedBy="org")
+     */
+    private $programs;
 
     /**
      * @return string
@@ -161,5 +176,53 @@ class Organization
     public function setModa($moda): void
     {
         $this->moda = $moda;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return User[]|ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User[]|ArrayCollection $users
+     */
+    public function setUsers($users): void
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * @return StudyProgram[]|ArrayCollection
+     */
+    public function getPrograms()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param StudyProgram[]|ArrayCollection $programs
+     */
+    public function setPrograms($programs): void
+    {
+        $this->programs = $programs;
     }
 }

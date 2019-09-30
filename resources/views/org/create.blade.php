@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Tambah Instansi</h1>
+        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.institute')) }}</h1>
     </section>
 
     <!-- Main content -->
@@ -11,42 +11,58 @@
             <!-- left column -->
             <div class="col-md-12">
                 <div class="box">
-                    <form class="form-horizontal" method="post">
-                    @csrf
-
                     <div class="box-body">
-                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                            <label for="name" class="col-sm-2 control-label">Name</label>
-                            <div class="col-sm-10">
-                                <input id="name" name="name" type="text" class="form-control" placeholder="Nama Instansi" value="{{ old('name') }}">
-                                <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
-                            </div>
-                        </div>
+                        <form method="post">
+                        @csrf
 
-                        <div class="form-group {{ $errors->has('short_name') ? 'has-error' : '' }}">
-                            <label for="short_name" class="col-sm-2 control-label">Short Name</label>
-                            <div class="col-sm-10">
-                                <input id="short_name" name="short_name" type="text" class="form-control" placeholder="Nama Pendek" value="{{ old('short_name') }}">
-                                <span class="help-block">{!! implode('', $errors->get('short_name')) !!}</span>
+                            <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
+                                <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
+                                <input type="text" class="form-control" id="code" name="code">
+                                <span class="help-block ">{!! implode('', $errors->get('code')) !!}</span>
                             </div>
-                        </div>
 
-                        <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                            <label for="type" class="col-sm-2 control-label">Type</label>
-                            <div class="col-sm-10">
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                                <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('short_name') ? 'has-error' : '' }}">
+                                <label for="short_name">{{ ucfirst(trans('common.short_name')) }} :</label>
+                                <input type="text" class="form-control" id="short_name" name="short_name">
+                                <span class="help-block ">{!! implode('', $errors->get('short_name')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                                <label for="type">{{ ucfirst(trans('common.type')) }} :</label>
                                 <select id="type" name="type" class="form-control">
-                                    <option value="{{ \App\Entities\Organization::TYPE_SUPPLY }}" {{ old('type') == \App\Entities\Organization::TYPE_DEMAND ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_SUPPLY) }}</option>
-                                    <option value="{{ \App\Entities\Organization::TYPE_DEMAND }}" {{ old('type') == \App\Entities\Organization::TYPE_DEMAND ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_DEMAND) }}</option>
+                                    <option value="{{ \App\Entities\Organization::TYPE_SUPPLY }}" selected>{{ ucfirst(\App\Entities\Organization::TYPE_SUPPLY) }}</option>
+                                    <option value="{{ \App\Entities\Organization::TYPE_DEMAND }}">{{ ucfirst(\App\Entities\Organization::TYPE_DEMAND) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
                             </div>
-                        </div>
-                    </div><!-- /.box-body -->
 
-                    <div class="box-footer" style="text-align: right">
-                        <input type="submit" value="Tambah" class="btn btn-primary">
-                    </div>
-                </form>
+                            <div class="form-group {{ $errors->has('moda') ? 'has-error' : '' }}">
+                                <label for="moda">{{ ucfirst(trans('common.moda')) }} :</label>
+                                <select id="moda" name="moda" class="form-control">
+                                    <option value="{{ \App\Entities\Organization::MODA_AIR }}" selected>{{ ucfirst(\App\Entities\Organization::MODA_AIR) }}</option>
+                                    <option value="{{ \App\Entities\Organization::MODA_UDARA }}">{{ ucfirst(\App\Entities\Organization::MODA_UDARA) }}</option>
+                                    <option value="{{ \App\Entities\Organization::MODA_DARAT }}">{{ ucfirst(\App\Entities\Organization::MODA_DARAT) }}</option>
+                                </select>
+                                <span class="help-block">{!! implode('', $errors->get('moda')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                                <label for="address">{{ ucfirst(trans('common.address')) }} :</label>
+                                <textarea class="form-control" id="address" name="address" rows="5"></textarea>
+                                <span class="help-block">{!! implode('', $errors->get('address')) !!}</span>
+                            </div>
+
+                            <div class="box-footer" style="text-align: right">
+                                <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
+                            </div>
+                        </form>
+                    </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
         </div>

@@ -16,46 +16,46 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_org_id_fkey;
-ALTER TABLE ONLY public.pengguna DROP CONSTRAINT pengguna_org_id_fkey;
+ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_instansi_id_fkey;
+ALTER TABLE ONLY public.pengguna DROP CONSTRAINT pengguna_instansi_id_fkey;
 ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_pkey;
 ALTER TABLE ONLY public.pengguna DROP CONSTRAINT pengguna_pkey;
-ALTER TABLE ONLY public.organisasi DROP CONSTRAINT organisasi_pkey;
+ALTER TABLE ONLY public.instansi DROP CONSTRAINT instansi_pkey;
 ALTER TABLE public.program_studi ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.pengguna ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.organisasi ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.instansi ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.program_studi_id_seq;
 DROP TABLE public.program_studi;
 DROP SEQUENCE public.pengguna_id_seq;
 DROP TABLE public.pengguna;
-DROP SEQUENCE public.organisasi_id_seq;
-DROP TABLE public.organisasi;
+DROP SEQUENCE public.instansi_id_seq;
+DROP TABLE public.instansi;
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: organisasi; Type: TABLE; Schema: public; Owner: postgres
+-- Name: instansi; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.organisasi (
+CREATE TABLE public.instansi (
     id bigint NOT NULL,
     kode character varying,
     nama character varying NOT NULL,
     singkatan character varying,
     tipe character varying NOT NULL,
-    moda character varying,
+    moda character varying NOT NULL,
     alamat character varying
 );
 
 
-ALTER TABLE public.organisasi OWNER TO postgres;
+ALTER TABLE public.instansi OWNER TO postgres;
 
 --
--- Name: organisasi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: instansi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.organisasi_id_seq
+CREATE SEQUENCE public.instansi_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -63,13 +63,13 @@ CREATE SEQUENCE public.organisasi_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.organisasi_id_seq OWNER TO postgres;
+ALTER TABLE public.instansi_id_seq OWNER TO postgres;
 
 --
--- Name: organisasi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: instansi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.organisasi_id_seq OWNED BY public.organisasi.id;
+ALTER SEQUENCE public.instansi_id_seq OWNED BY public.instansi.id;
 
 
 --
@@ -78,14 +78,15 @@ ALTER SEQUENCE public.organisasi_id_seq OWNED BY public.organisasi.id;
 
 CREATE TABLE public.pengguna (
     id bigint NOT NULL,
-    org_id bigint,
+    instansi_id bigint,
     email character varying NOT NULL,
     password character varying NOT NULL,
     otoritas character varying NOT NULL,
     aktif character varying NOT NULL,
     hapus character varying NOT NULL,
     nama character varying,
-    foto character varying
+    foto character varying,
+    bahasa character varying NOT NULL
 );
 
 
@@ -118,10 +119,10 @@ ALTER SEQUENCE public.pengguna_id_seq OWNED BY public.pengguna.id;
 
 CREATE TABLE public.program_studi (
     id bigint NOT NULL,
-    org_id bigint NOT NULL,
+    instansi_id bigint NOT NULL,
     kode character varying,
-    nama character varying,
-    jenjang character varying
+    nama character varying NOT NULL,
+    jenjang character varying NOT NULL
 );
 
 
@@ -149,10 +150,10 @@ ALTER SEQUENCE public.program_studi_id_seq OWNED BY public.program_studi.id;
 
 
 --
--- Name: organisasi id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: instansi id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.organisasi ALTER COLUMN id SET DEFAULT nextval('public.organisasi_id_seq'::regclass);
+ALTER TABLE ONLY public.instansi ALTER COLUMN id SET DEFAULT nextval('public.instansi_id_seq'::regclass);
 
 
 --
@@ -170,10 +171,10 @@ ALTER TABLE ONLY public.program_studi ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Data for Name: organisasi; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: instansi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.organisasi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdin;
+COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdin;
 \.
 
 
@@ -181,7 +182,7 @@ COPY public.organisasi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdi
 -- Data for Name: pengguna; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.pengguna (id, org_id, email, password, otoritas, aktif, hapus, nama, foto) FROM stdin;
+COPY public.pengguna (id, instansi_id, email, password, otoritas, aktif, hapus, nama, foto, bahasa) FROM stdin;
 \.
 
 
@@ -189,15 +190,15 @@ COPY public.pengguna (id, org_id, email, password, otoritas, aktif, hapus, nama,
 -- Data for Name: program_studi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.program_studi (id, org_id, kode, nama, jenjang) FROM stdin;
+COPY public.program_studi (id, instansi_id, kode, nama, jenjang) FROM stdin;
 \.
 
 
 --
--- Name: organisasi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: instansi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.organisasi_id_seq', 5, true);
+SELECT pg_catalog.setval('public.instansi_id_seq', 1, true);
 
 
 --
@@ -215,11 +216,11 @@ SELECT pg_catalog.setval('public.program_studi_id_seq', 1, false);
 
 
 --
--- Name: organisasi organisasi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: instansi instansi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.organisasi
-    ADD CONSTRAINT organisasi_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.instansi
+    ADD CONSTRAINT instansi_pkey PRIMARY KEY (id);
 
 
 --
@@ -239,19 +240,19 @@ ALTER TABLE ONLY public.program_studi
 
 
 --
--- Name: pengguna pengguna_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pengguna pengguna_instansi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.pengguna
-    ADD CONSTRAINT pengguna_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organisasi(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT pengguna_instansi_id_fkey FOREIGN KEY (instansi_id) REFERENCES public.instansi(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: program_studi program_studi_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: program_studi program_studi_instansi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.program_studi
-    ADD CONSTRAINT program_studi_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organisasi(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT program_studi_instansi_id_fkey FOREIGN KEY (instansi_id) REFERENCES public.instansi(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

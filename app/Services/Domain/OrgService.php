@@ -62,9 +62,12 @@ class OrgService
     public function create(Collection $data, $flush = true)
     {
         $org = new Organization;
+        $org->setCode($data->get('code'));
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
         $org->setType($data->get('type'));
+        $org->setModa($data->get('moda'));
+        $org->setAddress($data->get('address'));
         EntityManager::persist($org);
 
         if ($flush) {
@@ -84,9 +87,12 @@ class OrgService
      */
     public function update(Organization $org, Collection $data, $flush = true)
     {
+        $org->setCode($data->get('code'));
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
         $org->setType($data->get('type'));
+        $org->setModa($data->get('moda'));
+        $org->setAddress($data->get('address'));
         EntityManager::persist($org);
 
         if ($flush) {
@@ -105,9 +111,10 @@ class OrgService
      */
     public function delete(Organization $org)
     {
-        $count = count($org->getUsers());
+        $count_user = count($org->getUsers());
+        $count_program = count($org->getPrograms());
 
-        if (!$count) {
+        if (!$count_user && !$count_program) {
             EntityManager::remove($org);
             EntityManager::flush();
 
@@ -126,5 +133,21 @@ class OrgService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Get organization by type
+     * @param string $type
+     * @return Organization[]
+     */
+    public function getOrgByType($type = 'all')
+    {
+        if ($type == Organization::TYPE_DEMAND) {
+            return $this->getRepository()->findBy(['type' => Organization::TYPE_DEMAND]);
+        } elseif ($type == Organization::TYPE_SUPPLY) {
+            return $this->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY]);
+        }
+
+        return $this->getRepository()->findAll();
     }
 }

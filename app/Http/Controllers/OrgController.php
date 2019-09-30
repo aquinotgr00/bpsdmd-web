@@ -13,7 +13,7 @@ class OrgController extends Controller
     public function index(OrgService $orgService)
     {
         $page = request()->get('page');
-        $data = $orgService->paginateorg(request()->get('page'));
+        $data = $orgService->paginateOrg(request()->get('page'));
 
         return view('org.index', compact('data', 'page'));
     }
@@ -24,7 +24,8 @@ class OrgController extends Controller
             $request->validate([
                 'name' => 'required',
                 'short_name' => 'required',
-                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
+                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
+                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT
             ]);
 
             try {
@@ -49,7 +50,8 @@ class OrgController extends Controller
             $request->validate([
                 'name' => 'required',
                 'short_name' => 'required',
-                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND
+                'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
+                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT
             ]);
 
             try {
@@ -84,5 +86,24 @@ class OrgController extends Controller
         }
 
         return redirect()->route('org.index')->with($alert, $message);
+    }
+
+    public function ajaxDetailOrg(Request $request, Organization $org)
+    {
+        if ($request->ajax()) {
+            $data = [
+                'code' => $org->getCode(),
+                'name' => $org->getName(),
+                'short_name' => $org->getShortName(),
+                // 'photo' => $org->getPhoto() ? url(url(User::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
+                'type' => $org->getType(),
+                'moda' => $org->getModa(),
+                'address' => $org->getAddress()
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }
