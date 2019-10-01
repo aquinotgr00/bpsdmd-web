@@ -38,7 +38,7 @@
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
-                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getType()) }}</td>
@@ -133,7 +133,7 @@
 
         $.get('/org/'+org, function(org, status){
             if (status === 'success') {
-                // modalHtml.find('.orgPhoto').attr("src",org.photo);
+                modalHtml.find('.orgPhoto').attr("src",org.photo);
                 modalHtml.find('.orgCode').html(org.code);
                 modalHtml.find('.orgName').html(org.name);
                 modalHtml.find('.orgShortName').html(org.short_name);
@@ -146,7 +146,7 @@
     });
 
     $('#modalDetailOrg').on('hidden.bs.modal', function (e) {
-        // modalHtml.find('.orgPhoto').attr('src','');
+        modalHtml.find('.orgPhoto').attr('src','');
         modalHtml.find('.orgCode').html('');
         modalHtml.find('.orgName').html('');
         modalHtml.find('.orgShortName').html('');

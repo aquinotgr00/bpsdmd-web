@@ -68,6 +68,11 @@ class OrgService
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+
+        if ($data->get('uploaded_img')) {
+            $org->setPhoto($data->get('uploaded_img'));
+        }
+
         EntityManager::persist($org);
 
         if ($flush) {
@@ -93,6 +98,12 @@ class OrgService
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
+            $org->setPhoto($data->get('uploaded_img'));
+        }
+        
         EntityManager::persist($org);
 
         if ($flush) {

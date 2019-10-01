@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 public/users/img/*
 !public/users/img/.gitkeep
+public/orgs/img/*
+!public/orgs/img/.gitkeep

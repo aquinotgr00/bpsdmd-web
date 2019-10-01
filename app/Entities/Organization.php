@@ -18,6 +18,7 @@ class Organization
     const MODA_AIR = 'air';
     const MODA_UDARA = 'udara';
     const MODA_DARAT = 'darat';
+    const UPLOAD_PATH = 'orgs/img';
 
     /**
      * @var string
@@ -69,6 +70,13 @@ class Organization
      * @ORM\Column(name="alamat", type="string", nullable=true)
      */
     private $address = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
+     */
+    private $photo = NULL;
 
     /**
      * @var ArrayCollection|User[]
@@ -192,6 +200,22 @@ class Organization
     public function setAddress($address): void
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
     }
 
     /**

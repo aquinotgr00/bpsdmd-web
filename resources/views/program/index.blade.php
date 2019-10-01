@@ -38,7 +38,7 @@
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
-                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCode() }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getDegree()) }}</td>
