@@ -45,8 +45,10 @@
                                     <td>
                                         <a href="javascript:void(0)" class="viewOrg" data-org="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a> |
-                                        <a href="{{ url(route('program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucfirst(trans('common.study_program')) }}</a> 
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        @if($item->getType() == \App\Entities\Organization::TYPE_SUPPLY)
+                                            | <a href="{{ url(route('program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.study_program')) }}</a> 
+                                        @endif
                                     </td>
                                 </tr>
                                 <?php

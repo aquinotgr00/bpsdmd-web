@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>{{ ucfirst(trans('common.edit')) }} {{ ucfirst(trans('common.study_program')) }}</h1>
+        <h1>{{ ucfirst(trans('common.edit')) }} {{ ucwords(trans('common.study_program')) }}</h1>
     </section>
 
     <!-- Main content -->
