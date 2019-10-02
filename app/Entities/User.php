@@ -33,7 +33,7 @@ class User implements UserInterface
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })

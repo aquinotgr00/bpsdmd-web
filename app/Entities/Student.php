@@ -24,6 +24,16 @@ class Student
     /**
      * @var Organization
      *
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     * })
+     */
+    private $org;
+
+    /**
+     * @var Organization
+     *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="program_studi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
@@ -94,6 +104,22 @@ class Student
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Organization
+     */
+    public function getOrg(): Organization
+    {
+        return $this->org;
+    }
+
+    /**
+     * @param Organization $org
+     */
+    public function setOrg(Organization $org): void
+    {
+        $this->org = $org;
     }
 
     /**
