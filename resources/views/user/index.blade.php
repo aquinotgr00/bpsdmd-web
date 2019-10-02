@@ -50,7 +50,7 @@
                             foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
-                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ $item->getEmail() }}</td>
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
