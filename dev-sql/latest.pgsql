@@ -17,6 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_program_studi_id_fkey;
+ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_instansi_id_fkey;
 ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_instansi_id_fkey;
 ALTER TABLE ONLY public.pengguna DROP CONSTRAINT pengguna_instansi_id_fkey;
 ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_instansi_id_fkey;
@@ -245,7 +246,8 @@ ALTER SEQUENCE public.program_studi_id_seq OWNED BY public.program_studi.id;
 
 CREATE TABLE public.siswa (
     id bigint NOT NULL,
-    program_studi_id bigint NOT NULL,
+    instansi_id bigint NOT NULL,
+    program_studi_id bigint,
     kode character varying,
     nama character varying NOT NULL,
     periode_masuk character varying,
@@ -365,7 +367,7 @@ COPY public.program_studi (id, instansi_id, kode, nama, jenjang) FROM stdin;
 -- Data for Name: siswa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.siswa (id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk) FROM stdin;
+COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk) FROM stdin;
 \.
 
 
@@ -408,7 +410,7 @@ SELECT pg_catalog.setval('public.program_studi_id_seq', 1, false);
 -- Name: siswa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.siswa_id_seq', 1, false);
+SELECT pg_catalog.setval('public.siswa_id_seq', 1, true);
 
 
 --
@@ -489,6 +491,14 @@ ALTER TABLE ONLY public.pengguna
 
 ALTER TABLE ONLY public.program_studi
     ADD CONSTRAINT program_studi_instansi_id_fkey FOREIGN KEY (instansi_id) REFERENCES public.instansi(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: siswa siswa_instansi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.siswa
+    ADD CONSTRAINT siswa_instansi_id_fkey FOREIGN KEY (instansi_id) REFERENCES public.instansi(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

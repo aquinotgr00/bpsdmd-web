@@ -49,6 +49,6 @@ class UtilityService
      */
     private function generateDataGraphTrend()
     {
-        return [];
+        return $this->orgService->getGraphSchoolAndStudents();
     }
 }

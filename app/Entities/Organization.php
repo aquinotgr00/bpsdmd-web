@@ -91,6 +91,18 @@ class Organization
     private $programs;
 
     /**
+     * @var ArrayCollection|Teacher[]
+     * @ORM\OneToMany(targetEntity="Teacher", mappedBy="org")
+     */
+    private $teachers;
+
+    /**
+     * @var ArrayCollection|Student[]
+     * @ORM\OneToMany(targetEntity="Student", mappedBy="org")
+     */
+    private $students;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -248,5 +260,37 @@ class Organization
     public function setPrograms($programs): void
     {
         $this->programs = $programs;
+    }
+
+    /**
+     * @return Teacher[]|ArrayCollection
+     */
+    public function getTeachers()
+    {
+        return $this->teachers;
+    }
+
+    /**
+     * @param Teacher[]|ArrayCollection $teachers
+     */
+    public function setTeachers($teachers): void
+    {
+        $this->teachers = $teachers;
+    }
+
+    /**
+     * @return Student[]|ArrayCollection
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
+
+    /**
+     * @param Student[]|ArrayCollection $students
+     */
+    public function setStudents($students): void
+    {
+        $this->students = $students;
     }
 }

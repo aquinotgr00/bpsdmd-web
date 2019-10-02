@@ -24,7 +24,7 @@ class Teacher
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="teachers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
@@ -41,7 +41,7 @@ class Teacher
     /**
      * @var string
      *
-     * @ORM\Column(name="nip", type="string", nullable=false)
+     * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
 
