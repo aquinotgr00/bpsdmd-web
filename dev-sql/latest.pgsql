@@ -134,7 +134,8 @@ CREATE TABLE public.instansi (
     singkatan character varying,
     tipe character varying NOT NULL,
     moda character varying NOT NULL,
-    alamat character varying
+    alamat character varying,
+    foto character varying
 );
 
 
@@ -340,7 +341,7 @@ COPY public.dosen (id, instansi_id, nip, nama, gelar_depan, gelar_belakang, tang
 -- Data for Name: instansi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat) FROM stdin;
+COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat, foto) FROM stdin;
 \.
 
 
