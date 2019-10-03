@@ -8,6 +8,7 @@ use App\Rules\IsAllowedDomain;
 use App\Services\Application\AuthService;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\UserService;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
@@ -58,7 +59,7 @@ class AuthController extends Controller
             ]);
 
             if ($request->hasFile('image_file')) {          // if the request has image file in it
-                $request->get('image_file')->store(User::UPLOAD_PATH, 'public');
+                $request->file('image_file')->store(User::UPLOAD_PATH, 'public');
                 $photoName = $request->file('image_file')->hashName();
 
                 $request->merge([
@@ -83,7 +84,11 @@ class AuthController extends Controller
             return redirect()->route('login')->with('alert', 'Silahkan cek email anda untuk aktivasi.');
         }
 
-        return view('auth.register');
+        $orgs = DB::table('public.instansi as instansi')
+          ->selectRaw('instansi.id, instansi.nama')
+          ->get();
+
+        return view('auth.register', compact('orgs'));
     }
 
     public function verifyUser(Request $request, $randString, $id, UserService $userService)
