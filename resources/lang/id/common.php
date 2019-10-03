@@ -74,4 +74,15 @@ return [
     //manage program
     'study_program' => 'program studi',
     'degree' => 'jenjang',
+
+    //manage student
+    'student' => 'siswa',
+    'student_information' => 'informasi siswa',
+    'choose_program' => 'pilih program studi',
+    'invalid_program' => 'Program studi yang Anda pilih tidak valid.',
+    'period' => 'periode masuk',
+    'curriculum' => 'tahun kurikulum',
+    'date_of_birth' => 'tanggal lahir',
+    'class' => 'kelas',
+    'ipk' => 'ipk',
 ];

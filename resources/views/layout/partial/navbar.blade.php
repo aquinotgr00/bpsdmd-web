@@ -31,6 +31,13 @@
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))
+        <li>
+            <a href="{{ route('student.index') }}">
+                <i class="fa fa-user"></i>
+                <span>{{ ucwords(trans('common.student')) }}</span>
+            </a>
+        </li>
+
 {{--    <li>--}}
 {{--        <a href="{{ route('feeder.upload',['year'=>date('Y')]) }}">--}}
 {{--            <i class="fa fa-file"></i>--}}

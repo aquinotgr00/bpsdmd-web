@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,9 +33,9 @@ class Student
     private $org;
 
     /**
-     * @var Organization
+     * @var StudyProgram
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="students")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="program_studi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
@@ -51,7 +52,7 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", nullable=false)
+     * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
 
@@ -123,17 +124,17 @@ class Student
     }
 
     /**
-     * @return Organization
+     * @return StudyProgram
      */
-    public function getStudyProgram(): Organization
+    public function getStudyProgram(): StudyProgram
     {
         return $this->studyProgram;
     }
 
     /**
-     * @param Organization $studyProgram
+     * @param StudyProgram $studyProgram
      */
-    public function setStudyProgram(Organization $studyProgram): void
+    public function setStudyProgram(StudyProgram $studyProgram): void
     {
         $this->studyProgram = $studyProgram;
     }

@@ -74,4 +74,15 @@ return [
     //manage program
     'study_program' => 'study program',
     'degree' => 'degree',
+
+    //manage student
+    'student_information' => 'student information',
+    'student' => 'student',
+    'choose_program' => 'choose study program',
+    'invalid_program' => 'Chosen study program is invalid.',
+    'period' => 'period',
+    'curriculum' => 'curriculum',
+    'date_of_birth' => 'date of birth',
+    'class' => 'class',
+    'ipk' => 'ipk',
 ];
