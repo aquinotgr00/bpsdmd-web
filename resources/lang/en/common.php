@@ -69,8 +69,29 @@ return [
     'short_name' => 'short name',
     'moda' => 'moda',
     'address' => 'address',
+    'logo' => 'logo',
 
     //manage program
     'study_program' => 'study program',
     'degree' => 'degree',
+
+    //manage student
+    'student_information' => 'student information',
+    'student' => 'student',
+    'choose_program' => 'choose study program',
+    'invalid_program' => 'Chosen study program is invalid.',
+    'period' => 'period',
+    'curriculum' => 'curriculum',
+    'date_of_birth' => 'date of birth',
+    'class' => 'class',
+    'ipk' => 'ipk',
+
+    //manage teacher
+    'teacher_information' => 'teacher information',
+    'teacher' => 'teacher',
+    'nip' => 'nip',
+    'front_degree' => 'front degree',
+    'back_degree' => 'back degree',
+    'identity_number' => 'identity number',
+    'nidn' => 'nidn',
 ];

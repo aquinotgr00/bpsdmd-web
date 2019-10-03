@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                         @csrf
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
@@ -56,6 +56,18 @@
                                 <label for="address">{{ ucfirst(trans('common.address')) }} :</label>
                                 <textarea class="form-control" id="address" name="address" rows="5"></textarea>
                                 <span class="help-block">{!! implode('', $errors->get('address')) !!}</span>
+                            </div>
+
+                            <div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
+                                <div class="input-group-prepend">
+                                    <label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.logo')) }}</label>
+                                    <span class="help-block">{{ trans('common.allowed_photo') }}</span>
+                                    <span class="help-block">{{ __('common.max_photo', ['max' => '500KB']) }}</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="photo">
+                                    <span class="help-block ">{!! implode('', $errors->get('photo')) !!}</span>
+                                </div>
                             </div>
 
                             <div class="box-footer" style="text-align: right">

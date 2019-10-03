@@ -69,8 +69,29 @@ return [
     'short_name' => 'nama pendek',
     'moda' => 'moda',
     'address' => 'alamat',
+    'logo' => 'logo',
 
     //manage program
     'study_program' => 'program studi',
     'degree' => 'jenjang',
+
+    //manage student
+    'student' => 'siswa',
+    'student_information' => 'informasi siswa',
+    'choose_program' => 'pilih program studi',
+    'invalid_program' => 'Program studi yang Anda pilih tidak valid.',
+    'period' => 'periode masuk',
+    'curriculum' => 'tahun kurikulum',
+    'date_of_birth' => 'tanggal lahir',
+    'class' => 'kelas',
+    'ipk' => 'ipk',
+
+    //manage teacher
+    'teacher_information' => 'informasi dosen',
+    'teacher' => 'dosen',
+    'nip' => 'nip',
+    'front_degree' => 'gelar depan',
+    'back_degree' => 'gelar belakang',
+    'identity_number' => 'no ktp',
+    'nidn' => 'nidn',
 ];

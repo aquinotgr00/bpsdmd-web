@@ -7,6 +7,7 @@ use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
 use App\Exceptions\OrgDeleteException;
+use Image;
 
 class OrgController extends Controller
 {
@@ -25,11 +26,25 @@ class OrgController extends Controller
                 'name' => 'required',
                 'short_name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT
+                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT,
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ]);
 
             try {
-                $orgService->create(collect($request->input()));
+                $requestData = $request->all();
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(Organization::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
+                }
+
+                $orgService->create(collect($requestData));
                 $alert = 'alert_success';
                 $message = 'Instansi berhasil ditambahkan.';
             } catch (Exception $e) {
@@ -51,11 +66,25 @@ class OrgController extends Controller
                 'name' => 'required',
                 'short_name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT
+                'moda' => 'in:' . Organization::MODA_AIR . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT,
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ]);
 
             try {
-                $orgService->update($data, collect($request->input()));
+                $requestData = $request->all();
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(Organization::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
+                }
+
+                $orgService->update($data, collect($requestData), true);
                 $alert = 'alert_success';
                 $message = 'Instansi berhasil diubah.';
             } catch (Exception $e) {
@@ -95,7 +124,7 @@ class OrgController extends Controller
                 'code' => $org->getCode(),
                 'name' => $org->getName(),
                 'short_name' => $org->getShortName(),
-                // 'photo' => $org->getPhoto() ? url(url(User::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
+                'photo' => $org->getPhoto() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
                 'type' => $org->getType(),
                 'moda' => $org->getModa(),
                 'address' => $org->getAddress()

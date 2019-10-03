@@ -3,6 +3,8 @@
 namespace App\Services\Domain;
 
 use App\Entities\Organization;
+use App\Entities\Student;
+use App\Entities\StudyProgram;
 use App\Exceptions\OrgDeleteException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -25,6 +27,15 @@ class OrgService
         return EntityManager::createQueryBuilder()
             ->select($alias)
             ->from(Organization::class, $alias, $indexBy);
+    }
+
+    /**
+     * @param $dql
+     * @return \Doctrine\ORM\Query
+     */
+    public function createQuery($dql)
+    {
+        return EntityManager::createQuery($dql);
     }
 
     /**
@@ -68,6 +79,11 @@ class OrgService
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+
+        if ($data->get('uploaded_img')) {
+            $org->setPhoto($data->get('uploaded_img'));
+        }
+
         EntityManager::persist($org);
 
         if ($flush) {
@@ -93,6 +109,12 @@ class OrgService
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
+            $org->setPhoto($data->get('uploaded_img'));
+        }
+
         EntityManager::persist($org);
 
         if ($flush) {
@@ -149,5 +171,45 @@ class OrgService
         }
 
         return $this->getRepository()->findAll();
+    }
+
+    /**
+     * Get count school
+     *
+     * @return int
+     */
+    public function getCountSchool()
+    {
+        try {
+            $qb = $this->createQueryBuilder('org')
+                ->where('org.type = :type')
+                ->setParameter('type', Organization::TYPE_SUPPLY);
+
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Get org and total students
+     *
+     * @return string
+     */
+    public function getGraphSchoolAndStudents()
+    {
+        $query = \DB::select('
+        select i.nama, std.total as y
+        from instansi i
+        left join (
+            select s.instansi_id, count(s.id) as total
+            from siswa s
+            group by s.instansi_id
+        ) std ON std.instansi_id = i.id
+        where std.total > 0
+        order by y DESC
+        ');
+
+        return json_encode($query);
     }
 }

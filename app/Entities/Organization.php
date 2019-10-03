@@ -18,6 +18,7 @@ class Organization
     const MODA_AIR = 'air';
     const MODA_UDARA = 'udara';
     const MODA_DARAT = 'darat';
+    const UPLOAD_PATH = 'orgs/img';
 
     /**
      * @var string
@@ -71,6 +72,13 @@ class Organization
     private $address = NULL;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
+     */
+    private $photo = NULL;
+
+    /**
      * @var ArrayCollection|User[]
      * @ORM\OneToMany(targetEntity="User", mappedBy="org")
      */
@@ -81,6 +89,18 @@ class Organization
      * @ORM\OneToMany(targetEntity="StudyProgram", mappedBy="org")
      */
     private $programs;
+
+    /**
+     * @var ArrayCollection|Teacher[]
+     * @ORM\OneToMany(targetEntity="Teacher", mappedBy="org")
+     */
+    private $teachers;
+
+    /**
+     * @var ArrayCollection|Student[]
+     * @ORM\OneToMany(targetEntity="Student", mappedBy="org")
+     */
+    private $students;
 
     /**
      * @return string
@@ -195,6 +215,22 @@ class Organization
     }
 
     /**
+     * @return string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
+    }
+
+    /**
      * @return User[]|ArrayCollection
      */
     public function getUsers()
@@ -224,5 +260,37 @@ class Organization
     public function setPrograms($programs): void
     {
         $this->programs = $programs;
+    }
+
+    /**
+     * @return Teacher[]|ArrayCollection
+     */
+    public function getTeachers()
+    {
+        return $this->teachers;
+    }
+
+    /**
+     * @param Teacher[]|ArrayCollection $teachers
+     */
+    public function setTeachers($teachers): void
+    {
+        $this->teachers = $teachers;
+    }
+
+    /**
+     * @return Student[]|ArrayCollection
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
+
+    /**
+     * @param Student[]|ArrayCollection $students
+     */
+    public function setStudents($students): void
+    {
+        $this->students = $students;
     }
 }

@@ -38,15 +38,17 @@
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
-                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getType()) }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewOrg" data-org="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <a href="{{ url(route('org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a> |
-                                        <a href="{{ url(route('program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucfirst(trans('common.study_program')) }}</a> 
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        @if($item->getType() == \App\Entities\Organization::TYPE_SUPPLY)
+                                            | <a href="{{ url(route('program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.study_program')) }}</a> 
+                                        @endif
                                     </td>
                                 </tr>
                                 <?php
@@ -131,7 +133,7 @@
 
         $.get('/org/'+org, function(org, status){
             if (status === 'success') {
-                // modalHtml.find('.orgPhoto').attr("src",org.photo);
+                modalHtml.find('.orgPhoto').attr("src",org.photo);
                 modalHtml.find('.orgCode').html(org.code);
                 modalHtml.find('.orgName').html(org.name);
                 modalHtml.find('.orgShortName').html(org.short_name);
@@ -144,7 +146,7 @@
     });
 
     $('#modalDetailOrg').on('hidden.bs.modal', function (e) {
-        // modalHtml.find('.orgPhoto').attr('src','');
+        modalHtml.find('.orgPhoto').attr('src','');
         modalHtml.find('.orgCode').html('');
         modalHtml.find('.orgName').html('');
         modalHtml.find('.orgShortName').html('');

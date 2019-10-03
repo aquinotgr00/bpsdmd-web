@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data {{ ucfirst(trans('common.study_program')) }}</h1>
+        <h1>Data {{ ucwords(trans('common.study_program')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ url(route('program.create', [$org->getId()])) }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.study_program')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.study_program')) }}
                 </a>
             </li>
         </ol>
@@ -38,7 +38,7 @@
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
-                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCode() }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getDegree()) }}</td>

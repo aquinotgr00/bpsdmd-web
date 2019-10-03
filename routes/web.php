@@ -50,6 +50,22 @@ Route::group(['middleware' => ['authenticated']], function() {
 //        Route::any('/demand-by-kompetensi', 'LinkAndMatchController@getDemandByKompetensi')->name('linknmatch.getDemandByKompetensi');
 //    });
 
+    Route::group(['prefix' => 'student', 'middleware' => ['only_supply']], function() {
+        Route::any('/create', 'StudentController@create')->name('student.create');
+        Route::any('/{student}/update', 'StudentController@update')->name('student.update');
+        Route::get('/{student}/delete', 'StudentController@delete')->name('student.delete');
+        Route::get('/{student}', 'StudentController@ajaxDetailStudent')->name('student.view');
+        Route::get('/', 'StudentController@index')->name('student.index');
+    });
+
+    Route::group(['prefix' => 'teacher', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'TeacherController@create')->name('teacher.create');
+        Route::any('/{teacher}/update', 'TeacherController@update')->name('teacher.update');
+        Route::get('/{teacher}/delete', 'TeacherController@delete')->name('teacher.delete');
+        Route::get('/{teacher}', 'TeacherController@ajaxDetailTeacher')->name('teacher.view');
+        Route::get('/', 'TeacherController@index')->name('teacher.index');
+    });
+
     Route::group(['prefix' => 'data'], function() {
         Route::get('/school', 'UtilityController@dataSchool')->name('data.school');
         Route::get('/lecturer', 'UtilityController@dataLecturer')->name('data.lecturer');
