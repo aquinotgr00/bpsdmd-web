@@ -45,4 +45,13 @@
 {{--        </a>--}}
 {{--    </li>--}}
     @endif
+
+    @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))
+        <li>
+            <a href="{{ route('teacher.index') }}">
+                <i class="fa fa-user"></i>
+                <span>{{ ucwords(trans('common.teacher')) }}</span>
+            </a>
+        </li>
+    @endif
 </ul>

@@ -41,7 +41,7 @@ class Teacher
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", nullable=false)
+     * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
 
@@ -50,14 +50,14 @@ class Teacher
      *
      * @ORM\Column(name="gelar_depan", type="string", nullable=true)
      */
-    private $front_degree = NULL;
+    private $frontDegree = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="gelar_belakang", type="string", nullable=true)
      */
-    private $back_degree = NULL;
+    private $backDegree = NULL;
 
     /**
      * @var \DateTime
@@ -149,15 +149,15 @@ class Teacher
      */
     public function getFrontDegree(): ?string
     {
-        return $this->front_degree;
+        return $this->frontDegree;
     }
 
     /**
-     * @param string $front_degree
+     * @param string $frontDegree
      */
-    public function setFrontDegree($front_degree): void
+    public function setFrontDegree($frontDegree): void
     {
-        $this->front_degree = $front_degree;
+        $this->frontDegree = $frontDegree;
     }
 
     /**
@@ -165,15 +165,15 @@ class Teacher
      */
     public function getBackDegree(): ?string
     {
-        return $this->back_degree;
+        return $this->backDegree;
     }
 
     /**
-     * @param string $back_degree
+     * @param string $backDegree
      */
-    public function setBackDegree($back_degree): void
+    public function setBackDegree($backDegree): void
     {
-        $this->back_degree = $back_degree;
+        $this->backDegree = $backDegree;
     }
 
     /**

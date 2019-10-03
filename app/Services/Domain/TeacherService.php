@@ -3,9 +3,12 @@
 namespace App\Services\Domain;
 
 use App\Entities\Teacher;
+use App\Entities\Organization;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
 
 class TeacherService
@@ -48,5 +51,110 @@ class TeacherService
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    /**
+     * Paginate disease
+     *
+     * @param int $page
+     * @return LengthAwarePaginator
+     */
+    public function paginateTeacher($page): LengthAwarePaginator
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('t')
+            ->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
+    /**
+     * Create new Teacher
+     *
+     * @param Collection $data
+     * @param bool $flush
+     * @return Teacher
+     */
+    public function create(Collection $data, $org = false, $flush = true)
+    {
+        $teacher = new Teacher;
+        $teacher->setNip($data->get('nip'));
+        $teacher->setName($data->get('name'));
+        $teacher->setFrontDegree($data->get('front_degree'));
+        $teacher->setBackDegree($data->get('back_degree'));
+        $teacher->setIdentityNumber($data->get('identity_number'));
+        $teacher->setNidn($data->get('nidn'));
+
+        if ($org instanceof Organization) {
+            $teacher->setOrg($org);
+        }
+        if ($data->get('dateOfBirth') instanceof \DateTime) {
+            $teacher->setDateOfBirth($data->get('dateOfBirth'));
+        }
+
+        EntityManager::persist($teacher);
+
+        if ($flush) {
+            EntityManager::flush();
+
+            return $teacher;
+        }
+    }
+
+    /**
+     * Update Teacher
+     *
+     * @param Teacher $teacher
+     * @param Collection $data
+     * @param bool $flush
+     * @return Teacher
+     */
+    public function update(Teacher $teacher, Collection $data, $org = false, $flush = true)
+    {
+        $teacher->setNip($data->get('nip'));
+        $teacher->setName($data->get('name'));
+        $teacher->setFrontDegree($data->get('front_degree'));
+        $teacher->setBackDegree($data->get('back_degree'));
+        $teacher->setIdentityNumber($data->get('identity_number'));
+        $teacher->setNidn($data->get('nidn'));
+
+        if ($org instanceof Organization) {
+            $teacher->setOrg($org);
+        }
+        if ($data->get('dateOfBirth') instanceof \DateTime) {
+            $teacher->setDateOfBirth($data->get('dateOfBirth'));
+        }
+
+        EntityManager::persist($teacher);
+
+        if ($flush) {
+            EntityManager::flush();
+
+            return $teacher;
+        }
+    }
+
+    /**
+     * Delete Teacher
+     *
+     * @param Teacher $teacher
+     * @return bool
+     * @throws TeacherDeleteException
+     */
+    public function delete(Teacher $teacher)
+    {
+        EntityManager::remove($teacher);
+        EntityManager::flush();
+    }
+
+    /**
+     * Find Teacher by id
+     *
+     * @param $id
+     * @return Teacher
+     */
+    public function findById($id)
+    {
+        return $this->getRepository()->find($id);
     }
 }

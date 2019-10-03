@@ -85,4 +85,13 @@ return [
     'date_of_birth' => 'date of birth',
     'class' => 'class',
     'ipk' => 'ipk',
+
+    //manage teacher
+    'teacher_information' => 'teacher information',
+    'teacher' => 'teacher',
+    'nip' => 'nip',
+    'front_degree' => 'front degree',
+    'back_degree' => 'back degree',
+    'identity_number' => 'identity number',
+    'nidn' => 'nidn',
 ];

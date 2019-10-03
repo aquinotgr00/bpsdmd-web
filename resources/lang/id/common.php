@@ -85,4 +85,13 @@ return [
     'date_of_birth' => 'tanggal lahir',
     'class' => 'kelas',
     'ipk' => 'ipk',
+
+    //manage teacher
+    'teacher_information' => 'informasi dosen',
+    'teacher' => 'dosen',
+    'nip' => 'nip',
+    'front_degree' => 'gelar depan',
+    'back_degree' => 'gelar belakang',
+    'identity_number' => 'no ktp',
+    'nidn' => 'nidn',
 ];
