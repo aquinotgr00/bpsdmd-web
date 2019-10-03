@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.institute')) }}</h1>
+        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.student')) }}</h1>
     </section>
 
     <!-- Main content -->
@@ -67,7 +67,7 @@
 
                             <div class="form-group {{ $errors->has('dateOfBirth') ? 'has-error' : '' }}">
                                 <label for="dateOfBirth">{{ ucwords(trans('common.date_of_birth')) }} :</label>
-                                <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth">
+                                <input type="text" class="date form-control" id="dateOfBirth" name="dateOfBirth">
                                 <span class="help-block ">{!! implode('', $errors->get('dateOfBirth')) !!}</span>
                             </div>
 
@@ -86,6 +86,11 @@
                             <div class="box-footer" style="text-align: right">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
+                            <script type="text/javascript">
+                                $('.date').datepicker({  
+                                    format: 'dd-mm-yyyy' // HTML 5 
+                                });
+                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

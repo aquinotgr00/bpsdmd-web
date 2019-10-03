@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>{{ ucfirst(trans('common.edit')) }} {{ ucfirst(trans('common.institute')) }}</h1>
+        <h1>{{ ucfirst(trans('common.edit')) }} {{ ucfirst(trans('common.student')) }}</h1>
     </section>
 
     <!-- Main content -->
@@ -54,20 +54,20 @@
                             </div>
 
                             <div class="form-group {{ $errors->has('period') ? 'has-error' : '' }}">
-                                <label for="period">{{ ucfirst(trans('common.period')) }} :</label>
+                                <label for="period">{{ ucwords(trans('common.period')) }} :</label>
                                 <input type="text" class="form-control" id="period" name="period" value="{{ $data->getPeriod() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('period')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('curriculum') ? 'has-error' : '' }}">
-                                <label for="curriculum">{{ ucfirst(trans('common.curriculum')) }} :</label>
+                                <label for="curriculum">{{ ucwords(trans('common.curriculum')) }} :</label>
                                 <input type="text" class="form-control" id="curriculum" name="curriculum" value="{{ $data->getCurriculum() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('curriculum')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('dateOfBirth') ? 'has-error' : '' }}">
                                 <label for="dateOfBirth">{{ ucwords(trans('common.date_of_birth')) }} :</label>
-                                <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" value="{{ $data->getDateOfBirth() }}">
+                                <input type="text" class="date form-control" id="dateOfBirth" name="dateOfBirth" value="{{ $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d-m-Y') : '' }}">
                                 <span class="help-block ">{!! implode('', $errors->get('dateOfBirth')) !!}</span>
                             </div>
 
@@ -86,6 +86,11 @@
                             <div class="box-footer">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
+                            <script type="text/javascript">
+                                $('.date').datepicker({  
+                                    format: 'dd-mm-yyyy' // HTML 5 
+                                });
+                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -93,3 +98,4 @@
         </div>
     </section><!-- /.content -->
 @endsection
+

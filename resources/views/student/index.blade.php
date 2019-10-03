@@ -28,6 +28,7 @@
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th>{{ ucfirst(trans('common.institute')) }}</th>
+                                    <th>{{ ucwords(trans('common.study_program')) }}</th>
                                     <th>{{ strtoupper(trans('common.ipk')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
@@ -42,6 +43,7 @@
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
+                                    <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getName() : '-' }}</td>
                                     <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewStudent" data-student="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
