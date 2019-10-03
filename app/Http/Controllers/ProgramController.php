@@ -32,11 +32,11 @@ class ProgramController extends Controller
                 $requestData = $request->all();
                 $programService->create(collect($requestData));
                 $alert = 'alert_success';
-                $message = 'Program studi berhasil ditambahkan.';
+                $message = trans('common.create_success', ['object' => ucfirst(trans('common.study_program'))]);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah program studi. Silakan kontak web administrator!';
+                $message = trans('common.create_failed', ['object' => ucfirst(trans('common.study_program'))]);
             }
 
             return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
@@ -57,10 +57,10 @@ class ProgramController extends Controller
                 $requestData = $request->all();
                 $programService->update($data, collect($request->input()));
                 $alert = 'alert_success';
-                $message = 'Program studi berhasil diubah.';
+                $message = trans('common.update_success', ['object' => ucfirst(trans('common.study_program'))]);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah program studi. Silakan kontak web administrator!';
+                $message = trans('common.update_failed', ['object' => ucfirst(trans('common.study_program'))]);
             }
 
             return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
@@ -74,11 +74,11 @@ class ProgramController extends Controller
         try {
             $programService->delete($data);
             $alert = 'alert_success';
-            $message = 'Program studi berhasil dihapus.';
+            $message = trans('common.delete_success', ['object' => ucfirst(trans('common.study_program'))]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus program studi. Silakan kontak web administrator!';
+            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.study_program'))]);
         }
 
         return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
