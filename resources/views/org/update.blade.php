@@ -45,9 +45,10 @@
                             <div class="form-group {{ $errors->has('moda') ? 'has-error' : '' }}">
                                 <label for="moda">{{ ucfirst(trans('common.moda')) }} :</label>
                                 <select id="moda" name="moda" class="form-control">
-                                    <option value="{{ \App\Entities\Organization::MODA_AIR }}" {{ $data->getModa() == \App\Entities\Organization::MODA_AIR ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_AIR) }}</option>
+                                    <option value="{{ \App\Entities\Organization::MODA_LAUT }}" {{ $data->getModa() == \App\Entities\Organization::MODA_LAUT ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_LAUT) }}</option>
                                     <option value="{{ \App\Entities\Organization::MODA_UDARA }}" {{ $data->getModa() == \App\Entities\Organization::MODA_UDARA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_UDARA) }}</option>
                                     <option value="{{ \App\Entities\Organization::MODA_DARAT }}" {{ $data->getModa() == \App\Entities\Organization::MODA_DARAT ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_DARAT) }}</option>
+                                    <option value="{{ \App\Entities\Organization::MODA_KERETA }}" {{ $data->getModa() == \App\Entities\Organization::MODA_KERETA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_KERETA) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('moda')) !!}</span>
                             </div>

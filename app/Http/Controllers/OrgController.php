@@ -46,11 +46,11 @@ class OrgController extends Controller
 
                 $orgService->create(collect($requestData));
                 $alert = 'alert_success';
-                $message = 'Instansi berhasil ditambahkan.';
+                $message = trans('common.create_success', ['object' => ucfirst(trans('common.institute'))]);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah instansi. Silakan kontak web administrator!';
+                $message = trans('common.create_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
             return redirect()->route('org.index')->with($alert, $message);
@@ -86,10 +86,10 @@ class OrgController extends Controller
 
                 $orgService->update($data, collect($requestData), true);
                 $alert = 'alert_success';
-                $message = 'Instansi berhasil diubah.';
+                $message = trans('common.update_success', ['object' => ucfirst(trans('common.institute'))]);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah instansi. Silakan kontak web administrator!';
+                $message = trans('common.update_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
             return redirect()->route('org.index')->with($alert, $message);
@@ -103,15 +103,15 @@ class OrgController extends Controller
         try {
             $orgService->delete($data);
             $alert = 'alert_success';
-            $message = 'Instansi berhasil dihapus.';
+            $message = trans('common.delete_success', ['object' => ucfirst(trans('common.institute'))]);
         } catch (OrgDeleteException $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus instansi karena masih terdapat user instansi!';
+            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.institute'))]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus instansi. Silakan kontak web administrator!';
+            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.institute'))]);
         }
 
         return redirect()->route('org.index')->with($alert, $message);
@@ -121,13 +121,13 @@ class OrgController extends Controller
     {
         if ($request->ajax()) {
             $data = [
-                'code' => $org->getCode(),
+                'code' => $org->getCode() ? $org->getCode() : '-',
                 'name' => $org->getName(),
-                'short_name' => $org->getShortName(),
+                'short_name' => $org->getShortName() ? $org->getShortName() : '-',
                 'photo' => $org->getPhoto() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
                 'type' => $org->getType(),
                 'moda' => $org->getModa(),
-                'address' => $org->getAddress()
+                'address' => $org->getAddress() ? $org->getAddress() : '-'
             ];
 
             return response()->json($data);
