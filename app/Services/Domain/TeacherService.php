@@ -80,6 +80,7 @@ class TeacherService
         $teacher = new Teacher;
         $teacher->setNip($data->get('nip'));
         $teacher->setName($data->get('name'));
+        $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $teacher->setFrontDegree($data->get('front_degree'));
         $teacher->setBackDegree($data->get('back_degree'));
         $teacher->setIdentityNumber($data->get('identity_number'));
@@ -87,9 +88,6 @@ class TeacherService
 
         if ($org instanceof Organization) {
             $teacher->setOrg($org);
-        }
-        if ($data->get('dateOfBirth') instanceof \DateTime) {
-            $teacher->setDateOfBirth($data->get('dateOfBirth'));
         }
 
         EntityManager::persist($teacher);
@@ -113,6 +111,7 @@ class TeacherService
     {
         $teacher->setNip($data->get('nip'));
         $teacher->setName($data->get('name'));
+        $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $teacher->setFrontDegree($data->get('front_degree'));
         $teacher->setBackDegree($data->get('back_degree'));
         $teacher->setIdentityNumber($data->get('identity_number'));
@@ -120,9 +119,6 @@ class TeacherService
 
         if ($org instanceof Organization) {
             $teacher->setOrg($org);
-        }
-        if ($data->get('dateOfBirth') instanceof \DateTime) {
-            $teacher->setDateOfBirth($data->get('dateOfBirth'));
         }
 
         EntityManager::persist($teacher);

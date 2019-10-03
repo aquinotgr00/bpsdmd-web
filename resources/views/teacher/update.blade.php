@@ -54,7 +54,7 @@
 
                             <div class="form-group {{ $errors->has('dateOfBirth') ? 'has-error' : '' }}">
                                 <label for="dateOfBirth">{{ ucwords(trans('common.date_of_birth')) }} :</label>
-                                <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" value="{{ $data->getDateOfBirth() }}">
+                                <input type="text" class="date form-control" id="dateOfBirth" name="dateOfBirth" value="{{ $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d-m-Y') : '' }}">
                                 <span class="help-block ">{!! implode('', $errors->get('dateOfBirth')) !!}</span>
                             </div>
 
@@ -73,6 +73,11 @@
                             <div class="box-footer">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
+                            <script type="text/javascript">
+                                $('.date').datepicker({  
+                                    format: 'dd-mm-yyyy' // HTML 5 
+                                });
+                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

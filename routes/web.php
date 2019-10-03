@@ -58,7 +58,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'StudentController@index')->name('student.index');
     });
 
-    Route::group(['prefix' => 'teacher', 'middleware' => ['only_demand']], function() {
+    Route::group(['prefix' => 'teacher', 'middleware' => ['only_supply']], function() {
         Route::any('/create', 'TeacherController@create')->name('teacher.create');
         Route::any('/{teacher}/update', 'TeacherController@update')->name('teacher.update');
         Route::get('/{teacher}/delete', 'TeacherController@delete')->name('teacher.delete');
