@@ -69,6 +69,7 @@ return [
     'short_name' => 'short name',
     'moda' => 'moda',
     'address' => 'address',
+    'logo' => 'logo',
 
     //manage program
     'study_program' => 'study program',

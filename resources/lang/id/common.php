@@ -69,6 +69,7 @@ return [
     'short_name' => 'nama pendek',
     'moda' => 'moda',
     'address' => 'alamat',
+    'logo' => 'logo',
 
     //manage program
     'study_program' => 'program studi',

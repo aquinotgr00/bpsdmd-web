@@ -60,7 +60,7 @@
 
                             <div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
                                 <div class="input-group-prepend">
-                                    <label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.photo')) }}</label>
+                                    <label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.logo')) }}</label>
                                     <span class="help-block">{{ trans('common.allowed_photo') }}</span>
                                     <span class="help-block">{{ __('common.max_photo', ['max' => '500KB']) }}</span>
                                 </div>
