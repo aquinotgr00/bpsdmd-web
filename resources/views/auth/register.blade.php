@@ -14,19 +14,19 @@
             @endif
         </div> <!-- / .signin-text -->
 
-        <div class="form-group required required-asterisk {{ $errors->has('org') ? 'has-error' : '' }}">
+        {{-- <div class="form-group required required-asterisk {{ $errors->has('org') ? 'has-error' : '' }}">
             <label>Nama Organisasi</label>
-            <input name="org" id="org_id" class="form-control" type="text" required>
+            <input name="org_name" id="org_name" class="form-control" type="text" required>
             <span class="help-block">Nama resmi perusahaan Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
-        </div> <!-- / Org -->
+        </div> <!-- / Org --> --}}
 
         <div class="form-group required required-asterisk {{ $errors->has('org_type') ? 'has-error' : '' }}">
             <label>Jenis Organisasi</label>
-            <select name="org_type" id="org_type" class="form-control">
+            <select name="org" id="org" class="form-control">
               <option value="null"></option>
-              <option value="pelni">PELNI</option>
-              <option value="kai">KAI</option>
+              <option value="1">PELNI</option>
+              <option value="2">KAI</option>
             </select>
             <span class="help-block">Jenis perusahaan Anda.</span>
             <span class="help-block ">{!! implode('', $errors->get('org_type')) !!}</span>

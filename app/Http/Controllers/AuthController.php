@@ -52,7 +52,6 @@ class AuthController extends Controller
                 'name' => 'required|string',
                 'email' => ['required', 'email', new IsAllowedDomain],
                 'org' => 'required',
-                'org_type' => 'required',
                 'org_address' => 'required',
                 'image_file' => 'image|mimes:jpeg,png,jpg|max:2048',
                 'g-recaptcha-response' => 'required|captcha'
@@ -87,7 +86,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function verifyUser(Request $request, $id, UserService $userService)
+    public function verifyUser(Request $request, $randString, $id, UserService $userService)
     {
         if ($request->method() === 'POST') {
             $user = $userService->getRepository()->findOneBy([ 'id' => $id ]);
@@ -97,7 +96,8 @@ class AuthController extends Controller
                         'email' => $user->getEmail(),
                         'name' => $user->getName(),
                         'password' => $request->get('password'),
-                        'isActive' => 1
+                        'isActive' => 1,
+                        'language' => 'id',
                     ];
                     $userService->updateProfile($user, collect($userArr));
                 }
