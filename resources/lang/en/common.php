@@ -94,4 +94,14 @@ return [
     'back_degree' => 'back degree',
     'identity_number' => 'identity number',
     'nidn' => 'nidn',
+
+    //manage employee
+    'employee_information' => 'employee information',
+    'employee' => 'employee',
+    'choose_school' => 'choose school',
+    'invalid_school' => 'Chosen school is invalid.',
+    'school' => 'school',
+    'gender' => 'gender',
+    'place_of_birth' => 'place of birth',
+    'nationality' => 'nationality',
 ];

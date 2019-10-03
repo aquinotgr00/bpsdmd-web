@@ -66,6 +66,14 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'TeacherController@index')->name('teacher.index');
     });
 
+    Route::group(['prefix' => 'employee', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'EmployeeController@create')->name('employee.create');
+        Route::any('/{employee}/update', 'EmployeeController@update')->name('employee.update');
+        Route::get('/{employee}/delete', 'EmployeeController@delete')->name('employee.delete');
+        Route::get('/{employee}', 'EmployeeController@ajaxDetailEmployee')->name('employee.view');
+        Route::get('/', 'EmployeeController@index')->name('employee.index');
+    });
+
     Route::group(['prefix' => 'data'], function() {
         Route::get('/school', 'UtilityController@dataSchool')->name('data.school');
         Route::get('/lecturer', 'UtilityController@dataLecturer')->name('data.lecturer');

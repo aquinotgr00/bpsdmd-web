@@ -94,4 +94,14 @@ return [
     'back_degree' => 'gelar belakang',
     'identity_number' => 'no ktp',
     'nidn' => 'nidn',
+
+    //manage pegawai
+    'employee_information' => 'informasi pegawai',
+    'employee' => 'pegawai',
+    'choose_school' => 'pilih sekolah',
+    'invalid_school' => 'Sekolah yang Anda pilih tidak valid.',
+    'school' => 'sekolah',
+    'gender' => 'jenis kelamin',
+    'place_of_birth' => 'tempat lahir',
+    'nationality' => 'kewarganegaraan',
 ];

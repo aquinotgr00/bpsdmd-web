@@ -53,5 +53,11 @@
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))
+        <li>
+            <a href="{{ route('employee.index') }}">
+                <i class="fa fa-user"></i>
+                <span>{{ ucwords(trans('common.employee')) }}</span>
+            </a>
+        </li>
     @endif
 </ul>
