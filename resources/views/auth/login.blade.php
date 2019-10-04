@@ -6,7 +6,7 @@
         @csrf
 
         <div class="signin-text">
-            <span>Sign In to your account</span>
+            <span>{{trans('common.login_header')}}</span>
 
             @if(session('alert') ?? false)
                 <div class="alert alert-info alert-dismissible" role="alert">
@@ -44,7 +44,7 @@
     </form>
     <hr />
     <div style="margin-top:1em;">
-        <a href="{{ route('register') }}">Daftar</a>
+        <a href="{{ route('register') }}">{{trans('common.register_button')}}</a>
     </div>
     <!-- / Form -->
 @endsection

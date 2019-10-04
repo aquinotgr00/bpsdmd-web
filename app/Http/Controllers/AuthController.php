@@ -31,7 +31,7 @@ class AuthController extends Controller
                 return redirect(route('dashboard'));
             } catch (Exception $e) {
                 report($e);
-                $request->session()->flash('alert', 'Email atau password salah.');
+                $request->session()->flash('alert', trans('common.wrong_account'));
             }
         }
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
         if ($request->method() === 'POST') {
             $request->validate([                            // validate the request
                 'name' => 'required|string',
-                'email' => ['required', 'email', new IsAllowedDomain],
+                'email' => ['required', 'email', 'unique:App\Entities\User,email', new IsAllowedDomain],
                 'org' => 'required',
                 'org_address' => 'required',
                 'image_file' => 'image|mimes:jpeg,png,jpg|max:2048',
@@ -78,7 +78,7 @@ class AuthController extends Controller
             $url = env('APP_URL') .'/verify/'. $encryptedId;
             Mail::to($request->get('email'))->send(new VerificationMail($url, $request));                // send verification email
 
-            return redirect()->route('login')->with('alert', 'Silahkan cek email anda untuk aktivasi.');
+            return redirect()->route('login')->with('alert', trans('common.activate_account'));
         }
 
         $orgs = $orgService->getRepository()->findAll();
@@ -104,10 +104,10 @@ class AuthController extends Controller
                     $userService->updateProfile($user, collect($userArr));
                 }
 
-                return redirect()->route('login')->with('alert', 'Your account has been confirmed, go ahead and login.');
+                return redirect()->route('login')->with('alert', trans('common.activate_success'));
             }
 
-            return redirect()->back()->with('alert', 'Your password is wrong.');
+            return redirect()->back()->with('alert', trans('common.wrong_account'));
         }
 
         $user = $userService->getRepository()->findOneBy(['id' => $id[1]]);

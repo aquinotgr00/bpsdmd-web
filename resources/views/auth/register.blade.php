@@ -4,7 +4,7 @@
     <!-- Form -->
     <form name="form_register" id="form-register" method="POST" enctype="multipart/form-data">@csrf
         <div class="signin-text">
-            <span>Daftar</span>
+            <span>{{trans('common.register_button')}}</span>
 
             @if(session('alert') ?? false)
                 <div class="alert alert-danger alert-dismissible" role="alert">
@@ -15,48 +15,50 @@
         </div> <!-- / .signin-text -->
 
         <div class="form-group required required-asterisk {{ $errors->has('org_type') ? 'has-error' : '' }}">
-            <label>Jenis Organisasi</label>
+            <label>{{ trans('common.form.org') }}</label>
             <select name="org" id="org" class="form-control">
               <option value="null"></option>
               @foreach($orgs as $org)
                 <option value="{{$org->getId()}}">{{$org->getName()}}</option>
               @endforeach
             </select>
-            <span class="help-block">Jenis perusahaan Anda.</span>
-            <span class="help-block ">{!! implode('', $errors->get('org_type')) !!}</span>
+            <span class="help-block">{{ trans('common.help_block.org') }}</span>
+            <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
         </div> <!-- / Org -->
 
         <div class="form-group required required-asterisk {{ $errors->has('org_address') ? 'has-error' : '' }}">
-            <label>Alamat Lengkap Organisasi</label>
+            <label>{{ trans('common.form.org_address') }}</label>
             <textarea name="org_address" id="org_address" cols="30" rows="2" class="form-control"></textarea>
-            <span class="help-block">Alamat lengkap perusahaan Anda.</span>
+            <span class="help-block">{{ trans('common.help_block.org_address') }}</span>
             <span class="help-block ">{!! implode('', $errors->get('org_address')) !!}</span>
         </div> <!-- / Org -->
 
         <hr />
 
         <div class="form-group required required-asterisk {{ $errors->has('name') ? 'has-error' : '' }}">
-            <label>Nama</label>
+            <label>{{ ucfirst(trans('common.name')) }}</label>
             <input name="name" id="name_id" class="form-control" type="text">
-            <span class="help-block">Nama lengkap Anda.</span>
+            <span class="help-block">{{ trans('common.help_block.name') }}</span>
             <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
         </div> <!-- / Name -->
 
         <div class="form-group required required-asterisk {{ $errors->has('email') ? 'has-error' : '' }}">
-            <label>Email</label>
+            <label>{{ ucfirst(trans('common.email')) }}</label>
             <input name="email" id="email_id" class="form-control" type="text">
-            <span class="help-block">Email Anda. Harap menggunakan email resmi penanggung jawab ber-akhir-an @pelni.com atau @kai.com</span>
+            <span class="help-block">{{ trans('common.help_block.email') }}</span>
             <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
         </div> <!-- / Email -->
 
         <div class="form-group required required-asterisk {{ $errors->has('image_file') ? 'has-error' : '' }}">
-            <label>Foto</label>
+            <label>{{ ucfirst(trans('common.photo')) }}</label>
             <input name="image_file" type="file">
-            <span class="help-block">Foto Anda.</span>
+            <span class="help-block">{{ trans('common.help_block.photo') }}</span>
             <span class="help-block ">{!! implode('', $errors->get('image_file')) !!}</span>
         </div> <!-- / photo -->
+        <br />
         
         {!! NoCaptcha::display() !!}
+        <br />
 
         @if ($errors->has('g-recaptcha-response'))
           <span class="help-block">
@@ -68,24 +70,24 @@
             <div class="checkbox">
                 <label for="supAgreement">
                     <input type="checkbox" name="agreement" id="supAgreement" required>
-                    Dengan ini saya menyatakan bahwa data yang saya isikan adalah benar.
+                    {{ trans('common.help_block.toc') }}
                 </label>
             </div>
         </div>
 
         <div class="form-group alert alert-info small text-justify">
-            Setelah Anda mengirim formulir ini, kami akan mengirimkan email aktivasi akun Anda ke alamat email Anda.
+            {{ trans('common.help_block.email_activation') }}
         </div>
 
         <div class="form-actions text-center">
             <div>
-                <input type="submit" value="Daftar" class="signin-btn bg-primary" />
+                <input type="submit" value="{{trans('common.register_button')}}" class="signin-btn bg-primary" />
             </div>
         </div> <!-- / .form-actions -->
     </form>
     <hr />
     <div style="margin-top: 1em;">
-        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('login') }}">{{trans('common.login_button')}}</a>
     </div>
     <!-- / Form -->
 @endsection

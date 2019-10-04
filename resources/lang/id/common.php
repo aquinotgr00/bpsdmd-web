@@ -104,4 +104,34 @@ return [
     'gender' => 'jenis kelamin',
     'place_of_birth' => 'tempat lahir',
     'nationality' => 'kewarganegaraan',
+
+    // LOGIN
+    'login_header' => 'Masuk ke akun anda.',
+    'wrong_account' => 'Email/Password salah.',
+    'login_button' => 'Login',
+
+    // REGISTER
+    'invalid_email_domain' => 'Hanya diperbolehkan menggunakan email resmi dengan domain @kai.com atau @pelni.com',
+    'activate_account' => 'Silahkan cek email anda untuk aktivasi.',
+    'activate_success' => 'Akun anda sudah teraktivasi, silahkan login.',
+    'register_button' => 'Daftar',
+    'form' => [
+      'org' => 'Jenis Organisasi',
+      'org_address' => 'Alamat Lengkap Organisasi',
+    ],
+    'help_block' => [
+      'org' => 'Jenis perusahaan Anda.',
+      'org_address' => 'Alamat lengkap perusahaan Anda.',
+      'name' => 'Nama lengkap Anda.',
+      'email' => 'Email Anda. Harap menggunakan email resmi penanggung jawab ber-akhir-an @pelni.com atau @kai.com',
+      'photo' => 'Foto Anda.',
+      'toc' => 'Dengan ini saya menyatakan bahwa data yang saya isikan adalah benar.',
+      'email_activation' => 'Setelah Anda mengirim formulir ini, kami akan mengirimkan email aktivasi akun Anda ke alamat email Anda.',
+    ],
+
+    // EMAIL VERIFICATION
+    'email_verification_warning' => 'PENTING!! Jangan beritahukan informasi dibawah kepada siapapun.',
+    'email_verification_info' => 'Berikut adalah data yang kamu gunakan untuk verifikasi akun mu',
+    'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
+    'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
 ];
