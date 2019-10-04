@@ -19,7 +19,7 @@
             <select name="org" id="org" class="form-control">
               <option value="null"></option>
               @foreach($orgs as $org)
-                <option value="{{$org->id}}">{{$org->nama}}</option>
+                <option value="{{$org->getId()}}">{{$org->getName()}}</option>
               @endforeach
             </select>
             <span class="help-block">Jenis perusahaan Anda.</span>

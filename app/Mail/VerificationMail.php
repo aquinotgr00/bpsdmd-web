@@ -19,7 +19,6 @@ class VerificationMail extends Mailable
     public function __construct($url, $request)
     {
         $this->url = $url;
-        $this->username = $request->username;
         $this->password = $request->password;
     }
 
@@ -33,7 +32,6 @@ class VerificationMail extends Mailable
         return $this->view('email.verification')->with([
             'url' => $this->url,
             'password' => $this->password,
-            'username' => $this->username
         ]);
     }
 }

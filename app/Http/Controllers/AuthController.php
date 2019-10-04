@@ -20,9 +20,8 @@ class AuthController extends Controller
     {
         if ($request->method() == 'POST') {
             $request->validate([
-                'username' => 'string',
+                'email' => 'required|email',
                 'password' => 'required',
-                'email' => 'string',
                 'g-recaptcha-response' => 'required|captcha'
             ]);
 
@@ -67,9 +66,7 @@ class AuthController extends Controller
                 ]);
             }
 
-            $username = strtolower(preg_replace('/\s+/', '_', $request->get('name')));     // create username
             $request->merge([                               // merge request
-                'username' => $username,
                 'password' => substr(str_shuffle(md5(time())), 0, 8),
                 'authority' => 'demand',
                 'isActive' => 0
@@ -84,9 +81,7 @@ class AuthController extends Controller
             return redirect()->route('login')->with('alert', 'Silahkan cek email anda untuk aktivasi.');
         }
 
-        $orgs = DB::table('public.instansi as instansi')
-          ->selectRaw('instansi.id, instansi.nama')
-          ->get();
+        $orgs = $orgService->getRepository()->findAll();
 
         return view('auth.register', compact('orgs'));
     }

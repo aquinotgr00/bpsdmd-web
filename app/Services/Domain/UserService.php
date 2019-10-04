@@ -67,7 +67,6 @@ class UserService
     public function create(Collection $data, $org = false, $flush = true)
     {
         $user = new User;
-        $user->setEmail($data->get('username'));
         $user->setPassword($data->get('password'));
         $user->setAuthority($data->get('authority'));
         $user->setName($data->get('name'));
