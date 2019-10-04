@@ -50,6 +50,6 @@ class IsAllowedDomain implements Rule
      */
     public function message()
     {
-        return 'You only allowed using email with domain @pelni.com or kai.com!';
+        return trans('common.invalid_email_domain');
     }
 }

@@ -6,7 +6,7 @@
         @csrf
 
         <div class="signin-text">
-            <span>You need to change your default password to verify your account</span>
+            <span>@lang('common.email_verification_header')</span>
 
             @if(session('alert'))
                 <div class="alert alert-danger alert-dismissible" role="alert">

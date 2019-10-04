@@ -20,7 +20,8 @@ class AuthController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'email' => 'required|email',
-                'password' => 'required'
+                'password' => 'required',
+                'g-recaptcha-response' => 'required|captcha'
             ]);
 
             try {
@@ -29,7 +30,7 @@ class AuthController extends Controller
                 return redirect(route('dashboard'));
             } catch (Exception $e) {
                 report($e);
-                $request->session()->flash('alert', 'Email atau password salah.');
+                $request->session()->flash('alert', trans('common.wrong_account'));
             }
         }
 
@@ -48,15 +49,15 @@ class AuthController extends Controller
         if ($request->method() === 'POST') {
             $request->validate([                            // validate the request
                 'name' => 'required|string',
-                'email' => ['required', 'email', new IsAllowedDomain],
+                'email' => ['required', 'email', 'unique:App\Entities\User,email', new IsAllowedDomain],
                 'org' => 'required',
-                'org_type' => 'required',
                 'org_address' => 'required',
                 'image_file' => 'image|mimes:jpeg,png,jpg|max:2048',
+                'g-recaptcha-response' => 'required|captcha'
             ]);
 
             if ($request->hasFile('image_file')) {          // if the request has image file in it
-                $request->get('image_file')->store(User::UPLOAD_PATH, 'public');
+                $request->file('image_file')->store(User::UPLOAD_PATH, 'public');
                 $photoName = $request->file('image_file')->hashName();
 
                 $request->merge([
@@ -64,45 +65,61 @@ class AuthController extends Controller
                 ]);
             }
 
-            $username = strtolower(preg_replace('/\s+/', '_', $request->get('name')));     // create username
             $request->merge([                               // merge request
-                'username' => $username,
                 'password' => substr(str_shuffle(md5(time())), 0, 8),
                 'authority' => 'demand',
                 'isActive' => 0
             ]);
+
             $org = $request->get('authority') <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
             $user = $userService->create(collect($request->all()), $org);                   // create user
-
-            $randomString = substr(str_shuffle(md5(time())), 0, 15);
-            $url = env('APP_URL') . '/verify/' . $randomString . '/' . $user->getId();
+            $encryptedId = encrypt('activate-'.$user->getId());
+            $url = env('APP_URL') .'/verify/'. $encryptedId;
             Mail::to($request->get('email'))->send(new VerificationMail($url, $request));                // send verification email
 
-            return redirect()->route('login')->with('alert', 'Silahkan cek email anda untuk aktivasi.');
+            return redirect()->route('login')->with('alert', trans('common.activate_account'));
         }
 
-        return view('auth.register');
+        $orgs = $orgService->getRepository()->findAll();
+
+        return view('auth.register', compact('orgs'));
     }
 
     public function verifyUser(Request $request, $id, UserService $userService)
     {
+        $decryptedId = decrypt($id);
+        $id = explode("-", $decryptedId, 2);
+
+        if (!isset($id[1])) {
+            return abort(404);
+        }
+
         if ($request->method() === 'POST') {
-            $user = $userService->getRepository()->findOneBy([ 'id' => $id ]);
+            $user = $userService->getRepository()->findOneBy([ 'id' => $id[1] ]);
+
             if (Hash::check($request->get('old_password'), $user->getPassword())) {
                 if ($user->getIsActive() == 0) {
                     $userArr = [
                         'email' => $user->getEmail(),
                         'name' => $user->getName(),
                         'password' => $request->get('password'),
-                        'isActive' => 1
+                        'isActive' => 1,
+                        'language' => 'id',
                     ];
+
                     $userService->updateProfile($user, collect($userArr));
                 }
 
-                return redirect()->route('login')->with('alert', 'Your account has been confirmed, go ahead and login.');
+                return redirect()->route('login')->with('alert', trans('common.activate_success'));
             }
 
-            return redirect()->back()->with('alert', 'Your password is wrong.');
+            return redirect()->back()->with('alert', trans('common.wrong_account'));
+        }
+
+        $user = $userService->getRepository()->findOneBy(['id' => $id[1]]);
+
+        if ($user->getIsActive()){
+            return redirect('/');
         }
 
         return view('auth.verify-form');
