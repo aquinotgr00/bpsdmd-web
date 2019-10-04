@@ -134,4 +134,9 @@ return [
     'email_verification_info' => 'Berikut adalah data yang kamu gunakan untuk verifikasi akun mu',
     'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
     'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
+
+    //manage feeder
+    'feeder' => 'feeder',
+    'upload' => 'unggah file',
+    'choose_file' => 'pilih file',
 ];

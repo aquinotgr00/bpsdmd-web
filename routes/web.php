@@ -39,9 +39,10 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'UserController@index')->name('user.index');
     });
 
-//    Route::group(['prefix' => 'feeder', 'middleware' => ['only_supply']], function() {
-//        Route::any('/upload/{year}', 'FeederController@upload')->name('feeder.upload');
-//    });
+   Route::group(['prefix' => 'feeder', 'middleware' => ['only_supply']], function() {
+        Route::any('/upload', 'FeederController@upload')->name('feeder.upload');
+        Route::get('/', 'FeederController@index')->name('feeder.index');
+   });
 
 //    Route::group(['prefix' => 'link-and-match', 'middleware' => ['only_admin']], function() {
 //        Route::any('/{type}/index', 'LinkAndMatchController@indexAdmin')->name('linknmatch.admin.index')->where('type', \App\Entities\User::ROLE_ADMIN);

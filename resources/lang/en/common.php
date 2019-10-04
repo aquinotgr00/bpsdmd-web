@@ -104,4 +104,9 @@ return [
     'gender' => 'gender',
     'place_of_birth' => 'place of birth',
     'nationality' => 'nationality',
+
+    //manage feeder
+    'feeder' => 'feeder',
+    'upload' => 'upload file',
+    'choose_file' => 'choose file',
 ];

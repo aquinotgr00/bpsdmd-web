@@ -44,12 +44,12 @@
             </a>
         </li>
 
-{{--    <li>--}}
-{{--        <a href="{{ route('feeder.upload',['year'=>date('Y')]) }}">--}}
-{{--            <i class="fa fa-file"></i>--}}
-{{--            <span>Feeder</span>--}}
-{{--        </a>--}}
-{{--    </li>--}}
+        <li>
+            <a href="{{ route('feeder.index') }}">
+                <i class="fa fa-file"></i>
+                <span>Feeder</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))

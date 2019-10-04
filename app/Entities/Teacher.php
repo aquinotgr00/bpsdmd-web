@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Teacher
 {
+    const UPLOAD_PATH = 'teachers/feeder';
     /**
      * @var integer
      *
