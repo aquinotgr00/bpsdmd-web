@@ -56,14 +56,14 @@
             <span class="help-block ">{!! implode('', $errors->get('image_file')) !!}</span>
         </div> <!-- / photo -->
         <br />
-        
+
         {!! NoCaptcha::display() !!}
         <br />
 
         @if ($errors->has('g-recaptcha-response'))
-          <span class="help-block">
+        <span class="help-block">
             <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-          </span>
+        </span>
         @endif
 
         <div class="form-group required required-asterisk">
