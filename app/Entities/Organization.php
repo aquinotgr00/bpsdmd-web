@@ -15,9 +15,10 @@ class Organization
 {
     const TYPE_SUPPLY = 'supply';
     const TYPE_DEMAND = 'demand';
-    const MODA_AIR = 'air';
+    const MODA_LAUT = 'laut';
     const MODA_UDARA = 'udara';
     const MODA_DARAT = 'darat';
+    const MODA_KERETA = 'kereta api';
     const UPLOAD_PATH = 'orgs/img';
 
     /**

@@ -33,8 +33,14 @@
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))
         <li>
             <a href="{{ route('student.index') }}">
-                <i class="fa fa-user"></i>
+                <i class="fa fa-child"></i>
                 <span>{{ ucwords(trans('common.student')) }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('teacher.index') }}">
+                <i class="fa fa-user"></i>
+                <span>{{ ucwords(trans('common.teacher')) }}</span>
             </a>
         </li>
 
@@ -48,9 +54,9 @@
 
     @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))
         <li>
-            <a href="{{ route('teacher.index') }}">
+            <a href="{{ route('employee.index') }}">
                 <i class="fa fa-user"></i>
-                <span>{{ ucwords(trans('common.teacher')) }}</span>
+                <span>{{ ucwords(trans('common.employee')) }}</span>
             </a>
         </li>
     @endif

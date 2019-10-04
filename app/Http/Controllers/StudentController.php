@@ -28,7 +28,8 @@ class StudentController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
-                'org' => 'required'
+                'org' => 'required',
+                'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
 
             $messageBag = new MessageBag;
@@ -51,11 +52,11 @@ class StudentController extends Controller
 
                 $studentService->create(collect($requestData), $org, $studyProgram);
                 $alert = 'alert_success';
-                $message = 'Siswa berhasil ditambahkan.';
+                $message = trans('common.create_success', ['object' => ucfirst(trans('common.student'))]);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah siswa. Silakan kontak web administrator!';
+                $message = trans('common.create_failed', ['object' => ucfirst(trans('common.student'))]);
             }
 
             return redirect()->route('student.index')->with($alert, $message);
@@ -72,7 +73,8 @@ class StudentController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
-                'org' => 'required'
+                'org' => 'required',
+                'dateOfBirth' => 'required|date_format:"d-m-Y'
             ]);
 
             $messageBag = new MessageBag;
@@ -95,10 +97,10 @@ class StudentController extends Controller
 
                 $studentService->update($data, collect($requestData), $org, $studyProgram, true);
                 $alert = 'alert_success';
-                $message = 'Siswa berhasil diubah.';
+                $message = trans('common.update_success', ['object' => ucfirst(trans('common.student'))]);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah siswa. Silakan kontak web administrator!';
+                $message = trans('common.update_failed', ['object' => ucfirst(trans('common.student'))]);
             }
 
             return redirect()->route('student.index')->with($alert, $message);
@@ -115,15 +117,11 @@ class StudentController extends Controller
         try {
             $studentService->delete($data);
             $alert = 'alert_success';
-            $message = 'Siswa berhasil dihapus.';
-        } catch (StudentDeleteException $e) {
-            report($e);
-            $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus siswa karena masih terdapat user siswa!';
+            $message = trans('common.delete_success', ['object' => ucfirst(trans('common.student'))]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus siswa. Silakan kontak web administrator!';
+            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.student'))]);
         }
 
         return redirect()->route('student.index')->with($alert, $message);
@@ -133,15 +131,15 @@ class StudentController extends Controller
     {
         if ($request->ajax()) {
             $data = [
-                'code' => $data->getCode(),
+                'code' => $data->getCode() ? $data->getCode() : '-',
                 'name' => $data->getName(),
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
-                'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : false,
-                'period' => $data->getPeriod(),
-                'curriculum' => ($data->getCurriculum() instanceof DateTime) ? $data->getCurriculum() : null,
-                'date_of_birth' => ($data->getDateOfBirth() instanceof DateTime) ? $data->getDateOfBirth() : false,
-                'class' => $data->getClass(),
-                'ipk' => $data->getIpk()
+                'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : '-',
+                'period' => $data->getPeriod() ? $data->getPeriod() : '-',
+                'curriculum' => $data->getCurriculum() ? $data->getCurriculum() : '-',
+                'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
+                'class' => $data->getClass() ? $data->getClass() : '-',
+                'ipk' => $data->getIpk() ? $data->getIpk() : '-'
             ];
 
             return response()->json($data);

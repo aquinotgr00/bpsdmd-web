@@ -179,7 +179,7 @@ class Teacher
     /**
      * @return \DateTime
      */
-    public function getDateOfBirth(): \DateTime
+    public function getDateOfBirth()
     {
         return $this->dateOfBirth;
     }
@@ -187,7 +187,7 @@ class Teacher
     /**
      * @param \DateTime $dateOfBirth
      */
-    public function setDateOfBirth(\DateTime $dateOfBirth): void
+    public function setDateOfBirth($dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }

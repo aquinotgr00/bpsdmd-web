@@ -82,6 +82,8 @@ class StudentService
         $student->setCode($data->get('code'));
         $student->setName($data->get('name'));
         $student->setPeriod($data->get('period'));
+        $student->setCurriculum($data->get('curriculum'));
+        $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
 
@@ -90,12 +92,6 @@ class StudentService
         }
         if ($studyProgram instanceof StudyProgram) {
             $student->setStudyProgram($studyProgram);
-        }
-        if ($data->get('curriculum') instanceof \DateTime) {
-            $student->setCurriculum($data->get('curriculum'));
-        }
-        if ($data->get('dateOfBirth') instanceof \DateTime) {
-            $student->setDateOfBirth($data->get('dateOfBirth'));
         }
 
         EntityManager::persist($student);
@@ -120,6 +116,8 @@ class StudentService
         $student->setCode($data->get('code'));
         $student->setName($data->get('name'));
         $student->setPeriod($data->get('period'));
+        $student->setCurriculum($data->get('curriculum'));
+        $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
 
@@ -128,12 +126,6 @@ class StudentService
         }
         if ($studyProgram instanceof StudyProgram) {
             $student->setStudyProgram($studyProgram);
-        }
-        if ($data->get('curriculum') instanceof \DateTime) {
-            $student->setCurriculum($data->get('curriculum'));
-        }
-        if ($data->get('dateOfBirth') instanceof \DateTime) {
-            $student->setDateOfBirth($data->get('dateOfBirth'));
         }
 
         EntityManager::persist($student);

@@ -27,6 +27,7 @@ class TeacherController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
+                'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
 
             $messageBag = new MessageBag;
@@ -44,11 +45,11 @@ class TeacherController extends Controller
 
                 $teacherService->create(collect($requestData), $org);
                 $alert = 'alert_success';
-                $message = 'Dosen berhasil ditambahkan.';
+                $message = trans('common.create_success', ['object' => ucfirst(trans('common.teacher'))]);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah dosen. Silakan kontak web administrator!';
+                $message = trans('common.create_failed', ['object' => ucfirst(trans('common.teacher'))]);
             }
 
             return redirect()->route('teacher.index')->with($alert, $message);
@@ -64,6 +65,7 @@ class TeacherController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
+                'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
 
             $messageBag = new MessageBag;
@@ -81,10 +83,10 @@ class TeacherController extends Controller
 
                 $teacherService->update($data, collect($requestData), $org, true);
                 $alert = 'alert_success';
-                $message = 'Dosen berhasil diubah.';
+                $message = trans('common.update_success', ['object' => ucfirst(trans('common.teacher'))]);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah dosen. Silakan kontak web administrator!';
+                $message = trans('common.update_failed', ['object' => ucfirst(trans('common.teacher'))]);
             }
 
             return redirect()->route('teacher.index')->with($alert, $message);
@@ -100,15 +102,11 @@ class TeacherController extends Controller
         try {
             $teacherService->delete($data);
             $alert = 'alert_success';
-            $message = 'Dosen berhasil dihapus.';
-        } catch (TeacherDeleteException $e) {
-            report($e);
-            $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus dosen karena masih terdapat user dosen!';
+            $message = trans('common.delete_success', ['object' => ucfirst(trans('common.teacher'))]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus dosen. Silakan kontak web administrator!';
+            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.teacher'))]);
         }
 
         return redirect()->route('teacher.index')->with($alert, $message);
@@ -118,14 +116,14 @@ class TeacherController extends Controller
     {
         if ($request->ajax()) {
             $data = [
-                'nip' => $data->getNip(),
+                'nip' => $data->getNip() ? $data->getNip() : '-',
                 'name' => $data->getName(),
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
-                'date_of_birth' => ($data->getDateOfBirth() instanceof DateTime) ? $data->getDateOfBirth() : false,
-                'front_degree' => $data->getFrontDegree(),
-                'back_degree' => $data->getBackDegree(),
-                'identity_number' => $data->getIdentityNumber(),
-                'nidn' => $data->getNidn()
+                'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
+                'front_degree' => $data->getFrontDegree() ? $data->getFrontDegree() : '-',
+                'back_degree' => $data->getBackDegree() ? $data->getBackDegree() : '-',
+                'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
+                'nidn' => $data->getNidn() ? $data->getNidn() : '-'
             ];
 
             return response()->json($data);

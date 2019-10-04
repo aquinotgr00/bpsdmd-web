@@ -73,7 +73,7 @@ class Student
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_lahir", type="string", nullable=true)
+     * @ORM\Column(name="tanggal_lahir", type="date", nullable=true)
      */
     private $dateOfBirth = NULL;
 
@@ -126,7 +126,7 @@ class Student
     /**
      * @return StudyProgram
      */
-    public function getStudyProgram(): StudyProgram
+    public function getStudyProgram()
     {
         return $this->studyProgram;
     }
@@ -190,7 +190,7 @@ class Student
     /**
      * @return \DateTime
      */
-    public function getCurriculum(): \DateTime
+    public function getCurriculum()
     {
         return $this->curriculum;
     }
@@ -198,7 +198,7 @@ class Student
     /**
      * @param \DateTime $curriculum
      */
-    public function setCurriculum(\DateTime $curriculum): void
+    public function setCurriculum($curriculum): void
     {
         $this->curriculum = $curriculum;
     }
@@ -206,7 +206,7 @@ class Student
     /**
      * @return \DateTime
      */
-    public function getDateOfBirth(): \DateTime
+    public function getDateOfBirth()
     {
         return $this->dateOfBirth;
     }
@@ -214,7 +214,7 @@ class Student
     /**
      * @param \DateTime $dateOfBirth
      */
-    public function setDateOfBirth(\DateTime $dateOfBirth): void
+    public function setDateOfBirth($dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
     }

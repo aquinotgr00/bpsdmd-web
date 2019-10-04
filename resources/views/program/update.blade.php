@@ -11,10 +11,10 @@
             <!-- left column -->
             <div class="col-md-12">
                 <div class="box">
-                    <form class="form-horizontal" method="post">
-                    @csrf
+                    <div class="box-body">
+                        <form method="post">
+                        @csrf
 
-                        <div class="box-body">
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
                                 <input id="code" name="code" type="text" class="form-control" value="{{ $data->getCode() }}">
@@ -36,15 +36,14 @@
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_S1 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_S1 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S1) }}</option>
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_S2 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_S2 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S2) }}</option>
                                 </select>
-                                <span class="help-block">{!! implode('', $errors->get('moda')) !!}</span>
+                                <span class="help-block">{!! implode('', $errors->get('degree')) !!}</span>
                             </div>
 
-                        </div><!-- /.box-body -->
-
-                        <div class="box-footer">
-                            <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
-                        </div>
-                    </form>
+                            <div class="box-footer">
+                                <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
+                            </div>
+                        </form>
+                    </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
         </div>

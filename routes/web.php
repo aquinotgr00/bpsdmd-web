@@ -58,12 +58,20 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'StudentController@index')->name('student.index');
     });
 
-    Route::group(['prefix' => 'teacher', 'middleware' => ['only_demand']], function() {
+    Route::group(['prefix' => 'teacher', 'middleware' => ['only_supply']], function() {
         Route::any('/create', 'TeacherController@create')->name('teacher.create');
         Route::any('/{teacher}/update', 'TeacherController@update')->name('teacher.update');
         Route::get('/{teacher}/delete', 'TeacherController@delete')->name('teacher.delete');
         Route::get('/{teacher}', 'TeacherController@ajaxDetailTeacher')->name('teacher.view');
         Route::get('/', 'TeacherController@index')->name('teacher.index');
+    });
+
+    Route::group(['prefix' => 'employee', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'EmployeeController@create')->name('employee.create');
+        Route::any('/{employee}/update', 'EmployeeController@update')->name('employee.update');
+        Route::get('/{employee}/delete', 'EmployeeController@delete')->name('employee.delete');
+        Route::get('/{employee}', 'EmployeeController@ajaxDetailEmployee')->name('employee.view');
+        Route::get('/', 'EmployeeController@index')->name('employee.index');
     });
 
     Route::group(['prefix' => 'data'], function() {
