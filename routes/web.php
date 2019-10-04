@@ -85,7 +85,7 @@ Route::group(['middleware' => ['authenticated']], function() {
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');
 });
 
-Route::any('/verify/{string}/{id}', 'AuthController@verifyUser')->name('verify.user');
+Route::any('/verify/{id}', 'AuthController@verifyUser')->name('verify.user');
 Route::any('/register', 'AuthController@register')->name('register');
 Route::get('/logout', 'AuthController@logout')->name('logout');
 Route::any('/login', 'AuthController@login')->name('login');

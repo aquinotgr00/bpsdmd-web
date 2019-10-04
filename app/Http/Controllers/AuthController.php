@@ -74,8 +74,8 @@ class AuthController extends Controller
             $org = $request->get('authority') <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
             $user = $userService->create(collect($request->all()), $org);                   // create user
 
-            $randomString = substr(str_shuffle(md5(time())), 0, 15);
-            $url = env('APP_URL') . '/verify/' . $randomString . '/' . $user->getId();
+            $encryptedId = encrypt('activate-'.$user->getId());
+            $url = env('APP_URL') .'/verify/'. $encryptedId;
             Mail::to($request->get('email'))->send(new VerificationMail($url, $request));                // send verification email
 
             return redirect()->route('login')->with('alert', 'Silahkan cek email anda untuk aktivasi.');
@@ -86,10 +86,12 @@ class AuthController extends Controller
         return view('auth.register', compact('orgs'));
     }
 
-    public function verifyUser(Request $request, $randString, $id, UserService $userService)
+    public function verifyUser(Request $request, $id, UserService $userService)
     {
+        $decryptedId = decrypt($id);
+        $id = explode("-", $decryptedId, 2);
         if ($request->method() === 'POST') {
-            $user = $userService->getRepository()->findOneBy([ 'id' => $id ]);
+            $user = $userService->getRepository()->findOneBy([ 'id' => $id[1] ]);
             if (Hash::check($request->get('old_password'), $user->getPassword())) {
                 if ($user->getIsActive() == 0) {
                     $userArr = [
@@ -107,6 +109,10 @@ class AuthController extends Controller
 
             return redirect()->back()->with('alert', 'Your password is wrong.');
         }
+
+        $user = $userService->getRepository()->findOneBy(['id' => $id[1]]);
+        if ($user->getIsActive())
+          return redirect('/');
 
         return view('auth.verify-form');
     }
