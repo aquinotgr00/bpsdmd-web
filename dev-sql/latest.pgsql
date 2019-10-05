@@ -493,8 +493,6 @@ COPY public.dosen (id, instansi_id, nip, nama, gelar_depan, gelar_belakang, tang
 --
 
 COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat, foto) FROM stdin;
-1	\N	PELNI	\N	demand	air	\N	\N
-2	\N	KAI	\N	demand	darat	\N	\N
 \.
 
 
