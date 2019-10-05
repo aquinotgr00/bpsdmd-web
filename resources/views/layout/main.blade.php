@@ -17,9 +17,10 @@
 	<link href="{{ asset('css/gsStudentDashboard.css') }}" rel="stylesheet" type="text/css" />
 	<!-- gsFontsEmbed -->
 	<link href="{{ asset('gsFonts/gsFontsEmbed.css') }}" rel="stylesheet" type="text/css" />
-
 	<!-- DATA TABLES -->
-	<link href="{{ asset('css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <!-- datepicker -->
+	<link href="{{ asset('css/datepicker/datepicker.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,18 +31,19 @@
 
         <link rel="stylesheet" type="text/css" href="css/sia-mocca{LOADER_NAME_ADDITONAL}-loader.css" title="Mocca"/>
     -->
-
-
     <link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
     @yield('style')
 
+    <!-- datepicker -->
+    <script src="{{ asset('js/jquery.1.9.1.js') }}"></script>
+    <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 </head>
 
 <body class="skin-blue">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     @php
-        $loggedUser = get_user_data();
+        $loggedUser = currentUser();
     @endphp
     <a href="" class="logo">
         <img src="{{ asset('img/logo.png') }}">
@@ -87,8 +89,8 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div>
-                                <a href="{{ url(route('update.profile')) }}" class="btn btn-default btn-flat" style="margin-right: 15px;">Update profile</a>
-                                <a href="{{ url(route('logout')) }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ url(route('update.profile')) }}" class="btn btn-default btn-flat" style="margin-right: 15px;">{{ ucwords(trans('common.update_profile')) }}</a>
+                                <a href="{{ url(route('logout')) }}" class="btn btn-default btn-flat">{{ ucfirst(trans('common.sign_out')) }}</a>
                             </div>
                         </li>
                     </ul>
@@ -131,7 +133,7 @@
 
 	<!-- DATA TABLES SCRIPT -->
 	<script src="{{ asset('js/plugins/datatables/jquery.dataTables.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('js/plugins/datatables/dataTables.bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap.js') }}" type="text/javascript"></script>
 
 	<!-- gsStudentDashboard App -->
 	<script src="{{ asset('js/gsStudentDashboard/app.js') }}" type="text/javascript"></script>

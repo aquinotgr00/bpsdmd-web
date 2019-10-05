@@ -5,7 +5,8 @@ namespace App\Interfaces;
 interface UserInterface
 {
     public function getId();
-    public function getUsername();
+    public function getEmail();
     public function getPassword();
     public function getAuthority();
+    public function getLocale();
 }

@@ -2,9 +2,12 @@
 
 use App\Services\Application\AuthService;
 
-if (!function_exists("check_authorization")) {
-	function check_authorization($role = null)
-	{
+if (!function_exists("checkAuthorization")) {
+    /**
+     * @param null $role
+     * @return bool
+     */
+	function checkAuthorization($role = null) {
 		$userAccess = new AuthService();
 		$currentUser = $userAccess->check();
 
@@ -16,9 +19,11 @@ if (!function_exists("check_authorization")) {
 	}
 }
 
-if (!function_exists("get_user_data")) {
-	function get_user_data()
-	{
+if (!function_exists("currentUser")) {
+    /**
+     * @return \App\Entities\User|bool
+     */
+	function currentUser() {
 		$userAccess = new AuthService();
 		$currentUser = $userAccess->user();
 		if ($currentUser) {
@@ -29,10 +34,15 @@ if (!function_exists("get_user_data")) {
 	}
 }
 if (!function_exists('buildTree')) {
+    /**
+     * @param array $elements
+     * @param null $parentId
+     * @return array
+     */
 	function buildTree(array $elements, $parentId = null) {
-        $branch = array();
+        $branch = [];
         foreach ($elements as $element) {
-        	$element['parent_id'] = $element['parent_id'] == 'NULL' ? NULL : $element['parent_id'] ; 
+        	$element['parent_id'] = $element['parent_id'] == 'NULL' ? NULL : $element['parent_id'] ;
             if ($element['parent_id'] == $parentId) {
                 $children = buildTree($elements, $element['id']);
                 if ($children) {

@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Entities\User;
 use App\Entities\Organization;
+use App\Rules\IsAllowedDomain;
+use App\Services\Application\AuthService;
 use App\Services\Domain\UserService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
+use Image;
 
 class UserController extends Controller
 {
@@ -23,57 +26,86 @@ class UserController extends Controller
     public function create(Request $request, UserService $userService, OrgService $orgService, $type = null)
     {
         if ($request->method() == 'POST') {
-            $messageBag = new MessageBag;
-
-            $checkUserName = $userService->createQueryBuilder('u')->where('u.username = :username')
-                ->setParameters([
-                    'username' => $request->get('username')
-                ])->getQuery()->getResult();
-
-            if (!empty($checkUserName)) {
-                $messageBag->add('username', 'Username sudah digunakan');
-                return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
-            }
-
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'username' => 'required',
                 'password' => 'required||confirmed',
                 'password_confirmation' => 'required|same:password',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
+            ];
+
+            if ($type == User::ROLE_DEMAND) {
+                $validation['email'] = ['required', 'email', new IsAllowedDomain];
+            } else {
+                $validation['email'] = 'required|email';
+            }
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'email' => ucfirst(trans('common.email')),
+                'password' => ucfirst(trans('common.password')),
+                'password_confirmation' => ucfirst(trans('common.confirm_password')),
+                'photo' => ucfirst(trans('common.photo')),
+                'language' => ucfirst(trans('common.language')),
             ]);
+
+            $messageBag = new MessageBag;
+            $checkEmail = $userService->checkEmailExist($request->get('email'));
+
+            if ($checkEmail) {
+                $messageBag->add('email', trans('common.email_used'));
+                return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
+            }
+
+            if ($type != User::ROLE_ADMIN) {
+                $org = false;
+
+                if ($request->get('org')) {
+                    $org = $orgService->findById($request->get('org'));
+                }
+
+                if (!$org) {
+                    $messageBag->add('org', trans('common.invalid_institute'));
+                    return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
+                }
+            } else {
+                $org = false;
+            }
 
             try {
                 $requestData = $request->all();
+
                 if ($request->hasFile('photo')) {
                     $photo = $request->file('photo');
                     $photoName = $photo->hashName();
-                    if ($photo->move(User::UPLOAD_PATH, $photoName)) {
-                        $requestData['uploaded_img'] = User::UPLOAD_PATH . '/' . $photoName;
-                    }
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(User::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
                 }
 
                 $requestData['authority'] = $type;
-                $org = $type <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
-                $userService->create(collect($requestData), $org);
+                $userService->create(collect($requestData), $org, true);
 
                 $alert = 'alert_success';
-                $message = 'User ' . $type . ' berhasil ditambahkan.';
+                $message = trans('common.create_success', ['object' => 'User']);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = 'Tidak dapat menambah user ' . $type . '. Silakan kontak web administrator!';
+                $message = trans('common.create_failed', ['object' => 'User']);
             }
 
             return redirect()->route('user.index')->with($alert, $message);
         }
 
-        $dataOrg = array();
-
         if ($type == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY,'levelunit' => 2]);
-        } elseif ($type == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND,'parentunit' => null]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
+        } elseif ($type == User::ROLE_DEMAND) {
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
+        } else {
+            $dataOrg = [];
         }
 
         return view('user.create', ['type' => $type, 'dataOrg' => $dataOrg]);
@@ -82,83 +114,158 @@ class UserController extends Controller
     public function update(Request $request, UserService $userService, User $user, OrgService $orgService)
     {
         if ($request->method() == 'POST') {
-            $messageBag = new MessageBag;
-
-            $checkUserName = $userService->createQueryBuilder('u')->where('u.id != :id')->andWhere('u.username = :username')
-                ->setParameters([
-                    'id' => $user->getId(),
-                    'username' => $request->get('username')
-                ])->getQuery()->getResult();
-
-            if (!empty($checkUserName)) {
-                $messageBag->add('username', 'Username sudah digunakan');
-                return redirect()->route('update.profile', ['id' => $user->getId()])->withErrors($messageBag);
-            }
-
-            $validate = [
+            $validation = [
                 'name' => 'required',
-                'username' => 'required',
-                'isactive' => 'required',
+                'active' => 'required',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540',
+                'language' => 'required|in:'.User::LOCALE_ID.','.User::LOCALE_EN,
             ];
 
-            if (!empty($request->get('password'))) {
-                $validate['password'] = 'required||confirmed';
-                $validate['password_confirmation'] = 'required_with:password|required|same:password';
+            if ($user->getAuthority() == User::ROLE_DEMAND) {
+                $validation['email'] = ['required', 'email', new IsAllowedDomain];
+            } else {
+                $validation['email'] = 'required|email';
             }
 
-            $request->validate($validate);
+            if (!empty($request->get('password'))) {
+                $validation['password'] = 'required||confirmed';
+                $validation['password_confirmation'] = 'required_with:password|required|same:password';
+            }
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'email' => ucfirst(trans('common.email')),
+                'password' => ucfirst(trans('common.password')),
+                'password_confirmation' => ucfirst(trans('common.confirm_password')),
+                'photo' => ucfirst(trans('common.photo')),
+                'language' => ucfirst(trans('common.language')),
+            ]);
+
+            $messageBag = new MessageBag;
+            $checkEmail = $userService->checkEmailExist($request->get('email'), $user->getId());
+
+            if ($checkEmail) {
+                $messageBag->add('email', trans('common.email_used'));
+                return redirect()->route('user.update', ['id' => $user->getId()])->withErrors($messageBag);
+            }
+
+            if ($user->getAuthority() != User::ROLE_ADMIN) {
+                $org = false;
+
+                if ($request->get('org')) {
+                    $org = $orgService->findById($request->get('org'));
+                }
+
+                if (!$org) {
+                    $messageBag->add('org', trans('common.invalid_institute'));
+                    return redirect()->route('user.update', ['id' => $user->getId()])->withErrors($messageBag);
+                }
+            } else {
+                $org = false;
+            }
 
             try {
                 $requestData = $request->all();
+
                 if ($request->hasFile('photo')) {
                     $photo = $request->file('photo');
                     $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(User::UPLOAD_PATH).'/'.$photoName);
 
-                    if ($photo->move(User::UPLOAD_PATH, $photoName)) {
-                        $requestData['uploaded_img'] = User::UPLOAD_PATH . '/' . $photoName;
-                    }
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
                 }
 
-                $requestData['authority'] = $user->getAuthority();
-                $org = $user->getAuthority() <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
-                $userService->update($user, collect($requestData), $org);
+                $userService->update($user, collect($requestData), $org, true);
+
                 $alert = 'alert_success';
-                $message = 'User ' . $user->getName() . ' berhasil diubah.';
+                $message = trans('common.update_success', ['object' => 'User']);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = 'Tidak dapat mengubah user ' . $user->getName() . '. Silakan kontak web administrator!';
+                $message = trans('common.update_failed', ['object' => 'User']);
             }
 
             return redirect()->route('user.index')->with($alert, $message);
         }
 
-        $dataOrg = array();
         if ($user->getAuthority() == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_SUPPLY,'levelunit' => 2]);
-        } elseif ($user->getAuthority() == User::ROLE_SUPPLY) {
-            $dataOrg = $orgService->getRepository()->findBy(['type' => Organization::TYPE_DEMAND,'parentunit' => null]);
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
+        } elseif ($user->getAuthority() == User::ROLE_DEMAND) {
+            $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
+        } else {
+            $dataOrg = [];
         }
-        
-        // if ($user->getAuthority() <> User::ROLE_ADMIN) {
-        //     $dataOrg = $orgService->getRepository()->findBy(['tipe' => $user->getOrg()->getType(),'parentunit' => null]);
-        // }
 
         return view('user.update', compact('user', 'dataOrg'));
     }
 
-    public function delete(userService $userService, user $user)
+    public function delete(AuthService $authService, UserService $userService, User $user)
     {
+        if ($user->getId() == $authService->user()->getId()) {
+            $alert = 'alert_error';
+            $message = trans('common.self_delete_failed');
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
         try {
             $userService->delete($user);
             $alert = 'alert_success';
-            $message = 'User berhasil dihapus.';
+            $message = trans('common.delete_success', ['object' => 'User']);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = 'Tidak dapat menghapus user. Silakan kontak web administrator!';
+            $message = trans('common.delete_failed', ['object' => 'User']);
         }
 
         return redirect()->route('user.index')->with($alert, $message);
+    }
+
+    public function enable(AuthService $authService, UserService $userService, User $user)
+    {
+        if ($authService->user()->getId() != $user->getId()) {
+            $userService->enableUser($user);
+
+            $alert = 'alert_success';
+            $message = trans('common.update_success', ['object' => 'User']);
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function disable(AuthService $authService, UserService $userService, User $user)
+    {
+        if ($authService->user()->getId() != $user->getId()) {
+            $userService->disableUser($user);
+
+            $alert = 'alert_success';
+            $message = trans('common.update_success', ['object' => 'User']);
+
+            return redirect()->route('user.index')->with($alert, $message);
+        }
+
+        return redirect()->route('user.index');
+    }
+
+    public function ajaxDetailUser(Request $request, User $user)
+    {
+        if ($request->ajax()) {
+            $data = [
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'photo' => $user->getPhoto() ? url(url(User::UPLOAD_PATH.'/'.$user->getPhoto())) : url('img/avatar.png'),
+                'org' => ($user->getOrg() instanceof Organization) ? $user->getOrg()->getName() : false,
+                'authority' => $user->getAuthority(),
+                'active' => $user->getIsActive()
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }
