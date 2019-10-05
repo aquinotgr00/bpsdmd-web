@@ -515,9 +515,6 @@ COPY public.pegawai (id, sekolah_id, instansi_id, kode, nama, no_ktp, jenis_kela
 --
 
 COPY public.pengguna (id, instansi_id, email, password, otoritas, aktif, hapus, nama, foto, bahasa) FROM stdin;
-1	\N	admin@bpsdm.com	$2y$10$Vb.CJ6J6p80plOezbtTACOPuhXvmboBh.1jVbZkmGrRokgUmF9mhK	administrator	1	0	Admin BPSDM	\N	id
-2	1	user@pelni.com	$2y$10$7K0JrHljmniqxzgdXAC2xOdwrpYHkGE1C41NJBscIB8qKPwK81jLK	demand	1	0	User PELNI	\N	id
-3	2	user@kai.com	$2y$10$T1uXzHcqJNy2Wlf3sVH61e/EA1gMAEQvHXwStQq7HQzwIXcFgwqi6	demand	1	0	User KAI	\N	id
 \.
 
 
