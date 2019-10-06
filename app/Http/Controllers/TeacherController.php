@@ -123,17 +123,27 @@ class TeacherController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fs_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fd_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
         
-        //insert feeder
-        $feeder = ['filename' => $nama_file, 'user' => $authService->user()];
-        $feederService->create(collect($feeder));
+        try {
+            //insert feeder
+            $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
+            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
 
-        Excel::import(new TeacherImport, public_path('/excel/'.$nama_file));
+            Excel::import(new TeacherImport, public_path('/excel/'.$nama_file));
 
-        $alert = 'alert_success';
-        $message = 'Import Success';
+            //update status feeder
+            $feeder = $feederService->findById($idFeeder);
+            $feederService->activeFeeder($feeder);
+            
+            $alert = 'alert_success';
+            $message = trans('common.feeder_success', ['object' => trans('common.teacher')]);
+        } catch (Exception $e) {
+            report($e);
+            $alert = 'alert_error';
+            $message = trans('common.feeder_failed', ['object' => trans('common.teacher')]);
+        }
 
         return redirect()->route('teacher.index')->with($alert, $message);
     }

@@ -86,6 +86,9 @@ class StudentService
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
+        $student->setIdentityNumber($data->get('identity_number'));
+        $student->setStatus($data->get('status'));
+        $student->setGraduationYear($data->get('graduationYear'));
 
         if ($org instanceof Organization) {
             $student->setOrg($org);
@@ -120,6 +123,9 @@ class StudentService
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
+        $student->setIdentityNumber($data->get('identity_number'));
+        $student->setStatus($data->get('status'));
+        $student->setGraduationYear($data->get('graduationYear'));
 
         if ($org instanceof Organization) {
             $student->setOrg($org);

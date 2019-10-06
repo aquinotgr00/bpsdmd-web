@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Entities\Student;
 use App\Entities\Organization;
+use App\Imports\StudentImport;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
+use App\Services\Domain\FeederService;
+use App\Services\Application\AuthService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use App\Exceptions\StudentDeleteException;
+use Maatwebsite\Excel\Facades\Excel;
 use Image;
 
 class StudentController extends Controller
@@ -127,6 +131,38 @@ class StudentController extends Controller
         return redirect()->route('student.index')->with($alert, $message);
     }
 
+    public function upload(Request $request, FeederService $feederService, AuthService $authService)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = 'fs_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $file->move('excel', $nama_file);
+        
+        try {
+            //insert feeder
+            $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
+            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+
+            Excel::import(new StudentImport, public_path('/excel/'.$nama_file));
+
+            //update status feeder
+            $feeder = $feederService->findById($idFeeder);
+            $feederService->activeFeeder($feeder);
+            
+            $alert = 'alert_success';
+            $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+        } catch (Exception $e) {
+            report($e);
+            $alert = 'alert_error';
+            $message = trans('common.feeder_failed', ['object' => trans('common.student')]);
+        }
+
+        return redirect()->route('student.index')->with($alert, $message);
+    }
+
     public function ajaxDetailStudent(Request $request, Student $data)
     {
         if ($request->ajax()) {
@@ -137,9 +173,12 @@ class StudentController extends Controller
                 'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : '-',
                 'period' => $data->getPeriod() ? $data->getPeriod() : '-',
                 'curriculum' => $data->getCurriculum() ? $data->getCurriculum() : '-',
+                'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
                 'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
+                'status' => $data->getStatus() ? $data->getStatus() : '-',
                 'class' => $data->getClass() ? $data->getClass() : '-',
-                'ipk' => $data->getIpk() ? $data->getIpk() : '-'
+                'ipk' => $data->getIpk() ? $data->getIpk() : '-',
+                'graduation_year' => $data->getGraduationYear() ? $data->getGraduationYear() : '-'
             ];
 
             return response()->json($data);

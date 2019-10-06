@@ -5,6 +5,9 @@
         <h1>Data {{ ucfirst(trans('common.student')) }}</h1>
         <ol class="breadcrumb">
             <li>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExcel" style="padding:4px 6px;font-size:12px">
+                    <i class="fa fa-upload"></i> {{ ucwords(trans('common.student_feeder')) }}
+                </button>
                 <a href="{{ url(route('student.create')) }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.student')) }}
                 </a>
@@ -57,7 +60,7 @@
 
                                 @if(!count($data))
                                     <tr class="even pointer">
-                                        <td colspan="5">{{ ucfirst(trans('common.no_data')) }}</td>
+                                        <td colspan="7">{{ ucfirst(trans('common.no_data')) }}</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -110,9 +113,19 @@
                             <td class="studentCurriculum"></td>
                         </tr>
                         <tr>
+                            <th>{{ ucwords(trans('common.identity_number')) }}</th>
+                            <td>:</td>
+                            <td class="studentIdentityNumber"></td>
+                        </tr>
+                        <tr>
                             <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
                             <td>:</td>
                             <td class="studentDateOfBirth"></td>
+                        </tr>
+                        <tr>
+                            <th>{{ ucfirst(trans('common.status')) }}</th>
+                            <td>:</td>
+                            <td class="studentStatus"></td>
                         </tr>
                         <tr>
                             <th>{{ ucfirst(trans('common.class')) }}</th>
@@ -124,12 +137,43 @@
                             <td>:</td>
                             <td class="studentIpk"></td>
                         </tr>
+                        <tr>
+                            <th>{{ ucwords(trans('common.graduation_year')) }}</th>
+                            <td>:</td>
+                            <td class="studentGraduationYear"></td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="{{ url(route('student.upload')) }}" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="upload">{{ ucwords(trans('common.student_feeder')) }}</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        {{ csrf_field() }}
+
+                        <label>{{ ucfirst(trans('common.choose_file')) }}</label>
+                        <div class="form-group">
+                            <input type="file" name="file" required="required">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">{{ ucwords(trans('common.upload')) }}</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     </section><!-- /.content -->
@@ -151,9 +195,12 @@
                 modalHtml.find('.studentStudyProgram').html(student.study_program);
                 modalHtml.find('.studentPeriod').html(student.period);
                 modalHtml.find('.studentCurriculum').html(student.curriculum);
+                modalHtml.find('.studentIdentityNumber').html(student.identity_number);
                 modalHtml.find('.studentDateOfBirth').html(student.date_of_birth);
+                modalHtml.find('.studentStatus').html(student.status);
                 modalHtml.find('.studentClass').html(student.class);
                 modalHtml.find('.studentIpk').html(student.ipk);
+                modalHtml.find('.studentGraduationYear').html(student.graduation_year);
                 modalHtml.modal('show');
             }
         });
@@ -166,9 +213,12 @@
         modalHtml.find('.studentStudyProgram').html('');
         modalHtml.find('.studentPeriod').html('');
         modalHtml.find('.studentCurriculum').html('');
+        modalHtml.find('.studentIdentityNumber').html('');
         modalHtml.find('.studentDateOfBirth').html('');
+        modalHtml.find('.studentStatus').html('');
         modalHtml.find('.studentClass').html('');
         modalHtml.find('.studentIpk').html('');
+        modalHtml.find('.studentGraduationYear').html('');
     })
 </script>
 @endsection

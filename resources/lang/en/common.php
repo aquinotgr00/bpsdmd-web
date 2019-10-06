@@ -25,6 +25,8 @@ return [
     'update_failed' => ':object failed to edit. Please contact web administrator.',
     'delete_success' => ':object deleted successfully.',
     'delete_failed' => ':object failed to delete. Please contact web administrator.',
+    'feeder_success' => 'Feeder :object uploaded successfully.',
+    'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
 
     // table
@@ -85,6 +87,8 @@ return [
     'date_of_birth' => 'date of birth',
     'class' => 'class',
     'ipk' => 'ipk',
+    'graduation_year' => 'graduation year',
+    'student_feeder' => 'upload feeder data student',
 
     //manage teacher
     'teacher_information' => 'teacher information',
@@ -94,7 +98,7 @@ return [
     'back_degree' => 'back degree',
     'identity_number' => 'identity number',
     'nidn' => 'nidn',
-    'teacher_feeder' => 'upload data feeder',
+    'teacher_feeder' => 'upload feeder data teacher',
 
     //manage employee
     'employee_information' => 'employee information',

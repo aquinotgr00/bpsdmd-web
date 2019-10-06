@@ -56,6 +56,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{student}/update', 'StudentController@update')->name('student.update');
         Route::get('/{student}/delete', 'StudentController@delete')->name('student.delete');
         Route::get('/{student}', 'StudentController@ajaxDetailStudent')->name('student.view');
+        Route::any('/upload', 'StudentController@upload')->name('student.upload');
         Route::get('/', 'StudentController@index')->name('student.index');
     });
 

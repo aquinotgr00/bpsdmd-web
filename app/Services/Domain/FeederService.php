@@ -88,4 +88,41 @@ class FeederService
             return $feeder;
         }
     }
+
+    /**
+     * Delete Feeder
+     *
+     * @param Feeder $feeder
+     * @return bool
+     * @throws ProgramDeleteException
+     */
+    public function delete(Feeder $feeder)
+    {
+        EntityManager::remove($feeder);
+        EntityManager::flush();
+    }
+
+    /**
+     * Find Feeder by id
+     *
+     * @param $id
+     * @return Feeder
+     */
+    public function findById($id)
+    {
+        return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Active Feeder
+     *
+     * @param Feeder $feeder
+     */
+    public function activeFeeder(Feeder $feeder)
+    {
+        $feeder->setStatus(1);
+
+        EntityManager::persist($feeder);
+        EntityManager::flush();
+    }
 }
