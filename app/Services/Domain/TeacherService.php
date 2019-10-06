@@ -78,6 +78,7 @@ class TeacherService
     public function create(Collection $data, $org = false, $flush = true)
     {
         $teacher = new Teacher;
+        $teacher->setCode($data->get('code'));
         $teacher->setNip($data->get('nip'));
         $teacher->setName($data->get('name'));
         $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
@@ -109,6 +110,7 @@ class TeacherService
      */
     public function update(Teacher $teacher, Collection $data, $org = false, $flush = true)
     {
+        $teacher->setCode($data->get('code'));
         $teacher->setNip($data->get('nip'));
         $teacher->setName($data->get('name'));
         $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));

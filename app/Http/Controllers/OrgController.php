@@ -25,7 +25,7 @@ class OrgController extends Controller
             $request->validate([
                 'name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
+                'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ]);
 
@@ -64,7 +64,7 @@ class OrgController extends Controller
             $request->validate([
                 'name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
+                'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ]);
 

@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Teacher
 {
-    const UPLOAD_PATH = 'teachers/feeder';
     /**
      * @var integer
      *
@@ -31,6 +30,13 @@ class Teacher
      * })
      */
     private $org = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kode", type="string", nullable=true)
+     */
+    private $code = NULL;
 
     /**
      * @var string
@@ -100,7 +106,7 @@ class Teacher
     /**
      * @return Organization
      */
-    public function getOrg(): Organization
+    public function getOrg()
     {
         return $this->org;
     }
@@ -111,6 +117,22 @@ class Teacher
     public function setOrg(Organization $org): void
     {
         $this->org = $org;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code): void
+    {
+        $this->code = $code;
     }
 
     /**

@@ -2,7 +2,8 @@
 
 namespace App\Services\Domain;
 
-use App\Entities\SupplyFiles;
+use App\Entities\Feeder;
+use App\Entities\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
@@ -20,7 +21,7 @@ class FeederService
     {
         return EntityManager::createQueryBuilder()
         ->select($alias)
-        ->from(SupplyFiles::class, $alias, $indexBy);
+        ->from(Feeder::class, $alias, $indexBy);
     }
 
     /**
@@ -30,7 +31,7 @@ class FeederService
      */
     public function getRepository()
     {
-        return EntityManager::getRepository(SupplyFiles::class);
+        return EntityManager::getRepository(Feeder::class);
     }
 
 
@@ -39,47 +40,52 @@ class FeederService
      *
      * @param Collection $data
      * @param bool $flush
-     * @return SupplyFiles
+     * @return Feeder
      */
     public function create(Collection $data, $flush = true)
     {
-        $supplyFiles = new SupplyFiles;
-        $supplyFiles->setFileName($data->get('file_name'));
-        $supplyFiles->setUploadedBy($data->get('upload_by'));
-        $supplyFiles->setCreatedAt($data->get('created_at'));
-        $supplyFiles->setOrg($data->get('org'));
-        $supplyFiles->setPath($data->get('path'));
-        EntityManager::persist($supplyFiles);
+        $feeder = new Feeder;
+        $feeder->setFileName($data->get('filename'));
+        $feeder->setStatus(0);
+        $feeder->setCreatedAt(date_create_from_format('d-m-Y', date('d-m-Y')));
+
+        if ($data->get('user') instanceof User) {
+            $feeder->setUser($data->get('user'));
+        }
+
+        EntityManager::persist($feeder);
 
         if ($flush) {
             EntityManager::flush();
 
-            return $supplyFiles;
+            return $feeder;
         }
     }
 
     /**
      * Update Feeder
      *
-     * @param SupplyFiles $supplyFiles
+     * @param Feeder $feeder
      * @param Collection $data
      * @param bool $flush
-     * @return SupplyFiles
+     * @return Feeder
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function update(SupplyFiles $supplyFiles, Collection $data, $flush = true)
+    public function update(Feeder $feeder, Collection $data, $flush = true)
     {
-        $supplyFiles->setFileName($data->get('file_name'));
-        $supplyFiles->setUploadedBy($data->get('upload_by'));
-        $supplyFiles->setCreatedAt($data->get('created_at'));
-        $supplyFiles->setOrg($data->get('org'));
-        $supplyFiles->setPath($data->get('path'));
-        EntityManager::persist($supplyFiles);
+        $feeder->setFileName($data->get('filename'));
+        $feeder->setStatus($data->get('status'));
+
+        if ($data->get('user') instanceof User) {
+            $feeder->setUser($data->get('user'));
+        }
+
+        EntityManager::persist($feeder);
 
         if ($flush) {
             EntityManager::flush();
 
-            return $supplyFiles;
+            return $feeder;
         }
     }
 }

@@ -5,6 +5,9 @@
         <h1>Data {{ ucfirst(trans('common.teacher')) }}</h1>
         <ol class="breadcrumb">
             <li>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExcel" style="padding:4px 6px;font-size:12px">
+                    <i class="fa fa-upload"></i> {{ ucwords(trans('common.teacher_feeder')) }}
+                </button>
                 <a href="{{ url(route('teacher.create')) }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.teacher')) }}
                 </a>
@@ -125,6 +128,32 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" action="{{ url(route('teacher.upload')) }}" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="upload">{{ ucwords(trans('common.teacher_feeder')) }}</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        {{ csrf_field() }}
+
+                        <label>{{ ucfirst(trans('common.choose_file')) }}</label>
+                        <div class="form-group">
+                            <input type="file" name="file" required="required">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">{{ ucwords(trans('common.upload')) }}</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     </section><!-- /.content -->

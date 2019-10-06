@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Entities;
+namespace App\Imports;
 
+use EntityManager;
 use App\Entities\Teacher;
+use App\Entities\Organization;
+use App\Services\Application\AuthService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -13,24 +16,31 @@ class TeacherImport implements ToCollection
      *
      * @return Teacher|null
      */
-    public function collection (Collection  $rows)
+    public function collection (Collection $rows)
     {
-        foreach ($rows as $row) 
+        foreach ($rows as $key => $row) 
         {
+            if($key == 0){
+                continue;
+            }
+            $date_of_birth = gmdate('d-m-Y', (($row[8] - 25569) * 86400));
             $teacher = new Teacher;
-            $teacher->setId($row[0]);
+            $teacher->setCode($row[0]);
             $teacher->setIdentityNumber($row[1]);
-            $teacher->setOrg($row[3]);
             $teacher->setFrontDegree($row[6]);
             $teacher->setName($row[4]);
             $teacher->setBackDegree($row[7]);
-            $teacher->setDateOfBirth($row[8]);
+            $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $date_of_birth));
             $teacher->setNip($row[9]);
+
+            $authService = new AuthService();
+            $org = $authService->user()->getOrg();
+            if ($org instanceof Organization) {
+                $teacher->setOrg($org);
+            }
 
             EntityManager::persist($teacher);
             EntityManager::flush();
-
-            return $teacher;
         }
     }
 }

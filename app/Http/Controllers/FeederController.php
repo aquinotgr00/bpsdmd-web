@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Entities\TeacherImport;
+use App\Imports\TeacherImport;
 use App\Services\Application\AuthService;
 use App\Services\Domain\FeederService;
 use Illuminate\Support\Facades\DB;
@@ -25,10 +25,12 @@ class FeederController extends Controller
 
         $file = $request->file('file');
         $nama_file = rand().$file->getClientOriginalName();
-        $file->move('feeder', $nama_file);
+        $file->move(storage_patch('excel'), $nama_file);
 
-        Excel::import(new TeacherImport, public_path('/feeder/'.$nama_file));
+        //insert feeder
+        Excel::import(new TeacherImport, storage_patch('/excel/'.$nama_file));
 
+        //update status feeder to 1 
         $alert = 'alert_success';
         $message = 'Import Success';
 

@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Entities\Teacher;
 use App\Entities\Organization;
+use App\Imports\TeacherImport;
 use App\Services\Domain\TeacherService;
 use App\Services\Domain\OrgService;
+use App\Services\Domain\FeederService;
+use App\Services\Application\AuthService;
+use App\Exceptions\TeacherDeleteException;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use App\Exceptions\TeacherDeleteException;
+use Maatwebsite\Excel\Facades\Excel;
 use Image;
 
 class TeacherController extends Controller
@@ -108,6 +112,28 @@ class TeacherController extends Controller
             $alert = 'alert_error';
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.teacher'))]);
         }
+
+        return redirect()->route('teacher.index')->with($alert, $message);
+    }
+
+    public function upload(Request $request, FeederService $feederService, AuthService $authService)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = 'fs_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $file->move('excel', $nama_file);
+        
+        //insert feeder
+        $feeder = ['filename' => $nama_file, 'user' => $authService->user()];
+        $feederService->create(collect($feeder));
+
+        Excel::import(new TeacherImport, public_path('/excel/'.$nama_file));
+
+        $alert = 'alert_success';
+        $message = 'Import Success';
 
         return redirect()->route('teacher.index')->with($alert, $message);
     }

@@ -94,6 +94,7 @@ return [
     'back_degree' => 'back degree',
     'identity_number' => 'identity number',
     'nidn' => 'nidn',
+    'teacher_feeder' => 'upload data feeder',
 
     //manage employee
     'employee_information' => 'employee information',

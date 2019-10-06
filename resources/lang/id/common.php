@@ -94,6 +94,7 @@ return [
     'back_degree' => 'gelar belakang',
     'identity_number' => 'no ktp',
     'nidn' => 'nidn',
+    'teacher_feeder' => 'unggah data feeder',
 
     //manage pegawai
     'employee_information' => 'informasi pegawai',
