@@ -1,48 +1,49 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Entities\Teacher;
 use App\Entities\Organization;
+use App\Http\Controllers\Controller;
 use App\Imports\TeacherImport;
+use App\Services\Application\AuthService;
+use App\Services\Domain\FeederService;
 use App\Services\Domain\TeacherService;
 use App\Services\Domain\OrgService;
-use App\Services\Domain\FeederService;
-use App\Services\Application\AuthService;
-use App\Exceptions\TeacherDeleteException;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
 use Maatwebsite\Excel\Facades\Excel;
-use Image;
 
 class TeacherController extends Controller
 {
-    public function index(TeacherService $teacherService)
+    public function index(TeacherService $teacherService, Organization $org)
     {
         $page = request()->get('page');
-        $data = $teacherService->paginateTeacher(request()->get('page'));
+        $data = $teacherService->paginateTeacher(request()->get('page'), $org);
 
-        return view('teacher.index', compact('data', 'page'));
+        //build urls
+        $urlCreate = url(route('administrator.teacher.create', [$org->getId()]));
+        $urlUpdate = function($id) use ($org) {
+            return url(route('administrator.teacher.update', [$org->getId(), $id]));
+        };
+        $urlDelete = function($id) use ($org) {
+            return url(route('administrator.teacher.delete', [$org->getId(), $id]));
+        };
+        $urlDetail = '/org/'.$org->getId().'/teacher';
+        $urlUpload = url(route('administrator.teacher.upload', [$org->getId()]));
+
+        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
     }
 
-    public function create(Request $request, TeacherService $teacherService, OrgService $orgService)
+    public function create(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
+                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
-
-            $messageBag = new MessageBag;
-            $org = false;
-            if ($request->get('org')) {
-                $org = $orgService->findById($request->get('org'));
-            }
-            if (!$org) {
-                $messageBag->add('org', trans('common.invalid_institute'));
-                return redirect()->route('teacher.create')->withErrors($messageBag);
-            }
 
             try {
                 $requestData = $request->all();
@@ -56,7 +57,7 @@ class TeacherController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.teacher'))]);
             }
 
-            return redirect()->route('teacher.index')->with($alert, $message);
+            return redirect()->route('administrator.teacher.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
         $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
@@ -64,28 +65,20 @@ class TeacherController extends Controller
         return view('teacher.create', ['dataOrg' => $dataOrg]);
     }
 
-    public function update(Request $request, TeacherService $teacherService, Teacher $data, OrgService $orgService)
+    public function update(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org, Teacher $data)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
+                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
-
-            $messageBag = new MessageBag;
-            $org = false;
-            if ($request->get('org')) {
-                $org = $orgService->findById($request->get('org'));
-            }
-            if (!$org) {
-                $messageBag->add('org', trans('common.invalid_institute'));
-                return redirect()->route('teacher.update', ['id' => $data->getId()])->withErrors($messageBag);
-            }
 
             try {
                 $requestData = $request->all();
 
-                $teacherService->update($data, collect($requestData), $org, true);
+                $teacherService->update($data, collect($requestData), false, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.teacher'))]);
             } catch (Exception $e) {
@@ -93,7 +86,7 @@ class TeacherController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.teacher'))]);
             }
 
-            return redirect()->route('teacher.index')->with($alert, $message);
+            return redirect()->route('administrator.teacher.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
         $dataOrg = $orgService->getOrgByType(Organization::TYPE_DEMAND);
@@ -101,7 +94,7 @@ class TeacherController extends Controller
         return view('teacher.update', compact('data', 'dataOrg'));
     }
 
-    public function delete(TeacherService $teacherService, Teacher $data)
+    public function delete(TeacherService $teacherService, Organization $org, Teacher $data)
     {
         try {
             $teacherService->delete($data);
@@ -113,30 +106,33 @@ class TeacherController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.teacher'))]);
         }
 
-        return redirect()->route('teacher.index')->with($alert, $message);
+        return redirect()->route('administrator.teacher.index', ['org' => $org->getId()])->with($alert, $message);
     }
 
-    public function upload(Request $request, FeederService $feederService, AuthService $authService)
+    public function upload(Request $request, FeederService $feederService, AuthService $authService, Organization $org)
     {
         $this->validate($request, [
             'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fd_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fd_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
-        
+
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
             $idFeeder = $feederService->create(collect($dataFeeder))->getId();
 
-            Excel::import(new TeacherImport, public_path('/excel/'.$nama_file));
+            $importer = new TeacherImport;
+            $importer->setOrg($org);
+
+            Excel::import($importer, public_path('/excel/'.$nama_file));
 
             //update status feeder
             $feeder = $feederService->findById($idFeeder);
             $feederService->activeFeeder($feeder);
-            
+
             $alert = 'alert_success';
             $message = trans('common.feeder_success', ['object' => trans('common.teacher')]);
         } catch (Exception $e) {
@@ -145,10 +141,10 @@ class TeacherController extends Controller
             $message = trans('common.feeder_failed', ['object' => trans('common.teacher')]);
         }
 
-        return redirect()->route('teacher.index')->with($alert, $message);
+        return redirect()->route('administrator.teacher.index', ['org' => $org->getId()])->with($alert, $message);
     }
 
-    public function ajaxDetailTeacher(Request $request, Teacher $data)
+    public function ajaxDetailTeacher(Request $request, Organization $org, Teacher $data)
     {
         if ($request->ajax()) {
             $data = [

@@ -49,7 +49,7 @@ class OrgService
     }
 
     /**
-     * Paginate disease
+     * Paginate organization
      *
      * @param int $page
      * @return LengthAwarePaginator

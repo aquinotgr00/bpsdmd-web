@@ -17,7 +17,7 @@
                     <div class="icon">
                         <i class="fa fa-area-chart"></i>
                     </div>
-                    <a class="small-box-footer" href="{{url(route('data.school'))}}" title="Info Lebih Lanjut">
+                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
                         Info Lebih Lanjut
                         <i class="fa fa-arrow-circle-right"></i>
                     </a>
@@ -33,7 +33,7 @@
                     <div class="icon">
                         <i class="fa fa-users"></i>
                     </div>
-                    <a class="small-box-footer" href="{{url(route('data.lecturer'))}}" title="Info Lebih Lanjut">
+                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
                         Info Lebih Lanjut
                         <i class="fa fa-arrow-circle-right"></i>
                     </a>
@@ -49,7 +49,7 @@
                     <div class="icon">
                         <i class="fa fa-pie-chart"></i>
                     </div>
-                    <a class="small-box-footer" href="{{url(route('data.cadet'))}}" title="Info Lebih Lanjut">
+                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
                         Info Lebih Lanjut
                         <i class="fa fa-arrow-circle-right"></i>
                     </a>
@@ -65,7 +65,7 @@
                     <div class="icon">
                         <i class="fa fa-bar-chart"></i>
                     </div>
-                    <a class="small-box-footer" href="{{url(route('data.course'))}}" title="Info Lebih Lanjut">
+                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
                         Info Lebih Lanjut
                         <i class="fa fa-arrow-circle-right"></i>
                     </a>
@@ -93,7 +93,6 @@
                     <div class="box-body no-padding">
                         <div class="row">
                             <div class="col-sm-12">
-                                <!-- patTemplate:gtfwrendermodule name="chartpesertadiklat" module="home" submodule="renderChartTarunaNonDiklatAllBo" action="view" type="html" params="" / -->
                                 <div id="gsContainerTarunaNonDiklatALl" style="height: 300px; margin: 0"></div>
                             </div>
                         </div>

@@ -12,6 +12,14 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class StudentImport implements ToCollection
 {
+    /** @var sOrganization $org */
+    private $org;
+
+    public function setOrg(Organization $org)
+    {
+        $this->org = $org;
+    }
+
     /**
      * @param array $row
      *
@@ -24,25 +32,22 @@ class StudentImport implements ToCollection
             if($key == 0){
                 continue;
             }
-            $teacher = new Student;
-            $teacher->setCode(substr($row[0], strpos($row[0], "-") + 1));
-            $teacher->setIdentityNumber($row[1]);
-            $teacher->setName($row[2]);
-            $teacher->setPeriod($row[9]);
-            $teacher->setCurriculum($row[11]);
-            $teacher->setStatus($row[13]);
-            $teacher->setClass($row[14]);
-            $teacher->setIpk($row[16]);
-            $teacher->setGraduationYear($row[17]);
+            $student = new Student;
+            $student->setCode(substr($row[0], strpos($row[0], "-") + 1));
+            $student->setIdentityNumber($row[1]);
+            $student->setName($row[2]);
+            $student->setPeriod($row[9]);
+            $student->setCurriculum($row[11]);
+            $student->setStatus($row[13]);
+            $student->setClass($row[14]);
+            $student->setIpk($row[16]);
+            $student->setGraduationYear($row[17]);
 
-            
-            $authService = new AuthService();
-            $org = $authService->user()->getOrg();
-            if ($org instanceof Organization) {
-                $teacher->setOrg($org);
+            if ($this->org instanceof Organization) {
+                $student->setOrg($this->org);
             }
 
-            EntityManager::persist($teacher);
+            EntityManager::persist($student);
             EntityManager::flush();
         }
     }
