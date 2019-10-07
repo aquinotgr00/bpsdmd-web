@@ -80,6 +80,13 @@ class Organization
     private $photo = NULL;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="deskripsi", type="string", nullable=true)
+     */
+    private $description = NULL;
+
+    /**
      * @var ArrayCollection|User[]
      * @ORM\OneToMany(targetEntity="User", mappedBy="org")
      */
@@ -229,6 +236,22 @@ class Organization
     public function setPhoto($photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 
     /**

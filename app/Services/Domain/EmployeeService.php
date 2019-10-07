@@ -54,15 +54,19 @@ class EmployeeService
     }
 
     /**
-     * Paginate disease
+     * Paginate employee
      *
-     * @param int $page
+     * @param $page
+     * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateEmployee($page): LengthAwarePaginator
+    public function paginateEmployee($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('e')
+            ->andWhere('e.org = :orgId')
+            ->orderBy('e.id')
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);

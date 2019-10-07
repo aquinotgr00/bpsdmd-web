@@ -27,19 +27,6 @@
                                 <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
-                                <label for="org">{{ ucfirst(trans('common.institute')) }}</label>
-                                <select class="form-control" id="org" name="org">
-                                    <option value="">{{ ucwords(trans('common.choose_institute')) }}</option>
-                                    @if(!empty($dataOrg))
-                                        @foreach($dataOrg as $org)
-                                        <option value="{{ $org->getId() }}" {!! $data->getOrg()->getId() == $org->getId() ? 'selected':'' !!}>{{ $org->getName() }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                                <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
-                            </div>
-
                             <div class="form-group {{ $errors->has('studyProgram') ? 'has-error' : '' }}">
                                 <label for="studyProgram">{{ ucwords(trans('common.study_program')) }} :</label>
                                 <select class="form-control" id="studyProgram" name="studyProgram">
@@ -87,8 +74,8 @@
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                             <script type="text/javascript">
-                                $('.date').datepicker({  
-                                    format: 'dd-mm-yyyy' // HTML 5 
+                                $('.date').datepicker({
+                                    format: 'dd-mm-yyyy' // HTML 5
                                 });
                             </script>
                         </form>

@@ -54,15 +54,19 @@ class TeacherService
     }
 
     /**
-     * Paginate disease
+     * Paginate teacher
      *
-     * @param int $page
+     * @param $page
+     * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateTeacher($page): LengthAwarePaginator
+    public function paginateTeacher($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('t')
+            ->andWhere('t.org = :orgId')
+            ->orderBy('t.id')
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);

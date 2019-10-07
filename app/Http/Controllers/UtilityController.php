@@ -14,31 +14,15 @@ use Illuminate\Support\MessageBag;
 
 class UtilityController extends Controller
 {
-    public function dashboard(UtilityService $utilityService)
+    public function dashboard(UtilityService $utilityService, AuthService $authService)
     {
-        list($countSchools, $countTeachers, $countStudents, $countShortCourses, $dataGraphTrend) = $utilityService->getDataForDashboard();
+        if ($authService->user()->getAuthority() == User::ROLE_ADMIN) {
+            list($countSchools, $countTeachers, $countStudents, $countShortCourses, $dataGraphTrend) = $utilityService->getDataForDashboard();
 
-        return view('dashboard.index', compact('countSchools', 'countTeachers', 'countStudents', 'countShortCourses', 'dataGraphTrend'));
-    }
+            return view('dashboard.administrator', compact('countSchools', 'countTeachers', 'countStudents', 'countShortCourses', 'dataGraphTrend'));
+        }
 
-    public function dataSchool()
-    {
-        return view('dashboard.school');
-    }
-
-    public function dataLecturer()
-    {
-        return view('dashboard.lecturer');
-    }
-
-    public function dataCadet()
-    {
-        return view('dashboard.cadet');
-    }
-
-    public function dataCourse()
-    {
-        return view('dashboard.course');
+        return view('dashboard.org', ['org' => currentUser()->getOrg()]);
     }
 
     public function updateProfile(Request $request, UserService $userService, AuthService $authService)

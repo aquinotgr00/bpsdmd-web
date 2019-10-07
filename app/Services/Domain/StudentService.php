@@ -55,15 +55,19 @@ class StudentService
     }
 
     /**
-     * Paginate disease
+     * Paginate student
      *
-     * @param int $page
+     * @param $page
+     * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateStudent($page): LengthAwarePaginator
+    public function paginateStudent($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('s')
+            ->andWhere('s.org = :orgId')
+            ->orderBy('s.id')
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -130,6 +134,7 @@ class StudentService
         if ($org instanceof Organization) {
             $student->setOrg($org);
         }
+
         if ($studyProgram instanceof StudyProgram) {
             $student->setStudyProgram($studyProgram);
         }

@@ -5,7 +5,7 @@
         <h1>Data {{ ucfirst(trans('common.employee')) }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ url(route('employee.create')) }}">
+                <a href="{{ $urlCreate }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.employee')) }}
                 </a>
             </li>
@@ -47,8 +47,8 @@
                                     <td>{{ $item->getIdentityNumber() ? $item->getIdentityNumber() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewEmployee" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ url(route('employee.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('employee.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="{{ $urlUpdate }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ $urlDelete }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -144,11 +144,12 @@
 <script>
     $('a.viewEmployee').on('click', function () {
         let employee = $(this).data('employee'),
-            modalHtml = $('#modalDetailEmployee');
+            modalHtml = $('#modalDetailEmployee'),
+            url = '{{ $urlDetail }}';
 
         modalHtml.modal('hide');
 
-        $.get('/employee/'+employee, function(employee, status){
+        $.get(url+'/'+employee, function(employee, status){
             if (status === 'success') {
                 modalHtml.find('.employeeCode').html(employee.code);
                 modalHtml.find('.employeeName').html(employee.name);

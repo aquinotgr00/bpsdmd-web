@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExcel" style="padding:4px 6px;font-size:12px">
                     <i class="fa fa-upload"></i> {{ ucwords(trans('common.teacher_feeder')) }}
                 </button>
-                <a href="{{ url(route('teacher.create')) }}">
+                <a href="{{ $urlCreate }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.teacher')) }}
                 </a>
             </li>
@@ -50,8 +50,8 @@
                                     <td>{{ $item->getNidn() ? $item->getNidn() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewTeacher" data-teacher="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ url(route('teacher.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('teacher.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="{{ $urlUpdate }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ $urlDelete }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -133,7 +133,7 @@
 
     <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="post" action="{{ url(route('teacher.upload')) }}" enctype="multipart/form-data">
+            <form method="post" action="{{ $urlUpload }}" enctype="multipart/form-data">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="upload">{{ ucwords(trans('common.teacher_feeder')) }}</h5>
@@ -163,11 +163,12 @@
 <script>
     $('a.viewTeacher').on('click', function () {
         let teacher = $(this).data('teacher'),
-            modalHtml = $('#modalDetailTeacher');
+            modalHtml = $('#modalDetailTeacher'),
+            url = '{{ $urlDetail }}';
 
         modalHtml.modal('hide');
 
-        $.get('/teacher/'+teacher, function(teacher, status){
+        $.get(url+'/'+teacher, function(teacher, status){
             if (status === 'success') {
                 modalHtml.find('.teacherNip').html(teacher.nip);
                 modalHtml.find('.teacherName').html(teacher.name);

@@ -1,36 +1,44 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Supply;
 
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
+use App\Http\Controllers\Controller;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
 
 class ProgramController extends Controller
 {
-    public function index(ProgramService $programService, $org)
+    public function index(ProgramService $programService)
     {
         $page = request()->get('page');
-        $data = $programService->paginateProgram(request()->get('page'), $org);
+        $data = $programService->paginateProgram(request()->get('page'), currentUser()->getOrg());
 
-        return view('program.index', compact('data', 'page', 'org'));
+        //build urls
+        $urlCreate = url(route('supply.program.create'));
+        $urlUpdate = function($id) {
+            url(route('supply.program.update', [$id]));
+        };
+        $urlDelete = function($id) {
+            url(route('supply.program.delete', [$id]));
+        };
+
+        return view('program.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete'));
     }
 
-    public function create(Request $request, ProgramService $programService, OrgService $orgService, $org)
+    public function create(Request $request, ProgramService $programService, OrgService $orgService)
     {
         if ($request->method() == 'POST') {
-            $request->merge(['org' => $orgService->findById($org)]);
+            $request->merge(['org' => currentUser()->getOrg()]);
             $request->validate([
                 'org' => 'required',
             ]);
 
             try {
-                $requestData = $request->all();
-                $programService->create(collect($requestData));
+                $programService->create(collect($request->all()));
                 $alert = 'alert_success';
                 $message = trans('common.create_success', ['object' => ucfirst(trans('common.study_program'))]);
             } catch (Exception $e) {
@@ -39,22 +47,20 @@ class ProgramController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.study_program'))]);
             }
 
-            return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
+            return redirect()->route('supply.program.index')->with($alert, $message);
         }
 
         return view('program.create');
     }
 
-    public function update(Request $request, ProgramService $programService, OrgService $orgService, $org, StudyProgram $data)
+    public function update(Request $request, ProgramService $programService, OrgService $orgService, StudyProgram $data)
     {
         if ($request->method() == 'POST') {
-            $request->merge(['org' => $orgService->findById($org)]);
             $request->validate([
                 'org' => 'required',
             ]);
 
             try {
-                $requestData = $request->all();
                 $programService->update($data, collect($request->input()));
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.study_program'))]);
@@ -63,13 +69,13 @@ class ProgramController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.study_program'))]);
             }
 
-            return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
+            return redirect()->route('supply.program.index')->with($alert, $message);
         }
 
         return view('program.update', compact('data'));
     }
 
-    public function delete(ProgramService $programService, $org, StudyProgram $data)
+    public function delete(ProgramService $programService, StudyProgram $data)
     {
         try {
             $programService->delete($data);
@@ -81,6 +87,6 @@ class ProgramController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.study_program'))]);
         }
 
-        return redirect()->route('program.index', ['org' => $org->getId()])->with($alert, $message);
+        return redirect()->route('supply.program.index')->with($alert, $message);
     }
 }

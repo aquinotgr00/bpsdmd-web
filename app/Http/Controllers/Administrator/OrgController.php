@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Entities\Organization;
+use App\Http\Controllers\Controller;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class OrgController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
-            return redirect()->route('org.index')->with($alert, $message);
+            return redirect()->route('administrator.org.index')->with($alert, $message);
         }
 
         return view('org.create');
@@ -90,7 +91,7 @@ class OrgController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
-            return redirect()->route('org.index')->with($alert, $message);
+            return redirect()->route('administrator.org.index')->with($alert, $message);
         }
 
         return view('org.update', compact('data'));
@@ -112,7 +113,7 @@ class OrgController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.institute'))]);
         }
 
-        return redirect()->route('org.index')->with($alert, $message);
+        return redirect()->route('administrator.org.index')->with($alert, $message);
     }
 
     public function ajaxDetailOrg(Request $request, Organization $org)

@@ -5,7 +5,7 @@
         <h1>Data {{ ucwords(trans('common.study_program')) }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ url(route('program.create', [$org->getId()])) }}">
+                <a href="{{ $urlCreate }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.study_program')) }}
                 </a>
             </li>
@@ -43,8 +43,8 @@
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getDegree()) }}</td>
                                     <td>
-                                        <a href="{{ url(route('program.update', [$org->getId(), $item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('program.delete', [$org->getId(), $item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
