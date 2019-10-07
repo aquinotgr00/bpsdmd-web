@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Entities\Organization;
+use App\Http\Controllers\Controller;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,9 +25,8 @@ class OrgController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
-                'short_name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
+                'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ]);
 
@@ -53,7 +53,7 @@ class OrgController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
-            return redirect()->route('org.index')->with($alert, $message);
+            return redirect()->route('administrator.org.index')->with($alert, $message);
         }
 
         return view('org.create');
@@ -64,9 +64,8 @@ class OrgController extends Controller
         if ($request->method() == 'POST') {
             $request->validate([
                 'name' => 'required',
-                'short_name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
+                'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ]);
 
@@ -92,7 +91,7 @@ class OrgController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
-            return redirect()->route('org.index')->with($alert, $message);
+            return redirect()->route('administrator.org.index')->with($alert, $message);
         }
 
         return view('org.update', compact('data'));
@@ -114,7 +113,7 @@ class OrgController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.institute'))]);
         }
 
-        return redirect()->route('org.index')->with($alert, $message);
+        return redirect()->route('administrator.org.index')->with($alert, $message);
     }
 
     public function ajaxDetailOrg(Request $request, Organization $org)

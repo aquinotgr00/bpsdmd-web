@@ -25,12 +25,20 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $bindToEntityOr404 = function ($class, $findKey = 'id') {
-            return function ($value) use ($class, $findKey) {
+        $bindToEntityOr404 = function ($class, $findKey = 'id', $condition = false) {
+            return function ($value) use ($class, $findKey, $condition) {
                 $entity = EntityManager::getRepository($class)->findOneBy([$findKey => $value]);
 
                 if ($entity instanceof $class) {
-                    return $entity;
+                    if ($condition) {
+                        if ($condition == Entities\Organization::TYPE_SUPPLY || $condition == Entities\Organization::TYPE_DEMAND) {
+                            if ($entity->getType() == $condition) {
+                                return $entity;
+                            }
+                        }
+                    } else {
+                        return $entity;
+                    }
                 }
 
                 return abort(404);
@@ -39,10 +47,13 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('user', $bindToEntityOr404(Entities\User::class));
         Route::bind('org', $bindToEntityOr404(Entities\Organization::class));
+        Route::bind('org_supply', $bindToEntityOr404(Entities\Organization::class), 'id', Entities\Organization::TYPE_SUPPLY);
+        Route::bind('org_demand', $bindToEntityOr404(Entities\Organization::class), 'id', Entities\Organization::TYPE_DEMAND);
         Route::bind('program', $bindToEntityOr404(Entities\StudyProgram::class));
         Route::bind('student', $bindToEntityOr404(Entities\Student::class));
         Route::bind('teacher', $bindToEntityOr404(Entities\Teacher::class));
         Route::bind('employee', $bindToEntityOr404(Entities\Employee::class));
+        Route::bind('feeder', $bindToEntityOr404(Entities\Teacher::class));
         parent::boot();
     }
 

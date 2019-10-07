@@ -39,7 +39,7 @@ class UserService
     }
 
     /**
-     * Paginate disease
+     * Paginate User
      *
      * @param int $page
      * @return LengthAwarePaginator

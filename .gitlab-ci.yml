@@ -14,6 +14,6 @@ deploy_staging:
     name: staging
     url: bpsdm.datains.id
   script:
-    - ssh cent@bpsdm.datains.id -p 222 "cd ~/htdocs && git fetch --all && git checkout master && git pull origin master && composer install --no-dev && sudo service php-fpm restart && psql -U postgres bpsdmp < ./dev-sql/latest.pgsql && php artisan db:seed && exit"
+    - ssh cent@bpsdm.datains.id -p 222 "cd ~/htdocs && git fetch --all && git checkout master && git pull origin master && composer install --no-dev && sudo service php-fpm restart && psql -U postgres bpsdmp < ./dev-sql/latest.pgsql && php artisan doctrine:generate:proxies && php artisan db:seed && exit"
   only:
     - master

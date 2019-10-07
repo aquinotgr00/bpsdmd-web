@@ -5,7 +5,7 @@
 -- Dumped from database version 11.5
 -- Dumped by pg_dump version 11.5
 
--- Started on 2019-10-04 20:57:59
+-- Started on 2019-10-07 09:21:19
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,6 +23,7 @@ ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_instansi_id_fkey;
 ALTER TABLE ONLY public.sertifikat DROP CONSTRAINT sertifikat_pegawai_id_fkey;
 ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_instansi_id_fkey;
 ALTER TABLE ONLY public.pengguna DROP CONSTRAINT pengguna_instansi_id_fkey;
+ALTER TABLE ONLY public.feeder DROP CONSTRAINT pengguna_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_sekolah_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_instansi_id_fkey;
 ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_instansi_id_fkey;
@@ -32,6 +33,7 @@ ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_pkey;
 ALTER TABLE ONLY public.pengguna DROP CONSTRAINT pengguna_pkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_pkey;
 ALTER TABLE ONLY public.instansi DROP CONSTRAINT instansi_pkey;
+ALTER TABLE ONLY public.feeder DROP CONSTRAINT feeder_pkey;
 ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_pkey;
 ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_pkey;
 ALTER TABLE public.siswa ALTER COLUMN id DROP DEFAULT;
@@ -40,6 +42,7 @@ ALTER TABLE public.program_studi ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.pengguna ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.pegawai ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.instansi ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.feeder ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.dosen ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.diklat ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.siswa_id_seq;
@@ -54,6 +57,8 @@ DROP SEQUENCE public.pegawai_id_seq;
 DROP TABLE public.pegawai;
 DROP SEQUENCE public.instansi_id_seq;
 DROP TABLE public.instansi;
+DROP SEQUENCE public.feeder_id_seq;
+DROP TABLE public.feeder;
 DROP SEQUENCE public.dosen_id_seq;
 DROP TABLE public.dosen;
 DROP SEQUENCE public.diklat_id_seq;
@@ -63,7 +68,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 196 (class 1259 OID 25343)
+-- TOC entry 196 (class 1259 OID 25510)
 -- Name: diklat; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -77,7 +82,7 @@ CREATE TABLE public.diklat (
 ALTER TABLE public.diklat OWNER TO postgres;
 
 --
--- TOC entry 197 (class 1259 OID 25349)
+-- TOC entry 197 (class 1259 OID 25516)
 -- Name: diklat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -92,7 +97,7 @@ CREATE SEQUENCE public.diklat_id_seq
 ALTER TABLE public.diklat_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2908 (class 0 OID 0)
+-- TOC entry 2921 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: diklat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -101,7 +106,7 @@ ALTER SEQUENCE public.diklat_id_seq OWNED BY public.diklat.id;
 
 
 --
--- TOC entry 198 (class 1259 OID 25351)
+-- TOC entry 198 (class 1259 OID 25518)
 -- Name: dosen; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -114,14 +119,15 @@ CREATE TABLE public.dosen (
     gelar_belakang character varying,
     tanggal_lahir date,
     no_ktp character varying,
-    nidn character varying
+    nidn character varying,
+    kode character varying
 );
 
 
 ALTER TABLE public.dosen OWNER TO postgres;
 
 --
--- TOC entry 199 (class 1259 OID 25357)
+-- TOC entry 199 (class 1259 OID 25524)
 -- Name: dosen_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -136,7 +142,7 @@ CREATE SEQUENCE public.dosen_id_seq
 ALTER TABLE public.dosen_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2909 (class 0 OID 0)
+-- TOC entry 2922 (class 0 OID 0)
 -- Dependencies: 199
 -- Name: dosen_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -145,7 +151,47 @@ ALTER SEQUENCE public.dosen_id_seq OWNED BY public.dosen.id;
 
 
 --
--- TOC entry 200 (class 1259 OID 25359)
+-- TOC entry 212 (class 1259 OID 25686)
+-- Name: feeder; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.feeder (
+    id bigint NOT NULL,
+    nama_file character varying NOT NULL,
+    pengguna_id bigint NOT NULL,
+    status character varying,
+    created_at date
+);
+
+
+ALTER TABLE public.feeder OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 25694)
+-- Name: feeder_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.feeder_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.feeder_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2923 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: feeder_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.feeder_id_seq OWNED BY public.feeder.id;
+
+
+--
+-- TOC entry 200 (class 1259 OID 25526)
 -- Name: instansi; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -157,14 +203,15 @@ CREATE TABLE public.instansi (
     tipe character varying NOT NULL,
     moda character varying NOT NULL,
     alamat character varying,
-    foto character varying
+    foto character varying,
+    deskripsi character varying
 );
 
 
 ALTER TABLE public.instansi OWNER TO postgres;
 
 --
--- TOC entry 201 (class 1259 OID 25365)
+-- TOC entry 201 (class 1259 OID 25532)
 -- Name: instansi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -179,7 +226,7 @@ CREATE SEQUENCE public.instansi_id_seq
 ALTER TABLE public.instansi_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2910 (class 0 OID 0)
+-- TOC entry 2924 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: instansi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -188,7 +235,7 @@ ALTER SEQUENCE public.instansi_id_seq OWNED BY public.instansi.id;
 
 
 --
--- TOC entry 208 (class 1259 OID 25475)
+-- TOC entry 202 (class 1259 OID 25534)
 -- Name: pegawai; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -210,7 +257,7 @@ CREATE TABLE public.pegawai (
 ALTER TABLE public.pegawai OWNER TO postgres;
 
 --
--- TOC entry 210 (class 1259 OID 25504)
+-- TOC entry 203 (class 1259 OID 25540)
 -- Name: pegawai_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -225,8 +272,8 @@ CREATE SEQUENCE public.pegawai_id_seq
 ALTER TABLE public.pegawai_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2911 (class 0 OID 0)
--- Dependencies: 210
+-- TOC entry 2925 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: pegawai_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -234,7 +281,7 @@ ALTER SEQUENCE public.pegawai_id_seq OWNED BY public.pegawai.id;
 
 
 --
--- TOC entry 202 (class 1259 OID 25367)
+-- TOC entry 204 (class 1259 OID 25542)
 -- Name: pengguna; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -255,7 +302,7 @@ CREATE TABLE public.pengguna (
 ALTER TABLE public.pengguna OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 25373)
+-- TOC entry 205 (class 1259 OID 25548)
 -- Name: pengguna_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -270,8 +317,8 @@ CREATE SEQUENCE public.pengguna_id_seq
 ALTER TABLE public.pengguna_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2912 (class 0 OID 0)
--- Dependencies: 203
+-- TOC entry 2926 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: pengguna_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -279,7 +326,7 @@ ALTER SEQUENCE public.pengguna_id_seq OWNED BY public.pengguna.id;
 
 
 --
--- TOC entry 204 (class 1259 OID 25375)
+-- TOC entry 206 (class 1259 OID 25550)
 -- Name: program_studi; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -295,7 +342,7 @@ CREATE TABLE public.program_studi (
 ALTER TABLE public.program_studi OWNER TO postgres;
 
 --
--- TOC entry 205 (class 1259 OID 25381)
+-- TOC entry 207 (class 1259 OID 25556)
 -- Name: program_studi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -310,8 +357,8 @@ CREATE SEQUENCE public.program_studi_id_seq
 ALTER TABLE public.program_studi_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2913 (class 0 OID 0)
--- Dependencies: 205
+-- TOC entry 2927 (class 0 OID 0)
+-- Dependencies: 207
 -- Name: program_studi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -319,7 +366,7 @@ ALTER SEQUENCE public.program_studi_id_seq OWNED BY public.program_studi.id;
 
 
 --
--- TOC entry 209 (class 1259 OID 25481)
+-- TOC entry 208 (class 1259 OID 25558)
 -- Name: sertifikat; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -334,7 +381,7 @@ CREATE TABLE public.sertifikat (
 ALTER TABLE public.sertifikat OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 25507)
+-- TOC entry 209 (class 1259 OID 25564)
 -- Name: sertifikat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -349,8 +396,8 @@ CREATE SEQUENCE public.sertifikat_id_seq
 ALTER TABLE public.sertifikat_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2914 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 2928 (class 0 OID 0)
+-- Dependencies: 209
 -- Name: sertifikat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -358,7 +405,7 @@ ALTER SEQUENCE public.sertifikat_id_seq OWNED BY public.sertifikat.id;
 
 
 --
--- TOC entry 206 (class 1259 OID 25383)
+-- TOC entry 210 (class 1259 OID 25566)
 -- Name: siswa; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -372,14 +419,17 @@ CREATE TABLE public.siswa (
     tahun_kurikulum character varying,
     tanggal_lahir date,
     kelas character varying,
-    ipk character varying
+    ipk character varying,
+    no_ktp character varying,
+    status character varying,
+    tahun_lulus character varying
 );
 
 
 ALTER TABLE public.siswa OWNER TO postgres;
 
 --
--- TOC entry 207 (class 1259 OID 25389)
+-- TOC entry 211 (class 1259 OID 25572)
 -- Name: siswa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -394,8 +444,8 @@ CREATE SEQUENCE public.siswa_id_seq
 ALTER TABLE public.siswa_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2915 (class 0 OID 0)
--- Dependencies: 207
+-- TOC entry 2929 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: siswa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -403,7 +453,7 @@ ALTER SEQUENCE public.siswa_id_seq OWNED BY public.siswa.id;
 
 
 --
--- TOC entry 2735 (class 2604 OID 25391)
+-- TOC entry 2742 (class 2604 OID 25574)
 -- Name: diklat id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -411,7 +461,7 @@ ALTER TABLE ONLY public.diklat ALTER COLUMN id SET DEFAULT nextval('public.dikla
 
 
 --
--- TOC entry 2736 (class 2604 OID 25392)
+-- TOC entry 2743 (class 2604 OID 25575)
 -- Name: dosen id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -419,7 +469,15 @@ ALTER TABLE ONLY public.dosen ALTER COLUMN id SET DEFAULT nextval('public.dosen_
 
 
 --
--- TOC entry 2737 (class 2604 OID 25393)
+-- TOC entry 2750 (class 2604 OID 25702)
+-- Name: feeder id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.feeder ALTER COLUMN id SET DEFAULT nextval('public.feeder_id_seq'::regclass);
+
+
+--
+-- TOC entry 2744 (class 2604 OID 25576)
 -- Name: instansi id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -427,7 +485,7 @@ ALTER TABLE ONLY public.instansi ALTER COLUMN id SET DEFAULT nextval('public.ins
 
 
 --
--- TOC entry 2741 (class 2604 OID 25506)
+-- TOC entry 2745 (class 2604 OID 25577)
 -- Name: pegawai id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -435,7 +493,7 @@ ALTER TABLE ONLY public.pegawai ALTER COLUMN id SET DEFAULT nextval('public.pega
 
 
 --
--- TOC entry 2738 (class 2604 OID 25394)
+-- TOC entry 2746 (class 2604 OID 25578)
 -- Name: pengguna id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -443,7 +501,7 @@ ALTER TABLE ONLY public.pengguna ALTER COLUMN id SET DEFAULT nextval('public.pen
 
 
 --
--- TOC entry 2739 (class 2604 OID 25395)
+-- TOC entry 2747 (class 2604 OID 25579)
 -- Name: program_studi id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -451,7 +509,7 @@ ALTER TABLE ONLY public.program_studi ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 2742 (class 2604 OID 25509)
+-- TOC entry 2748 (class 2604 OID 25580)
 -- Name: sertifikat id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -477,30 +535,38 @@ COPY public.diklat (id, instansi_id, nama) FROM stdin;
 
 
 --
--- TOC entry 2889 (class 0 OID 25351)
+-- TOC entry 2900 (class 0 OID 25518)
 -- Dependencies: 198
 -- Data for Name: dosen; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.dosen (id, instansi_id, nip, nama, gelar_depan, gelar_belakang, tanggal_lahir, no_ktp, nidn) FROM stdin;
+COPY public.dosen (id, instansi_id, nip, nama, gelar_depan, gelar_belakang, tanggal_lahir, no_ktp, nidn, kode) FROM stdin;
 \.
 
 
 --
--- TOC entry 2891 (class 0 OID 25359)
+-- TOC entry 2914 (class 0 OID 25686)
+-- Dependencies: 212
+-- Data for Name: feeder; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.feeder (id, nama_file, pengguna_id, status, created_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2902 (class 0 OID 25526)
 -- Dependencies: 200
 -- Data for Name: instansi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat, foto) FROM stdin;
-1	\N	PELNI	\N	demand	air	\N	\N
-2	\N	KAI	\N	demand	darat	\N	\N
+COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat, foto, deskripsi) FROM stdin;
 \.
 
 
 --
--- TOC entry 2899 (class 0 OID 25475)
--- Dependencies: 208
+-- TOC entry 2904 (class 0 OID 25534)
+-- Dependencies: 202
 -- Data for Name: pegawai; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -539,17 +605,17 @@ COPY public.sertifikat (id, pegawai_id, nama, masa_berlaku) FROM stdin;
 
 
 --
--- TOC entry 2897 (class 0 OID 25383)
--- Dependencies: 206
+-- TOC entry 2912 (class 0 OID 25566)
+-- Dependencies: 210
 -- Data for Name: siswa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk) FROM stdin;
+COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk, no_ktp, status, tahun_lulus) FROM stdin;
 \.
 
 
 --
--- TOC entry 2916 (class 0 OID 0)
+-- TOC entry 2930 (class 0 OID 0)
 -- Dependencies: 197
 -- Name: diklat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -567,7 +633,16 @@ SELECT pg_catalog.setval('public.dosen_id_seq', 1, false);
 
 
 --
--- TOC entry 2918 (class 0 OID 0)
+-- TOC entry 2932 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: feeder_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.feeder_id_seq', 37, true);
+
+
+--
+-- TOC entry 2933 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: instansi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -639,7 +714,16 @@ ALTER TABLE ONLY public.dosen
 
 
 --
--- TOC entry 2748 (class 2606 OID 25402)
+-- TOC entry 2766 (class 2606 OID 25693)
+-- Name: feeder feeder_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.feeder
+    ADD CONSTRAINT feeder_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2756 (class 2606 OID 25587)
 -- Name: instansi instansi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -720,7 +804,16 @@ ALTER TABLE ONLY public.pegawai
 
 
 --
--- TOC entry 2759 (class 2606 OID 25419)
+-- TOC entry 2776 (class 2606 OID 25697)
+-- Name: feeder pengguna_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.feeder
+    ADD CONSTRAINT pengguna_id_fkey FOREIGN KEY (pengguna_id) REFERENCES public.pengguna(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2771 (class 2606 OID 25616)
 -- Name: pengguna pengguna_instansi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 

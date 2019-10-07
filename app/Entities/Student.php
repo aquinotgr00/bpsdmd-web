@@ -92,6 +92,27 @@ class Student
     private $ipk = NULL;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="no_ktp", type="string", nullable=true)
+     */
+    private $identityNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=true)
+     */
+    private $status = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tahun_lulus", type="string", nullable=true)
+     */
+    private $graduationYear = NULL;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -249,5 +270,53 @@ class Student
     public function setIpk($ipk): void
     {
         $this->ipk = $ipk;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentityNumber(): ?string
+    {
+        return $this->identityNumber;
+    }
+
+    /**
+     * @param string $identityNumber
+     */
+    public function setIdentityNumber($identityNumber): void
+    {
+        $this->identityNumber = $identityNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGraduationYear(): ?string
+    {
+        return $this->graduationYear;
+    }
+
+    /**
+     * @param string $graduationYear
+     */
+    public function setGraduationYear($graduationYear): void
+    {
+        $this->graduationYear = $graduationYear;
     }
 }

@@ -5,17 +5,17 @@
     <h1>Data {{ ucfirst(trans('common.user')) }}</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="{{ url(route('user.create',['type' => \App\Entities\User::ROLE_ADMIN])) }}">
+            <a href="{{ url(route('administrator.user.create',['type' => \App\Entities\User::ROLE_ADMIN])) }}">
                 <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.user')) }} Administrator
             </a>
         </li>
         <li>
-            <a href="{{ url(route('user.create',['type' => \App\Entities\User::ROLE_SUPPLY])) }}">
+            <a href="{{ url(route('administrator.user.create',['type' => \App\Entities\User::ROLE_SUPPLY])) }}">
                 <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.user')) }} Supply
             </a>
         </li>
         <li>
-            <a href="{{ url(route('user.create',['type' => \App\Entities\User::ROLE_DEMAND])) }}">
+            <a href="{{ url(route('administrator.user.create',['type' => \App\Entities\User::ROLE_DEMAND])) }}">
                 <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.user')) }} Demand
             </a>
         </li>
@@ -57,17 +57,17 @@
                                     <td>{{ ucfirst($item->getAuthority()) }}</td>
                                     <td style="text-align: center;">
                                         @if($item->getIsactive())
-                                            <a href="{{ url(route('user.disable', [$item->getId()])) }}"><span class="label label-success">{{ ucfirst(trans('common.active')) }}</span></a>
+                                            <a href="{{ url(route('administrator.user.disable', [$item->getId()])) }}"><span class="label label-success">{{ ucfirst(trans('common.active')) }}</span></a>
                                         @else
-                                            <a href="{{ url(route('user.enable', [$item->getId()])) }}"><span class="label label-danger">{{ ucwords(trans('common.inactive')) }}</span></a>
+                                            <a href="{{ url(route('administrator.user.enable', [$item->getId()])) }}"><span class="label label-danger">{{ ucwords(trans('common.inactive')) }}</span></a>
                                         @endif
                                     </td>
                                     <td style="text-align: center;">
                                         <a href="javascript:void(0)" class="viewUser" data-user="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ url(route('user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a>
+                                        <a href="{{ url(route('administrator.user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a>
                                         @if(currentUser()->getId() <> $item->getId())
                                         |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('administrator.user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                         @endif
                                     </td>
                                 </tr>

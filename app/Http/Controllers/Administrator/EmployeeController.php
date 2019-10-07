@@ -1,30 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Entities\Employee;
 use App\Entities\Organization;
+use App\Http\Controllers\Controller;
 use App\Services\Domain\EmployeeService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use App\Exceptions\EmployeeDeleteException;
-use Image;
 
 class EmployeeController extends Controller
 {
-    public function index(EmployeeService $employeeService)
+    public function index(EmployeeService $employeeService, Organization $org)
     {
         $page = request()->get('page');
-        $data = $employeeService->paginateEmployee(request()->get('page'));
+        $data = $employeeService->paginateEmployee(request()->get('page'), $org);
 
-        return view('employee.index', compact('data', 'page'));
+        //build urls
+        $urlCreate = url(route('administrator.employee.create', [$org->getId()]));
+        $urlUpdate = function($id) use ($org) {
+            return url(route('administrator.employee.update', [$org->getId(), $id]));
+        };
+        $urlDelete = function($id) use ($org) {
+            return url(route('administrator.employee.delete', [$org->getId(), $id]));
+        };
+        $urlDetail = '/org/'.$org->getId().'/employee';
+
+        return view('employee.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
     }
 
-    public function create(Request $request, EmployeeService $employeeService, OrgService $orgService)
+    public function create(Request $request, EmployeeService $employeeService, OrgService $orgService, Organization $org)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
                 'school' => 'required',
@@ -34,14 +44,6 @@ class EmployeeController extends Controller
             ]);
 
             $messageBag = new MessageBag;
-            $org = false;
-            if ($request->get('org')) {
-                $org = $orgService->findById($request->get('org'));
-            }
-            if (!$org) {
-                $messageBag->add('org', trans('common.invalid_institute'));
-                return redirect()->route('employee.create')->withErrors($messageBag);
-            }
 
             $school = false;
             if ($request->get('school')) {
@@ -49,7 +51,7 @@ class EmployeeController extends Controller
             }
             if (!$school) {
                 $messageBag->add('school', trans('common.invalid_institute'));
-                return redirect()->route('employee.create')->withErrors($messageBag);
+                return redirect()->route('administrator.employee.create', ['org' => $org->getId()])->withErrors($messageBag);
             }
 
             try {
@@ -64,7 +66,7 @@ class EmployeeController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.employee'))]);
             }
 
-            return redirect()->route('employee.index')->with($alert, $message);
+            return redirect()->route('administrator.employee.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
         $dataSchool     = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
@@ -73,9 +75,10 @@ class EmployeeController extends Controller
         return view('employee.create', ['dataSchool' => $dataSchool, 'dataOrg' => $dataOrg]);
     }
 
-    public function update(Request $request, EmployeeService $employeeService, Employee $data, OrgService $orgService)
+    public function update(Request $request, EmployeeService $employeeService, OrgService $orgService, Organization $org, Employee $data)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
                 'school' => 'required',
@@ -85,14 +88,6 @@ class EmployeeController extends Controller
             ]);
 
             $messageBag = new MessageBag;
-            $org = false;
-            if ($request->get('org')) {
-                $org = $orgService->findById($request->get('org'));
-            }
-            if (!$org) {
-                $messageBag->add('org', trans('common.invalid_institute'));
-                return redirect()->route('employee.update', ['id' => $data->getId()])->withErrors($messageBag);
-            }
 
             $school = false;
             if ($request->get('school')) {
@@ -100,13 +95,13 @@ class EmployeeController extends Controller
             }
             if (!$school) {
                 $messageBag->add('school', trans('common.invalid_institute'));
-                return redirect()->route('employee.update', ['id' => $data->getId()])->withErrors($messageBag);
+                return redirect()->route('administrator.employee.update', ['org' => $org->getId(), 'employee' => $data->getId()])->withErrors($messageBag);
             }
 
             try {
                 $requestData = $request->all();
 
-                $employeeService->update($data, collect($requestData), $org, $school, true);
+                $employeeService->update($data, collect($requestData), false, $school, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {
@@ -114,7 +109,7 @@ class EmployeeController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.employee'))]);
             }
 
-            return redirect()->route('employee.index')->with($alert, $message);
+            return redirect()->route('administrator.employee.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
         $dataSchool     = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
@@ -123,7 +118,7 @@ class EmployeeController extends Controller
         return view('employee.update', compact('data', 'dataSchool', 'dataOrg'));
     }
 
-    public function delete(EmployeeService $employeeService, Employee $data)
+    public function delete(EmployeeService $employeeService, Organization $org, Employee $data)
     {
         try {
             $employeeService->delete($data);
@@ -135,10 +130,10 @@ class EmployeeController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.employee'))]);
         }
 
-        return redirect()->route('employee.index')->with($alert, $message);
+        return redirect()->route('administrator.employee.index', ['org' => $org->getId()])->with($alert, $message);
     }
 
-    public function ajaxDetailEmployee(Request $request, Employee $data)
+    public function ajaxDetailEmployee(Request $request, Organization $org, Employee $data)
     {
         if ($request->ajax()) {
             $data = [
