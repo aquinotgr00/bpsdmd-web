@@ -124,7 +124,10 @@ class TeacherController extends Controller
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
             $idFeeder = $feederService->create(collect($dataFeeder))->getId();
 
-            Excel::import(new TeacherImport, public_path('/excel/'.$nama_file));
+            $importer = new TeacherImport;
+            $importer->setOrg($org);
+
+            Excel::import($importer, public_path('/excel/'.$nama_file));
 
             //update status feeder
             $feeder = $feederService->findById($idFeeder);
