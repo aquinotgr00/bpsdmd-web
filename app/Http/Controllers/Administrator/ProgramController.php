@@ -20,10 +20,10 @@ class ProgramController extends Controller
         //build urls
         $urlCreate = url(route('administrator.program.create', [$org->getId()]));
         $urlUpdate = function($id) use ($org) {
-            url(route('administrator.program.update', [$org->getId(), $id]));
+            return url(route('administrator.program.update', [$org->getId(), $id]));
         };
         $urlDelete = function($id) use ($org) {
-            url(route('administrator.program.delete', [$org->getId(), $id]));
+            return url(route('administrator.program.delete', [$org->getId(), $id]));
         };
 
         return view('program.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete'));
@@ -35,6 +35,8 @@ class ProgramController extends Controller
             $request->merge(['org' => $org]);
             $request->validate([
                 'org' => 'required',
+                'name' => 'required',
+                'degree' => 'required|in:'.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
             ]);
 
             try {
@@ -59,6 +61,8 @@ class ProgramController extends Controller
             $request->merge(['org' => $org]);
             $request->validate([
                 'org' => 'required',
+                'name' => 'required',
+                'degree' => 'required|in:'.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
             ]);
 
             try {

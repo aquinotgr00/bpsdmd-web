@@ -23,15 +23,15 @@ class StudentController extends Controller
         $data = $studentService->paginateStudent(request()->get('page'), currentUser()->getOrg());
 
         //build urls
-        $urlCreate = url(route('supply.program.create'));
+        $urlCreate = url(route('supply.student.create'));
         $urlUpdate = function($id) {
-            url(route('supply.program.update', [$id]));
+            return url(route('supply.student.update', [$id]));
         };
         $urlDelete = function($id) {
-            url(route('supply.program.delete', [$id]));
+            return url(route('supply.student.delete', [$id]));
         };
         $urlDetail = '/student';
-        $urlUpload = url(route('supply.program.upload'));
+        $urlUpload = url(route('supply.student.upload'));
 
         return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
     }
@@ -39,6 +39,7 @@ class StudentController extends Controller
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => currentUser()->getOrg()]);
             $request->validate([
                 'name' => 'required',
                 'org' => 'required',
@@ -76,6 +77,7 @@ class StudentController extends Controller
     public function update(Request $request, StudentService $studentService, Student $data, OrgService $orgService, ProgramService $programService)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => currentUser()->getOrg()]);
             $request->validate([
                 'name' => 'required',
                 'org' => 'required',

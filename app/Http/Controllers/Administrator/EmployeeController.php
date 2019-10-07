@@ -21,10 +21,10 @@ class EmployeeController extends Controller
         //build urls
         $urlCreate = url(route('administrator.employee.create', [$org->getId()]));
         $urlUpdate = function($id) use ($org) {
-            url(route('administrator.employee.update', [$org->getId(), $id]));
+            return url(route('administrator.employee.update', [$org->getId(), $id]));
         };
         $urlDelete = function($id) use ($org) {
-            url(route('administrator.employee.delete', [$org->getId(), $id]));
+            return url(route('administrator.employee.delete', [$org->getId(), $id]));
         };
         $urlDetail = '/org/'.$org->getId().'/employee';
 
@@ -34,6 +34,7 @@ class EmployeeController extends Controller
     public function create(Request $request, EmployeeService $employeeService, OrgService $orgService, Organization $org)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
                 'school' => 'required',
@@ -77,6 +78,7 @@ class EmployeeController extends Controller
     public function update(Request $request, EmployeeService $employeeService, OrgService $orgService, Organization $org, Employee $data)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
                 'school' => 'required',
@@ -131,7 +133,7 @@ class EmployeeController extends Controller
         return redirect()->route('administrator.employee.index', ['org' => $org->getId()])->with($alert, $message);
     }
 
-    public function ajaxDetailEmployee(Request $request, Employee $data)
+    public function ajaxDetailEmployee(Request $request, Organization $org, Employee $data)
     {
         if ($request->ajax()) {
             $data = [

@@ -48,11 +48,11 @@
                                         <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('administrator.org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                         @if($item->getType() == \App\Entities\Organization::TYPE_SUPPLY)
                                             | <a href="{{ url(route('administrator.program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.study_program')) }}</a>
-                                            | <a href="{{ url(route('administrator.teacher.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.teacher')) }}</a>
-                                            | <a href="{{ url(route('administrator.student.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.program')) }}</a>
+                                            | <a href="{{ url(route('administrator.teacher.index', [$item->getId()])) }}"><i class="fa fa-male"></i> {{ ucwords(trans('common.teacher')) }}</a>
+                                            | <a href="{{ url(route('administrator.student.index', [$item->getId()])) }}"><i class="fa fa-child"></i> {{ ucwords(trans('common.student')) }}</a>
                                         @endif
                                         @if($item->getType() == \App\Entities\Organization::TYPE_DEMAND)
-                                            | <a href="{{ url(route('administrator.employee.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.employee')) }}</a>
+                                            | <a href="{{ url(route('administrator.employee.index', [$item->getId()])) }}"><i class="fa fa-user"></i> {{ ucwords(trans('common.employee')) }}</a>
                                         @endif
                                     </td>
                                 </tr>

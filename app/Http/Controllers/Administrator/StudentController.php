@@ -25,10 +25,10 @@ class StudentController extends Controller
         //build urls
         $urlCreate = url(route('administrator.student.create', [$org->getId()]));
         $urlUpdate = function($id) use ($org) {
-            url(route('administrator.student.update', [$org->getId(), $id]));
+            return url(route('administrator.student.update', [$org->getId(), $id]));
         };
         $urlDelete = function($id) use ($org) {
-            url(route('administrator.student.delete', [$org->getId(), $id]));
+            return url(route('administrator.student.delete', [$org->getId(), $id]));
         };
         $urlDetail = '/org/'.$org->getId().'/student';
         $urlUpload = url(route('administrator.student.upload', [$org->getId()]));
@@ -39,6 +39,7 @@ class StudentController extends Controller
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService, Organization $org)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
                 'org' => 'required',
@@ -74,6 +75,7 @@ class StudentController extends Controller
     public function update(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService, Organization $org, Student $data)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
                 'org' => 'required',
@@ -127,7 +129,7 @@ class StudentController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fs_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fs_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {

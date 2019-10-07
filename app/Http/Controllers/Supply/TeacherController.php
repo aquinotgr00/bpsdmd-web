@@ -24,10 +24,10 @@ class TeacherController extends Controller
         //build urls
         $urlCreate = url(route('supply.teacher.create'));
         $urlUpdate = function($id) {
-            url(route('supply.teacher.update', [$id]));
+            return url(route('supply.teacher.update', [$id]));
         };
         $urlDelete = function($id) {
-            url(route('supply.teacher.delete', [$id]));
+            return url(route('supply.teacher.delete', [$id]));
         };
         $urlDetail = '/teacher';
         $urlUpload = url(route('supply.teacher.upload'));

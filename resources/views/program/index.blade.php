@@ -39,7 +39,7 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
-                                    <td>{{ $item->getCode() }}</td>
+                                    <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getDegree()) }}</td>
                                     <td>

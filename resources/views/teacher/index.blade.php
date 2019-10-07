@@ -50,8 +50,8 @@
                                     <td>{{ $item->getNidn() ? $item->getNidn() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewTeacher" data-teacher="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ $urlUpdate }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ $urlDelete }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -174,7 +174,7 @@
                 modalHtml.find('.teacherName').html(teacher.name);
                 modalHtml.find('.teacherInstitute').html(teacher.org);
                 modalHtml.find('.teacherFrontDegree').html(teacher.front_degree);
-                modalHtml.find('.teacherBackDegree').html(teacher.front_degree);
+                modalHtml.find('.teacherBackDegree').html(teacher.back_degree);
                 modalHtml.find('.teacherDateOfBirth').html(teacher.date_of_birth);
                 modalHtml.find('.teacherIdentityNumber').html(teacher.identity_number);
                 modalHtml.find('.teacherNidn').html(teacher.nidn);

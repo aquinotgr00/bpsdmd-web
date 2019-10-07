@@ -24,10 +24,10 @@ class TeacherController extends Controller
         //build urls
         $urlCreate = url(route('administrator.teacher.create', [$org->getId()]));
         $urlUpdate = function($id) use ($org) {
-            url(route('administrator.teacher.update', [$org->getId(), $id]));
+            return url(route('administrator.teacher.update', [$org->getId(), $id]));
         };
         $urlDelete = function($id) use ($org) {
-            url(route('administrator.teacher.delete', [$org->getId(), $id]));
+            return url(route('administrator.teacher.delete', [$org->getId(), $id]));
         };
         $urlDetail = '/org/'.$org->getId().'/teacher';
         $urlUpload = url(route('administrator.teacher.upload', [$org->getId()]));
@@ -38,8 +38,10 @@ class TeacherController extends Controller
     public function create(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
+                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
 
@@ -66,8 +68,10 @@ class TeacherController extends Controller
     public function update(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org, Teacher $data)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => $org]);
             $request->validate([
                 'name' => 'required',
+                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
             ]);
 
@@ -112,7 +116,7 @@ class TeacherController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fd_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fd_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {

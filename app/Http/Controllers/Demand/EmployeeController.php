@@ -21,10 +21,10 @@ class EmployeeController extends Controller
         //build urls
         $urlCreate = url(route('demand.employee.create'));
         $urlUpdate = function($id) {
-            url(route('demand.employee.update', [$id]));
+            return url(route('demand.employee.update', [$id]));
         };
         $urlDelete = function($id) {
-            url(route('demand.employee.delete', [$id]));
+            return url(route('demand.employee.delete', [$id]));
         };
         $urlDetail = '/employee';
 
@@ -34,6 +34,7 @@ class EmployeeController extends Controller
     public function create(Request $request, EmployeeService $employeeService, OrgService $orgService)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => currentUser()->getOrg()]);
             $request->validate([
                 'name' => 'required',
                 'school' => 'required',
@@ -78,6 +79,7 @@ class EmployeeController extends Controller
     public function update(Request $request, EmployeeService $employeeService, Employee $data, OrgService $orgService)
     {
         if ($request->method() == 'POST') {
+            $request->merge(['org' => currentUser()->getOrg()]);
             $request->validate([
                 'name' => 'required',
                 'school' => 'required',
