@@ -4,6 +4,11 @@ Aplikasi ini menggunakan framework [Laravel](https://laravel.com/docs/5.8) dan m
 **Cara install aplikasi:**
 1. Clone `git clone git@gitlab.com:datains/projects/bpsdm-webapps.git`
 2. Copy `.env.example` menjadi `.env` dan ubah sesuai kebutuhan.
+  a. Tambahkan key berikut untuk captcha
+```
+NOCAPTCHA_SECRET=6LdedLoUAAAAAH5GqQnBHxYfyWi6Zkrizr17jghF
+NOCAPTCHA_SITEKEY=6LdedLoUAAAAAE8HF0BJcYUdTTuSBiRldxsK7d3x
+```
 3. Import database `psql namadb < dev-sql/latest.pgsql`
 4. Run `composer install`
 5. Run `php  artisan doctrine:generate:proxies`
