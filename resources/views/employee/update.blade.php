@@ -40,19 +40,6 @@
                                 <span class="help-block ">{!! implode('', $errors->get('school')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
-                                <label for="org">{{ ucfirst(trans('common.institute')) }}</label>
-                                <select class="form-control" id="org" name="org">
-                                    <option value="">{{ ucwords(trans('common.choose_institute')) }}</option>
-                                    @if(!empty($dataOrg))
-                                        @foreach($dataOrg as $org)
-                                        <option value="{{ $org->getId() }}" {!! $data->getOrg()->getId() == $org->getId() ? 'selected':'' !!}>{{ $org->getName() }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                                <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
-                            </div>
-
                             <div class="form-group {{ $errors->has('identity_number') ? 'has-error' : '' }}">
                                 <label for="identity_number">{{ ucwords(trans('common.identity_number')) }} :</label>
                                 <input type="text" class="form-control" id="identity_number" name="identity_number" value="{{ $data->getIdentityNumber() }}">
@@ -96,8 +83,8 @@
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                             <script type="text/javascript">
-                                $('.date').datepicker({  
-                                    format: 'dd-mm-yyyy' // HTML 5 
+                                $('.date').datepicker({
+                                    format: 'dd-mm-yyyy' // HTML 5
                                 });
                             </script>
                         </form>

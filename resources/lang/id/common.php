@@ -25,6 +25,8 @@ return [
     'update_failed' => ':object gagal diubah. Silakan kontak administrator web.',
     'delete_success' => ':object berhasil dihapus.',
     'delete_failed' => ':object gagal dihapus. Silakan kontak administrator web.',
+    'feeder_success' => 'Feeder :object berhasil diunggah.',
+    'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
 
     // table
@@ -85,6 +87,8 @@ return [
     'date_of_birth' => 'tanggal lahir',
     'class' => 'kelas',
     'ipk' => 'ipk',
+    'graduation_year' => 'tahun lulus',
+    'student_feeder' => 'unggah feeder data siswa',
 
     //manage teacher
     'teacher_information' => 'informasi dosen',
@@ -94,6 +98,7 @@ return [
     'back_degree' => 'gelar belakang',
     'identity_number' => 'no ktp',
     'nidn' => 'nidn',
+    'teacher_feeder' => 'unggah feeder data dosen',
 
     //manage pegawai
     'employee_information' => 'informasi pegawai',
@@ -134,4 +139,9 @@ return [
     'email_verification_info' => 'Berikut adalah data yang kamu gunakan untuk verifikasi akun mu',
     'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
     'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
+
+    //manage feeder
+    'feeder' => 'feeder',
+    'upload' => 'unggah file',
+    'choose_file' => 'pilih file',
 ];

@@ -163,10 +163,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -181,6 +177,7 @@ return [
         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -238,7 +235,8 @@ return [
         'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
         'Registry'      => LaravelDoctrine\ORM\Facades\Registry::class,
         'Doctrine'      => LaravelDoctrine\ORM\Facades\Doctrine::class,
-        'Image'         => Intervention\Image\Facades\Image::class
+        'Image'         => Intervention\Image\Facades\Image::class,
+        'Excel'         => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

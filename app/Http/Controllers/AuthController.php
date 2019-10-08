@@ -8,7 +8,6 @@ use App\Rules\IsAllowedDomain;
 use App\Services\Application\AuthService;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\UserService;
-use Illuminate\Support\Facades\DB;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
@@ -71,9 +70,9 @@ class AuthController extends Controller
                 'authority' => 'demand',
                 'isActive' => 0
             ]);
+
             $org = $request->get('authority') <> User::ROLE_ADMIN ? $orgService->getRepository()->find($request->get('org')) : false;
             $user = $userService->create(collect($request->all()), $org);                   // create user
-
             $encryptedId = encrypt('activate-'.$user->getId());
             $url = env('APP_URL') .'/verify/'. $encryptedId;
             Mail::to($request->get('email'))->send(new VerificationMail($url, $request));                // send verification email
@@ -90,8 +89,14 @@ class AuthController extends Controller
     {
         $decryptedId = decrypt($id);
         $id = explode("-", $decryptedId, 2);
+
+        if (!isset($id[1])) {
+            return abort(404);
+        }
+
         if ($request->method() === 'POST') {
             $user = $userService->getRepository()->findOneBy([ 'id' => $id[1] ]);
+
             if (Hash::check($request->get('old_password'), $user->getPassword())) {
                 if ($user->getIsActive() == 0) {
                     $userArr = [
@@ -101,6 +106,7 @@ class AuthController extends Controller
                         'isActive' => 1,
                         'language' => 'id',
                     ];
+
                     $userService->updateProfile($user, collect($userArr));
                 }
 
@@ -111,8 +117,10 @@ class AuthController extends Controller
         }
 
         $user = $userService->getRepository()->findOneBy(['id' => $id[1]]);
-        if ($user->getIsActive())
-          return redirect('/');
+
+        if ($user->getIsActive()){
+            return redirect('/');
+        }
 
         return view('auth.verify-form');
     }

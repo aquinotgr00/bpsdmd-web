@@ -39,12 +39,13 @@ class ProgramService
     }
 
     /**
-     * Paginate disease
+     * Paginate program
      *
      * @param int $page
+     * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateProgram($page, $org): LengthAwarePaginator
+    public function paginateProgram($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('p')

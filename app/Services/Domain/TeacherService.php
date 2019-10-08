@@ -54,15 +54,19 @@ class TeacherService
     }
 
     /**
-     * Paginate disease
+     * Paginate teacher
      *
-     * @param int $page
+     * @param $page
+     * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateTeacher($page): LengthAwarePaginator
+    public function paginateTeacher($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('t')
+            ->andWhere('t.org = :orgId')
+            ->orderBy('t.id')
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -78,6 +82,7 @@ class TeacherService
     public function create(Collection $data, $org = false, $flush = true)
     {
         $teacher = new Teacher;
+        $teacher->setCode($data->get('code'));
         $teacher->setNip($data->get('nip'));
         $teacher->setName($data->get('name'));
         $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
@@ -109,6 +114,7 @@ class TeacherService
      */
     public function update(Teacher $teacher, Collection $data, $org = false, $flush = true)
     {
+        $teacher->setCode($data->get('code'));
         $teacher->setNip($data->get('nip'));
         $teacher->setName($data->get('name'));
         $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));

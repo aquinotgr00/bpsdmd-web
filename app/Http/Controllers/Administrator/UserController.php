@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Entities\User;
 use App\Entities\Organization;
+use App\Http\Controllers\Controller;
 use App\Rules\IsAllowedDomain;
 use App\Services\Application\AuthService;
 use App\Services\Domain\UserService;
@@ -54,7 +55,7 @@ class UserController extends Controller
 
             if ($checkEmail) {
                 $messageBag->add('email', trans('common.email_used'));
-                return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
+                return redirect()->route('administrator.user.create', ['type' => $type])->withErrors($messageBag);
             }
 
             if ($type != User::ROLE_ADMIN) {
@@ -66,7 +67,7 @@ class UserController extends Controller
 
                 if (!$org) {
                     $messageBag->add('org', trans('common.invalid_institute'));
-                    return redirect()->route('user.create', ['type' => $type])->withErrors($messageBag);
+                    return redirect()->route('administrator.user.create', ['type' => $type])->withErrors($messageBag);
                 }
             } else {
                 $org = false;
@@ -97,7 +98,7 @@ class UserController extends Controller
                 $message = trans('common.create_failed', ['object' => 'User']);
             }
 
-            return redirect()->route('user.index')->with($alert, $message);
+            return redirect()->route('administrator.user.index')->with($alert, $message);
         }
 
         if ($type == User::ROLE_SUPPLY) {
@@ -146,7 +147,7 @@ class UserController extends Controller
 
             if ($checkEmail) {
                 $messageBag->add('email', trans('common.email_used'));
-                return redirect()->route('user.update', ['id' => $user->getId()])->withErrors($messageBag);
+                return redirect()->route('administrator.user.update', ['id' => $user->getId()])->withErrors($messageBag);
             }
 
             if ($user->getAuthority() != User::ROLE_ADMIN) {
@@ -158,7 +159,7 @@ class UserController extends Controller
 
                 if (!$org) {
                     $messageBag->add('org', trans('common.invalid_institute'));
-                    return redirect()->route('user.update', ['id' => $user->getId()])->withErrors($messageBag);
+                    return redirect()->route('administrator.user.update', ['id' => $user->getId()])->withErrors($messageBag);
                 }
             } else {
                 $org = false;
@@ -187,7 +188,7 @@ class UserController extends Controller
                 $message = trans('common.update_failed', ['object' => 'User']);
             }
 
-            return redirect()->route('user.index')->with($alert, $message);
+            return redirect()->route('administrator.user.index')->with($alert, $message);
         }
 
         if ($user->getAuthority() == User::ROLE_SUPPLY) {
@@ -207,7 +208,7 @@ class UserController extends Controller
             $alert = 'alert_error';
             $message = trans('common.self_delete_failed');
 
-            return redirect()->route('user.index')->with($alert, $message);
+            return redirect()->route('administrator.user.index')->with($alert, $message);
         }
 
         try {
@@ -220,7 +221,7 @@ class UserController extends Controller
             $message = trans('common.delete_failed', ['object' => 'User']);
         }
 
-        return redirect()->route('user.index')->with($alert, $message);
+        return redirect()->route('administrator.user.index')->with($alert, $message);
     }
 
     public function enable(AuthService $authService, UserService $userService, User $user)
@@ -231,10 +232,10 @@ class UserController extends Controller
             $alert = 'alert_success';
             $message = trans('common.update_success', ['object' => 'User']);
 
-            return redirect()->route('user.index')->with($alert, $message);
+            return redirect()->route('administrator.user.index')->with($alert, $message);
         }
 
-        return redirect()->route('user.index');
+        return redirect()->route('administrator.user.index');
     }
 
     public function disable(AuthService $authService, UserService $userService, User $user)
@@ -245,10 +246,10 @@ class UserController extends Controller
             $alert = 'alert_success';
             $message = trans('common.update_success', ['object' => 'User']);
 
-            return redirect()->route('user.index')->with($alert, $message);
+            return redirect()->route('administrator.user.index')->with($alert, $message);
         }
 
-        return redirect()->route('user.index');
+        return redirect()->route('administrator.user.index');
     }
 
     public function ajaxDetailUser(Request $request, User $user)

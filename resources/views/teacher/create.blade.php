@@ -13,7 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         <form method="post" enctype="multipart/form-data">
-                        @csrf
+                            @csrf
 
                             <div class="form-group {{ $errors->has('nip') ? 'has-error' : '' }}">
                                 <label for="nip">{{ strtoupper(trans('common.nip')) }} :</label>
@@ -25,19 +25,6 @@
                                 <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
                                 <input type="text" class="form-control" id="name" name="name">
                                 <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('org') ? 'has-error' : '' }}">
-                                <label for="org">{{ ucfirst(trans('common.institute')) }} :</label>
-                                <select class="form-control" id="org" name="org">
-                                    <option value="">{{ ucwords(trans('common.choose_institute')) }}</option>
-                                    @if(!empty($dataOrg))
-                                        @foreach($dataOrg as $org)
-                                        <option value="{{ $org->getId() }}">{{ $org->getName() }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                                <span class="help-block ">{!! implode('', $errors->get('org')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('front_degree') ? 'has-error' : '' }}">
@@ -74,8 +61,8 @@
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
                             <script type="text/javascript">
-                                $('.date').datepicker({  
-                                    format: 'dd-mm-yyyy' // HTML 5 
+                                $('.date').datepicker({
+                                    format: 'dd-mm-yyyy' // HTML 5
                                 });
                             </script>
                         </form>

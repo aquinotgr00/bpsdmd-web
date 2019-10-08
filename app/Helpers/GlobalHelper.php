@@ -2,6 +2,21 @@
 
 use App\Services\Application\AuthService;
 
+if (!function_exists('getAuthority')) {
+    /**
+     * @return bool|string|null
+     */
+    function getAuthority() {
+        $userAccess = new AuthService();
+        $currentUser = $userAccess->user();
+        if ($currentUser) {
+            return $currentUser->getAuthority();
+        }
+
+        return false;
+    }
+}
+
 if (!function_exists("checkAuthorization")) {
     /**
      * @param null $role
@@ -33,6 +48,7 @@ if (!function_exists("currentUser")) {
 		return false;
 	}
 }
+
 if (!function_exists('buildTree')) {
     /**
      * @param array $elements

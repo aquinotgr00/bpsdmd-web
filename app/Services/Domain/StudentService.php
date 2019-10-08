@@ -55,15 +55,19 @@ class StudentService
     }
 
     /**
-     * Paginate disease
+     * Paginate student
      *
-     * @param int $page
+     * @param $page
+     * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateStudent($page): LengthAwarePaginator
+    public function paginateStudent($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('s')
+            ->andWhere('s.org = :orgId')
+            ->orderBy('s.id')
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -86,6 +90,9 @@ class StudentService
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
+        $student->setIdentityNumber($data->get('identity_number'));
+        $student->setStatus($data->get('status'));
+        $student->setGraduationYear($data->get('graduationYear'));
 
         if ($org instanceof Organization) {
             $student->setOrg($org);
@@ -120,10 +127,14 @@ class StudentService
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
+        $student->setIdentityNumber($data->get('identity_number'));
+        $student->setStatus($data->get('status'));
+        $student->setGraduationYear($data->get('graduationYear'));
 
         if ($org instanceof Organization) {
             $student->setOrg($org);
         }
+
         if ($studyProgram instanceof StudyProgram) {
             $student->setStudyProgram($studyProgram);
         }

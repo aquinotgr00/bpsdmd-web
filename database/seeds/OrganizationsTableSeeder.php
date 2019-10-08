@@ -19,7 +19,7 @@ class OrganizationsTableSeeder extends Seeder
             [
                 'name' => 'PELNI',
                 'type' => \App\Entities\Organization::TYPE_DEMAND,
-                'moda' => \App\Entities\Organization::MODA_AIR
+                'moda' => \App\Entities\Organization::MODA_LAUT
             ],
             [
                 'name' => 'KAI',

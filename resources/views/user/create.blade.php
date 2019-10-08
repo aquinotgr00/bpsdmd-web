@@ -18,13 +18,13 @@
 
 						<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 							<label for="name">{{ ucfirst(trans('common.name')) }} :</label>
-							<input type="text" class="form-control" id="username" name="name">
+							<input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
 							<span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
 						</div>
 
 						<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 							<label for="email">{{ ucfirst(trans('common.email')) }} :</label>
-							<input type="text" class="form-control" id="email" name="email">
+							<input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
 							<span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
 						</div>
 
@@ -47,7 +47,11 @@
 								<option value="">{{ ucwords(trans('common.choose_institute')) }}</option>
 								@if(!empty($dataOrg))
                                     @foreach($dataOrg as $org)
+                                        @if (old('org') == $org->getId())
+                                    <option value="{{ $org->getId() }}" selected>{{ $org->getName() }}</option>
+                                        @else
                                     <option value="{{ $org->getId() }}">{{ $org->getName() }}</option>
+                                        @endif
                                     @endforeach
 								@endif
 							</select>
@@ -70,8 +74,8 @@
                         <div class="form-group {{ $errors->has('language') ? 'has-error' : '' }}">
                             <label for="language">{{ ucfirst(trans('common.language')) }}</label>
                             <select class="form-control" id="language" name="language">
-                                <option value="{{ \App\Entities\User::LOCALE_ID }}" selected>{{ ucfirst(trans('common.locale_id')) }}</option>
-                                <option value="{{ \App\Entities\User::LOCALE_EN }}">{{ ucfirst(trans('common.locale_en')) }}</option>
+                                <option value="{{ \App\Entities\User::LOCALE_ID }}" {{ old('language') == \App\Entities\User::LOCALE_ID ? 'selected' : '' }}>{{ ucfirst(trans('common.locale_id')) }}</option>
+                                <option value="{{ \App\Entities\User::LOCALE_EN }}" {{ old('language') == \App\Entities\User::LOCALE_EN ? 'selected' : '' }}>{{ ucfirst(trans('common.locale_en')) }}</option>
                             </select>
                             <span class="help-block ">{!! implode('', $errors->get('language')) !!}</span>
                         </div>
