@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data {{ ucwords(trans('common.study_program')) }}</h1>
+        <h1>Data {{ ucwords(trans('common.license')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.study_program')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.license')) }}
                 </a>
             </li>
         </ol>
@@ -25,23 +25,25 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>{{ ucfirst(trans('common.moda')) }}</th>
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
+                                    <th>{{ ucfirst(trans('common.chapter')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
-                                    <th>{{ ucfirst(trans('common.degree')) }}</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
-                                /** @var \App\Entities\Organization $item */
+                                /** @var \App\Entities\License $item */
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
+                                    <td>{{ ucfirst($item->getModa()) }}</td>
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
+                                    <td>{{ ucfirst($item->getChapter()) }}</td>
                                     <td>{{ $item->getName() }}</td>
-                                    <td>{{ ucfirst($item->getDegree()) }}</td>
                                     <td>
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>

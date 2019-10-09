@@ -21,6 +21,13 @@
             <span>{{ ucwords(trans('common.user_management')) }}</span>
         </a>
     </li>
+
+    <li>
+        <a href="{{ url(route('administrator.license.index')) }}">
+            <i class="fa fa-file"></i>
+            <span>{{ ucwords(trans('common.license')) }}</span>
+        </a>
+    </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))

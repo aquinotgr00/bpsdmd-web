@@ -507,7 +507,6 @@ ALTER TABLE public.lisensi_id_seq OWNER TO postgres;
 CREATE TABLE public.lisensi (
     id bigint DEFAULT nextval('public.lisensi_id_seq'::regclass) NOT NULL,
     kode character varying NOT NULL,
-    induk bigint,
     nama character varying NOT NULL,
     bab character varying NOT NULL,
     moda character varying NOT NULL
@@ -1064,7 +1063,7 @@ COPY public.kompetensi_unit (id, kode, kompetensi) FROM stdin;
 -- Data for Name: lisensi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.lisensi (id, kode, induk, nama, bab, moda) FROM stdin;
+COPY public.lisensi (id, kode, nama, bab, moda) FROM stdin;
 \.
 
 
