@@ -275,7 +275,8 @@ CREATE TABLE public.instansi (
     tipe character varying NOT NULL,
     moda character varying NOT NULL,
     alamat character varying,
-    foto character varying
+    foto character varying,
+    deskripsi character varying
 );
 
 
@@ -874,7 +875,10 @@ CREATE TABLE public.siswa (
     tahun_kurikulum character varying,
     tanggal_lahir date,
     kelas character varying,
-    ipk character varying
+    ipk character varying,
+    no_ktp character varying,
+    status character varying,
+    tahun_lulus character varying
 );
 
 
@@ -990,7 +994,7 @@ COPY public.fungsi_pekerjaan (id, instansi_id, kode, nama) FROM stdin;
 -- Data for Name: instansi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat, foto) FROM stdin;
+COPY public.instansi (id, kode, nama, singkatan, tipe, moda, alamat, foto, deskripsi) FROM stdin;
 \.
 
 
@@ -1170,7 +1174,7 @@ COPY public.sertifikat (id, pegawai_id, nama, masa_berlaku) FROM stdin;
 -- Data for Name: siswa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk) FROM stdin;
+COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk, no_ktp, status, tahun_lulus) FROM stdin;
 \.
 
 
