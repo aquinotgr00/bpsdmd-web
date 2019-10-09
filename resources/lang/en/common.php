@@ -28,6 +28,7 @@ return [
     'feeder_success' => 'Feeder :object uploaded successfully.',
     'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
+    'confirm_delete' => 'Are you sure?',
 
     // table
     'view' => 'view',
@@ -114,4 +115,9 @@ return [
     'feeder' => 'feeder',
     'upload' => 'upload file',
     'choose_file' => 'choose file',
+
+    // manage lisensi
+    'license' => 'license',
+    'chapter' => 'chapter',
+    'parent' => 'parent',
 ];

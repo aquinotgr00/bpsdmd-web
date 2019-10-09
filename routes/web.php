@@ -67,6 +67,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\UserController@index')->name('administrator.user.index');
     });
 
+    Route::group(['prefix' => '/license', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\LicenseController@create')->name('administrator.license.create');
+        Route::any('/{license}/update', 'Administrator\LicenseController@update')->name('administrator.license.update');
+        Route::get('/{license}/delete', 'Administrator\LicenseController@delete')->name('administrator.license.delete');
+        Route::get('/', 'Administrator\LicenseController@index')->name('administrator.license.index');
+    });
+
     // supply routes
     Route::group(['prefix' => '/program', 'middleware' => ['only_supply']], function() {
         Route::any('/create', 'Supply\ProgramController@create')->name('supply.program.create');
