@@ -48,7 +48,7 @@
                             <div class="form-group {{ $errors->has('identity_number') ? 'has-error' : '' }}">
                                 <label for="identity_number">{{ ucwords(trans('common.identity_number')) }} :</label>
                                 <input type="text" class="form-control" id="identity_number" name="identity_number" value="{{ $data->getIdentityNumber() }}">
-                                <span class="help-block ">{!! implode('', $errors->get('class')) !!}</span>
+                                <span class="help-block ">{!! implode('', $errors->get('identity_number')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('nidn') ? 'has-error' : '' }}">

@@ -28,6 +28,13 @@
             <span>{{ ucwords(trans('common.license')) }}</span>
         </a>
     </li>
+
+    <li>
+        <a href="{{ url(route('administrator.diklat.index')) }}">
+            <i class="fa fa-calendar"></i>
+            <span>{{ ucwords(trans('common.diklat')) }}</span>
+        </a>
+    </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))

@@ -150,4 +150,16 @@ return [
     'license' => 'lisensi',
     'chapter' => 'BAB',
     'parent' => 'induk',
+
+    //manage diklat
+    'diklat' => 'diklat',
+    'data_diklat' => 'data diklat',
+    'start_date' => 'tanggal mulai',
+    'end_date' => 'tanggal selesai',
+    'total_target_student' => 'target jumlah siswa',
+    'total_realization_student' => 'realisasi jumlah siswa',
+    'requirement_student' => 'syarat siswa',
+    'target_student' => 'target siswa',
+    'output_diklat' => 'diklat keluaran',
+    'outcome_diklat' => 'diklat hasil',
 ];

@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data {{ ucwords(trans('common.license')) }}</h1>
+        <h1>Data {{ ucwords(trans('common.data_diklat')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.license')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.data_diklat')) }}
                 </a>
             </li>
         </ol>
@@ -25,25 +25,24 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>{{ ucfirst(trans('common.moda')) }}</th>
-                                    <th>{{ ucfirst(trans('common.code')) }}</th>
-                                    <th>{{ ucfirst(trans('common.chapter')) }}</th>
-                                    <th>{{ ucfirst(trans('common.name')) }}</th>
-                                    <th>Action</th>
+                                    <th>{{ ucwords(trans('common.start_date')) }}</th>
+                                    <th>{{ ucwords(trans('common.end_date')) }}</th>
+                                    <th>{{ ucwords(trans('common.total_target_student')) }}</th>
+                                    <th>{{ ucwords(trans('common.total_realization_student')) }}</th>
+                                    <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
-                                /** @var \App\Entities\License $item */
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
-                                    <td>{{ ucfirst($item->getModa()) }}</td>
-                                    <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
-                                    <td>{{ ucfirst($item->getChapter()) }}</td>
-                                    <td>{{ $item->getName() }}</td>
+                                    <td>{{ $item->getStartDate()->format('d F Y') }}</td>
+                                    <td>{{ $item->getEndDate()->format('d F Y') }}</td>
+                                    <td>{{ $item->getTotalTarget() ? $item->getTotalTarget() : '-' }}</td>
+                                    <td>{{ $item->getTotalRealization() ? $item->getTotalRealization() : '-' }}</td>
                                     <td>
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>

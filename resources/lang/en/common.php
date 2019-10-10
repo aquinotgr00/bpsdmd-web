@@ -120,4 +120,16 @@ return [
     'license' => 'license',
     'chapter' => 'chapter',
     'parent' => 'parent',
+
+    //manage diklat
+    'diklat' => 'diklat',
+    'data_diklat' => 'data diklat',
+    'start_date' => 'start date',
+    'end_date' => 'end date',
+    'total_target_student' => 'total target student',
+    'total_realization_student' => 'total realization student',
+    'requirement_student' => 'requirement student',
+    'target_student' => 'target student',
+    'output_diklat' => 'output diklat',
+    'outcome_diklat' => 'outcome diklat',
 ];
