@@ -46,6 +46,7 @@ ALTER TABLE ONLY public.pengguna DROP CONSTRAINT instansi_id;
 ALTER TABLE ONLY public.program_studi DROP CONSTRAINT instansi_id;
 ALTER TABLE ONLY public.fungsi_pekerjaan DROP CONSTRAINT fungsi_pekerjaan_instansi_id_fkey;
 ALTER TABLE ONLY public.feeder DROP CONSTRAINT feeder_pengguna_id_fkey;
+ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_instansi_id_fkey;
 ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_instansi_id_fkey;
 ALTER TABLE ONLY public.data_diklat DROP CONSTRAINT data_diklat_diklat_id_fkey;
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_id;
@@ -1728,6 +1729,14 @@ ALTER TABLE ONLY public.data_diklat
 
 ALTER TABLE ONLY public.diklat
     ADD CONSTRAINT diklat_instansi_id_fkey FOREIGN KEY (instansi_id) REFERENCES public.instansi(id);
+
+
+--
+-- Name: dosen dosen_instansi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dosen
+    ADD CONSTRAINT dosen_instansi_id_fkey FOREIGN KEY (instansi_id) REFERENCES public.instansi(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
