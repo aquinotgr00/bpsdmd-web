@@ -19,17 +19,18 @@ SET row_security = off;
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_program_studi_id_fkey;
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_instansi_id_fkey;
 ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT sertifikat_id_fkey;
+ALTER TABLE ONLY public.peserta_diklat DROP CONSTRAINT peserta_diklat_kabupaten_id_fkey;
 ALTER TABLE ONLY public.peserta_diklat DROP CONSTRAINT peserta_diklat_diklat_id_fkey;
 ALTER TABLE ONLY public.penawaran_siswa DROP CONSTRAINT penawaran_siswa_siswa_id_fkey;
 ALTER TABLE ONLY public.penawaran_siswa DROP CONSTRAINT penawaran_siswa_jabatan_id_fkey;
 ALTER TABLE ONLY public.penawaran_siswa DROP CONSTRAINT penawaran_siswa_instansi_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_sekolah_id_fkey;
-ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_lisensi_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_instansi_id_fkey;
 ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT pegawai_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_program_studi_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_lisensi_id_fkey;
 ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_jabatan_id_fkey;
+ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_fungsi_pekerjaan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_unit_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_tujuan_utama_id;
 ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_program_studi_id_fkey;
@@ -39,6 +40,7 @@ ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaa
 ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_fungsi_utama_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_fungsi_kunci_id;
+ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_kompetensi_id_fkey1;
 ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_kompetensi_id_fkey;
 ALTER TABLE ONLY public.kabupaten DROP CONSTRAINT kabupaten_id_fkey;
 ALTER TABLE ONLY public.jabatan DROP CONSTRAINT jabatan_instansi_id_fkey;
@@ -50,6 +52,7 @@ ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_instansi_id_fkey;
 ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_instansi_id_fkey;
 ALTER TABLE ONLY public.data_diklat DROP CONSTRAINT data_diklat_diklat_id_fkey;
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_id;
+ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT sertifikat_pegawai_pkey;
 ALTER TABLE ONLY public.sertifikat DROP CONSTRAINT sertifikat_id;
 ALTER TABLE ONLY public.provinsi DROP CONSTRAINT provinsi_id;
 ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_id;
@@ -73,6 +76,7 @@ ALTER TABLE ONLY public.jabatan DROP CONSTRAINT jabatan_id;
 ALTER TABLE ONLY public.instansi DROP CONSTRAINT instansi_id;
 ALTER TABLE ONLY public.fungsi_pekerjaan DROP CONSTRAINT fungsi_pekerjaan_id;
 ALTER TABLE ONLY public.feeder DROP CONSTRAINT feeder_id;
+ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_pkey;
 ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_id;
 ALTER TABLE ONLY public.data_diklat DROP CONSTRAINT data_diklat_id;
 ALTER TABLE public.siswa ALTER COLUMN id DROP DEFAULT;
@@ -751,7 +755,6 @@ CREATE TABLE public.pegawai (
     tanggal_lahir date,
     bahasa character varying,
     kewarganegaraan character varying,
-    lisensi_id bigint NOT NULL,
     foto character varying
 );
 
@@ -1243,7 +1246,7 @@ COPY public.lisensi_program_studi (id, lisensi_id, program_studi_id) FROM stdin;
 -- Data for Name: pegawai; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.pegawai (id, sekolah_id, instansi_id, kode, nama, no_ktp, jenis_kelamin, tempat_lahir, tanggal_lahir, bahasa, kewarganegaraan, lisensi_id, foto) FROM stdin;
+COPY public.pegawai (id, sekolah_id, instansi_id, kode, nama, no_ktp, jenis_kelamin, tempat_lahir, tanggal_lahir, bahasa, kewarganegaraan, foto) FROM stdin;
 \.
 
 
@@ -1524,6 +1527,14 @@ ALTER TABLE ONLY public.diklat
 
 
 --
+-- Name: dosen dosen_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dosen
+    ADD CONSTRAINT dosen_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: feeder feeder_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1708,6 +1719,14 @@ ALTER TABLE ONLY public.sertifikat
 
 
 --
+-- Name: sertifikat_pegawai sertifikat_pegawai_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sertifikat_pegawai
+    ADD CONSTRAINT sertifikat_pegawai_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: siswa siswa_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1796,6 +1815,14 @@ ALTER TABLE ONLY public.kompetensi_diklat
 
 
 --
+-- Name: kompetensi_diklat kompetensi_diklat_kompetensi_id_fkey1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_diklat
+    ADD CONSTRAINT kompetensi_diklat_kompetensi_id_fkey1 FOREIGN KEY (kompetensi_id) REFERENCES public.kompetensi(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: kompetensi kompetensi_fungsi_kunci_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1868,6 +1895,14 @@ ALTER TABLE ONLY public.kompetensi
 
 
 --
+-- Name: lisensi_pekerjaan lisensi_pekerjaan_fungsi_pekerjaan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lisensi_pekerjaan
+    ADD CONSTRAINT lisensi_pekerjaan_fungsi_pekerjaan_id_fkey FOREIGN KEY (fungsi_pekerjaan_id) REFERENCES public.fungsi_pekerjaan(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: lisensi_pekerjaan lisensi_pekerjaan_jabatan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1908,14 +1943,6 @@ ALTER TABLE ONLY public.pegawai
 
 
 --
--- Name: pegawai pegawai_lisensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.pegawai
-    ADD CONSTRAINT pegawai_lisensi_id_fkey FOREIGN KEY (lisensi_id) REFERENCES public.lisensi(id);
-
-
---
 -- Name: pegawai pegawai_sekolah_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1953,6 +1980,14 @@ ALTER TABLE ONLY public.penawaran_siswa
 
 ALTER TABLE ONLY public.peserta_diklat
     ADD CONSTRAINT peserta_diklat_diklat_id_fkey FOREIGN KEY (diklat_id) REFERENCES public.diklat(id);
+
+
+--
+-- Name: peserta_diklat peserta_diklat_kabupaten_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.peserta_diklat
+    ADD CONSTRAINT peserta_diklat_kabupaten_id_fkey FOREIGN KEY (kabupaten_id) REFERENCES public.kabupaten(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
