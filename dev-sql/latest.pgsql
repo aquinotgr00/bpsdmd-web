@@ -207,6 +207,48 @@ ALTER SEQUENCE public.diklat_id_seq OWNED BY public.diklat.id;
 
 
 --
+-- Name: dosen; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dosen (
+    id bigint NOT NULL,
+    instansi_id bigint,
+    nip character varying,
+    nama character varying NOT NULL,
+    gelar_depan character varying,
+    gelar_belakang character varying,
+    tanggal_lahir date,
+    no_ktp character varying,
+    nidn character varying,
+    kode character varying,
+    foto character varying
+);
+
+
+ALTER TABLE public.dosen OWNER TO postgres;
+
+--
+-- Name: dosen_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.dosen_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dosen_id_seq OWNER TO postgres;
+
+--
+-- Name: dosen_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.dosen_id_seq OWNED BY public.dosen.id;
+
+
+--
 -- Name: feeder_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -694,16 +736,16 @@ CREATE TABLE public.pegawai (
     id bigint DEFAULT nextval('public.pegawai_id_seq'::regclass) NOT NULL,
     sekolah_id bigint NOT NULL,
     instansi_id bigint NOT NULL,
-    sertifikat_id bigint NOT NULL,
     kode character varying NOT NULL,
     nama character varying,
-    "no_KTP" character varying NOT NULL,
+    no_ktp character varying NOT NULL,
     jenis_kelamin character varying,
     tempat_lahir character varying,
     tanggal_lahir date,
     bahasa character varying,
     kewarganegaraan character varying,
-    lisensi_id bigint NOT NULL
+    lisensi_id bigint NOT NULL,
+    foto character varying
 );
 
 
@@ -903,13 +945,46 @@ ALTER TABLE public.sertifikat_id_seq OWNER TO postgres;
 
 CREATE TABLE public.sertifikat (
     id bigint DEFAULT nextval('public.sertifikat_id_seq'::regclass) NOT NULL,
-    pegawai_id bigint NOT NULL,
-    nama character varying NOT NULL,
-    masa_berlaku date NOT NULL
+    nama character varying NOT NULL
 );
 
 
 ALTER TABLE public.sertifikat OWNER TO postgres;
+
+--
+-- Name: sertifikat_pegawai; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sertifikat_pegawai (
+    id bigint NOT NULL,
+    pegawai_id bigint NOT NULL,
+    sertifikat_id bigint NOT NULL,
+    masa_berlaku date NOT NULL
+);
+
+
+ALTER TABLE public.sertifikat_pegawai OWNER TO postgres;
+
+--
+-- Name: sertifikat_pegawai_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.sertifikat_pegawai_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE public.sertifikat_pegawai_id_seq OWNER TO postgres;
+
+--
+-- Name: sertifikat_pegawai_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.sertifikat_pegawai_id_seq OWNED BY public.sertifikat_pegawai.id;
+
 
 --
 -- Name: siswa; Type: TABLE; Schema: public; Owner: postgres
@@ -928,7 +1003,8 @@ CREATE TABLE public.siswa (
     ipk character varying,
     no_ktp character varying,
     status character varying,
-    tahun_lulus character varying
+    tahun_lulus character varying,
+    foto character varying
 );
 
 
@@ -963,6 +1039,13 @@ ALTER TABLE ONLY public.diklat ALTER COLUMN id SET DEFAULT nextval('public.dikla
 
 
 --
+-- Name: dosen id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dosen ALTER COLUMN id SET DEFAULT nextval('public.dosen_id_seq'::regclass);
+
+
+--
 -- Name: instansi id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -981,6 +1064,13 @@ ALTER TABLE ONLY public.pengguna ALTER COLUMN id SET DEFAULT nextval('public.pen
 --
 
 ALTER TABLE ONLY public.program_studi ALTER COLUMN id SET DEFAULT nextval('public.program_studi_id_seq'::regclass);
+
+
+--
+-- Name: sertifikat_pegawai id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sertifikat_pegawai ALTER COLUMN id SET DEFAULT nextval('public.sertifikat_pegawai_id_seq'::regclass);
 
 
 --
@@ -1003,6 +1093,14 @@ COPY public.data_diklat (id, diklat_id, tanggal_mulai, tanggal_selesai, target_j
 --
 
 COPY public.diklat (id, instansi_id, nama, tipe) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dosen; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.dosen (id, instansi_id, nip, nama, gelar_depan, gelar_belakang, tanggal_lahir, no_ktp, nidn, kode, foto) FROM stdin;
 \.
 
 
@@ -1138,7 +1236,7 @@ COPY public.lisensi_program_studi (id, lisensi_id, program_studi_id) FROM stdin;
 -- Data for Name: pegawai; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.pegawai (id, sekolah_id, instansi_id, sertifikat_id, kode, nama, "no_KTP", jenis_kelamin, tempat_lahir, tanggal_lahir, bahasa, kewarganegaraan, lisensi_id) FROM stdin;
+COPY public.pegawai (id, sekolah_id, instansi_id, kode, nama, no_ktp, jenis_kelamin, tempat_lahir, tanggal_lahir, bahasa, kewarganegaraan, lisensi_id, foto) FROM stdin;
 \.
 
 
@@ -1186,7 +1284,15 @@ COPY public.provinsi (id, kode, nama, singkatan) FROM stdin;
 -- Data for Name: sertifikat; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.sertifikat (id, pegawai_id, nama, masa_berlaku) FROM stdin;
+COPY public.sertifikat (id, nama) FROM stdin;
+\.
+
+
+--
+-- Data for Name: sertifikat_pegawai; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sertifikat_pegawai (id, pegawai_id, sertifikat_id, masa_berlaku) FROM stdin;
 \.
 
 
@@ -1194,7 +1300,7 @@ COPY public.sertifikat (id, pegawai_id, nama, masa_berlaku) FROM stdin;
 -- Data for Name: siswa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk, no_ktp, status, tahun_lulus) FROM stdin;
+COPY public.siswa (id, instansi_id, program_studi_id, kode, nama, periode_masuk, tahun_kurikulum, tanggal_lahir, kelas, ipk, no_ktp, status, tahun_lulus, foto) FROM stdin;
 \.
 
 
@@ -1210,6 +1316,13 @@ SELECT pg_catalog.setval('public.data_diklat_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.diklat_id_seq', 1, false);
+
+
+--
+-- Name: dosen_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.dosen_id_seq', 3, true);
 
 
 --
@@ -1371,6 +1484,13 @@ SELECT pg_catalog.setval('public.kompetensi_prodi_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.sertifikat_id_seq', 1, false);
+
+
+--
+-- Name: sertifikat_pegawai_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.sertifikat_pegawai_id_seq', 1, false);
 
 
 --
@@ -1709,6 +1829,14 @@ ALTER TABLE ONLY public.lisensi_program_studi
 
 
 --
+-- Name: sertifikat_pegawai pegawai_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sertifikat_pegawai
+    ADD CONSTRAINT pegawai_id_fkey FOREIGN KEY (pegawai_id) REFERENCES public.pegawai(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: pegawai pegawai_instansi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1730,14 +1858,6 @@ ALTER TABLE ONLY public.pegawai
 
 ALTER TABLE ONLY public.pegawai
     ADD CONSTRAINT pegawai_sekolah_id_fkey FOREIGN KEY (sekolah_id) REFERENCES public.instansi(id);
-
-
---
--- Name: pegawai pegawai_sertifikat_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.pegawai
-    ADD CONSTRAINT pegawai_sertifikat_id_fkey FOREIGN KEY (sertifikat_id) REFERENCES public.sertifikat(id);
 
 
 --
@@ -1820,11 +1940,16 @@ ALTER TABLE ONLY public.kompetensi_prodi
 
 
 --
--- Name: sertifikat sertifikat_pegawai_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.sertifikat
-    ADD CONSTRAINT sertifikat_pegawai_id_fkey FOREIGN KEY (pegawai_id) REFERENCES public.pegawai(id);
+
+
+--
+-- Name: sertifikat_pegawai sertifikat_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sertifikat_pegawai
+    ADD CONSTRAINT sertifikat_id_fkey FOREIGN KEY (sertifikat_id) REFERENCES public.sertifikat(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
