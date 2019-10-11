@@ -7,10 +7,13 @@ use App\Entities\Organization;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\DiklatService;
 use App\Services\Domain\OrgService;
+use App\Services\Domain\FeederService;
+use App\Imports\DiklatImport;
 use Exception;
 use Illuminate\Http\Request;
 use App\Exceptions\DiklatDeleteException;
 use Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DiklatController extends Controller
 {
@@ -113,5 +116,39 @@ class DiklatController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function upload(Request $request, FeederService $feederService, AuthService $authService)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = 'fd_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $file->move('excel', $nama_file);
+
+        try {
+            //insert feeder
+            $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
+            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+
+            $importer = new DiklatImport;
+
+            Excel::import($importer, public_path('/excel/'.$nama_file));
+
+            //update status feeder
+            $feeder = $feederService->findById($idFeeder);
+            $feederService->activeFeeder($feeder);
+
+            $alert = 'alert_success';
+            $message = trans('common.feeder_success', ['object' => trans('common.diklat')]);
+        } catch (Exception $e) {
+            report($e);
+            $alert = 'alert_error';
+            $message = trans('common.feeder_failed', ['object' => trans('common.diklat')]);
+        }
+
+        return redirect()->route('supply.diklat.index')->with($alert, $message);
     }
 }

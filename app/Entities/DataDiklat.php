@@ -86,6 +86,48 @@ class DataDiklat
      * @ORM\Column(name="outcome_diklat", type="string", nullable=true)
      */
     private $outcomeDiklat = NULL;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_buka", type="string", nullable=true)
+     */
+    private $sk_buka = NULL;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_tutup", type="string", nullable=true)
+     */
+    private $sk_tutup = NULL;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="angkatan", type="string", nullable=true)
+     */
+    private $generation = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tahun", type="string", nullable=true)
+     */
+    private $year = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lama_diklat", type="string", nullable=true)
+     */
+    private $period = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tempat", type="string", nullable=true)
+     */
+    private $place = NULL;
 
     /**
      * @return int
@@ -245,5 +287,101 @@ class DataDiklat
     public function setOutcomeDiklat($outcomeDiklat): void
     {
         $this->outcomeDiklat = $outcomeDiklat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSkBuka(): ?string
+    {
+        return $this->sk_buka;
+    }
+
+    /**
+     * @param string $sk_buka
+     */
+    public function setSkBuka($sk_buka): void
+    {
+        $this->sk_buka = $sk_buka;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSkTutup(): ?string
+    {
+        return $this->sk_tutup;
+    }
+
+    /**
+     * @param string $sk_tutup
+     */
+    public function setSkTutup($sk_tutup): void
+    {
+        $this->sk_tutup = $sk_tutup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGeneration(): ?string
+    {
+        return $this->generation;
+    }
+
+    /**
+     * @param string $generation
+     */
+    public function setGeneration($generation): void
+    {
+        $this->generation = $generation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getYear(): ?string
+    {
+        return $this->year;
+    }
+
+    /**
+     * @param string $year
+     */
+    public function setYear($year): void
+    {
+        $this->year = $year;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPeriod(): ?string
+    {
+        return $this->outcomeDiklat;
+    }
+
+    /**
+     * @param string $period
+     */
+    public function setPeriod($period): void
+    {
+        $this->period = $period;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlace(): ?string
+    {
+        return $this->place;
+    }
+
+    /**
+     * @param string $place
+     */
+    public function setPlace($place): void
+    {
+        $this->place = $place;
     }
 }
