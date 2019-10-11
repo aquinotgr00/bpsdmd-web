@@ -23,11 +23,17 @@ class OrgController extends Controller
     public function create(Request $request, OrgService $orgService)
     {
         if ($request->method() == 'POST') {
-            $request->validate([
+            $validation = [
                 'name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
                 'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
+            ];
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'type' => ucfirst(trans('common.type')),
+                'photo' => ucfirst(trans('common.photo')),
             ]);
 
             try {
@@ -62,11 +68,17 @@ class OrgController extends Controller
     public function update(Request $request, OrgService $orgService, Organization $data)
     {
         if ($request->method() == 'POST') {
-            $request->validate([
+            $validation = [
                 'name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
                 'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
+            ];
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'type' => ucfirst(trans('common.type')),
+                'photo' => ucfirst(trans('common.photo')),
             ]);
 
             try {
@@ -123,10 +135,10 @@ class OrgController extends Controller
                 'code' => $org->getCode() ? $org->getCode() : '-',
                 'name' => $org->getName(),
                 'short_name' => $org->getShortName() ? $org->getShortName() : '-',
+                'type' => ucfirst($org->getType()),
+                'moda' => ucfirst($org->getModa()),
+                'address' => $org->getAddress() ? $org->getAddress() : '-',
                 'photo' => $org->getPhoto() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
-                'type' => $org->getType(),
-                'moda' => $org->getModa(),
-                'address' => $org->getAddress() ? $org->getAddress() : '-'
             ];
 
             return response()->json($data);

@@ -57,6 +57,23 @@
                                 <span class="help-block ">{!! implode('', $errors->get('nidn')) !!}</span>
                             </div>
 
+                            <div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
+                                <img src="">
+                                <div class="input-group-prepend">
+                                    <label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.photo')) }}</label>
+                                    <span class="help-block">{{ trans('common.allowed_photo') }}</span>
+                                    <span class="help-block">{{ __('common.max_photo', ['max' => '500KB']) }}</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                    aria-describedby="inputGroupFileAddon01" name="photo">
+                                    <span class="help-block ">{!! implode('', $errors->get('photo')) !!}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <img src="{{ $data->getPhoto() ? url(\App\Entities\Teacher::UPLOAD_PATH.'/'.$data->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
+                            </div>
+
                             <div class="box-footer">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>

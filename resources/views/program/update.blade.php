@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                         @csrf
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">

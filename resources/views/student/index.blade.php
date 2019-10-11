@@ -73,109 +73,112 @@
             </div>
         </div>
 
-    <div id="modalDetailStudent" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                    <h4 class="modal-title">{{ ucwords(trans('common.student_information')) }}</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <tr>
-                            <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
-                            <td width="5%">:</td>
-                            <td class="studentCode"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.name')) }}</th>
-                            <td>:</td>
-                            <td class="studentName"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.institute')) }}</th>
-                            <td>:</td>
-                            <td class="studentInstitute"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.study_program')) }}</th>
-                            <td>:</td>
-                            <td class="studentStudyProgram"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.period')) }}</th>
-                            <td>:</td>
-                            <td class="studentPeriod"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.curriculum')) }}</th>
-                            <td>:</td>
-                            <td class="studentCurriculum"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.identity_number')) }}</th>
-                            <td>:</td>
-                            <td class="studentIdentityNumber"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
-                            <td>:</td>
-                            <td class="studentDateOfBirth"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.status')) }}</th>
-                            <td>:</td>
-                            <td class="studentStatus"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.class')) }}</th>
-                            <td>:</td>
-                            <td class="studentClass"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ strtoupper(trans('common.ipk')) }}</th>
-                            <td>:</td>
-                            <td class="studentIpk"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.graduation_year')) }}</th>
-                            <td>:</td>
-                            <td class="studentGraduationYear"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form method="post" action="{{ $urlUpload }}" enctype="multipart/form-data">
+        <div id="modalDetailStudent" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="upload">{{ ucwords(trans('common.student_feeder')) }}</h5>
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                        <h4 class="modal-title">{{ ucwords(trans('common.student_information')) }}</h4>
                     </div>
                     <div class="modal-body">
-
-                        {{ csrf_field() }}
-
-                        <label>{{ ucfirst(trans('common.choose_file')) }}</label>
-                        <div class="form-group">
-                            <input type="file" name="file" required="required">
+                        <div style="text-align: center; margin-bottom: 22px">
+                            <img class="studentPhoto" src="" width="100px" height="100px">
                         </div>
-
+                        <table class="table">
+                            <tr>
+                                <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
+                                <td width="5%">:</td>
+                                <td class="studentCode"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.name')) }}</th>
+                                <td>:</td>
+                                <td class="studentName"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.institute')) }}</th>
+                                <td>:</td>
+                                <td class="studentInstitute"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.study_program')) }}</th>
+                                <td>:</td>
+                                <td class="studentStudyProgram"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.period')) }}</th>
+                                <td>:</td>
+                                <td class="studentPeriod"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.curriculum')) }}</th>
+                                <td>:</td>
+                                <td class="studentCurriculum"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.identity_number')) }}</th>
+                                <td>:</td>
+                                <td class="studentIdentityNumber"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
+                                <td>:</td>
+                                <td class="studentDateOfBirth"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.status')) }}</th>
+                                <td>:</td>
+                                <td class="studentStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.class')) }}</th>
+                                <td>:</td>
+                                <td class="studentClass"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ strtoupper(trans('common.ipk')) }}</th>
+                                <td>:</td>
+                                <td class="studentIpk"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.graduation_year')) }}</th>
+                                <td>:</td>
+                                <td class="studentGraduationYear"></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">{{ ucwords(trans('common.upload')) }}</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+        <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="post" action="{{ $urlUpload }}" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="upload">{{ ucwords(trans('common.student_feeder')) }}</h5>
+                        </div>
+                        <div class="modal-body">
+
+                            {{ csrf_field() }}
+
+                            <label>{{ ucfirst(trans('common.choose_file')) }}</label>
+                            <div class="form-group">
+                                <input type="file" name="file" required="required">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">{{ ucwords(trans('common.upload')) }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </section><!-- /.content -->
 @endsection
 
@@ -202,6 +205,7 @@
                 modalHtml.find('.studentClass').html(student.class);
                 modalHtml.find('.studentIpk').html(student.ipk);
                 modalHtml.find('.studentGraduationYear').html(student.graduation_year);
+                modalHtml.find('.studentPhoto').attr("src",student.photo);
                 modalHtml.modal('show');
             }
         });
@@ -220,6 +224,7 @@
         modalHtml.find('.studentClass').html('');
         modalHtml.find('.studentIpk').html('');
         modalHtml.find('.studentGraduationYear').html('');
+        modalHtml.find('.studentPhoto').attr('src','');
     })
 </script>
 @endsection

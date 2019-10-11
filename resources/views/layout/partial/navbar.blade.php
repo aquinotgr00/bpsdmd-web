@@ -40,7 +40,7 @@
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))
         <li>
             <a href="{{ route('supply.program.index') }}">
-                <i class="fa fa-child"></i>
+                <i class="fa fa-sliders"></i>
                 <span>{{ ucwords(trans('common.study_program')) }}</span>
             </a>
         </li>

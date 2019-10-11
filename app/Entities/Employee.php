@@ -15,6 +15,8 @@ class Employee
 {
     const GENDER_MALE = 'male';
     const GENDER_FEMALE = 'female';
+    const UPLOAD_PATH = 'employees/img';
+
     /**
      * @var integer
      *
@@ -45,11 +47,21 @@ class Employee
     private $org;
 
     /**
+     * @var Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="sertifikat_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     * })
+     */
+    private $certificate = NULL;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="kode", type="string", nullable=true)
+     * @ORM\Column(name="kode", type="string", nullable=false)
      */
-    private $code = NULL;
+    private $code;
 
     /**
      * @var string
@@ -61,9 +73,9 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="no_ktp", type="string", nullable=true)
+     * @ORM\Column(name="no_ktp", type="string", nullable=false)
      */
-    private $identityNumber = NULL;
+    private $identityNumber;
 
     /**
      * @var string
@@ -99,6 +111,13 @@ class Employee
      * @ORM\Column(name="kewarganegaraan", type="string", nullable=true)
      */
     private $nationality = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
+     */
+    private $photo = NULL;
 
     /**
      * @return int
@@ -274,5 +293,21 @@ class Employee
     public function setNationality($nationality): void
     {
         $this->nationality = $nationality;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
     }
 }

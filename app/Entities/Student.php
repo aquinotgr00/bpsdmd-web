@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Student
 {
+    const UPLOAD_PATH = 'students/img';
+
     /**
      * @var integer
      *
@@ -111,6 +113,13 @@ class Student
      * @ORM\Column(name="tahun_lulus", type="string", nullable=true)
      */
     private $graduationYear = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
+     */
+    private $photo = NULL;
 
     /**
      * @return int
@@ -318,5 +327,21 @@ class Student
     public function setGraduationYear($graduationYear): void
     {
         $this->graduationYear = $graduationYear;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
     }
 }

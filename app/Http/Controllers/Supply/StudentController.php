@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Supply;
 
 use App\Entities\Student;
 use App\Entities\Organization;
+use App\Entities\StudyProgram;
 use App\Imports\StudentImport;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\StudentService;
@@ -13,7 +14,9 @@ use App\Services\Domain\FeederService;
 use App\Services\Application\AuthService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 use Maatwebsite\Excel\Facades\Excel;
+use Image;
 
 class StudentController extends Controller
 {
@@ -39,11 +42,16 @@ class StudentController extends Controller
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService)
     {
         if ($request->method() == 'POST') {
-            $request->merge(['org' => currentUser()->getOrg()]);
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
+            ];
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
+                'photo' => ucfirst(trans('common.photo')),
             ]);
 
             $org = currentUser()->getOrg();
@@ -55,6 +63,17 @@ class StudentController extends Controller
 
             try {
                 $requestData = $request->all();
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(Student::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
+                }
 
                 $studentService->create(collect($requestData), $org, $studyProgram);
                 $alert = 'alert_success';
@@ -69,7 +88,7 @@ class StudentController extends Controller
         }
 
         $dataOrg            = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
-        $dataStudyProgram   = $programService->getRepository()->findAll();
+        $dataStudyProgram   = $programService->getProgramByOrg(currentUser()->getOrg());
 
         return view('student.create', ['dataOrg' => $dataOrg, 'dataStudyProgram' => $dataStudyProgram]);
     }
@@ -77,11 +96,16 @@ class StudentController extends Controller
     public function update(Request $request, StudentService $studentService, Student $data, OrgService $orgService, ProgramService $programService)
     {
         if ($request->method() == 'POST') {
-            $request->merge(['org' => currentUser()->getOrg()]);
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'org' => 'required',
-                'dateOfBirth' => 'required|date_format:"d-m-Y'
+                'dateOfBirth' => 'required|date_format:"d-m-Y',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
+            ];
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
+                'photo' => ucfirst(trans('common.photo')),
             ]);
 
             $studyProgram = false;
@@ -91,6 +115,17 @@ class StudentController extends Controller
 
             try {
                 $requestData = $request->all();
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(Student::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
+                }
 
                 $studentService->update($data, collect($requestData), false, $studyProgram, true);
                 $alert = 'alert_success';
@@ -104,7 +139,7 @@ class StudentController extends Controller
         }
 
         $dataOrg            = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
-        $dataStudyProgram   = $programService->getRepository()->findAll();
+        $dataStudyProgram   = $programService->getProgramByOrg(currentUser()->getOrg());
 
         return view('student.update', compact('data', 'dataOrg', 'dataStudyProgram'));
     }
@@ -174,7 +209,8 @@ class StudentController extends Controller
                 'status' => $data->getStatus() ? $data->getStatus() : '-',
                 'class' => $data->getClass() ? $data->getClass() : '-',
                 'ipk' => $data->getIpk() ? $data->getIpk() : '-',
-                'graduation_year' => $data->getGraduationYear() ? $data->getGraduationYear() : '-'
+                'graduation_year' => $data->getGraduationYear() ? $data->getGraduationYear() : '-',
+                'photo' => $data->getPhoto() ? url(url(Student::UPLOAD_PATH.'/'.$data->getPhoto())) : url('img/avatar.png'),
             ];
 
             return response()->json($data);

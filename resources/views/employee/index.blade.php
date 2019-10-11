@@ -70,73 +70,76 @@
             </div>
         </div>
 
-    <div id="modalDetailEmployee" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                    <h4 class="modal-title">{{ ucwords(trans('common.employee_information')) }}</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <tr>
-                            <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
-                            <td width="5%">:</td>
-                            <td class="employeeCode"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.name')) }}</th>
-                            <td>:</td>
-                            <td class="employeeName"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.school')) }}</th>
-                            <td>:</td>
-                            <td class="employeeSchool"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.institute')) }}</th>
-                            <td>:</td>
-                            <td class="employeeInstitute"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.identity_number')) }}</th>
-                            <td>:</td>
-                            <td class="employeeIdentityNumber"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.gender')) }}</th>
-                            <td>:</td>
-                            <td class="employeeGender"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.place_of_birth')) }}</th>
-                            <td>:</td>
-                            <td class="employeePlaceOfBirth"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
-                            <td>:</td>
-                            <td class="employeeDateOfBirth"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.language')) }}</th>
-                            <td>:</td>
-                            <td class="employeeLanguage"></td>
-                        </tr>
-                        <tr>
-                            <th>{{ ucfirst(trans('common.nationality')) }}</th>
-                            <td>:</td>
-                            <td class="employeeNationality"></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div id="modalDetailEmployee" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                        <h4 class="modal-title">{{ ucwords(trans('common.employee_information')) }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center; margin-bottom: 22px">
+                            <img class="employeePhoto" src="" width="100px" height="100px">
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
+                                <td width="5%">:</td>
+                                <td class="employeeCode"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.name')) }}</th>
+                                <td>:</td>
+                                <td class="employeeName"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.school')) }}</th>
+                                <td>:</td>
+                                <td class="employeeSchool"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.institute')) }}</th>
+                                <td>:</td>
+                                <td class="employeeInstitute"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.identity_number')) }}</th>
+                                <td>:</td>
+                                <td class="employeeIdentityNumber"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.gender')) }}</th>
+                                <td>:</td>
+                                <td class="employeeGender"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.place_of_birth')) }}</th>
+                                <td>:</td>
+                                <td class="employeePlaceOfBirth"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
+                                <td>:</td>
+                                <td class="employeeDateOfBirth"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.language')) }}</th>
+                                <td>:</td>
+                                <td class="employeeLanguage"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.nationality')) }}</th>
+                                <td>:</td>
+                                <td class="employeeNationality"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </section><!-- /.content -->
 @endsection
 
@@ -161,6 +164,7 @@
                 modalHtml.find('.employeeDateOfBirth').html(employee.date_of_birth);
                 modalHtml.find('.employeeLanguage').html(employee.language);
                 modalHtml.find('.employeeNationality').html(employee.nationality);
+                modalHtml.find('.employeePhoto').attr("src",employee.photo);
                 modalHtml.modal('show');
             }
         });
@@ -177,6 +181,7 @@
         modalHtml.find('.employeeDateOfBirth').html('');
         modalHtml.find('.employeeLanguage').html('');
         modalHtml.find('.employeeNationality').html('');
+        modalHtml.find('.employeePhoto').attr('src','');
     })
 </script>
 @endsection

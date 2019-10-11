@@ -76,6 +76,7 @@ return [
 
     //manage program
     'study_program' => 'program studi',
+    'program_information' => 'informasi program studi',
     'degree' => 'jenjang',
 
     //manage student

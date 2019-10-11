@@ -26,6 +26,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/create', 'Administrator\ProgramController@create')->name('administrator.program.create');
             Route::any('/{program}/update', 'Administrator\ProgramController@update')->name('administrator.program.update');
             Route::get('/{program}/delete', 'Administrator\ProgramController@delete')->name('administrator.program.delete');
+            Route::get('/{program}', 'Administrator\ProgramController@ajaxDetailProgram')->name('administrator.program.view');
             Route::get('/', 'Administrator\ProgramController@index')->name('administrator.program.index');
         });
 
@@ -94,6 +95,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/create', 'Supply\ProgramController@create')->name('supply.program.create');
         Route::any('/{program}/update', 'Supply\ProgramController@update')->name('supply.program.update');
         Route::get('/{program}/delete', 'Supply\ProgramController@delete')->name('supply.program.delete');
+        Route::get('/{program}', 'Supply\ProgramController@ajaxDetailProgram')->name('administrator.program.view');
         Route::get('/', 'Supply\ProgramController@index')->name('supply.program.index');
     });
 

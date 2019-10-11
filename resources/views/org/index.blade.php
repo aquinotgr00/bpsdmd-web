@@ -80,7 +80,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                    <h4 class="modal-title">{{ ucfirst(trans('common.institute_information')) }}</h4>
+                    <h4 class="modal-title">{{ ucwords(trans('common.institute_information')) }}</h4>
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center; margin-bottom: 22px">
@@ -98,7 +98,7 @@
                             <td class="orgName"></td>
                         </tr>
                         <tr>
-                            <th>{{ ucfirst(trans('common.short_name')) }}</th>
+                            <th>{{ ucwords(trans('common.short_name')) }}</th>
                             <td>:</td>
                             <td class="orgShortName"></td>
                         </tr>

@@ -76,6 +76,7 @@ return [
 
     //manage program
     'study_program' => 'study program',
+    'program_information' => 'study program information',
     'degree' => 'degree',
 
     //manage student

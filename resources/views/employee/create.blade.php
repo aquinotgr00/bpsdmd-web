@@ -17,13 +17,13 @@
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
-                                <input type="text" class="form-control" id="code" name="code">
+                                <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('code')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
                             </div>
 
@@ -33,7 +33,7 @@
                                     <option value="">{{ ucwords(trans('common.choose_school')) }}</option>
                                     @if(!empty($dataSchool))
                                         @foreach($dataSchool as $school)
-                                        <option value="{{ $school->getId() }}">{{ $school->getName() }}</option>
+                                        <option value="{{ $school->getId() }}" {{ old('school') == $school->getId() ? 'selected' : '' }}>{{ $school->getName() }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -42,41 +42,53 @@
 
                             <div class="form-group {{ $errors->has('identity_number') ? 'has-error' : '' }}">
                                 <label for="identity_number">{{ ucwords(trans('common.identity_number')) }} :</label>
-                                <input type="text" class="form-control" id="identity_number" name="identity_number">
+                                <input type="text" class="form-control" id="identity_number" name="identity_number" value="{{ old('identity_number') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('identity_number')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                                 <label for="gender">{{ ucwords(trans('common.gender')) }} :</label>
                                 <select id="gender" name="gender" class="form-control">
-                                    <option value="{{ \App\Entities\Employee::GENDER_MALE }}" selected>{{ ucfirst(\App\Entities\Employee::GENDER_MALE) }}</option>
-                                    <option value="{{ \App\Entities\Employee::GENDER_FEMALE }}">{{ ucfirst(\App\Entities\Employee::GENDER_FEMALE) }}</option>
+                                    <option value="{{ \App\Entities\Employee::GENDER_MALE }}" {{ old('gender') == \App\Entities\Employee::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Employee::GENDER_MALE) }}</option>
+                                    <option value="{{ \App\Entities\Employee::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Employee::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Employee::GENDER_FEMALE) }}</option>
                                 </select>
                                 <span class="help-block ">{!! implode('', $errors->get('gender')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('placeOfBirth') ? 'has-error' : '' }}">
-                                <label for="placeOfBirth">{{ ucfirst(trans('common.place_of_birth')) }} :</label>
-                                <input type="text" class="form-control" id="placeOfBirth" name="placeOfBirth">
+                                <label for="placeOfBirth">{{ ucwords(trans('common.place_of_birth')) }} :</label>
+                                <input type="text" class="form-control" id="placeOfBirth" name="placeOfBirth" value="{{ old('placeOfBirth') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('placeOfBirth')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('dateOfBirth') ? 'has-error' : '' }}">
                                 <label for="dateOfBirth">{{ ucwords(trans('common.date_of_birth')) }} :</label>
-                                <input type="text" class="date form-control" id="dateOfBirth" name="dateOfBirth">
+                                <input type="text" class="date form-control" id="dateOfBirth" name="dateOfBirth" value="{{ old('dateOfBirth') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('dateOfBirth')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('language') ? 'has-error' : '' }}">
                                 <label for="language">{{ ucfirst(trans('common.language')) }} :</label>
-                                <input type="text" class="form-control" id="language" name="language">
+                                <input type="text" class="form-control" id="language" name="language" value="{{ old('language') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('language')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('nationality') ? 'has-error' : '' }}">
                                 <label for="nationality">{{ ucfirst(trans('common.nationality')) }} :</label>
-                                <input type="text" class="form-control" id="nationality" name="nationality">
+                                <input type="text" class="form-control" id="nationality" name="nationality" value="{{ old('nationality') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('nationality')) !!}</span>
+                            </div>
+
+                            <div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
+                                <div class="input-group-prepend">
+                                    <label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.photo')) }}</label>
+                                    <span class="help-block">{{ trans('common.allowed_photo') }}</span>
+                                    <span class="help-block">{{ __('common.max_photo', ['max' => '500KB']) }}</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="photo">
+                                    <span class="help-block ">{!! implode('', $errors->get('photo')) !!}</span>
+                                </div>
                             </div>
 
                             <div class="box-footer" style="text-align: right">
