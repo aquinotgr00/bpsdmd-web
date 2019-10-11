@@ -18,28 +18,28 @@ SET row_security = off;
 
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_program_studi_id_fkey;
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_instansi_id_fkey;
-ALTER TABLE ONLY public.sertifikat DROP CONSTRAINT sertifikat_pegawai_id_fkey;
-ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_program_studi_id_fkey;
-ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_kompetensi_id_fkey;
-ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_kompetensi_id_fkey;
-ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_lisensi_id_fkey;
-ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_kompetensi_id_fkey;
-ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey;
+ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT sertifikat_id_fkey;
 ALTER TABLE ONLY public.peserta_diklat DROP CONSTRAINT peserta_diklat_diklat_id_fkey;
 ALTER TABLE ONLY public.penawaran_siswa DROP CONSTRAINT penawaran_siswa_siswa_id_fkey;
 ALTER TABLE ONLY public.penawaran_siswa DROP CONSTRAINT penawaran_siswa_jabatan_id_fkey;
 ALTER TABLE ONLY public.penawaran_siswa DROP CONSTRAINT penawaran_siswa_instansi_id_fkey;
-ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_sertifikat_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_sekolah_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_lisensi_id_fkey;
 ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_instansi_id_fkey;
+ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT pegawai_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_program_studi_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_lisensi_id_fkey;
 ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_jabatan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_unit_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_tujuan_utama_id;
+ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_program_studi_id_fkey;
+ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_kompetensi_id_fkey;
+ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_lisensi_id_fkey;
+ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_kompetensi_id_fkey;
+ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_fungsi_utama_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_fungsi_kunci_id;
+ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_kompetensi_id_fkey;
 ALTER TABLE ONLY public.kabupaten DROP CONSTRAINT kabupaten_id_fkey;
 ALTER TABLE ONLY public.jabatan DROP CONSTRAINT jabatan_instansi_id_fkey;
 ALTER TABLE ONLY public.pengguna DROP CONSTRAINT instansi_id;
@@ -50,9 +50,6 @@ ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_instansi_id_fkey;
 ALTER TABLE ONLY public.data_diklat DROP CONSTRAINT data_diklat_diklat_id_fkey;
 ALTER TABLE ONLY public.siswa DROP CONSTRAINT siswa_id;
 ALTER TABLE ONLY public.sertifikat DROP CONSTRAINT sertifikat_id;
-ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_id;
-ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_id;
-ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_id;
 ALTER TABLE ONLY public.provinsi DROP CONSTRAINT provinsi_id;
 ALTER TABLE ONLY public.program_studi DROP CONSTRAINT program_studi_id;
 ALTER TABLE ONLY public.peserta_diklat DROP CONSTRAINT peserta_diklat_id;
@@ -64,9 +61,12 @@ ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_id;
 ALTER TABLE ONLY public.lisensi DROP CONSTRAINT lisensi_id;
 ALTER TABLE ONLY public.kompetensi_unit DROP CONSTRAINT kompetensi_unit_id;
 ALTER TABLE ONLY public.kompetensi_tujuan_utama DROP CONSTRAINT kompetensi_tujuan_utama_id;
+ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_id;
+ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_id;
 ALTER TABLE ONLY public.kompetensi_fungsi_utama DROP CONSTRAINT kompetensi_fungsi_utama_id;
 ALTER TABLE ONLY public.kompetensi_fungsi_kunci DROP CONSTRAINT kompetensi_fungsi_kunci_id;
+ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_id;
 ALTER TABLE ONLY public.kabupaten DROP CONSTRAINT kabupaten_id;
 ALTER TABLE ONLY public.jabatan DROP CONSTRAINT jabatan_id;
 ALTER TABLE ONLY public.instansi DROP CONSTRAINT instansi_id;
@@ -75,12 +75,16 @@ ALTER TABLE ONLY public.feeder DROP CONSTRAINT feeder_id;
 ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_id;
 ALTER TABLE ONLY public.data_diklat DROP CONSTRAINT data_diklat_id;
 ALTER TABLE public.siswa ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.sertifikat_pegawai ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.program_studi ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.pengguna ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.instansi ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.dosen ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.diklat ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.siswa_id_seq;
 DROP TABLE public.siswa;
+DROP SEQUENCE public.sertifikat_pegawai_id_seq;
+DROP TABLE public.sertifikat_pegawai;
 DROP TABLE public.sertifikat;
 DROP SEQUENCE public.sertifikat_id_seq;
 DROP TABLE public.provinsi;
@@ -127,6 +131,8 @@ DROP TABLE public.fungsi_pekerjaan;
 DROP SEQUENCE public.fungsi_pekerjaan_id_seq;
 DROP TABLE public.feeder;
 DROP SEQUENCE public.feeder_id_seq;
+DROP SEQUENCE public.dosen_id_seq;
+DROP TABLE public.dosen;
 DROP SEQUENCE public.diklat_id_seq;
 DROP TABLE public.diklat;
 DROP TABLE public.data_diklat;
@@ -193,7 +199,7 @@ CREATE SEQUENCE public.diklat_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
-    NO MAXVALUE
+    MAXVALUE 2147483647
     CACHE 1;
 
 
@@ -235,7 +241,7 @@ CREATE SEQUENCE public.dosen_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
-    NO MAXVALUE
+    MAXVALUE 2147483647
     CACHE 1;
 
 
@@ -332,7 +338,7 @@ CREATE SEQUENCE public.instansi_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
-    NO MAXVALUE
+    MAXVALUE 2147483647
     CACHE 1;
 
 
@@ -812,7 +818,7 @@ CREATE SEQUENCE public.pengguna_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
-    NO MAXVALUE
+    MAXVALUE 2147483647
     CACHE 1;
 
 
@@ -884,7 +890,7 @@ CREATE SEQUENCE public.program_studi_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
-    NO MAXVALUE
+    MAXVALUE 2147483647
     CACHE 1;
 
 
@@ -1018,7 +1024,7 @@ CREATE SEQUENCE public.siswa_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
-    NO MAXVALUE
+    MAXVALUE 2147483647
     CACHE 1;
 
 
@@ -1361,6 +1367,13 @@ SELECT pg_catalog.setval('public.kabupaten_id_seq', 1, false);
 
 
 --
+-- Name: kompetensi_diklat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.kompetensi_diklat_id_seq', 1, false);
+
+
+--
 -- Name: kompetensi_fungsi_kunci_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1379,6 +1392,20 @@ SELECT pg_catalog.setval('public.kompetensi_fungsi_utama_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.kompetensi_id_seq', 1, false);
+
+
+--
+-- Name: kompetensi_pekerjaan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.kompetensi_pekerjaan_id_seq', 1, false);
+
+
+--
+-- Name: kompetensi_prodi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.kompetensi_prodi_id_seq', 1, false);
 
 
 --
@@ -1459,27 +1486,6 @@ SELECT pg_catalog.setval('public.provinsi_id_seq', 1, false);
 
 
 --
--- Name: kompetensi_pekerjaan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.kompetensi_pekerjaan_id_seq', 1, false);
-
-
---
--- Name: kompetensi_diklat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.kompetensi_diklat_id_seq', 1, false);
-
-
---
--- Name: kompetensi_prodi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.kompetensi_prodi_id_seq', 1, false);
-
-
---
 -- Name: sertifikat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1557,6 +1563,14 @@ ALTER TABLE ONLY public.kabupaten
 
 
 --
+-- Name: kompetensi_diklat kompetensi_diklat_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_diklat
+    ADD CONSTRAINT kompetensi_diklat_id PRIMARY KEY (id);
+
+
+--
 -- Name: kompetensi_fungsi_kunci kompetensi_fungsi_kunci_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1578,6 +1592,22 @@ ALTER TABLE ONLY public.kompetensi_fungsi_utama
 
 ALTER TABLE ONLY public.kompetensi
     ADD CONSTRAINT kompetensi_id PRIMARY KEY (id);
+
+
+--
+-- Name: kompetensi_pekerjaan kompetensi_pekerjaan_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_pekerjaan
+    ADD CONSTRAINT kompetensi_pekerjaan_id PRIMARY KEY (id);
+
+
+--
+-- Name: kompetensi_prodi kompetensi_prodi_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_prodi
+    ADD CONSTRAINT kompetensi_prodi_id PRIMARY KEY (id);
 
 
 --
@@ -1669,30 +1699,6 @@ ALTER TABLE ONLY public.provinsi
 
 
 --
--- Name: kompetensi_pekerjaan kompetensi_pekerjaan_id; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_pekerjaan
-    ADD CONSTRAINT kompetensi_pekerjaan_id PRIMARY KEY (id);
-
-
---
--- Name: kompetensi_diklat kompetensi_diklat_id; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_diklat
-    ADD CONSTRAINT kompetensi_diklat_id PRIMARY KEY (id);
-
-
---
--- Name: kompetensi_prodi kompetensi_prodi_id; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_prodi
-    ADD CONSTRAINT kompetensi_prodi_id PRIMARY KEY (id);
-
-
---
 -- Name: sertifikat sertifikat_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1773,6 +1779,14 @@ ALTER TABLE ONLY public.kabupaten
 
 
 --
+-- Name: kompetensi_diklat kompetensi_diklat_kompetensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_diklat
+    ADD CONSTRAINT kompetensi_diklat_kompetensi_id_fkey FOREIGN KEY (diklat_id) REFERENCES public.diklat(id);
+
+
+--
 -- Name: kompetensi kompetensi_fungsi_kunci_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1786,6 +1800,46 @@ ALTER TABLE ONLY public.kompetensi
 
 ALTER TABLE ONLY public.kompetensi
     ADD CONSTRAINT kompetensi_fungsi_utama_id FOREIGN KEY (kompetensi_fungsi_utama_id) REFERENCES public.kompetensi_fungsi_utama(id) NOT VALID;
+
+
+--
+-- Name: kompetensi_pekerjaan kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_pekerjaan
+    ADD CONSTRAINT kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey FOREIGN KEY (fungsi_pekerjaan_id) REFERENCES public.fungsi_pekerjaan(id);
+
+
+--
+-- Name: kompetensi_pekerjaan kompetensi_pekerjaan_kompetensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_pekerjaan
+    ADD CONSTRAINT kompetensi_pekerjaan_kompetensi_id_fkey FOREIGN KEY (kompetensi_id) REFERENCES public.kompetensi(id);
+
+
+--
+-- Name: kompetensi_pekerjaan kompetensi_pekerjaan_lisensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_pekerjaan
+    ADD CONSTRAINT kompetensi_pekerjaan_lisensi_id_fkey FOREIGN KEY (lisensi_id) REFERENCES public.lisensi(id);
+
+
+--
+-- Name: kompetensi_prodi kompetensi_prodi_kompetensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_prodi
+    ADD CONSTRAINT kompetensi_prodi_kompetensi_id_fkey FOREIGN KEY (kompetensi_id) REFERENCES public.kompetensi(id);
+
+
+--
+-- Name: kompetensi_prodi kompetensi_prodi_program_studi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_prodi
+    ADD CONSTRAINT kompetensi_prodi_program_studi_id_fkey FOREIGN KEY (program_studi_id) REFERENCES public.program_studi(id);
 
 
 --
@@ -1893,58 +1947,6 @@ ALTER TABLE ONLY public.peserta_diklat
 
 
 --
--- Name: kompetensi_pekerjaan kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_pekerjaan
-    ADD CONSTRAINT kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey FOREIGN KEY (fungsi_pekerjaan_id) REFERENCES public.fungsi_pekerjaan(id);
-
-
---
--- Name: kompetensi_pekerjaan kompetensi_pekerjaan_kompetensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_pekerjaan
-    ADD CONSTRAINT kompetensi_pekerjaan_kompetensi_id_fkey FOREIGN KEY (kompetensi_id) REFERENCES public.kompetensi(id);
-
-
---
--- Name: kompetensi_pekerjaan kompetensi_pekerjaan_lisensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_pekerjaan
-    ADD CONSTRAINT kompetensi_pekerjaan_lisensi_id_fkey FOREIGN KEY (lisensi_id) REFERENCES public.lisensi(id);
-
-
---
--- Name: kompetensi_diklat kompetensi_diklat_kompetensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_diklat
-    ADD CONSTRAINT kompetensi_diklat_kompetensi_id_fkey FOREIGN KEY (diklat_id) REFERENCES public.diklat(id);
-
---
--- Name: kompetensi_prodi kompetensi_prodi_kompetensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_prodi
-    ADD CONSTRAINT kompetensi_prodi_kompetensi_id_fkey FOREIGN KEY (kompetensi_id) REFERENCES public.kompetensi(id);
-
-
---
--- Name: kompetensi_prodi kompetensi_prodi_program_studi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.kompetensi_prodi
-    ADD CONSTRAINT kompetensi_prodi_program_studi_id_fkey FOREIGN KEY (program_studi_id) REFERENCES public.program_studi(id);
-
-
---
---
-
-
-
---
 -- Name: sertifikat_pegawai sertifikat_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1968,8 +1970,7 @@ ALTER TABLE ONLY public.siswa
     ADD CONSTRAINT siswa_program_studi_id_fkey FOREIGN KEY (program_studi_id) REFERENCES public.program_studi(id);
 
 
--- Completed on 2019-10-11 16:36:34
-
 --
 -- PostgreSQL database dump complete
 --
+
