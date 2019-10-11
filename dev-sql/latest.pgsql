@@ -30,6 +30,7 @@ ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT pegawai_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_program_studi_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_lisensi_id_fkey;
 ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_jabatan_id_fkey;
+ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_fungsi_pekerjaan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_unit_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_tujuan_utama_id;
 ALTER TABLE ONLY public.kompetensi_prodi DROP CONSTRAINT kompetensi_prodi_program_studi_id_fkey;
@@ -1891,6 +1892,14 @@ ALTER TABLE ONLY public.kompetensi
 
 ALTER TABLE ONLY public.kompetensi
     ADD CONSTRAINT kompetensi_unit_id FOREIGN KEY (kompetensi_unit_id) REFERENCES public.kompetensi_unit(id) NOT VALID;
+
+
+--
+-- Name: lisensi_pekerjaan lisensi_pekerjaan_fungsi_pekerjaan_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lisensi_pekerjaan
+    ADD CONSTRAINT lisensi_pekerjaan_fungsi_pekerjaan_id_fkey FOREIGN KEY (fungsi_pekerjaan_id) REFERENCES public.fungsi_pekerjaan(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
