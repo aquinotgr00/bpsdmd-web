@@ -39,6 +39,7 @@ ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaa
 ALTER TABLE ONLY public.kompetensi_pekerjaan DROP CONSTRAINT kompetensi_pekerjaan_fungsi_pekerjaan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_fungsi_utama_id;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_fungsi_kunci_id;
+ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_kompetensi_id_fkey1;
 ALTER TABLE ONLY public.kompetensi_diklat DROP CONSTRAINT kompetensi_diklat_kompetensi_id_fkey;
 ALTER TABLE ONLY public.kabupaten DROP CONSTRAINT kabupaten_id_fkey;
 ALTER TABLE ONLY public.jabatan DROP CONSTRAINT jabatan_instansi_id_fkey;
@@ -73,6 +74,7 @@ ALTER TABLE ONLY public.jabatan DROP CONSTRAINT jabatan_id;
 ALTER TABLE ONLY public.instansi DROP CONSTRAINT instansi_id;
 ALTER TABLE ONLY public.fungsi_pekerjaan DROP CONSTRAINT fungsi_pekerjaan_id;
 ALTER TABLE ONLY public.feeder DROP CONSTRAINT feeder_id;
+ALTER TABLE ONLY public.dosen DROP CONSTRAINT dosen_pkey;
 ALTER TABLE ONLY public.diklat DROP CONSTRAINT diklat_id;
 ALTER TABLE ONLY public.data_diklat DROP CONSTRAINT data_diklat_id;
 ALTER TABLE public.siswa ALTER COLUMN id DROP DEFAULT;
@@ -1524,6 +1526,14 @@ ALTER TABLE ONLY public.diklat
 
 
 --
+-- Name: dosen dosen_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dosen
+    ADD CONSTRAINT dosen_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: feeder feeder_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1793,6 +1803,14 @@ ALTER TABLE ONLY public.kabupaten
 
 ALTER TABLE ONLY public.kompetensi_diklat
     ADD CONSTRAINT kompetensi_diklat_kompetensi_id_fkey FOREIGN KEY (diklat_id) REFERENCES public.diklat(id);
+
+
+--
+-- Name: kompetensi_diklat kompetensi_diklat_kompetensi_id_fkey1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.kompetensi_diklat
+    ADD CONSTRAINT kompetensi_diklat_kompetensi_id_fkey1 FOREIGN KEY (kompetensi_id) REFERENCES public.kompetensi(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
