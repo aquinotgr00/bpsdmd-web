@@ -26,6 +26,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/create', 'Administrator\ProgramController@create')->name('administrator.program.create');
             Route::any('/{program}/update', 'Administrator\ProgramController@update')->name('administrator.program.update');
             Route::get('/{program}/delete', 'Administrator\ProgramController@delete')->name('administrator.program.delete');
+            Route::get('/{program}', 'Administrator\ProgramController@ajaxDetailProgram')->name('administrator.program.view');
             Route::get('/', 'Administrator\ProgramController@index')->name('administrator.program.index');
         });
 
@@ -67,11 +68,34 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\UserController@index')->name('administrator.user.index');
     });
 
+    Route::group(['prefix' => '/license', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\LicenseController@create')->name('administrator.license.create');
+        Route::any('/{license}/update', 'Administrator\LicenseController@update')->name('administrator.license.update');
+        Route::get('/{license}/delete', 'Administrator\LicenseController@delete')->name('administrator.license.delete');
+        Route::get('/', 'Administrator\LicenseController@index')->name('administrator.license.index');
+    });
+
+    Route::group(['prefix' => '/diklat', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\DiklatController@create')->name('administrator.diklat.create');
+        Route::any('/{diklat}/update', 'Administrator\DiklatController@update')->name('administrator.diklat.update');
+        Route::get('/{diklat}/delete', 'Administrator\DiklatController@delete')->name('administrator.diklat.delete');
+        Route::get('/{diklat}', 'Administrator\DiklatController@ajaxDetailDiklat')->name('administrator.diklat.view');
+        Route::get('/', 'Administrator\DiklatController@index')->name('administrator.diklat.index');
+
+        Route::group(['prefix' => '/{diklat}/data_diklat', 'middleware' => ['only_admin']], function() {
+            Route::any('/create', 'Administrator\Data_diklatController@create')->name('administrator.data_diklat.create');
+            Route::any('/{data_diklat}/update', 'Administrator\Data_diklatController@update')->name('administrator.data_diklat.update');
+            Route::get('/{data_diklat}/delete', 'Administrator\Data_diklatController@delete')->name('administrator.data_diklat.delete');
+            Route::get('/', 'Administrator\Data_diklatController@index')->name('administrator.data_diklat.index');
+        });
+    });
+
     // supply routes
     Route::group(['prefix' => '/program', 'middleware' => ['only_supply']], function() {
         Route::any('/create', 'Supply\ProgramController@create')->name('supply.program.create');
         Route::any('/{program}/update', 'Supply\ProgramController@update')->name('supply.program.update');
         Route::get('/{program}/delete', 'Supply\ProgramController@delete')->name('supply.program.delete');
+        Route::get('/{program}', 'Supply\ProgramController@ajaxDetailProgram')->name('administrator.program.view');
         Route::get('/', 'Supply\ProgramController@index')->name('supply.program.index');
     });
 

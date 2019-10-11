@@ -28,6 +28,7 @@ return [
     'feeder_success' => 'Feeder :object berhasil diunggah.',
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
+    'confirm_delete' => 'Apakah Anda yakin?',
 
     // table
     'view' => 'lihat',
@@ -75,6 +76,7 @@ return [
 
     //manage program
     'study_program' => 'program studi',
+    'program_information' => 'informasi program studi',
     'degree' => 'jenjang',
 
     //manage student
@@ -140,8 +142,25 @@ return [
     'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
     'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
 
-    //manage feeder
+    // manage feeder
     'feeder' => 'feeder',
     'upload' => 'unggah file',
     'choose_file' => 'pilih file',
+
+    // manage lisensi
+    'license' => 'lisensi',
+    'chapter' => 'BAB',
+    'parent' => 'induk',
+
+    //manage diklat
+    'diklat' => 'diklat',
+    'data_diklat' => 'data diklat',
+    'start_date' => 'tanggal mulai',
+    'end_date' => 'tanggal selesai',
+    'total_target_student' => 'target jumlah siswa',
+    'total_realization_student' => 'realisasi jumlah siswa',
+    'requirement_student' => 'syarat siswa',
+    'target_student' => 'target siswa',
+    'output_diklat' => 'diklat keluaran',
+    'outcome_diklat' => 'diklat hasil',
 ];

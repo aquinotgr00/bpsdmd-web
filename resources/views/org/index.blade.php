@@ -45,7 +45,7 @@
                                     <td>
                                         <a href="javascript:void(0)" class="viewOrg" data-org="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <a href="{{ url(route('administrator.org.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('administrator.org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.org.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                         @if($item->getType() == \App\Entities\Organization::TYPE_SUPPLY)
                                             | <a href="{{ url(route('administrator.program.index', [$item->getId()])) }}"><i class="fa fa-sliders"></i> {{ ucwords(trans('common.study_program')) }}</a>
                                             | <a href="{{ url(route('administrator.teacher.index', [$item->getId()])) }}"><i class="fa fa-male"></i> {{ ucwords(trans('common.teacher')) }}</a>
@@ -80,7 +80,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                    <h4 class="modal-title">{{ ucfirst(trans('common.institute_information')) }}</h4>
+                    <h4 class="modal-title">{{ ucwords(trans('common.institute_information')) }}</h4>
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center; margin-bottom: 22px">
@@ -98,7 +98,7 @@
                             <td class="orgName"></td>
                         </tr>
                         <tr>
-                            <th>{{ ucfirst(trans('common.short_name')) }}</th>
+                            <th>{{ ucwords(trans('common.short_name')) }}</th>
                             <td>:</td>
                             <td class="orgShortName"></td>
                         </tr>

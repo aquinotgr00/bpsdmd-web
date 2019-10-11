@@ -101,6 +101,10 @@ class StudentService
             $student->setStudyProgram($studyProgram);
         }
 
+        if ($data->get('uploaded_img')) {
+            $student->setPhoto($data->get('uploaded_img'));
+        }
+
         EntityManager::persist($student);
 
         if ($flush) {
@@ -137,6 +141,11 @@ class StudentService
 
         if ($studyProgram instanceof StudyProgram) {
             $student->setStudyProgram($studyProgram);
+        }
+
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(Student::UPLOAD_PATH).'/'.$student->getPhoto());
+            $student->setPhoto($data->get('uploaded_img'));
         }
 
         EntityManager::persist($student);

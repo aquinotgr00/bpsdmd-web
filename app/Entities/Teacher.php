@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Teacher
 {
+    const UPLOAD_PATH = 'teachers/img';
+
     /**
      * @var integer
      *
@@ -79,6 +81,13 @@ class Teacher
      * @ORM\Column(name="no_ktp", type="string", nullable=true)
      */
     private $identityNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
+     */
+    private $photo = NULL;
 
     /**
      * @var string
@@ -245,5 +254,21 @@ class Teacher
     public function setNidn($nidn): void
     {
         $this->nidn = $nidn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
     }
 }

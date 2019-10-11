@@ -95,6 +95,10 @@ class TeacherService
             $teacher->setOrg($org);
         }
 
+        if ($data->get('uploaded_img')) {
+            $teacher->setPhoto($data->get('uploaded_img'));
+        }
+
         EntityManager::persist($teacher);
 
         if ($flush) {
@@ -125,6 +129,11 @@ class TeacherService
 
         if ($org instanceof Organization) {
             $teacher->setOrg($org);
+        }
+
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(Teacher::UPLOAD_PATH).'/'.$teacher->getPhoto());
+            $teacher->setPhoto($data->get('uploaded_img'));
         }
 
         EntityManager::persist($teacher);

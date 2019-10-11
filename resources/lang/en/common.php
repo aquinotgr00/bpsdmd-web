@@ -28,6 +28,7 @@ return [
     'feeder_success' => 'Feeder :object uploaded successfully.',
     'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
+    'confirm_delete' => 'Are you sure?',
 
     // table
     'view' => 'view',
@@ -75,6 +76,7 @@ return [
 
     //manage program
     'study_program' => 'study program',
+    'program_information' => 'study program information',
     'degree' => 'degree',
 
     //manage student
@@ -114,4 +116,21 @@ return [
     'feeder' => 'feeder',
     'upload' => 'upload file',
     'choose_file' => 'choose file',
+
+    // manage lisensi
+    'license' => 'license',
+    'chapter' => 'chapter',
+    'parent' => 'parent',
+
+    //manage diklat
+    'diklat' => 'diklat',
+    'data_diklat' => 'data diklat',
+    'start_date' => 'start date',
+    'end_date' => 'end date',
+    'total_target_student' => 'total target student',
+    'total_realization_student' => 'total realization student',
+    'requirement_student' => 'requirement student',
+    'target_student' => 'target student',
+    'output_diklat' => 'output diklat',
+    'outcome_diklat' => 'outcome diklat',
 ];

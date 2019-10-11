@@ -98,6 +98,10 @@ class EmployeeService
             $employee->setSchool($school);
         }
 
+        if ($data->get('uploaded_img')) {
+            $employee->setPhoto($data->get('uploaded_img'));
+        }
+
         EntityManager::persist($employee);
 
         if ($flush) {
@@ -131,6 +135,11 @@ class EmployeeService
         }
         if ($school instanceof Organization) {
             $employee->setSchool($school);
+        }
+
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(Employee::UPLOAD_PATH).'/'.$employee->getPhoto());
+            $employee->setPhoto($data->get('uploaded_img'));
         }
 
         EntityManager::persist($employee);

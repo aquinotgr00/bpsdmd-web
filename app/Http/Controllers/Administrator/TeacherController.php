@@ -13,6 +13,7 @@ use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Image;
 
 class TeacherController extends Controller
 {
@@ -38,15 +39,31 @@ class TeacherController extends Controller
     public function create(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org)
     {
         if ($request->method() == 'POST') {
-            $request->merge(['org' => $org]);
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
+            ];
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
+                'photo' => ucfirst(trans('common.photo')),
             ]);
 
             try {
                 $requestData = $request->all();
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(Teacher::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
+                }
 
                 $teacherService->create(collect($requestData), $org);
                 $alert = 'alert_success';
@@ -67,16 +84,35 @@ class TeacherController extends Controller
 
     public function update(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org, Teacher $data)
     {
+        if($org->getId() != $data->getOrg()->getId()){
+            return abort(404);
+        }
         if ($request->method() == 'POST') {
-            $request->merge(['org' => $org]);
-            $request->validate([
+            $validation = [
                 'name' => 'required',
-                'org' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
+                'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
+            ];
+
+            $request->validate($validation, [], [
+                'name' => ucfirst(trans('common.name')),
+                'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
+                'photo' => ucfirst(trans('common.photo')),
             ]);
 
             try {
                 $requestData = $request->all();
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $photoName = $photo->hashName();
+                    $img = Image::make($photo->getRealPath())->fit(100);
+                    $img->save(public_path(Teacher::UPLOAD_PATH).'/'.$photoName);
+
+                    $requestData['uploaded_img'] = $photoName;
+                } else {
+                    $requestData['uploaded_img'] = false;
+                }
 
                 $teacherService->update($data, collect($requestData), false, true);
                 $alert = 'alert_success';
@@ -96,6 +132,9 @@ class TeacherController extends Controller
 
     public function delete(TeacherService $teacherService, Organization $org, Teacher $data)
     {
+        if($org->getId() != $data->getOrg()->getId()){
+            return abort(404);
+        }
         try {
             $teacherService->delete($data);
             $alert = 'alert_success';
@@ -146,6 +185,9 @@ class TeacherController extends Controller
 
     public function ajaxDetailTeacher(Request $request, Organization $org, Teacher $data)
     {
+        if($org->getId() != $data->getOrg()->getId()){
+            return abort(404);
+        }
         if ($request->ajax()) {
             $data = [
                 'nip' => $data->getNip() ? $data->getNip() : '-',
@@ -155,7 +197,8 @@ class TeacherController extends Controller
                 'front_degree' => $data->getFrontDegree() ? $data->getFrontDegree() : '-',
                 'back_degree' => $data->getBackDegree() ? $data->getBackDegree() : '-',
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
-                'nidn' => $data->getNidn() ? $data->getNidn() : '-'
+                'nidn' => $data->getNidn() ? $data->getNidn() : '-',
+                'photo' => $data->getPhoto() ? url(url(Teacher::UPLOAD_PATH.'/'.$data->getPhoto())) : url('img/avatar.png'),
             ];
 
             return response()->json($data);

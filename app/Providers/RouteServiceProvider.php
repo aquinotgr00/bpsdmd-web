@@ -53,7 +53,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('student', $bindToEntityOr404(Entities\Student::class));
         Route::bind('teacher', $bindToEntityOr404(Entities\Teacher::class));
         Route::bind('employee', $bindToEntityOr404(Entities\Employee::class));
+        Route::bind('license', $bindToEntityOr404(Entities\License::class));
         Route::bind('feeder', $bindToEntityOr404(Entities\Teacher::class));
+        Route::bind('diklat', $bindToEntityOr404(Entities\Diklat::class));
+        Route::bind('data_diklat', $bindToEntityOr404(Entities\DataDiklat::class));
         parent::boot();
     }
 
