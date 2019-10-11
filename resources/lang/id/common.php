@@ -76,7 +76,6 @@ return [
 
     //manage program
     'study_program' => 'program studi',
-    'program_information' => 'informasi program studi',
     'degree' => 'jenjang',
 
     //manage student
@@ -152,15 +151,18 @@ return [
     'chapter' => 'BAB',
     'parent' => 'induk',
 
-    //manage diklat
-    'diklat' => 'diklat',
-    'data_diklat' => 'data diklat',
+    //manage short course
+    'short_course' => 'diklat',
+    'short_course_data' => 'data diklat',
+    'short_course_information' => 'informasi diklat',
     'start_date' => 'tanggal mulai',
     'end_date' => 'tanggal selesai',
     'total_target_student' => 'target jumlah siswa',
     'total_realization_student' => 'realisasi jumlah siswa',
-    'requirement_student' => 'syarat siswa',
-    'target_student' => 'target siswa',
-    'output_diklat' => 'diklat keluaran',
-    'outcome_diklat' => 'diklat hasil',
+    'open_sk' => 'sk buka',
+    'close_sk' => 'sk tutup',
+    'generation' => 'angkatan',
+    'year' => 'tahun',
+    'short_course_time' => 'lama diklat',
+    'place' => 'tempat',
 ];

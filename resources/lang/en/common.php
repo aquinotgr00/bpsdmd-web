@@ -76,7 +76,6 @@ return [
 
     //manage program
     'study_program' => 'study program',
-    'program_information' => 'study program information',
     'degree' => 'degree',
 
     //manage student
@@ -122,15 +121,18 @@ return [
     'chapter' => 'chapter',
     'parent' => 'parent',
 
-    //manage diklat
-    'diklat' => 'diklat',
-    'data_diklat' => 'data diklat',
+    //manage short course
+    'short_course' => 'short course',
+    'short_course_data' => 'short course data',
+    'short_course_information' => 'short course information',
     'start_date' => 'start date',
     'end_date' => 'end date',
     'total_target_student' => 'total target student',
     'total_realization_student' => 'total realization student',
-    'requirement_student' => 'requirement student',
-    'target_student' => 'target student',
-    'output_diklat' => 'output diklat',
-    'outcome_diklat' => 'outcome diklat',
+    'open_sk' => 'open sk',
+    'close_sk' => 'close sk',
+    'generation' => 'generation',
+    'year' => 'year',
+    'short_course_time' => 'short course time',
+    'place' => 'place',
 ];

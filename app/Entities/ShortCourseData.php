@@ -5,12 +5,12 @@ namespace App\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DataDiklat
+ * ShortCourseData
  *
  * @ORM\Table(name="data_diklat")
  * @ORM\Entity
  */
-class DataDiklat
+class ShortCourseData
 {
     /**
      * @var integer
@@ -22,14 +22,14 @@ class DataDiklat
     private $id;
 
     /**
-     * @var Diklat
+     * @var ShortCourse
      *
-     * @ORM\ManyToOne(targetEntity="Diklat", inversedBy="diklats")
+     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="shortCourseDatas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="diklat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
-    private $diklat;
+    private $shortCourse;
 
     /**
      * @var \DateTime
@@ -62,30 +62,44 @@ class DataDiklat
     /**
      * @var string
      *
-     * @ORM\Column(name="syarat_peserta", type="string", nullable=true)
+     * @ORM\Column(name="sk_buka", type="string", nullable=true)
      */
-    private $requirement = NULL;
+    private $openSk = NULL;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="target_peserta", type="string", nullable=true)
+     * @ORM\Column(name="sk_tutup", type="string", nullable=true)
      */
-    private $target = NULL;
+    private $closeSk = NULL;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="angkatan", type="integer", nullable=true)
+     */
+    private $generation = NULL;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tahun", type="integer", nullable=true)
+     */
+    private $year = NULL;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lama_diklat", type="integer", nullable=true)
+     */
+    private $shortCourseTime = NULL;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="output_diklat", type="string", nullable=true)
+     * @ORM\Column(name="tempat", type="string", nullable=true)
      */
-    private $outputDiklat = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="outcome_diklat", type="string", nullable=true)
-     */
-    private $outcomeDiklat = NULL;
+    private $place = NULL;
 
     /**
      * @return int
@@ -104,19 +118,19 @@ class DataDiklat
     }
 
     /**
-     * @return Diklat
+     * @return ShortCourse
      */
-    public function getDiklat(): Diklat
+    public function getShortCourse(): ShortCourse
     {
-        return $this->diklat;
+        return $this->shortCourse;
     }
 
     /**
-     * @param Diklat $diklat
+     * @param ShortCourse $shortCourse
      */
-    public function setDiklat(Diklat $diklat): void
+    public function setShortCourse(ShortCourse $shortCourse): void
     {
-        $this->diklat = $diklat;
+        $this->shortCourse = $shortCourse;
     }
 
     /**
@@ -186,64 +200,96 @@ class DataDiklat
     /**
      * @return string
      */
-    public function getRequirement(): ?string
+    public function getOpenSk(): ?string
     {
-        return $this->requirement;
+        return $this->openSk;
     }
 
     /**
      * @param string $requirement
      */
-    public function setRequirement($requirement): void
+    public function setOpenSk($openSk): void
     {
-        $this->requirement = $requirement;
+        $this->openSk = $openSk;
     }
 
     /**
      * @return string
      */
-    public function getTarget(): ?string
+    public function getCloseSk(): ?string
     {
-        return $this->target;
+        return $this->closeSk;
     }
 
     /**
-     * @param string $target
+     * @param string $closeSk
      */
-    public function setTarget($target): void
+    public function setCloseSk($closeSk): void
     {
-        $this->target = $target;
+        $this->closeSk = $closeSk;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGeneration()
+    {
+        return $this->generation;
+    }
+
+    /**
+     * @param int $generation
+     */
+    public function setGeneration($generation): void
+    {
+        $this->generation = $generation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * @param int $year
+     */
+    public function setYear($year): void
+    {
+        $this->year = $year;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShortCourseTime()
+    {
+        return $this->shortCourseTime;
+    }
+
+    /**
+     * @param int $shortCourseTime
+     */
+    public function setShortCourseTime($shortCourseTime): void
+    {
+        $this->shortCourseTime = $shortCourseTime;
     }
 
     /**
      * @return string
      */
-    public function getOutputDiklat(): ?string
+    public function getPlace(): ?string
     {
-        return $this->outputDiklat;
+        return $this->place;
     }
 
     /**
-     * @param string $requirement
+     * @param string $place
      */
-    public function setOutputDiklat($outputDiklat): void
+    public function setPlace($place): void
     {
-        $this->outputDiklat = $outputDiklat;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOutcomeDiklat(): ?string
-    {
-        return $this->outcomeDiklat;
-    }
-
-    /**
-     * @param string $outcomeDiklat
-     */
-    public function setOutcomeDiklat($outcomeDiklat): void
-    {
-        $this->outcomeDiklat = $outcomeDiklat;
+        $this->place = $place;
     }
 }

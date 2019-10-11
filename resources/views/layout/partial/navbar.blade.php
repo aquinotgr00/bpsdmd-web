@@ -30,9 +30,9 @@
     </li>
 
     <li>
-        <a href="{{ url(route('administrator.diklat.index')) }}">
+        <a href="{{ url(route('administrator.shortCourse.index')) }}">
             <i class="fa fa-calendar"></i>
-            <span>{{ ucwords(trans('common.diklat')) }}</span>
+            <span>{{ ucwords(trans('common.short_course')) }}</span>
         </a>
     </li>
     @endif

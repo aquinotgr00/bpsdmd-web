@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data {{ ucwords(trans('common.data_diklat')) }}</h1>
+        <h1>Data {{ ucwords(trans('common.short_course_data')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.data_diklat')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.short_course_data')) }}
                 </a>
             </li>
         </ol>
