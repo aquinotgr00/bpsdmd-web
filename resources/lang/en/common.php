@@ -10,6 +10,10 @@ return [
     | Common localization i18n
     |
     */
+    // Application Name
+    'application_name' => 'SIM SDM TRANAS',
+    'app_sub_name' => 'Human Resources Development Ministry of Transportation',
+    'app_sub_name_short' => 'BPSDM Transportation',
 
     // menus
     'dashboard' => 'dashboard',

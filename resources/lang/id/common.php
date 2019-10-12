@@ -10,6 +10,10 @@ return [
     | Translasi umum i18n
     |
     */
+    // Application Name
+    'application_name' => 'SIM SDM TRANAS',
+    'app_sub_name' => 'BPSDM Kementrian Perhubungan',
+    'app_sub_name_short' => 'BPSDM Perhubungan',
 
     // menus
     'dashboard' => 'beranda',
