@@ -47,16 +47,6 @@ class Employee
     private $org;
 
     /**
-     * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sertifikat_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
-     * })
-     */
-    private $certificate = NULL;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="kode", type="string", nullable=false)

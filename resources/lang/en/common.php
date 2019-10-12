@@ -139,4 +139,12 @@ return [
     'year' => 'year',
     'short_course_time' => 'short course time',
     'place' => 'place',
+
+    //manage certificate
+    'certificate' => 'sertifikat',
+    'certificate_information' => 'certificate information',
+    'validity_period' => 'validity period',
+    'employee_certificate' => 'employee certificate',
+    'choose_certificate' => 'choose certificate',
+    'invalid_certificate' => 'Chosen certificate is invalid.',
 ];

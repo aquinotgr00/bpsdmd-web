@@ -169,4 +169,12 @@ return [
     'year' => 'tahun',
     'short_course_time' => 'lama diklat',
     'place' => 'tempat',
+
+    //manage certificate
+    'certificate' => 'sertifikat',
+    'validity_period' => 'masa berlaku',
+    'employee_certificate' => 'sertifikat pegawai',
+    'choose_certificate' => 'pilih sertifikat',
+    'invalid_certificate' => 'Sertifikat yang Anda pilih tidak valid.',
+
 ];

@@ -124,6 +124,21 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{employee}/delete', 'Demand\EmployeeController@delete')->name('demand.employee.delete');
         Route::get('/{employee}', 'Demand\EmployeeController@ajaxDetailEmployee')->name('demand.employee.view');
         Route::get('/', 'Demand\EmployeeController@index')->name('demand.employee.index');
+
+        Route::group(['prefix' => '/{employee}/employeeCertificate', 'middleware' => ['only_demand']], function() {
+            Route::any('/create', 'Demand\EmployeeCertificateController@create')->name('demand.employeeCertificate.create');
+            Route::any('/{employeeCertificate}/update', 'Demand\EmployeeCertificateController@update')->name('demand.employeeCertificate.update');
+            Route::get('/{employeeCertificate}/delete', 'Demand\EmployeeCertificateController@delete')->name('demand.employeeCertificate.delete');
+            Route::get('/{employeeCertificate}', 'Demand\EmployeeCertificateController@ajaxDetailEmployeeCertificate')->name('demand.employeeCertificate.view');
+            Route::get('/', 'Demand\EmployeeCertificateController@index')->name('demand.employeeCertificate.index');
+        });
+    });
+
+    Route::group(['prefix' => '/certificate', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'Demand\CertificateController@create')->name('demand.certificate.create');
+        Route::any('/{certificate}/update', 'Demand\CertificateController@update')->name('demand.certificate.update');
+        Route::get('/{certificate}/delete', 'Demand\CertificateController@delete')->name('demand.certificate.delete');
+        Route::get('/', 'Demand\CertificateController@index')->name('demand.certificate.index');
     });
 
     // utils routes
