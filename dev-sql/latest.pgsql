@@ -29,6 +29,7 @@ ALTER TABLE ONLY public.pegawai DROP CONSTRAINT pegawai_instansi_id_fkey;
 ALTER TABLE ONLY public.sertifikat_pegawai DROP CONSTRAINT pegawai_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_program_studi_id_fkey;
 ALTER TABLE ONLY public.lisensi_program_studi DROP CONSTRAINT lisensi_program_studi_lisensi_id_fkey;
+ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_lisensi_id_fkey;
 ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_jabatan_id_fkey;
 ALTER TABLE ONLY public.lisensi_pekerjaan DROP CONSTRAINT lisensi_pekerjaan_fungsi_pekerjaan_id_fkey;
 ALTER TABLE ONLY public.kompetensi DROP CONSTRAINT kompetensi_unit_id;
@@ -1332,7 +1333,7 @@ SELECT pg_catalog.setval('public.diklat_id_seq', 1, false);
 -- Name: dosen_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.dosen_id_seq', 3, true);
+SELECT pg_catalog.setval('public.dosen_id_seq', 1, true);
 
 
 --
@@ -1908,6 +1909,14 @@ ALTER TABLE ONLY public.lisensi_pekerjaan
 
 ALTER TABLE ONLY public.lisensi_pekerjaan
     ADD CONSTRAINT lisensi_pekerjaan_jabatan_id_fkey FOREIGN KEY (jabatan_id) REFERENCES public.jabatan(id);
+
+
+--
+-- Name: lisensi_pekerjaan lisensi_pekerjaan_lisensi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lisensi_pekerjaan
+    ADD CONSTRAINT lisensi_pekerjaan_lisensi_id_fkey FOREIGN KEY (lisensi_id) REFERENCES public.lisensi(id);
 
 
 --
