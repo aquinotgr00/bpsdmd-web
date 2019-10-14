@@ -110,7 +110,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="import-modal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form action="{{route('administrator.diklat.upload')}}" method="POST" enctype="multipart/form-data">@csrf
+          <form action="{{route('administrator.shortCourse.upload')}}" method="POST" enctype="multipart/form-data">@csrf
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">{{ ucfirst(trans('common.upload')) }} {{ ucfirst(trans('common.diklat')) }}</h4>

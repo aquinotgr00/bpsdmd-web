@@ -11,6 +11,10 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Exceptions\ShortCourseDeleteException;
 use Image;
+use App\Services\Domain\FeederService;
+use App\Services\Application\AuthService;
+use App\Imports\ShortCourseImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ShortCourseController extends Controller
 {
@@ -150,7 +154,7 @@ class ShortCourseController extends Controller
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
             $idFeeder = $feederService->create(collect($dataFeeder))->getId();
 
-            $importer = new DiklatImport;
+            $importer = new ShortCourseImport;
 
             Excel::import($importer, public_path('/excel/'.$nama_file));
 
@@ -159,13 +163,13 @@ class ShortCourseController extends Controller
             $feederService->activeFeeder($feeder);
 
             $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.diklat')]);
+            $message = trans('common.feeder_success', ['object' => trans('common.short_course')]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.feeder_failed', ['object' => trans('common.diklat')]);
+            $message = trans('common.feeder_failed', ['object' => trans('common.short_course')]);
         }
 
-        return redirect()->route('administrator.diklat.index')->with($alert, $message);
+        return redirect()->route('administrator.shortCourse.index')->with($alert, $message);
     }
 }
