@@ -91,3 +91,7 @@
     </div>
     <!-- / Form -->
 @endsection
+
+@section('script')
+    <script src="{{ asset('js/refreshbg.js') }}"></script>
+@endsection

@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data {{ ucwords(trans('common.data_diklat')) }}</h1>
+        <h1>Data {{ ucfirst(trans('common.certificate')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.data_diklat')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.certificate')) }}
                 </a>
             </li>
         </ol>
@@ -25,10 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>{{ ucwords(trans('common.start_date')) }}</th>
-                                    <th>{{ ucwords(trans('common.end_date')) }}</th>
-                                    <th>{{ ucwords(trans('common.total_target_student')) }}</th>
-                                    <th>{{ ucwords(trans('common.total_realization_student')) }}</th>
+                                    <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
@@ -39,10 +36,7 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
-                                    <td>{{ $item->getStartDate()->format('d F Y') }}</td>
-                                    <td>{{ $item->getEndDate()->format('d F Y') }}</td>
-                                    <td>{{ $item->getTotalTarget() ? $item->getTotalTarget() : '-' }}</td>
-                                    <td>{{ $item->getTotalRealization() ? $item->getTotalRealization() : '-' }}</td>
+                                    <td>{{ $item->getName() }}</td>
                                     <td>
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
@@ -54,7 +48,7 @@
 
                                 @if(!count($data))
                                     <tr class="even pointer">
-                                        <td colspan="6">{{ ucfirst(trans('common.no_data')) }}</td>
+                                        <td colspan="5">{{ ucfirst(trans('common.no_data')) }}</td>
                                     </tr>
                                 @endif
                             </tbody>

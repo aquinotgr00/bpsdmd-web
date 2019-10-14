@@ -1,0 +1,34 @@
+/* Login - Register */
+html body.page-signin {
+    background-size: cover;
+}
+.mascott {
+    width: 100%;
+    position: relative;
+}
+
+.mascott img:first-child {
+    width: 60%;
+    left: -45px;
+    top: 130px;
+}
+
+.mascott img:last-child {
+    width: 60%;
+    right: -45px;
+    top: 130px;
+}
+
+.mascott img:nth-child(2) {
+    width: 115%;
+    top: 75px;
+    left: -13px;
+}
+
+.mascott img {
+    position: absolute;
+}
+
+.recaptcha {
+    margin: 20px 20px 0px 13px;
+}

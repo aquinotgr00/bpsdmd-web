@@ -75,19 +75,19 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\LicenseController@index')->name('administrator.license.index');
     });
 
-    Route::group(['prefix' => '/diklat', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\DiklatController@create')->name('administrator.diklat.create');
-        Route::any('/{diklat}/update', 'Administrator\DiklatController@update')->name('administrator.diklat.update');
-        Route::get('/{diklat}/delete', 'Administrator\DiklatController@delete')->name('administrator.diklat.delete');
-        Route::get('/{diklat}', 'Administrator\DiklatController@ajaxDetailDiklat')->name('administrator.diklat.view');
-        Route::get('/', 'Administrator\DiklatController@index')->name('administrator.diklat.index');
-        Route::post('/upload', 'Administrator\DiklatController@upload')->name('administrator.diklat.upload');
+    Route::group(['prefix' => '/shortCourse', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\ShortCourseController@create')->name('administrator.shortCourse.create');
+        Route::any('/{shortCourse}/update', 'Administrator\ShortCourseController@update')->name('administrator.shortCourse.update');
+        Route::get('/{shortCourse}/delete', 'Administrator\ShortCourseController@delete')->name('administrator.shortCourse.delete');
+        Route::get('/{shortCourse}', 'Administrator\ShortCourseController@ajaxDetailShortCourse')->name('administrator.shortCourse.view');
+        Route::get('/', 'Administrator\ShortCourseController@index')->name('administrator.shortCourse.index');
+        Route::post('/upload', 'Administrator\ShortCourseController@upload')->name('administrator.shortCourse.upload');
 
-        Route::group(['prefix' => '/{diklat}/data_diklat', 'middleware' => ['only_admin']], function() {
-            Route::any('/create', 'Administrator\Data_diklatController@create')->name('administrator.data_diklat.create');
-            Route::any('/{data_diklat}/update', 'Administrator\Data_diklatController@update')->name('administrator.data_diklat.update');
-            Route::get('/{data_diklat}/delete', 'Administrator\Data_diklatController@delete')->name('administrator.data_diklat.delete');
-            Route::get('/', 'Administrator\Data_diklatController@index')->name('administrator.data_diklat.index');
+        Route::group(['prefix' => '/{shortCourse}/shortCourseData', 'middleware' => ['only_admin']], function() {
+            Route::any('/create', 'Administrator\ShortCourseDataController@create')->name('administrator.shortCourseData.create');
+            Route::any('/{shortCourseData}/update', 'Administrator\ShortCourseDataController@update')->name('administrator.shortCourseData.update');
+            Route::get('/{shortCourseData}/delete', 'Administrator\ShortCourseDataController@delete')->name('administrator.shortCourseData.delete');
+            Route::get('/', 'Administrator\ShortCourseDataController@index')->name('administrator.shortCourseData.index');
         });
     });
 
@@ -125,6 +125,21 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{employee}/delete', 'Demand\EmployeeController@delete')->name('demand.employee.delete');
         Route::get('/{employee}', 'Demand\EmployeeController@ajaxDetailEmployee')->name('demand.employee.view');
         Route::get('/', 'Demand\EmployeeController@index')->name('demand.employee.index');
+
+        Route::group(['prefix' => '/{employee}/employeeCertificate', 'middleware' => ['only_demand']], function() {
+            Route::any('/create', 'Demand\EmployeeCertificateController@create')->name('demand.employeeCertificate.create');
+            Route::any('/{employeeCertificate}/update', 'Demand\EmployeeCertificateController@update')->name('demand.employeeCertificate.update');
+            Route::get('/{employeeCertificate}/delete', 'Demand\EmployeeCertificateController@delete')->name('demand.employeeCertificate.delete');
+            Route::get('/{employeeCertificate}', 'Demand\EmployeeCertificateController@ajaxDetailEmployeeCertificate')->name('demand.employeeCertificate.view');
+            Route::get('/', 'Demand\EmployeeCertificateController@index')->name('demand.employeeCertificate.index');
+        });
+    });
+
+    Route::group(['prefix' => '/certificate', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'Demand\CertificateController@create')->name('demand.certificate.create');
+        Route::any('/{certificate}/update', 'Demand\CertificateController@update')->name('demand.certificate.update');
+        Route::get('/{certificate}/delete', 'Demand\CertificateController@delete')->name('demand.certificate.delete');
+        Route::get('/', 'Demand\CertificateController@index')->name('demand.certificate.index');
     });
 
     // utils routes

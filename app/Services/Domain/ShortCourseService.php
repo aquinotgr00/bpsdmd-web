@@ -3,9 +3,12 @@
 namespace App\Services\Domain;
 
 use App\Entities\ShortCourse;
+use App\Entities\Organization;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
 
 class ShortCourseService
@@ -25,13 +28,12 @@ class ShortCourseService
     }
 
     /**
-     * Instance repository
-     *
-     * @return EntityRepository
+     * @param $dql
+     * @return \Doctrine\ORM\Query
      */
-    public function getRepository()
+    public function createQuery($dql)
     {
-        return EntityManager::getRepository(ShortCourse::class);
+        return EntityManager::createQuery($dql);
     }
 
     /**
@@ -48,5 +50,108 @@ class ShortCourseService
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    /**
+     * Instance repository
+     *
+     * @return EntityRepository
+     */
+    public function getRepository()
+    {
+        return EntityManager::getRepository(ShortCourse::class);
+    }
+
+    /**
+     * Paginate ShortCourse
+     *
+     * @param $page
+     * @param Organization $org
+     * @return LengthAwarePaginator
+     */
+    public function paginateShortCourse($page): LengthAwarePaginator
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('sc')
+            ->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
+    /**
+     * Create new ShortCourse
+     *
+     * @param Collection $data
+     * @param bool $flush
+     * @return ShortCourse
+     */
+    public function create(Collection $data, $org = false, $flush = true)
+    {
+        $shortCourse = new ShortCourse;
+        $shortCourse->setName($data->get('name'));
+        $shortCourse->setType($data->get('type'));
+
+        if ($org instanceof Organization) {
+            $shortCourse->setOrg($org);
+        }
+
+        EntityManager::persist($shortCourse);
+
+        if ($flush) {
+            EntityManager::flush();
+
+            return $shortCourse;
+        }
+    }
+
+    /**
+     * Update ShortCourse
+     *
+     * @param ShortCourse $shortCourse
+     * @param Collection $data
+     * @param bool $flush
+     * @return ShortCourse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function update(ShortCourse $shortCourse, Collection $data, $org = false, $flush = true)
+    {
+        $shortCourse->setName($data->get('name'));
+        $shortCourse->setType($data->get('type'));
+
+        if ($org instanceof Organization) {
+            $shortCourse->setOrg($org);
+        }
+
+        EntityManager::persist($shortCourse);
+
+        if ($flush) {
+            EntityManager::flush();
+
+            return $shortCourse;
+        }
+    }
+
+    /**
+     * Delete ShortCourse
+     *
+     * @param ShortCourse $shortCourse
+     * @return bool
+     * @throws ProgramDeleteException
+     */
+    public function delete(ShortCourse $shortCourse)
+    {
+        EntityManager::remove($shortCourse);
+        EntityManager::flush();
+    }
+
+    /**
+     * Find ShortCourse by id
+     *
+     * @param $id
+     * @return ShortCourse
+     */
+    public function findById($id)
+    {
+        return $this->getRepository()->find($id);
     }
 }

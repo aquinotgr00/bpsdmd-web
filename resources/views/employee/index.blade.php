@@ -48,7 +48,8 @@
                                     <td>
                                         <a href="javascript:void(0)" class="viewEmployee" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a> |
+                                        <a href="{{ $urlCertificate($item->getId()) }}"><i class="fa fa-envelope"></i> {{ ucwords(trans('common.certificate')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -170,7 +171,7 @@
         });
     });
 
-    $('#modalDetailStudent').on('hidden.bs.modal', function (e) {
+    $('#modalDetailEmployee').on('hidden.bs.modal', function (e) {
         modalHtml.find('.employeeCode').html('');
         modalHtml.find('.employeeName').html('');
         modalHtml.find('.employeeSchool').html('');

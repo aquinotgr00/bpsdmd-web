@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>{{ ucfirst(trans('common.edit')) }} {{ ucfirst(trans('common.diklat')) }}</h1>
+        <h1>{{ ucfirst(trans('common.edit')) }} {{ ucfirst(trans('common.short_course')) }}</h1>
     </section>
 
     <!-- Main content -->
@@ -37,8 +37,8 @@
                             <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                                 <label for="type">{{ ucfirst(trans('common.type')) }} :</label>
                                 <select id="type" name="type" class="form-control">
-                                    <option value="{{ \App\Entities\Diklat::TYPE_DPM }}" {{ $data->getType() == \App\Entities\Diklat::TYPE_DPM ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Diklat::TYPE_DPM) }}</option>
-                                    <option value="{{ \App\Entities\Diklat::TYPE_TEKNIS }}" {{ $data->getType() == \App\Entities\Diklat::TYPE_TEKNIS ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Diklat::TYPE_TEKNIS) }}</option>
+                                    <option value="{{ \App\Entities\ShortCourse::TYPE_DPM }}" {{ $data->getType() == \App\Entities\ShortCourse::TYPE_DPM ? 'selected' : '' }}>{{ ucfirst(\App\Entities\ShortCourse::TYPE_DPM) }}</option>
+                                    <option value="{{ \App\Entities\ShortCourse::TYPE_TEKNIS }}" {{ $data->getType() == \App\Entities\ShortCourse::TYPE_TEKNIS ? 'selected' : '' }}>{{ ucfirst(\App\Entities\ShortCourse::TYPE_TEKNIS) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
                             </div>

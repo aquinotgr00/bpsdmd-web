@@ -30,9 +30,9 @@
     </li>
 
     <li>
-        <a href="{{ url(route('administrator.diklat.index')) }}">
+        <a href="{{ url(route('administrator.shortCourse.index')) }}">
             <i class="fa fa-calendar"></i>
-            <span>{{ ucwords(trans('common.diklat')) }}</span>
+            <span>{{ ucwords(trans('common.short_course')) }}</span>
         </a>
     </li>
     @endif
@@ -63,6 +63,12 @@
             <a href="{{ route('demand.employee.index') }}">
                 <i class="fa fa-user"></i>
                 <span>{{ ucwords(trans('common.employee')) }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('demand.certificate.index') }}">
+                <i class="fa fa-envelope"></i>
+                <span>{{ ucwords(trans('common.certificate')) }}</span>
             </a>
         </li>
     @endif

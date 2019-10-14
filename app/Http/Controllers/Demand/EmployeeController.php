@@ -28,8 +28,11 @@ class EmployeeController extends Controller
             return url(route('demand.employee.delete', [$id]));
         };
         $urlDetail = '/employee';
+        $urlCertificate = function($id){
+            return url(route('demand.employeeCertificate.index', [$id]));
+        };
 
-        return view('employee.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
+        return view('employee.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlCertificate'));
     }
 
     public function create(Request $request, EmployeeService $employeeService, OrgService $orgService)

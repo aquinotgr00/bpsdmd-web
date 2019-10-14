@@ -762,15 +762,15 @@ a, a:hover { text-decoration: none; }
 .checkbox label::after, .checkbox label::before, .radio label::after, .radio label::before { content: " "; display: table; }
 .checkbox label::after, .radio label::after { clear: both; }
 .has-error .help-block::after, .has-error .help-block::before, .has-success .help-block::after, .has-success .help-block::before, .has-warning .help-block::after, .has-warning .help-block::before { content: ""; position: absolute; border-left: 6px solid transparent; border-right: 6px solid transparent; }
-.has-error .help-block::before, .has-success .help-block::before, .has-warning .help-block::before { border-bottom: 7px solid; border-width: 7px; left: 16px; top: -7px; }
-.has-error .help-block::after, .has-success .help-block::after, .has-warning .help-block::after { border-bottom: 6px solid; left: 17px; top: -6px; }
+/* .has-error .help-block::before, .has-success .help-block::before, .has-warning .help-block::before { border-bottom: 7px solid; border-width: 7px; left: 55px; top: 38px; } */
+/* .has-error .help-block::after, .has-success .help-block::after, .has-warning .help-block::after { border-bottom: 6px solid; left: 17px; top: -6px; } */
 .has-error.simple .help-block::after, .has-error.simple .help-block::before, .has-success.simple .help-block::after, .has-success.simple .help-block::before, .has-warning.simple .help-block::after, .has-warning.simple .help-block::before { display: none; }
 .has-feedback:not(.form-group) { position: relative; }
 .has-feedback:not(.form-group) .form-control-feedback { top: 0px; }
 .has-warning .help-block::before { border-bottom-color: rgb(241, 204, 126); }
 .has-warning .help-block::after { border-bottom-color: rgb(249, 242, 204); }
 .has-error .help-block::before { border-bottom-color: rgb(221, 167, 176); }
-.has-error .help-block::after { border-bottom-color: rgb(243, 226, 226); }
+/* .has-error .help-block::after { border-bottom-color: rgb(243, 226, 226); } */
 .has-success .help-block::before { border-bottom-color: rgb(181, 216, 153); }
 .has-success .help-block::after { border-bottom-color: rgb(226, 241, 220); }
 .has-warning.dark .help-block::before { border-bottom-color: rgb(208, 128, 13); }

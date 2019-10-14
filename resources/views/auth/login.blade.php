@@ -9,7 +9,7 @@
             <span>{{trans('common.login_header')}}</span>
 
             @if(session('alert') ?? false)
-                <div class="alert alert-info alert-dismissible" role="alert">
+                <div class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     {{ session('alert') }}
                 </div>
@@ -27,11 +27,13 @@
             <span class="fa fa-lock signin-form-icon"></span>
             <span class="help-block ">{!! implode('', $errors->get('password')) !!}</span>
 		</div> <!-- / Password -->
-		
-		{!! NoCaptcha::display() !!}
+
+        <div class="recaptcha">
+		    {!! NoCaptcha::display() !!}
+		</div>
 
 		@if ($errors->has('g-recaptcha-response'))
-			<span class="help-block">
+			<span class="help-block recaptcha response">
 				<strong>{{ $errors->first('g-recaptcha-response') }}</strong>
 			</span>
 		@endif
@@ -47,4 +49,8 @@
         <a href="{{ route('register') }}">{{trans('common.register_button')}}</a>
     </div>
     <!-- / Form -->
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/refreshbg.js') }}"></script>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.diklat')) }}</h1>
+        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.short_course')) }}</h1>
     </section>
 
     <!-- Main content -->
@@ -21,7 +21,7 @@
                                     <option value="">{{ ucwords(trans('common.choose_institute')) }}</option>
                                     @if(!empty($dataOrg))
                                         @foreach($dataOrg as $org)
-                                        <option value="{{ $org->getId() }}">{{ $org->getName() }}</option>
+                                        <option value="{{ $org->getId() }}" {{ old('org') == $org->getId() ? 'selected' : '' }}>{{ $org->getName() }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -37,8 +37,8 @@
                             <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                                 <label for="type">{{ ucfirst(trans('common.type')) }} :</label>
                                 <select id="type" name="type" class="form-control">
-                                    <option value="{{ \App\Entities\Diklat::TYPE_DPM }}" {{ old('type') == \App\Entities\Diklat::TYPE_DPM ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Diklat::TYPE_DPM) }}</option>
-                                    <option value="{{ \App\Entities\Diklat::TYPE_TEKNIS }}" {{ old('type') == \App\Entities\Diklat::TYPE_TEKNIS ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Diklat::TYPE_TEKNIS) }}</option>
+                                    <option value="{{ \App\Entities\ShortCourse::TYPE_DPM }}" {{ old('type') == \App\Entities\ShortCourse::TYPE_DPM ? 'selected' : '' }}>{{ ucfirst(\App\Entities\ShortCourse::TYPE_DPM) }}</option>
+                                    <option value="{{ \App\Entities\ShortCourse::TYPE_TEKNIS }}" {{ old('type') == \App\Entities\ShortCourse::TYPE_TEKNIS ? 'selected' : '' }}>{{ ucfirst(\App\Entities\ShortCourse::TYPE_TEKNIS) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
                             </div>

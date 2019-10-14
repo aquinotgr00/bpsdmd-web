@@ -26,6 +26,9 @@
 	<!-- gsFontsEmbed -->
 	<link href="{{ asset('gsFonts/gsFontsEmbed.css') }}" rel="stylesheet" type="text/css" />
 
+	<!-- BPSDM styling -->
+	<link href="{{ asset('css/bpsdm-styling.css') }}" rel="stylesheet" type="text/css" />
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,7 +37,7 @@
     <![endif]-->
 
 	<link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
-	
+
 	<style>
 		.signin-form .form-group.required-asterisk > label::after, .signin-form .form-group.required-asterisk > div > label::after {
 			content: " *";
@@ -58,8 +61,6 @@
 	<div id="page-signin-bg">
 		<!-- Background overlay -->
 		<div class="overlay"></div>
-		<!-- Replace this with your bg image -->
-		<img style="" src="{{ asset('img/loginbg.jpg') }}" alt="">
 	</div>
 	<!-- / Page background -->
 
@@ -70,18 +71,17 @@
 		<!-- Left side -->
 		<div class="signin-info">
 			<a href="#" class="logo">
-				{{ config('app.name') }}
+				{{trans('common.application_name')}}
 			</a> <!-- / .logo -->
-			{{-- <div class="slogan">
-				Company name
-			</div> --}}
+			<div class="slogan">
+				{{trans('common.app_sub_name')}}
+			</div>
 			<!-- / .slogan -->
-			<ul>
-				<li><i class="fa fa-dashboard signin-icon"></i> Dashboard</li>
-				<li><i class="fa fa-bar-chart-o signin-icon"></i> Grafik</li>
-				<li><i class="fa fa-table signin-icon"></i> Tabular</li>
-				<li><i class="fa fa-search signin-icon"></i> Pencarian Taruna</li>
-			</ul> <!-- / Info list -->
+			<div class="mascott">
+				<img src="{{ asset('img/TARUNA BPSDMP.png') }}" alt="">
+				<img src="{{ asset('img/Logo HARHUBNAS 2019.png') }}" alt="">
+				<img src="{{ asset('img/TARUNI BPSDMP.png') }}" alt="">
+			</div>
 		</div>
         <!-- / Left side -->
         @endif
@@ -89,7 +89,7 @@
 		<!-- Right side -->
 		<div class="signin-form">
 			<div style="text-align: center;">
-				<img src="{{ asset('img/bpsdmp.png') }}" alt="" style="margin-top: -5px;">
+				<img src="{{ asset('img/kemenhub.png') }}" alt="" style="margin-top: -5px;">
 			</div>
 
             <!-- Content -->
@@ -99,5 +99,7 @@
 		<!-- Right side -->
 	</div>
 	<!-- / Container -->
+
+    @yield('script')
 </body>
 </html>
