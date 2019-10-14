@@ -118,6 +118,7 @@
               <div class="modal-body">
                 <label for="file">{{ ucfirst(trans('common.choose_file')) }}</label>
                 <input type="file" name="file" class="form-control">
+                <p>Unduh contoh file: <a href="{{route('administrator.shortCourse.template.download')}}">template</a></p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

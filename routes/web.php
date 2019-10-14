@@ -80,6 +80,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{shortCourse}/update', 'Administrator\ShortCourseController@update')->name('administrator.shortCourse.update');
         Route::get('/{shortCourse}/delete', 'Administrator\ShortCourseController@delete')->name('administrator.shortCourse.delete');
         Route::get('/{shortCourse}', 'Administrator\ShortCourseController@ajaxDetailShortCourse')->name('administrator.shortCourse.view');
+        Route::get('/download/template', 'Administrator\ShortCourseController@templateDownload')->name('administrator.shortCourse.template.download');
         Route::get('/', 'Administrator\ShortCourseController@index')->name('administrator.shortCourse.index');
         Route::post('/upload', 'Administrator\ShortCourseController@upload')->name('administrator.shortCourse.upload');
 

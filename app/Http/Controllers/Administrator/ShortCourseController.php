@@ -172,4 +172,10 @@ class ShortCourseController extends Controller
 
         return redirect()->route('administrator.shortCourse.index')->with($alert, $message);
     }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-diklat.xlsx";
+        return response()->download($file, 'template.xlsx');
+    }
 }
