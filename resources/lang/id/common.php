@@ -37,6 +37,7 @@ return [
     'delete' => 'hapus',
     'action' => 'aksi',
     'no_data' => 'Tidak ada data.',
+    'import' => 'import',
 
     // manage user
     'user_information' => 'informasi pengguna',

@@ -81,6 +81,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{diklat}/delete', 'Administrator\DiklatController@delete')->name('administrator.diklat.delete');
         Route::get('/{diklat}', 'Administrator\DiklatController@ajaxDetailDiklat')->name('administrator.diklat.view');
         Route::get('/', 'Administrator\DiklatController@index')->name('administrator.diklat.index');
+        Route::post('/upload', 'Administrator\DiklatController@upload')->name('administrator.diklat.upload');
 
         Route::group(['prefix' => '/{diklat}/data_diklat', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\Data_diklatController@create')->name('administrator.data_diklat.create');

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Exceptions\DiklatDeleteException;
 use Image;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Application\AuthService;
 
 class DiklatController extends Controller
 {
@@ -149,6 +150,6 @@ class DiklatController extends Controller
             $message = trans('common.feeder_failed', ['object' => trans('common.diklat')]);
         }
 
-        return redirect()->route('supply.diklat.index')->with($alert, $message);
+        return redirect()->route('administrator.diklat.index')->with($alert, $message);
     }
 }

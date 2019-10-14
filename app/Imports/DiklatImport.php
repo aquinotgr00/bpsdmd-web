@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Entities\DataDiklat;
 use EntityManager;
 use App\Entities\Diklat;
-use App\Entities\Organization;
+use App\Services\Domain\OrgService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -18,12 +18,13 @@ class DiklatImport implements ToCollection
      */
     public function collection (Collection $cols)
     {
+        $orgService = new OrgService;
         foreach ($cols as $key => $col) 
         {
             if($key == 0){
                 continue;
             }
-            $org = Organization::where('name', $col[4])->first();
+            $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
             $diklat = new Diklat;
             $diklat->setOrg($org);
             $diklat->setName($col[1]);
@@ -43,6 +44,8 @@ class DiklatImport implements ToCollection
             $data_diklat->setPlace($col[12]);
 
             EntityManager::persist($diklat);
+            EntityManager::flush();
+
             EntityManager::persist($data_diklat);
             EntityManager::flush();
         }
