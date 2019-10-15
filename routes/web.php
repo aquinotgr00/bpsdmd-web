@@ -54,6 +54,15 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::get('/{employee}/delete', 'Administrator\EmployeeController@delete')->name('administrator.employee.delete');
             Route::get('/{employee}', 'Administrator\EmployeeController@ajaxDetailEmployee')->name('administrator.employee.view');
             Route::get('/', 'Administrator\EmployeeController@index')->name('administrator.employee.index');
+
+            Route::group(['prefix' => '/{employee}/employeeCertificate', 'middleware' => ['only_admin']], function() {
+                Route::any('/create', 'Administrator\EmployeeCertificateController@create')->name('administrator.employeeCertificate.create');
+                Route::any('/{employeeCertificate}/update', 'Administrator\EmployeeCertificateController@update')->name('administrator.employeeCertificate.update');
+                Route::get('/{employeeCertificate}/delete', 'Administrator\EmployeeCertificateController@delete')->name('administrator.employeeCertificate.delete');
+                Route::get('/{employeeCertificate}', 'Administrator\EmployeeCertificateController@ajaxDetailEmployeeCertificate')->name('administrator.employeeCertificate.view');
+                Route::any('/upload', 'Administrator\EmployeeCertificateController@upload')->name('administrator.employeeCertificate.upload');
+                Route::get('/', 'Administrator\EmployeeCertificateController@index')->name('administrator.employeeCertificate.index');
+            });
         });
     });
 

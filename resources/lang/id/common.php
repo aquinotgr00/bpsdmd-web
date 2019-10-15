@@ -177,5 +177,6 @@ return [
     'employee_certificate' => 'sertifikat pegawai',
     'choose_certificate' => 'pilih sertifikat',
     'invalid_certificate' => 'Sertifikat yang Anda pilih tidak valid.',
+    'certificate_feeder' => 'unggah feeder data sertifikat pegawai',
 
 ];

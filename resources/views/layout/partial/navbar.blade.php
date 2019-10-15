@@ -8,33 +8,33 @@
     </li>
 
     @if(checkAuthorization(\App\Entities\User::ROLE_ADMIN))
-    <li>
-        <a href="{{ url(route('administrator.org.index')) }}">
-            <i class="fa fa-sitemap"></i>
-            <span>{{ ucfirst(trans('common.institute')) }}</span>
-        </a>
-    </li>
+        <li>
+            <a href="{{ url(route('administrator.org.index')) }}">
+                <i class="fa fa-sitemap"></i>
+                <span>{{ ucfirst(trans('common.institute')) }}</span>
+            </a>
+        </li>
 
-    <li>
-        <a href="{{ url(route('administrator.user.index')) }}">
-            <i class="fa fa-group"></i>
-            <span>{{ ucwords(trans('common.user_management')) }}</span>
-        </a>
-    </li>
+        <li>
+            <a href="{{ url(route('administrator.user.index')) }}">
+                <i class="fa fa-group"></i>
+                <span>{{ ucwords(trans('common.user_management')) }}</span>
+            </a>
+        </li>
 
-    <li>
-        <a href="{{ url(route('administrator.license.index')) }}">
-            <i class="fa fa-file"></i>
-            <span>{{ ucwords(trans('common.license')) }}</span>
-        </a>
-    </li>
+        <li>
+            <a href="{{ url(route('administrator.license.index')) }}">
+                <i class="fa fa-file"></i>
+                <span>{{ ucwords(trans('common.license')) }}</span>
+            </a>
+        </li>
 
-    <li>
-        <a href="{{ url(route('administrator.shortCourse.index')) }}">
-            <i class="fa fa-calendar"></i>
-            <span>{{ ucwords(trans('common.short_course')) }}</span>
-        </a>
-    </li>
+        <li>
+            <a href="{{ url(route('administrator.shortCourse.index')) }}">
+                <i class="fa fa-calendar"></i>
+                <span>{{ ucwords(trans('common.short_course')) }}</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))

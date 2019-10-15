@@ -29,7 +29,7 @@ class EmployeeController extends Controller
         };
         $urlDetail = '/org/'.$org->getId().'/employee';
         $urlCertificate = function($id) use ($org) {
-            return url(route('administrator.employeeCertificate.delete', [$org->getId(), $id]));
+            return url(route('administrator.employeeCertificate.index', [$org->getId(), $id]));
         };
 
         return view('employee.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlCertificate'));

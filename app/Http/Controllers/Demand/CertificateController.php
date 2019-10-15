@@ -15,7 +15,7 @@ class CertificateController extends Controller
     public function index(CertificateService $certificateService)
     {
         $page = request()->get('page');
-        $data = $certificateService->paginateCertificate(request()->get('page'), currentUser()->getOrg());
+        $data = $certificateService->paginateCertificate(request()->get('page'));
 
         //build urls
         $urlCreate = url(route('demand.certificate.create'));

@@ -5,9 +5,16 @@
         <h1>Data {{ ucwords(trans('common.employee_certificate')) }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.employee_certificate')) }}
-                </a>
+                @if(checkAuthorization(\App\Entities\User::ROLE_ADMIN))
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExcel" style="padding:4px 6px;font-size:12px">
+                        <i class="fa fa-upload"></i> {{ ucwords(trans('common.certificate_feeder')) }}
+                    </button>
+                @endif
+                @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))
+                    <a href="{{ $urlCreate }}">
+                        <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.employee_certificate')) }}
+                    </a>
+                @endif
             </li>
         </ol>
     </section>
@@ -40,9 +47,11 @@
                                     <td>{{ $item->getCertificate() instanceof \App\Entities\Certificate ? $item->getCertificate()->getName() : '-' }}</td>
                                     <td>{{ $item->getValidityPeriod() instanceof \DateTime ? $item->getValidityPeriod()->format('d F Y') : '' }}</td>
                                     <td>
-                                        <a href="javascript:void(0)" class="viewEmployeeCertificate" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="javascript:void(0)" class="viewEmployeeCertificate" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a>
+                                        @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))
+                                            | <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a>
+                                            | <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <?php
@@ -94,6 +103,32 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="post" action="{{ $urlUpload }}" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="upload">{{ ucwords(trans('common.certificate_feeder')) }}</h5>
+                        </div>
+                        <div class="modal-body">
+
+                            {{ csrf_field() }}
+
+                            <label>{{ ucfirst(trans('common.choose_file')) }}</label>
+                            <div class="form-group">
+                                <input type="file" name="file" required="required">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">{{ ucwords(trans('common.upload')) }}</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </section><!-- /.content -->
