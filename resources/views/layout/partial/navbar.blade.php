@@ -71,5 +71,11 @@
                 <span>{{ ucwords(trans('common.certificate')) }}</span>
             </a>
         </li>
+        <li>
+            <a href="{{ route('demand.recruitment.index') }}">
+                <i class="fa fa-cart-plus"></i>
+                <span>{{ ucwords(trans('common.recruitment')) }}</span>
+            </a>
+        </li>
     @endif
 </ul>

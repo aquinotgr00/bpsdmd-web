@@ -152,6 +152,10 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Demand\CertificateController@index')->name('demand.certificate.index');
     });
 
+    Route::group(['prefix' => '/recruitment', 'middleware' => ['only_demand']], function() {
+        Route::get('/', 'Demand\RecruitmentController@index')->name('demand.recruitment.index');
+    });
+
     // utils routes
     Route::any('/update-profile', 'UtilityController@updateProfile')->name('update.profile');
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');

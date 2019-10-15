@@ -179,4 +179,6 @@ return [
     'invalid_certificate' => 'Sertifikat yang Anda pilih tidak valid.',
     'certificate_feeder' => 'unggah feeder data sertifikat pegawai',
 
+    //manage recruitment
+    'recruitment' => 'penawaran siswa',
 ];
