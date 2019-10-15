@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Entities\Organization;
 use EntityManager;
 use App\Entities\ShortCourse;
 use App\Services\Domain\ShortCourseDataService;
@@ -21,7 +22,7 @@ class ShortCourseImport implements ToCollection
     {
         foreach ($cols as $key => $col) 
         {
-            if($key == 0){
+            if($key == 0 || is_null($col[2])){
                 continue;
             }
 
@@ -50,9 +51,6 @@ class ShortCourseImport implements ToCollection
             ]);
             $subShortCourse = new ShortCourseDataService;
             $subShortCourse->create($subShortCourseData, $shortCourse);
-
-            EntityManager::persist($subShortCourse);
-            EntityManager::flush();
         }
     }
 }
