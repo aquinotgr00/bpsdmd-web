@@ -110,6 +110,13 @@ class Employee
     private $photo = NULL;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", nullable=true)
+     */
+    private $email = NULL;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -299,5 +306,21 @@ class Employee
     public function setPhoto($photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
     }
 }

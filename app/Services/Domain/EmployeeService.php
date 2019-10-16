@@ -84,6 +84,7 @@ class EmployeeService
         $employee = new Employee;
         $employee->setCode($data->get('code'));
         $employee->setName($data->get('name'));
+        $employee->setEmail($data->get('email'));
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
         $employee->setPlaceOfBirth($data->get('placeOfBirth'));
@@ -123,6 +124,7 @@ class EmployeeService
     {
         $employee->setCode($data->get('code'));
         $employee->setName($data->get('name'));
+        $employee->setEmail($data->get('email'));
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
         $employee->setPlaceOfBirth($data->get('placeOfBirth'));

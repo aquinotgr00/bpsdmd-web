@@ -27,6 +27,12 @@
                                 <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <label for="email">{{ ucfirst(trans('common.email')) }} :</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
+                            </div>
+
                             <div class="form-group {{ $errors->has('school') ? 'has-error' : '' }}">
                                 <label for="school">{{ ucfirst(trans('common.school')) }} :</label>
                                 <select class="form-control" id="school" name="school">

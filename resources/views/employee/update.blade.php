@@ -13,7 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         <form method="post" enctype="multipart/form-data">
-                        @csrf
+                            @csrf
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
@@ -25,6 +25,12 @@
                                 <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $data->getName() }}">
                                 <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <label for="email">{{ ucfirst(trans('common.email')) }} :</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ $data->getEmail() }}">
+                                <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('school') ? 'has-error' : '' }}">
