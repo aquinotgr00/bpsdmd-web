@@ -94,6 +94,11 @@
                                 <td class="employeeName"></td>
                             </tr>
                             <tr>
+                                <th>{{ ucwords(trans('common.email')) }}</th>
+                                <td>:</td>
+                                <td class="employeeEmail"></td>
+                            </tr>
+                            <tr>
                                 <th>{{ ucfirst(trans('common.school')) }}</th>
                                 <td>:</td>
                                 <td class="employeeSchool"></td>
@@ -157,6 +162,7 @@
             if (status === 'success') {
                 modalHtml.find('.employeeCode').html(employee.code);
                 modalHtml.find('.employeeName').html(employee.name);
+                modalHtml.find('.employeeEmail').html(employee.email);
                 modalHtml.find('.employeeSchool').html(employee.school);
                 modalHtml.find('.employeeInstitute').html(employee.org);
                 modalHtml.find('.employeeIdentityNumber').html(employee.identity_number);

@@ -102,7 +102,7 @@ return [
     'nip' => 'nip',
     'front_degree' => 'gelar depan',
     'back_degree' => 'gelar belakang',
-    'identity_number' => 'no ktp',
+    'identity_number' => 'no KTP',
     'nidn' => 'nidn',
     'teacher_feeder' => 'unggah feeder data dosen',
 
