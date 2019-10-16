@@ -148,4 +148,7 @@ return [
     'choose_certificate' => 'choose certificate',
     'invalid_certificate' => 'Chosen certificate is invalid.',
     'certificate_feeder' => 'unggah feeder data employee certificate',
+    
+    //manage recruitment
+    'recruitment' => 'recruitment',
 ];
