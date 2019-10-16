@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Entities\Organization;
 use EntityManager;
 use App\Entities\ShortCourse;
 use App\Services\Domain\ShortCourseDataService;
@@ -21,12 +22,17 @@ class ShortCourseImport implements ToCollection
     {
         foreach ($cols as $key => $col) 
         {
-            if($key == 0){
+            if($key == 0 || is_null($col[2])){
                 continue;
             }
 
             $orgService = new OrgService;
             $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
+            if ($org == null) {
+              $data = collect(['name' => $col[4], 'type' => 'demand']);
+              $orgService->create($data);
+              $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
+            }
 
             $shortCourse = new ShortCourse;
             $shortCourse->setName($col[1]);
@@ -50,9 +56,6 @@ class ShortCourseImport implements ToCollection
             ]);
             $subShortCourse = new ShortCourseDataService;
             $subShortCourse->create($subShortCourseData, $shortCourse);
-
-            EntityManager::persist($subShortCourse);
-            EntityManager::flush();
         }
     }
 }
