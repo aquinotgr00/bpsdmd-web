@@ -10,6 +10,10 @@ return [
     | Common localization i18n
     |
     */
+    // Application Name
+    'application_name' => 'SIM SDM TRANAS',
+    'app_sub_name' => 'Human Resources Development Ministry of Transportation',
+    'app_sub_name_short' => 'BPSDM Transportation',
 
     // menus
     'dashboard' => 'dashboard',
@@ -28,6 +32,7 @@ return [
     'feeder_success' => 'Feeder :object uploaded successfully.',
     'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
+    'confirm_delete' => 'Are you sure?',
 
     // table
     'view' => 'view',
@@ -114,4 +119,36 @@ return [
     'feeder' => 'feeder',
     'upload' => 'upload file',
     'choose_file' => 'choose file',
+
+    // manage lisensi
+    'license' => 'license',
+    'chapter' => 'chapter',
+    'parent' => 'parent',
+
+    //manage short course
+    'short_course' => 'short course',
+    'short_course_data' => 'short course data',
+    'short_course_information' => 'short course information',
+    'start_date' => 'start date',
+    'end_date' => 'end date',
+    'total_target_student' => 'total target student',
+    'total_realization_student' => 'total realization student',
+    'open_sk' => 'open sk',
+    'close_sk' => 'close sk',
+    'generation' => 'generation',
+    'year' => 'year',
+    'short_course_time' => 'short course time',
+    'place' => 'place',
+
+    //manage certificate
+    'certificate' => 'sertifikat',
+    'certificate_information' => 'certificate information',
+    'validity_period' => 'validity period',
+    'employee_certificate' => 'employee certificate',
+    'choose_certificate' => 'choose certificate',
+    'invalid_certificate' => 'Chosen certificate is invalid.',
+    'certificate_feeder' => 'unggah feeder data employee certificate',
+    
+    //manage recruitment
+    'recruitment' => 'recruitment',
 ];

@@ -6,19 +6,19 @@
 .page-invoice.page-invoice-print .invoice-recipient::before { color: rgb(0, 0, 0); background: transparent none repeat scroll 0px 0px; }
 .page-pricing .plans-container::after, .page-pricing .plans-container::before { content: " "; display: table; }
 .page-pricing .plans-container::after { clear: both; }
-html body.page-signin { 
+html body.page-signin {
   /*background: rgb(102, 102, 102) none repeat scroll 0% 0% ! important; */
-  background: transparent url('../img/loginbg.jpg') 50% 50% no-repeat;
+  /* background: transparent url('../img/loginbg.jpg') 50% 50% no-repeat; */
   font-family: 'Roboto', sans-serif;
 }
 #page-signin-bg { height: 100%; left: 0px; overflow: hidden; position: fixed; top: 0px; width: 100%; z-index: 20; }
 #page-signin-bg img { width: 100%; background-repeat: repeat;}
 #page-signin-bg .overlay { background: rgba(0, 0, 0, 0.5) none repeat scroll 0% 0%; bottom: 0px; left: 0px; position: absolute; right: 0px; top: 0px; }
 .page-signin .signin-container { border-radius: 2px; display: block; margin: 20px 14px; position: relative; z-index: 999; }
-.page-signin .signin-info { background: #3C8DBC none repeat scroll 0% 0%;; display: block; overflow: hidden; padding: 20px 30px; text-align: center; opacity: 0.8;}
-.page-signin .signin-info .logo { color: rgb(255, 255, 255); font-size: 30px; font-weight: 700; }
+.page-signin .signin-info { background: #ffffff none repeat scroll 0% 0%; display: block; overflow: hidden; padding: 20px 30px; text-align: center; opacity: 0.8;}
+.page-signin .signin-info .logo { color: rgb(44, 23, 110); font-size: 30px; font-weight: 700; }
 .page-signin .signin-info .logo[href]:hover { opacity: 0.7; }
-.page-signin .signin-info .slogan { color: rgb(255, 255, 255); font-size: 16px; font-weight: 300; margin-top: 5px; }
+.page-signin .signin-info .slogan { color: rgb(44, 23, 110); font-size: 16px; font-weight: 300; margin-top: 5px; }
 .page-signin .signin-info ul { display: none; }
 .page-signin .signin-form { background: rgb(255, 255, 255) none repeat scroll 0% 0%; display: block; padding: 30px; position: relative; }
 .page-signin .signin-form img { width: 100px; }
@@ -36,12 +36,12 @@ html body.page-signin {
 .page-signin .form-actions a.forgot-password:hover { color: rgb(85, 85, 85); text-decoration: none; }
 .page-signin .form-group { margin: 0px; position: relative; }
 .page-signin .form-group + .form-group { margin: 10px 0px 0px; }
-.page-signin .form-group.w-icon .signin-form-icon { border-right: 1px solid rgb(214, 214, 214); bottom: 9px; color: rgb(214, 214, 214); display: block; font-size: 14px; left: 0px; line-height: 27px; position: absolute; text-align: center; top: 9px; width: 40px; z-index: 1002; transition: all 0.3s ease 0s; }
+.page-signin .form-group.w-icon .signin-form-icon { border-right: 1px solid rgb(214, 214, 214); color: rgb(214, 214, 214); display: block; font-size: 14px; left: 0px; line-height: 27px; position: absolute; text-align: center; top: 9px; width: 40px; z-index: 1002; transition: all 0.3s ease 0s; }
 .page-signin .form-group.w-icon input[type="password"], .page-signin .form-group.w-icon input[type="text"] { font-size: 15px; padding-left: 56px; }
 .page-signin .form-group.w-icon input[type="password"]:focus + .signin-form-icon, .page-signin .form-group.w-icon input[type="text"]:focus + .signin-form-icon { color: rgb(136, 136, 136); }
 .page-signin .signin-text { color: rgb(119, 119, 119); display: block; font-size: 15px; font-style: italic; margin-bottom: 25px; position: relative; text-align: center; }
 .page-signin .signin-text span { background: rgb(255, 255, 255) none repeat scroll 0% 0%; display: inline-block; padding: 0px 20px; position: relative; }
-.page-signin .signin-text::before { background: rgb(228, 228, 228) none repeat scroll 0% 0%; content: ""; display: block; height: 1px; left: 0px; position: absolute; right: 0px; top: 50%; }
+/* .page-signin .signin-text::before { background: rgb(228, 228, 228) none repeat scroll 0% 0%; content: ""; display: block; height: 1px; left: 0px; position: absolute; right: 0px; top: 50%; } */
 .page-signin .signin-with { background: rgb(244, 244, 244) none repeat scroll 0% 0%; border-top: 1px solid rgb(221, 221, 221); margin: 30px -30px -30px; padding: 20px 30px; }
 .page-signin .signin-with-btn { border-radius: 2px; color: rgb(255, 255, 255); display: block; font-weight: 300; padding: 10px 0px; text-align: center; transition: all 0.3s ease 0s; }
 .page-signin .signin-with-btn span { font-weight: 600; }
@@ -49,11 +49,11 @@ html body.page-signin {
 .page-signin .not-a-member { color: rgb(255, 255, 255); display: block; font-size: 14px; margin: -20px 0px 0px; padding: 20px 0px; position: relative; text-align: center; z-index: 999; }
 .page-signin .not-a-member a { color: rgb(255, 255, 255); text-decoration: underline; transition: all 0.3s ease 0s; }
 .page-signin .not-a-member a:hover { opacity: 0.6; }
-.fail_login { 
-  margin-bottom: 20px; 
+.fail_login {
+  margin-bottom: 20px;
   background-color: #f56954;
   color: #fff;
-  padding: 10px; 
+  padding: 10px;
 }
 @media (min-width: 480px) {
   .page-signin .form-actions { margin-top: 15px; }

@@ -67,7 +67,7 @@
                                         <a href="{{ url(route('administrator.user.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a>
                                         @if(currentUser()->getId() <> $item->getId())
                                         |
-                                        <a onclick="return confirm('Apakah anda yakin ?')" href="{{ url(route('administrator.user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.user.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                         @endif
                                     </td>
                                 </tr>

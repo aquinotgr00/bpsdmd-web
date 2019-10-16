@@ -10,6 +10,10 @@ return [
     | Translasi umum i18n
     |
     */
+    // Application Name
+    'application_name' => 'SIM SDM TRANAS',
+    'app_sub_name' => 'BPSDM Kementrian Perhubungan',
+    'app_sub_name_short' => 'BPSDM Perhubungan',
 
     // menus
     'dashboard' => 'beranda',
@@ -28,6 +32,7 @@ return [
     'feeder_success' => 'Feeder :object berhasil diunggah.',
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
+    'confirm_delete' => 'Apakah Anda yakin?',
 
     // table
     'view' => 'lihat',
@@ -36,6 +41,7 @@ return [
     'delete' => 'hapus',
     'action' => 'aksi',
     'no_data' => 'Tidak ada data.',
+    'import' => 'import',
 
     // manage user
     'user_information' => 'informasi pengguna',
@@ -96,7 +102,7 @@ return [
     'nip' => 'nip',
     'front_degree' => 'gelar depan',
     'back_degree' => 'gelar belakang',
-    'identity_number' => 'no ktp',
+    'identity_number' => 'no KTP',
     'nidn' => 'nidn',
     'teacher_feeder' => 'unggah feeder data dosen',
 
@@ -140,8 +146,39 @@ return [
     'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
     'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
 
-    //manage feeder
+    // manage feeder
     'feeder' => 'feeder',
     'upload' => 'unggah file',
     'choose_file' => 'pilih file',
+
+    // manage lisensi
+    'license' => 'lisensi',
+    'chapter' => 'BAB',
+    'parent' => 'induk',
+
+    //manage short course
+    'short_course' => 'diklat',
+    'short_course_data' => 'data diklat',
+    'short_course_information' => 'informasi diklat',
+    'start_date' => 'tanggal mulai',
+    'end_date' => 'tanggal selesai',
+    'total_target_student' => 'target jumlah siswa',
+    'total_realization_student' => 'realisasi jumlah siswa',
+    'open_sk' => 'sk buka',
+    'close_sk' => 'sk tutup',
+    'generation' => 'angkatan',
+    'year' => 'tahun',
+    'short_course_time' => 'lama diklat',
+    'place' => 'tempat',
+
+    //manage certificate
+    'certificate' => 'sertifikat',
+    'validity_period' => 'masa berlaku',
+    'employee_certificate' => 'sertifikat pegawai',
+    'choose_certificate' => 'pilih sertifikat',
+    'invalid_certificate' => 'Sertifikat yang Anda pilih tidak valid.',
+    'certificate_feeder' => 'unggah feeder data sertifikat pegawai',
+
+    //manage recruitment
+    'recruitment' => 'penawaran siswa',
 ];

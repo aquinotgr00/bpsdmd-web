@@ -13,7 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         <form method="post" enctype="multipart/form-data">
-                        @csrf
+                            @csrf
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
@@ -25,6 +25,12 @@
                                 <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $data->getName() }}">
                                 <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <label for="email">{{ ucfirst(trans('common.email')) }} :</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ $data->getEmail() }}">
+                                <span class="help-block ">{!! implode('', $errors->get('email')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('school') ? 'has-error' : '' }}">
@@ -43,7 +49,7 @@
                             <div class="form-group {{ $errors->has('identity_number') ? 'has-error' : '' }}">
                                 <label for="identity_number">{{ ucwords(trans('common.identity_number')) }} :</label>
                                 <input type="text" class="form-control" id="identity_number" name="identity_number" value="{{ $data->getIdentityNumber() }}">
-                                <span class="help-block ">{!! implode('', $errors->get('class')) !!}</span>
+                                <span class="help-block ">{!! implode('', $errors->get('identity_number')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
@@ -77,6 +83,23 @@
                                 <label for="nationality">{{ ucfirst(trans('common.nationality')) }} :</label>
                                 <input type="text" class="form-control" id="nationality" name="nationality" value="{{ $data->getNationality() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('nationality')) !!}</span>
+                            </div>
+
+                            <div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
+                                <img src="">
+                                <div class="input-group-prepend">
+                                    <label class="custom-file-label" for="inputGroupFile01">{{ ucfirst(trans('common.photo')) }}</label>
+                                    <span class="help-block">{{ trans('common.allowed_photo') }}</span>
+                                    <span class="help-block">{{ __('common.max_photo', ['max' => '500KB']) }}</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                    aria-describedby="inputGroupFileAddon01" name="photo">
+                                    <span class="help-block ">{!! implode('', $errors->get('photo')) !!}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <img src="{{ $data->getPhoto() ? url(\App\Entities\Employee::UPLOAD_PATH.'/'.$data->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
                             </div>
 
                             <div class="box-footer">

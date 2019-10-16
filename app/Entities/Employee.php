@@ -15,6 +15,8 @@ class Employee
 {
     const GENDER_MALE = 'male';
     const GENDER_FEMALE = 'female';
+    const UPLOAD_PATH = 'employees/img';
+
     /**
      * @var integer
      *
@@ -47,9 +49,9 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="kode", type="string", nullable=true)
+     * @ORM\Column(name="kode", type="string", nullable=false)
      */
-    private $code = NULL;
+    private $code;
 
     /**
      * @var string
@@ -61,9 +63,9 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="no_ktp", type="string", nullable=true)
+     * @ORM\Column(name="no_ktp", type="string", nullable=false)
      */
-    private $identityNumber = NULL;
+    private $identityNumber;
 
     /**
      * @var string
@@ -99,6 +101,20 @@ class Employee
      * @ORM\Column(name="kewarganegaraan", type="string", nullable=true)
      */
     private $nationality = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", nullable=true)
+     */
+    private $photo = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", nullable=true)
+     */
+    private $email = NULL;
 
     /**
      * @return int
@@ -274,5 +290,37 @@ class Employee
     public function setNationality($nationality): void
     {
         $this->nationality = $nationality;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
     }
 }

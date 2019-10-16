@@ -64,15 +64,15 @@ class ProgramService
      * @param bool $flush
      * @return StudyProgram
      */
-    public function create(Collection $data, $flush = true)
+    public function create(Collection $data, $org = false, $flush = true)
     {
         $program = new StudyProgram;
         $program->setCode($data->get('code'));
         $program->setName($data->get('name'));
         $program->setDegree($data->get('degree'));
 
-        if ($data->get('org') instanceof Organization) {
-            $program->setOrg($data->get('org'));
+        if ($org instanceof Organization) {
+            $program->setOrg($org);
         }
 
         EntityManager::persist($program);
@@ -92,14 +92,14 @@ class ProgramService
      * @param bool $flush
      * @return StudyProgram
      */
-    public function update(StudyProgram $program, Collection $data, $flush = true)
+    public function update(StudyProgram $program, Collection $data, $org = false, $flush = true)
     {
         $program->setCode($data->get('code'));
         $program->setName($data->get('name'));
         $program->setDegree($data->get('degree'));
 
-        if ($data->get('org') instanceof Organization) {
-            $program->setOrg($data->get('org'));
+        if ($org instanceof Organization) {
+            $program->setOrg($org);
         }
 
         EntityManager::persist($program);
@@ -133,5 +133,19 @@ class ProgramService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Get StudyProgram by org
+     * @param string $org
+     * @return StudyProgram[]
+     */
+    public function getProgramByOrg($org = 'all')
+    {
+        if ($org instanceof Organization) {
+            return $this->getRepository()->findBy(['org' => $org]);
+        }
+
+        return $this->getRepository()->findAll();
     }
 }

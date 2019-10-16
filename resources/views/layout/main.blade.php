@@ -22,6 +22,8 @@
     <!-- datepicker -->
 	<link href="{{ asset('css/datepicker/datepicker.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="{{ asset('css/bpsdm-styling.css') }}" rel="stylesheet" type="text/css" />
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -46,9 +48,12 @@
         $loggedUser = currentUser();
     @endphp
     <a href="" class="logo">
-        <img src="{{ asset('img/logo.png') }}">
+        <img src="{{ asset('img/kemenhub.png') }}">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        {{ config('app.name') }}
+        <div class="logo--text">
+	        <h2>{{ ucwords(trans('common.application_name')) }}</h2>
+	        <h3>{{ ucwords(trans('common.app_sub_name_short')) }}</h3>
+		</div>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -76,7 +81,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
-                        <li class="user-header bg-light-blue">
+                        <li class="user-header">
                             <img src="{{ asset('img/bpsdmp.png') }}" class="img-circle" alt="Logo" />
                             <p>
                                 @if(!empty($loggedUser->getOrg()))
@@ -137,6 +142,8 @@
 
 	<!-- gsStudentDashboard App -->
 	<script src="{{ asset('js/gsStudentDashboard/app.js') }}" type="text/javascript"></script>
+    
+    <script src="{{ asset('js/bpsdm-scripts.js') }}" type="text/javascript"></script>
 
 	<!-- gsStudentDashboard dashboard -->
 	<script src="{{ asset('js/gsStudentDashboard/dashboard.js') }}" type="text/javascript"></script>

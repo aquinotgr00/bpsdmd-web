@@ -84,6 +84,7 @@ class EmployeeService
         $employee = new Employee;
         $employee->setCode($data->get('code'));
         $employee->setName($data->get('name'));
+        $employee->setEmail($data->get('email'));
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
         $employee->setPlaceOfBirth($data->get('placeOfBirth'));
@@ -96,6 +97,10 @@ class EmployeeService
         }
         if ($school instanceof Organization) {
             $employee->setSchool($school);
+        }
+
+        if ($data->get('uploaded_img')) {
+            $employee->setPhoto($data->get('uploaded_img'));
         }
 
         EntityManager::persist($employee);
@@ -119,6 +124,7 @@ class EmployeeService
     {
         $employee->setCode($data->get('code'));
         $employee->setName($data->get('name'));
+        $employee->setEmail($data->get('email'));
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
         $employee->setPlaceOfBirth($data->get('placeOfBirth'));
@@ -131,6 +137,11 @@ class EmployeeService
         }
         if ($school instanceof Organization) {
             $employee->setSchool($school);
+        }
+
+        if ($data->get('uploaded_img')) {
+            @unlink(public_path(Employee::UPLOAD_PATH).'/'.$employee->getPhoto());
+            $employee->setPhoto($data->get('uploaded_img'));
         }
 
         EntityManager::persist($employee);

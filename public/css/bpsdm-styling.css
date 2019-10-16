@@ -1,0 +1,147 @@
+/* Login - Register */
+html body.page-signin {
+    background-size: cover;
+}
+.mascott {
+    width: 100%;
+    position: relative;
+}
+
+.mascott img:first-child {
+    width: 60%;
+    left: -45px;
+    top: 130px;
+}
+
+.mascott img:last-child {
+    width: 60%;
+    right: -45px;
+    top: 130px;
+}
+
+.mascott img:nth-child(2) {
+    width: 115%;
+    top: 75px;
+    left: -13px;
+}
+
+.mascott img {
+    position: absolute;
+}
+
+.recaptcha {
+    margin: 20px 20px 0px 13px;
+}
+
+/* Recruitment Page */
+.recruitment .col-xs-6,
+.recruitment .col-sm-3,
+.recruitment .col-md-12 {
+    padding-right: 0!important;
+    padding-left: 0!important;
+}
+.col-md-8.search-result-students {
+    width: 72%;
+    margin-left: 15px;
+}
+.hasil-pencarian {
+    width: 38%;
+}
+.row-in-br {
+    border-right: 1px solid rgba(120,130,140,.13);
+}
+.col-in {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.col-in li.col-middle {
+    width: 40%;
+}
+.col-in li.col-last {
+    float: right;
+}
+.col-in li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.progress {
+    -webkit-box-shadow: none!important;
+    background-color: rgba(120,130,140,.13);
+    box-shadow: none!important;
+    height: 4px;
+    border-radius: 0;
+    margin-bottom: 18px;
+    overflow: hidden;
+}
+.daftar-penawaran {
+    width: 33%;
+}
+.col-in li .circle {
+    display: inline-block;
+}
+
+element.style {
+}
+.col-in li .circle {
+    display: inline-block;
+}
+.circle-md {
+    width: 60px;
+    padding-top: 15px;
+    height: 60px;
+    font-size: 24px!important;
+}
+.circle {
+    border-radius: 100%;
+    text-align: center;
+    color: #fff;
+}
+.bg-success {
+    background-color: #4caf50!important;
+}
+.row.overview-results .white-box {
+    padding: 10px;
+    margin-bottom: 15px;
+}
+#daftar_taruna_wrapper {
+    padding-top: 20px;
+}
+.form-group.rentang-usia input {
+    width: 85px;
+    display: inline-block;
+}
+
+/* Link and Match */
+#list-prodi {
+  font-size: 14px !important;
+}
+
+.content {
+  font-size: 14px;
+}
+
+.list-prodi-item {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.rounder {
+  border-radius: 20px;
+  border:1px solid  #eaeded;
+  padding: 10px;
+  background-color:#FFFFFF;
+  margin-bottom: 10px;
+}
+
+.list-kompetensi {
+  line-height: 1.5em;
+  padding-left: 20px;
+}
+
+.lowongan-item {
+    padding: 5px 20px;
+}
