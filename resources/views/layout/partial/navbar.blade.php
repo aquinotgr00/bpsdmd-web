@@ -66,6 +66,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('demand.jobTitle.index') }}">
+                <i class="fa fa-shield"></i>
+                <span>{{ ucwords(trans('common.jobTitle')) }}</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('demand.certificate.index') }}">
                 <i class="fa fa-envelope"></i>
                 <span>{{ ucwords(trans('common.certificate')) }}</span>
