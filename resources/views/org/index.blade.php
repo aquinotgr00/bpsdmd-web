@@ -53,6 +53,7 @@
                                         @endif
                                         @if($item->getType() == \App\Entities\Organization::TYPE_DEMAND)
                                             | <a href="{{ url(route('administrator.employee.index', [$item->getId()])) }}"><i class="fa fa-user"></i> {{ ucwords(trans('common.employee')) }}</a>
+                                            | <a href="{{ url(route('administrator.jobTitle.index', [$item->getId()])) }}"><i class="fa fa-shield"></i> {{ ucwords(trans('common.jobTitle')) }}</a>
                                         @endif
                                     </td>
                                 </tr>

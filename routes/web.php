@@ -22,6 +22,8 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{org}', 'Administrator\OrgController@ajaxDetailOrg')->name('administrator.org.view');
         Route::get('/', 'Administrator\OrgController@index')->name('administrator.org.index');
 
+        Route::get('/link-match', 'Administrator\LinkMatchController@index')->name('administrator.linkmatch.index');
+
         Route::group(['prefix' => '/{org_supply}/program', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\ProgramController@create')->name('administrator.program.create');
             Route::any('/{program}/update', 'Administrator\ProgramController@update')->name('administrator.program.update');
@@ -64,6 +66,18 @@ Route::group(['middleware' => ['authenticated']], function() {
                 Route::get('/', 'Administrator\EmployeeCertificateController@index')->name('administrator.employeeCertificate.index');
             });
         });
+
+        Route::group(['prefix' => '/{org_demand}/jobTitle', 'middleware' => ['only_admin']], function() {
+            Route::any('/create', 'Administrator\JobTitleController@create')->name('administrator.jobTitle.create');
+            Route::any('/{jobTitle}/update', 'Administrator\JobTitleController@update')->name('administrator.jobTitle.update');
+            Route::get('/{jobTitle}/delete', 'Administrator\JobTitleController@delete')->name('administrator.jobTitle.delete');
+            Route::get('/', 'Administrator\JobTitleController@index')->name('administrator.jobTitle.index');
+        });
+    });
+
+
+    Route::group(['prefix' => '/link-match', 'middleware' => ['only_admin']], function() {
+        Route::get('/', 'Administrator\LinkMatchController@index')->name('administrator.linkmatch.index');
     });
 
     Route::group(['prefix' => '/user', 'middleware' => ['only_admin']], function() {
@@ -145,6 +159,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         });
     });
 
+    Route::group(['prefix' => '/jobTitle', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'Demand\JobTitleController@create')->name('demand.jobTitle.create');
+        Route::any('/{jobTitle}/update', 'Demand\JobTitleController@update')->name('demand.jobTitle.update');
+        Route::get('/{jobTitle}/delete', 'Demand\JobTitleController@delete')->name('demand.jobTitle.delete');
+        Route::get('/', 'Demand\JobTitleController@index')->name('demand.jobTitle.index');
+    });
+
     Route::group(['prefix' => '/certificate', 'middleware' => ['only_demand']], function() {
         Route::any('/create', 'Demand\CertificateController@create')->name('demand.certificate.create');
         Route::any('/{certificate}/update', 'Demand\CertificateController@update')->name('demand.certificate.update');
@@ -154,6 +175,9 @@ Route::group(['middleware' => ['authenticated']], function() {
 
     Route::group(['prefix' => '/recruitment', 'middleware' => ['only_demand']], function() {
         Route::get('/', 'Demand\RecruitmentController@index')->name('demand.recruitment.index');
+    });
+    Route::group(['prefix' => '/offering', 'middleware' => ['only_demand']], function() {
+        Route::get('/', 'Demand\OfferingController@index')->name('demand.recruitment.offer');
     });
 
     // utils routes

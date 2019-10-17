@@ -22,6 +22,8 @@
     <!-- datepicker -->
 	<link href="{{ asset('css/datepicker/datepicker.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="{{ asset('css/bpsdm-styling.css') }}" rel="stylesheet" type="text/css" />
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -140,6 +142,8 @@
 
 	<!-- gsStudentDashboard App -->
 	<script src="{{ asset('js/gsStudentDashboard/app.js') }}" type="text/javascript"></script>
+    
+    <script src="{{ asset('js/bpsdm-scripts.js') }}" type="text/javascript"></script>
 
 	<!-- gsStudentDashboard dashboard -->
 	<script src="{{ asset('js/gsStudentDashboard/dashboard.js') }}" type="text/javascript"></script>

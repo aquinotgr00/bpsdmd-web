@@ -41,6 +41,7 @@ class EmployeeController extends Controller
             $validation = [
                 'code' => 'required',
                 'name' => 'required',
+                'email' => 'nullable|email',
                 'identity_number' => 'required',
                 'school' => 'required',
                 'gender' => 'in:' . Employee::GENDER_MALE . ',' . Employee::GENDER_FEMALE,
@@ -51,6 +52,7 @@ class EmployeeController extends Controller
             $request->validate($validation, [], [
                 'code' => ucfirst(trans('common.code')),
                 'name' => ucfirst(trans('common.name')),
+                'email' => ucfirst(trans('common.email')),
                 'identity_number' => ucfirst(trans('common.identity_number')),
                 'school' => ucfirst(trans('common.school')),
                 'gender' => ucfirst(trans('common.gender')),
@@ -108,6 +110,7 @@ class EmployeeController extends Controller
             $validation = [
                 'code' => 'required',
                 'name' => 'required',
+                'email' => 'nullable|email',
                 'identity_number' => 'required',
                 'school' => 'required',
                 'gender' => 'in:' . Employee::GENDER_MALE . ',' . Employee::GENDER_FEMALE,
@@ -118,6 +121,7 @@ class EmployeeController extends Controller
             $request->validate($validation, [], [
                 'code' => ucfirst(trans('common.code')),
                 'name' => ucfirst(trans('common.name')),
+                'email' => ucfirst(trans('common.email')),
                 'identity_number' => ucfirst(trans('common.identity_number')),
                 'school' => ucfirst(trans('common.school')),
                 'gender' => ucfirst(trans('common.gender')),
@@ -188,6 +192,7 @@ class EmployeeController extends Controller
             $data = [
                 'code' => $data->getCode() ? $data->getCode() : '-',
                 'name' => $data->getName(),
+                'email' => $data->getEmail(),
                 'school' => ($data->getSchool() instanceof Organization) ? $data->getSchool()->getName() : false,
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',

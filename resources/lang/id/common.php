@@ -102,7 +102,7 @@ return [
     'nip' => 'nip',
     'front_degree' => 'gelar depan',
     'back_degree' => 'gelar belakang',
-    'identity_number' => 'no ktp',
+    'identity_number' => 'no KTP',
     'nidn' => 'nidn',
     'teacher_feeder' => 'unggah feeder data dosen',
 
@@ -181,6 +181,9 @@ return [
     'choose_certificate' => 'pilih sertifikat',
     'invalid_certificate' => 'Sertifikat yang Anda pilih tidak valid.',
     'certificate_feeder' => 'unggah feeder data sertifikat pegawai',
+
+    //manage job title
+    'jobTitle' => 'jabatan',
 
     //manage recruitment
     'recruitment' => 'penawaran siswa',
