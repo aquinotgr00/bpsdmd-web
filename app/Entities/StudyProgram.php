@@ -55,9 +55,9 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="jenjang", type="string", nullable=false)
+     * @ORM\Column(name="jenjang", type="string", nullable=true)
      */
-    private $degree;
+    private $degree = NULL;
 
     /**
      * @return string

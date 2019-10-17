@@ -22,20 +22,20 @@ class EmployeeCertificateImport implements ToCollection
     }
 
     /**
-     * @param array $row
+     * @param array $col
      *
      * @return Student|null
      */
-    public function collection (Collection $rows)
+    public function collection (Collection $cols)
     {
-        foreach ($rows as $key => $row) 
+        foreach ($cols as $key => $col) 
         {
             if($key == 0){
                 continue;
             }
 
             $employeeCertificate = new EmployeeCertificate;
-            $employeeCertificate->setValidityPeriod($row[14]);
+            $employeeCertificate->setValidityPeriod($col[14]);
 
             EntityManager::persist($employeeCertificate);
             EntityManager::flush();
