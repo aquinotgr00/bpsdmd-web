@@ -57,7 +57,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::get('/{employee}', 'Administrator\EmployeeController@ajaxDetailEmployee')->name('administrator.employee.view');
             Route::get('/', 'Administrator\EmployeeController@index')->name('administrator.employee.index');
 
-            Route::group(['prefix' => '/{employee}/employeeCertificate', 'middleware' => ['only_admin']], function() {
+            Route::group(['prefix' => '/{employee}/employee-certificate', 'middleware' => ['only_admin']], function() {
                 Route::any('/create', 'Administrator\EmployeeCertificateController@create')->name('administrator.employeeCertificate.create');
                 Route::any('/{employeeCertificate}/update', 'Administrator\EmployeeCertificateController@update')->name('administrator.employeeCertificate.update');
                 Route::get('/{employeeCertificate}/delete', 'Administrator\EmployeeCertificateController@delete')->name('administrator.employeeCertificate.delete');
@@ -67,7 +67,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             });
         });
 
-        Route::group(['prefix' => '/{org_demand}/jobTitle', 'middleware' => ['only_admin']], function() {
+        Route::group(['prefix' => '/{org_demand}/job-title', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\JobTitleController@create')->name('administrator.jobTitle.create');
             Route::any('/{jobTitle}/update', 'Administrator\JobTitleController@update')->name('administrator.jobTitle.update');
             Route::get('/{jobTitle}/delete', 'Administrator\JobTitleController@delete')->name('administrator.jobTitle.delete');
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\LicenseController@index')->name('administrator.license.index');
     });
 
-    Route::group(['prefix' => '/shortCourse', 'middleware' => ['only_admin']], function() {
+    Route::group(['prefix' => '/short-course', 'middleware' => ['only_admin']], function() {
         Route::any('/create', 'Administrator\ShortCourseController@create')->name('administrator.shortCourse.create');
         Route::any('/{shortCourse}/update', 'Administrator\ShortCourseController@update')->name('administrator.shortCourse.update');
         Route::get('/{shortCourse}/delete', 'Administrator\ShortCourseController@delete')->name('administrator.shortCourse.delete');
@@ -107,7 +107,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\ShortCourseController@index')->name('administrator.shortCourse.index');
         Route::post('/upload', 'Administrator\ShortCourseController@upload')->name('administrator.shortCourse.upload');
 
-        Route::group(['prefix' => '/{shortCourse}/shortCourseData', 'middleware' => ['only_admin']], function() {
+        Route::group(['prefix' => '/{shortCourse}/short-course-data', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\ShortCourseDataController@create')->name('administrator.shortCourseData.create');
             Route::any('/{shortCourseData}/update', 'Administrator\ShortCourseDataController@update')->name('administrator.shortCourseData.update');
             Route::get('/{shortCourseData}/delete', 'Administrator\ShortCourseDataController@delete')->name('administrator.shortCourseData.delete');
@@ -150,16 +150,17 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{employee}', 'Demand\EmployeeController@ajaxDetailEmployee')->name('demand.employee.view');
         Route::get('/', 'Demand\EmployeeController@index')->name('demand.employee.index');
 
-        Route::group(['prefix' => '/{employee}/employeeCertificate', 'middleware' => ['only_demand']], function() {
+        Route::group(['prefix' => '/{employee}/employee-certificate', 'middleware' => ['only_demand']], function() {
             Route::any('/create', 'Demand\EmployeeCertificateController@create')->name('demand.employeeCertificate.create');
             Route::any('/{employeeCertificate}/update', 'Demand\EmployeeCertificateController@update')->name('demand.employeeCertificate.update');
             Route::get('/{employeeCertificate}/delete', 'Demand\EmployeeCertificateController@delete')->name('demand.employeeCertificate.delete');
             Route::get('/{employeeCertificate}', 'Demand\EmployeeCertificateController@ajaxDetailEmployeeCertificate')->name('demand.employeeCertificate.view');
+            Route::any('/upload', 'Demand\EmployeeCertificateController@upload')->name('demand.employeeCertificate.upload');
             Route::get('/', 'Demand\EmployeeCertificateController@index')->name('demand.employeeCertificate.index');
         });
     });
 
-    Route::group(['prefix' => '/jobTitle', 'middleware' => ['only_demand']], function() {
+    Route::group(['prefix' => '/job-title', 'middleware' => ['only_demand']], function() {
         Route::any('/create', 'Demand\JobTitleController@create')->name('demand.jobTitle.create');
         Route::any('/{jobTitle}/update', 'Demand\JobTitleController@update')->name('demand.jobTitle.update');
         Route::get('/{jobTitle}/delete', 'Demand\JobTitleController@delete')->name('demand.jobTitle.delete');
