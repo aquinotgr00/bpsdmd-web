@@ -107,6 +107,7 @@ return [
     'teacher_feeder' => 'unggah feeder data dosen',
 
     //manage pegawai
+    'employee_code' => 'NIK',
     'employee_information' => 'informasi pegawai',
     'employee' => 'pegawai',
     'choose_school' => 'pilih sekolah',
@@ -115,6 +116,7 @@ return [
     'gender' => 'jenis kelamin',
     'place_of_birth' => 'tempat lahir',
     'nationality' => 'kewarganegaraan',
+    'graduate' => 'lulus',
 
     // LOGIN
     'login_header' => 'Masuk ke akun anda.',
@@ -160,6 +162,7 @@ return [
     'short_course' => 'diklat',
     'short_course_data' => 'data diklat',
     'short_course_information' => 'informasi diklat',
+    'short_course_participant' => 'peserta diklat',
     'start_date' => 'tanggal mulai',
     'end_date' => 'tanggal selesai',
     'total_target_student' => 'target jumlah siswa',

@@ -15,7 +15,7 @@ class ShortCourseDataController extends Controller
     public function index(ShortCourseDataService $shortCourseDataService, ShortCourse $shortCourse)
     {
         $page = request()->get('page');
-        $data = $shortCourseDataService->paginateShortCourseData(request()->get('page'), $shortCourse);
+        $data = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $shortCourse->getId()]);
 
         //build urls
         $urlCreate = url(route('administrator.shortCourseData.create', [$shortCourse->getId()]));
