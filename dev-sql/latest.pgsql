@@ -1802,7 +1802,7 @@ ALTER TABLE ONLY public.jabatan
 --
 
 ALTER TABLE ONLY public.kabupaten
-    ADD CONSTRAINT kabupaten_id_fkey FOREIGN KEY (id) REFERENCES public.provinsi(id);
+    ADD CONSTRAINT kabupaten_id_fkey FOREIGN KEY (id) REFERENCES public.provinsi(provinsi_id);
 
 
 --
