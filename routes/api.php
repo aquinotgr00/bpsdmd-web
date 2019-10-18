@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/employee/get-by-name', 'Demand\EmployeeController@getByName')->name('demand.employee.get_by_name');
+Route::post('/district/get-by-name', 'Demand\DistrictController@getByName')->name('demand.district.get_by_name');

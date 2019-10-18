@@ -10,7 +10,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('administrator.shortCourseParticipant.create', Request::segment(2)) }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.short_course_participant')) }}
                 </a>
             </li>
@@ -106,7 +106,19 @@
                   <th>{{ ucfirst(trans('common.action')) }}</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                @foreach($shortCourseParticipants as $participant)
+                  <tr>
+                    <td>{{ $participant->getEmployee()->getCode() }}</td>
+                    <td>{{ $participant->getEmployee()->getPhoto() }}</td>
+                    <td>{{ $participant->getEmployee()->getName() }}</td>
+                    <td>{{ $participant->getEmployee()->getEmail() }}</td>
+                    <td>{{ $participant->getEmployee()->getGender() }}</td>
+                    <td>{{ $participant->getGraduate() == 1 ? trans('common.graduate'):trans('common.not_yet') }}</td>
+                    <td></td>
+                  </tr>
+                @endforeach
+              </tbody>
             </table>
           </div>
         </div>

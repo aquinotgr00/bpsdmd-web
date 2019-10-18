@@ -42,6 +42,8 @@ return [
     'action' => 'aksi',
     'no_data' => 'Tidak ada data.',
     'import' => 'import',
+    'done' => 'sudah',
+    'not_yet' => 'belum',
 
     // manage user
     'user_information' => 'informasi pengguna',
@@ -173,6 +175,10 @@ return [
     'year' => 'tahun',
     'short_course_time' => 'lama diklat',
     'place' => 'tempat',
+    'background' => 'latar belakang',
+    'competence_certificat' => 'sertifikat kompetensi',
+    'training_certificat' => 'sertifikat pelatihan',
+    'district' => 'kabupaten',
 
     //manage certificate
     'certificate' => 'sertifikat',

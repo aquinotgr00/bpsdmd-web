@@ -112,6 +112,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{shortCourseData}/update', 'Administrator\ShortCourseDataController@update')->name('administrator.shortCourseData.update');
             Route::get('/{shortCourseData}/delete', 'Administrator\ShortCourseDataController@delete')->name('administrator.shortCourseData.delete');
             Route::get('/', 'Administrator\ShortCourseDataController@index')->name('administrator.shortCourseData.index');
+            Route::any('/participant/create', 'Administrator\ShortCourseParticipantController@create')->name('administrator.shortCourseParticipant.create');
         });
     });
 

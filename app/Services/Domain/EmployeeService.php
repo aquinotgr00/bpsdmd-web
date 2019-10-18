@@ -28,6 +28,21 @@ class EmployeeService
     }
 
     /**
+     * @return Employee[]
+     */
+    public function findByName(string $name)
+    {
+        $query = $this->createQueryBuilder('s')
+            ->where('s.name LIKE :name')
+            ->orderBy('s.name', 'asc')
+            ->setParameter('name', "%$name%")
+            ->getQuery()
+            ->getArrayResult();
+
+        return $query;
+    }
+
+    /**
      * Instance repository
      *
      * @return EntityRepository

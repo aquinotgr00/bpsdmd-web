@@ -209,4 +209,10 @@ class EmployeeController extends Controller
 
         return abort(404);
     }
+
+    public function getByName(Request $request, EmployeeService $employeeService)
+    {
+        $employee = $employeeService->findByName($request->q);
+        return $employee;
+    }
 }

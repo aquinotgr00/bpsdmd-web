@@ -7,15 +7,17 @@ use App\Entities\ShortCourse;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\ShortCourseDataService;
 use App\Services\Domain\ShortCourseService;
+use App\Services\Domain\ShortCourseParticipantService;
 use Exception;
 use Illuminate\Http\Request;
 
 class ShortCourseDataController extends Controller
 {
-    public function index(ShortCourseDataService $shortCourseDataService, ShortCourse $shortCourse)
+    public function index(ShortCourseDataService $shortCourseDataService, ShortCourse $shortCourse, ShortCourseParticipantService $shortCourseParticipantService)
     {
         $page = request()->get('page');
         $data = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $shortCourse->getId()]);
+        $shortCourseParticipants = $shortCourseParticipantService->getRepository()->findBy(['shortCourse' => $shortCourse->getId()]);
 
         //build urls
         $urlCreate = url(route('administrator.shortCourseData.create', [$shortCourse->getId()]));
@@ -27,7 +29,7 @@ class ShortCourseDataController extends Controller
         };
         $urlDetail = '/shortCourse/'.$shortCourse->getId().'/shortCourseData';
 
-        return view('shortCourseData.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
+        return view('shortCourseData.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'shortCourseParticipants'));
     }
 
     public function create(Request $request, ShortCourseDataService $shortCourseDataService, ShortCourseService $shortCourseService, ShortCourse $shortCourse)
