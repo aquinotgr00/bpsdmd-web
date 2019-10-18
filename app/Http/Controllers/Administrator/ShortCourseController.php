@@ -146,7 +146,12 @@ class ShortCourseController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fd_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        if ($authService->user()->getEmail() === 'admin@bpsdm.com') {
+            $orgId = 0;
+        } else {
+            $orgId = $authService->user()->getOrg()->getId();
+        }
+        $nama_file = 'fd_'.$orgId.'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {
