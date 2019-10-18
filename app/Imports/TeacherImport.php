@@ -8,6 +8,7 @@ use App\Entities\Organization;
 use App\Services\Application\AuthService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class TeacherImport implements ToCollection
 {
@@ -20,26 +21,26 @@ class TeacherImport implements ToCollection
     }
 
     /**
-     * @param array $row
+     * @param array $col
      *
      * @return Teacher|null
      */
-    public function collection (Collection $rows)
+    public function collection (Collection $cols)
     {
-        foreach ($rows as $key => $row) 
+        foreach ($cols as $key => $col) 
         {
             if($key == 0){
                 continue;
             }
-            $date_of_birth = gmdate('d-m-Y', (($row[8] - 25569) * 86400));
+
             $teacher = new Teacher;
-            $teacher->setCode($row[0]);
-            $teacher->setIdentityNumber($row[1]);
-            $teacher->setFrontDegree($row[6]);
-            $teacher->setName($row[4]);
-            $teacher->setBackDegree($row[7]);
-            $teacher->setDateOfBirth(date_create_from_format('d-m-Y', $date_of_birth));
-            $teacher->setNip($row[9]);
+            $teacher->setCode($col[0]);
+            $teacher->setIdentityNumber($col[1]);
+            $teacher->setFrontDegree($col[6]);
+            $teacher->setName($col[4]);
+            $teacher->setBackDegree($col[7]);
+            $teacher->setDateOfBirth(Date::excelToDateTimeObject($col[8]), 'd-m-Y');
+            $teacher->setNip($col[9]);
 
             if ($this->org instanceof Organization) {
                 $teacher->setOrg($this->org);

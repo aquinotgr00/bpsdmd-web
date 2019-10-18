@@ -29,9 +29,10 @@ class EmployeeCertificateController extends Controller
         $urlDelete = function($id) use ($employee) {
             return url(route('demand.employeeCertificate.delete', [$employee->getId(), $id]));
         };
-        $urlDetail = '/employee/'.$employee->getId().'/employeeCertificate';
+        $urlDetail = '/employee/'.$employee->getId().'/employee-certificate';
+        $urlUpload = url(route('demand.employeeCertificate.upload', [$employee->getId()]));
 
-        return view('employeeCertificate.index', compact('data', 'page', 'employee', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
+        return view('employeeCertificate.index', compact('data', 'page', 'employee', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
     }
 
     public function create(Request $request, EmployeeCertificateService $employeeCertificateService, CertificateService $certificateService, Employee $employee)

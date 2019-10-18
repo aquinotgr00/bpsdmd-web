@@ -192,7 +192,7 @@ class EmployeeController extends Controller
             $data = [
                 'code' => $data->getCode() ? $data->getCode() : '-',
                 'name' => $data->getName(),
-                'email' => $data->getEmail(),
+                'email' => $data->getEmail() ? $data->getEmail() : '-',
                 'school' => ($data->getSchool() instanceof Organization) ? $data->getSchool()->getName() : false,
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',

@@ -879,7 +879,7 @@ CREATE TABLE public.program_studi (
     instansi_id bigint NOT NULL,
     kode character varying,
     nama character varying NOT NULL,
-    jenjang character varying NOT NULL
+    jenjang character varying
 );
 
 

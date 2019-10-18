@@ -27,7 +27,7 @@ class ShortCourseDataController extends Controller
         $urlDelete = function($id) use ($shortCourse) {
             return url(route('administrator.shortCourseData.delete', [$shortCourse->getId(), $id]));
         };
-        $urlDetail = '/shortCourse/'.$shortCourse->getId().'/shortCourseData';
+        $urlDetail = '/short-course/'.$shortCourse->getId().'/short-course-data';
 
         return view('shortCourseData.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'shortCourseParticipants'));
     }

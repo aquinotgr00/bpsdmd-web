@@ -32,7 +32,7 @@ class EmployeeCertificateController extends Controller
         $urlDelete = function($id) use ($employee) {
             return url(route('administrator.employeeCertificate.delete', [$org->getId(), $employee->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/employee/'.$employee->getId().'/employeeCertificate';
+        $urlDetail = '/org/'.$org->getId().'/employee/'.$employee->getId().'/employee-certificate';
         $urlUpload = url(route('administrator.employeeCertificate.upload', [$org->getId(), $employee->getId()]));
 
         return view('employeeCertificate.index', compact('data', 'page', 'employee', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
@@ -169,7 +169,7 @@ class EmployeeCertificateController extends Controller
         return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId(), 'employee' => $employee->getId()])->with($alert, $message);
     }
 
-    public function ajaxDetailEmployeeCertificate(Request $request, Employee $employee, Certificate $certificate, EmployeeCertificate $data)
+    public function ajaxDetailEmployeeCertificate(Request $request, Organization $org, Employee $employee, Certificate $certificate, EmployeeCertificate $data)
     {
         if ($request->ajax()) {
             $data = [
