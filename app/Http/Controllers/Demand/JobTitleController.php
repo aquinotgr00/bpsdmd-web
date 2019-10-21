@@ -47,11 +47,11 @@ class JobTitleController extends Controller
 
                 $jobTitleService->create(collect($requestData), $org);
                 $alert = 'alert_success';
-                $message = trans('common.create_success', ['object' => ucfirst(trans('common.jobTitle'))]);
+                $message = trans('common.create_success', ['object' => ucfirst(trans('common.job_title'))]);
             } catch (Exception $e) {
                 report($e);
                 $alert = 'alert_error';
-                $message = trans('common.create_failed', ['object' => ucfirst(trans('common.jobTitle'))]);
+                $message = trans('common.create_failed', ['object' => ucfirst(trans('common.job_title'))]);
             }
 
             return redirect()->route('demand.jobTitle.index')->with($alert, $message);
@@ -76,10 +76,10 @@ class JobTitleController extends Controller
 
                 $jobTitleService->update($data, collect($requestData), false, true);
                 $alert = 'alert_success';
-                $message = trans('common.update_success', ['object' => ucfirst(trans('common.jobTitle'))]);
+                $message = trans('common.update_success', ['object' => ucfirst(trans('common.job_title'))]);
             } catch (Exception $e) {
                 $alert = 'alert_error';
-                $message = trans('common.update_failed', ['object' => ucfirst(trans('common.jobTitle'))]);
+                $message = trans('common.update_failed', ['object' => ucfirst(trans('common.job_title'))]);
             }
 
             return redirect()->route('demand.jobTitle.index')->with($alert, $message);
@@ -93,11 +93,11 @@ class JobTitleController extends Controller
         try {
             $jobTitleService->delete($data);
             $alert = 'alert_success';
-            $message = trans('common.delete_success', ['object' => ucfirst(trans('common.jobTitle'))]);
+            $message = trans('common.delete_success', ['object' => ucfirst(trans('common.job_title'))]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.jobTitle'))]);
+            $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.job_title'))]);
         }
 
         return redirect()->route('demand.jobTitle.index')->with($alert, $message);

@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.jobTitle')) }}</h1>
+        <h1>{{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.job_title')) }}</h1>
     </section>
 
     <!-- Main content -->

@@ -176,7 +176,8 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::group(['prefix' => '/recruitment', 'middleware' => ['only_demand']], function() {
-        Route::get('/', 'Demand\RecruitmentController@index')->name('demand.recruitment.index');
+        Route::any('/', 'Demand\RecruitmentController@index')->name('demand.recruitment.index');
+        Route::get('/{student}', 'Demand\RecruitmentController@ajaxDetailStudent')->name('demand.recruitment.view');
     });
     Route::group(['prefix' => '/offering', 'middleware' => ['only_demand']], function() {
         Route::get('/', 'Demand\OfferingController@index')->name('demand.recruitment.offer');

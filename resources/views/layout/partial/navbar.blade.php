@@ -68,7 +68,7 @@
         <li>
             <a href="{{ route('demand.jobTitle.index') }}">
                 <i class="fa fa-shield"></i>
-                <span>{{ ucwords(trans('common.jobTitle')) }}</span>
+                <span>{{ ucwords(trans('common.job_title')) }}</span>
             </a>
         </li>
         <li>

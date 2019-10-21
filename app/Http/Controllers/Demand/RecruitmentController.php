@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Demand;
 
+use App\Entities\Student;
 use App\Entities\Recruitment;
+use App\Entities\Organization;
+use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
+use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
+use App\Services\Domain\JobTitleService;
+use App\Services\Domain\ProgramService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -12,11 +18,40 @@ use Image;
 
 class RecruitmentController extends Controller
 {
-    public function index(RecruitmentService $recruitmentService)
+    public function index(Request $request, RecruitmentService $recruitmentService, StudentService $studentService, ProgramService $programService)
     {
         $page = request()->get('page');
-        $data = $recruitmentService->paginateRecruitment(request()->get('page'));
+        $data = $recruitmentService->paginateRecruitment(request()->get('page'), collect($requestData));
 
-        return view('recruitment.index', compact('data', 'page'));
+        $student 		= $studentService->paginateRecruitment(request()->get('page'));
+        $dataProgram 	= $programService->getRepository()->findAll();
+        $urlDetail 		= '/recruitment';
+
+        return view('recruitment.index', compact('data', 'student', 'dataProgram', 'page', 'urlDetail'));
+    }
+
+    public function ajaxDetailStudent(Request $request, Student $data)
+    {
+        if ($request->ajax()) {
+            $data = [
+                'code' => $data->getCode() ? $data->getCode() : '-',
+                'name' => $data->getName(),
+                'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
+                'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : '-',
+                'period' => $data->getPeriod() ? $data->getPeriod() : '-',
+                'curriculum' => $data->getCurriculum() ? $data->getCurriculum() : '-',
+                'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
+                'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
+                'status' => $data->getStatus() ? $data->getStatus() : '-',
+                'class' => $data->getClass() ? $data->getClass() : '-',
+                'ipk' => $data->getIpk() ? $data->getIpk() : '-',
+                'graduation_year' => $data->getGraduationYear() ? $data->getGraduationYear() : '-',
+                'photo' => $data->getPhoto() ? url(url(Student::UPLOAD_PATH.'/'.$data->getPhoto())) : url('img/avatar.png'),
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }

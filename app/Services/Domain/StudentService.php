@@ -74,6 +74,21 @@ class StudentService
     }
 
     /**
+     * Paginate Recruitment
+     *
+     * @param $page\
+     * @return LengthAwarePaginator
+     */
+    public function paginateRecruitment($page): LengthAwarePaginator
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('e')
+            ->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
+    /**
      * Create new Student
      *
      * @param Collection $data

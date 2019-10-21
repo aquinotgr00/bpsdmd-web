@@ -18,15 +18,22 @@
                     @include('layout.partial.alert')
                     <div class="col-xs-6 col-sm-3">
                         <div class="white-box">
-                            <form method="GET" action="">
-                                <h3 class="box-title m-b-0">Pencarian Detail</h3>
+                            <form method="post" action="">
+                                <h3 class="box-title m-b-0">{{ ucwords(trans('common.detailed_search')) }}</h3>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">Jabatan</label>
-                                            <select class="form-control" id="license"><option value="" selected="">--pilih--</option><option value="1">AERONAUTICAL COMMUNICATION OFFICER</option><option value="2">AERONAUTICAL INFORMATION SERVICE OFFICER</option><option value="3">AIR TRAFFIC CONTROLLER</option><option value="4">AIS DATABASE OFFICER</option><option value="5">AIS PUBLICATION OFFICER</option><option value="6">NOTAM OFFICE OFFICER</option><option value="7">FLIGHT DATA OFFICER</option><option value="8">CENTRALIZED FLIGHT PLAN OFFICER</option><option value="9">STAF ADMINISTRASI</option><option value="10">STAF KESELAMATAN</option><option value="11">TEKNISI TELEKOMUNIKASI</option><option value="12">TEKNISI CENTRALIZED FLIGHT PLAN</option><option value="13">TEKNISI PENUNJANG</option><option value="14">STAF ATFM</option><option value="15">STAF PELAPORAN DATA</option><option value="16">SUPERVISOR TEKNIK TELEKOMUNIKASI</option><option value="17">SUPERVISOR TEKNIK PENUNJANG</option><option value="18">TEKNISI NOTAM OFFICE</option><option value="19">PERANCANG PROSEDUR PENERBANGAN</option><option value="20">KARTOGRAFER</option></select>
-                                            <input type="hidden" name="id_job_title" value="" id="hidden-license-job-title">
+                                            <label class="control-label">{{ ucwords(trans('common.job_title')) }}</label>
+                                            <select class="form-control" id="job_title">
+                                                <option value="" selected="">--{{ ucwords(trans('common.choose_job_title')) }}--</option>
+                                                @if(!empty($dataProgram))
+                                                    @foreach($dataProgram as $program)
+                                                    <option value="{{ $program->getId() }}" {{ old('program') == $program->getId() ? 'selected' : '' }}>{{ $program->getName() }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <input type="hidden" name="job_title" value="" id="hidden-license-job-title">
                                             <span class="help-block" id="span-helper"> Filter program studi dengan kompetensi yang dicari </span>
                                         </div>
                                     </div>
@@ -34,7 +41,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group lisensi">
-                                            <label class="control-label" id="label-license" style="display: none;">Lisensi</label>
+                                            <label class="control-label" id="label-license" style="display: none;">{{ ucwords(trans('common.license')) }}</label>
                                             <div class="progress" style="display:none;">
                                                 <div class="progress-bar progress-bar-info active progress-bar-striped" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"> <span class="sr-only">Processing</span> </div>
                                             </div>
@@ -45,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group rentang-usia">
-                                            <label class="control-label">Rentang Usia</label><br>
+                                            <label class="control-label">{{ ucwords(trans('common.age_range')) }}</label><br>
                                             <input type="number" id="usia" class="form-control" value="" placeholder="min." name="usia" step="1" min="21">
                                             <input type="number" id="usia-max" class="form-control" value="" placeholder="max" name="usiamax" step="1" min="21">
                                             <span class="help-block">Usia minimal 21 tahun </span>
@@ -63,20 +70,20 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">Jenis Kelamin</label>
-                                            <select class="form-control" id="license" name="jenis_kelamin">
+                                            <label class="control-label">{{ ucwords(trans('common.gender')) }}</label>
+                                            <select class="form-control" id="gender" name="gender">
                                                 <option value="" selected="">Semua</option>
                                                 <option value="L">Laki-laki</option>
                                                 <option value="P">Perempuan</option>
                                             </select>
-                                            <span class="help-block">Jenis Kelamin</span>
+                                            <span class="help-block">{{ ucwords(trans('common.gender')) }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">Akreditasi</label>
+                                            <label class="control-label">{{ ucwords(trans('common.accreditation')) }}</label>
                                             <select class="form-control" id="akreditasi" name="akreditasi">
                                                 <option value="" selected="">Semua</option>
                                                 <option value="A">A</option>
@@ -84,7 +91,7 @@
                                                 <option value="C">C</option>
                                                 <option value="N/A">N/A</option>
                                             </select>
-                                            <span class="help-block">Akreditasi sekolah</span>
+                                            <span class="help-block">{{ ucwords(trans('common.school_accreditation')) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -148,221 +155,176 @@
                                     <table id="daftar_taruna" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Nama</th>
-                                                <th>Asal Sekolah</th>
-                                                <th>Jenjang</th>
-                                                <th>Tahun Kelulusan</th>
-                                                <th>IPK</th>
-                                                <th>Jenis Kelamin</th>
-                                                <th>Action</th>
+                                                <th>{{ ucfirst(trans('common.name')) }}</th>
+                                                <th>{{ ucfirst(trans('common.school')) }}</th>
+                                                <th>{{ ucfirst(trans('common.degree')) }}</th>
+                                                <th>{{ ucwords(trans('common.graduation_year')) }}</th>
+                                                <th>{{ strtoupper(trans('common.ipk')) }}</th>
+                                                <th>{{ ucwords(trans('common.gender')) }}</th>
+                                                <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                                <td><button class="btn btn-block btn-info" data-toggle="modal" data-target="detail-siswa-offer-modal">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>San Francisco</td>
-                                                <td>66</td>
-                                                <td>2009/01/12</td>
-                                                <td>$86,000</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2012/03/29</td>
-                                                <td>$433,060</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Airi Satou</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>33</td>
-                                                <td>2008/11/28</td>
-                                                <td>$162,700</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brielle Williamson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>New York</td>
-                                                <td>61</td>
-                                                <td>2012/12/02</td>
-                                                <td>$372,000</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Herrod Chandler</td>
-                                                <td>Sales Assistant</td>
-                                                <td>San Francisco</td>
-                                                <td>59</td>
-                                                <td>2012/08/06</td>
-                                                <td>$137,500</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Rhona Davidson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>Tokyo</td>
-                                                <td>55</td>
-                                                <td>2010/10/14</td>
-                                                <td>$327,900</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Colleen Hurst</td>
-                                                <td>Javascript Developer</td>
-                                                <td>San Francisco</td>
-                                                <td>39</td>
-                                                <td>2009/09/15</td>
-                                                <td>$205,500</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sonya Frost</td>
-                                                <td>Software Engineer</td>
-                                                <td>Edinburgh</td>
-                                                <td>23</td>
-                                                <td>2008/12/13</td>
-                                                <td>$103,600</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jena Gaines</td>
-                                                <td>Office Manager</td>
-                                                <td>London</td>
-                                                <td>30</td>
-                                                <td>2008/12/19</td>
-                                                <td>$90,560</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Quinn Flynn</td>
-                                                <td>Support Lead</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2013/03/03</td>
-                                                <td>$342,000</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Charde Marshall</td>
-                                                <td>Regional Director</td>
-                                                <td>San Francisco</td>
-                                                <td>36</td>
-                                                <td>2008/10/16</td>
-                                                <td>$470,600</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Haley Kennedy</td>
-                                                <td>Senior Marketing Designer</td>
-                                                <td>London</td>
-                                                <td>43</td>
-                                                <td>2012/12/18</td>
-                                                <td>$313,500</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tatyana Fitzpatrick</td>
-                                                <td>Regional Director</td>
-                                                <td>London</td>
-                                                <td>19</td>
-                                                <td>2010/03/17</td>
-                                                <td>$385,750</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Michael Silva</td>
-                                                <td>Marketing Designer</td>
-                                                <td>London</td>
-                                                <td>66</td>
-                                                <td>2012/11/27</td>
-                                                <td>$198,500</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Paul Byrd</td>
-                                                <td>Chief Financial Officer (CFO)</td>
-                                                <td>New York</td>
-                                                <td>64</td>
-                                                <td>2010/06/09</td>
-                                                <td>$725,000</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gloria Little</td>
-                                                <td>Systems Administrator</td>
-                                                <td>New York</td>
-                                                <td>59</td>
-                                                <td>2009/04/10</td>
-                                                <td>$237,500</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bradley Greer</td>
-                                                <td>Software Engineer</td>
-                                                <td>London</td>
-                                                <td>41</td>
-                                                <td>2012/10/13</td>
-                                                <td>$132,000</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dai Rios</td>
-                                                <td>Personnel Lead</td>
-                                                <td>Edinburgh</td>
-                                                <td>35</td>
-                                                <td>2012/09/26</td>
-                                                <td>$217,500</td>
-                                                <td><button class="btn btn-block btn-info">Detail</button></td>
-                                            </tr>
+                                            <?php
+                                            $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
+                                            foreach ($student as $item) {
+                                            ?>
+                                                <tr>
+                                                    <td>{{ $item->getName() }}</td>
+                                                    <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
+                                                    <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getDegree() : '-' }}</td>
+                                                    <td>{{ $item->getGraduationYear() ? $item->getGraduationYear() : '-' }}</td>
+                                                    <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
+                                                    <td>{{ '-' }}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-info viewStudent" data-student="{{ $item->getId() }}">Detail</a>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                            }
+                                            ?>
+
+                                            @if(!count($student))
+                                                <tr class="even pointer">
+                                                    <td colspan="5">{{ ucfirst(trans('common.no_data')) }}</td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal -->
-                        <!-- Modal -->
-                <div id="detail-siswa-offer-modal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modalDetailStudent" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                            <h4 class="modal-title">{{ ucwords(trans('common.student_information')) }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: center; margin-bottom: 22px">
+                                <img class="studentPhoto" src="" width="100px" height="100px">
                             </div>
-                            <div class="modal-body">
-                                <p>Some text in the modal.</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                            <table class="table">
+                                <tr>
+                                    <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
+                                    <td width="5%">:</td>
+                                    <td class="studentCode"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.name')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentName"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucfirst(trans('common.institute')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentInstitute"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.study_program')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentStudyProgram"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.period')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentPeriod"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.curriculum')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentCurriculum"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.identity_number')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentIdentityNumber"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentDateOfBirth"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucfirst(trans('common.status')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentStatus"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucfirst(trans('common.class')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentClass"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ strtoupper(trans('common.ipk')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentIpk"></td>
+                                </tr>
+                                <tr>
+                                    <th>{{ ucwords(trans('common.graduation_year')) }}</th>
+                                    <td>:</td>
+                                    <td class="studentGraduationYear"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section><!-- /.content -->
+@endsection
+
+@section('script')
+<script>
+    $('a.viewStudent').on('click', function () {
+        let student = $(this).data('student'),
+            modalHtml = $('#modalDetailStudent'),
+            url = '{{ $urlDetail }}';
+
+        modalHtml.modal('hide');
+
+        $.get(url+'/'+student, function(student, status){
+            if (status === 'success') {
+                modalHtml.find('.studentCode').html(student.code);
+                modalHtml.find('.studentName').html(student.name);
+                modalHtml.find('.studentInstitute').html(student.org);
+                modalHtml.find('.studentStudyProgram').html(student.study_program);
+                modalHtml.find('.studentPeriod').html(student.period);
+                modalHtml.find('.studentCurriculum').html(student.curriculum);
+                modalHtml.find('.studentIdentityNumber').html(student.identity_number);
+                modalHtml.find('.studentDateOfBirth').html(student.date_of_birth);
+                modalHtml.find('.studentStatus').html(student.status);
+                modalHtml.find('.studentClass').html(student.class);
+                modalHtml.find('.studentIpk').html(student.ipk);
+                modalHtml.find('.studentGraduationYear').html(student.graduation_year);
+                modalHtml.find('.studentPhoto').attr("src",student.photo);
+                modalHtml.modal('show');
+            }
+        });
+    });
+
+    $('#modalDetailStudent').on('hidden.bs.modal', function (e) {
+        modalHtml.find('.studentCode').html('');
+        modalHtml.find('.studentName').html('');
+        modalHtml.find('.studentInstitute').html('');
+        modalHtml.find('.studentStudyProgram').html('');
+        modalHtml.find('.studentPeriod').html('');
+        modalHtml.find('.studentCurriculum').html('');
+        modalHtml.find('.studentIdentityNumber').html('');
+        modalHtml.find('.studentDateOfBirth').html('');
+        modalHtml.find('.studentStatus').html('');
+        modalHtml.find('.studentClass').html('');
+        modalHtml.find('.studentIpk').html('');
+        modalHtml.find('.studentGraduationYear').html('');
+        modalHtml.find('.studentPhoto').attr('src','');
+    })
+</script>
 @endsection

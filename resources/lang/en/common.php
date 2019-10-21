@@ -150,8 +150,14 @@ return [
     'certificate_feeder' => 'unggah feeder data employee certificate',
 
     //manage job title
-    'jobTitle' => 'job title',
+    'job_title' => 'job title',
     
     //manage recruitment
     'recruitment' => 'recruitment',
+    'detailed_search' => 'detailed search',
+    'find_student' => 'find student',
+    'choose_job_title' => 'choose job title',
+    'age_range' => 'age range',
+    'accreditation' => 'accreditation',
+    'school_accreditation' => 'school accreditation',
 ];

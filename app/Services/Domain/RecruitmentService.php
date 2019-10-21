@@ -41,10 +41,10 @@ class RecruitmentService
      *
      * @return int
      */
-    public function getCountEmployee()
+    public function getCountRecruitment()
     {
         try {
-            $qb = $this->createQueryBuilder('c');
+            $qb = $this->createQueryBuilder('r');
 
             return $qb->getQuery()->getSingleScalarResult();
         } catch (\Exception $e) {
@@ -56,9 +56,10 @@ class RecruitmentService
      * Paginate Recruitment
      *
      * @param $page\
+     * @param Collection $search
      * @return LengthAwarePaginator
      */
-    public function paginateRecruitment($page): LengthAwarePaginator
+    public function paginateRecruitment($page, Collection $search): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('e')

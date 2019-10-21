@@ -189,8 +189,14 @@ return [
     'certificate_feeder' => 'unggah feeder data sertifikat pegawai',
 
     //manage job title
-    'jobTitle' => 'jabatan',
+    'job_title' => 'jabatan',
 
     //manage recruitment
     'recruitment' => 'penawaran siswa',
+    'detailed_search' => 'pencarian detail',
+    'find_student' => 'cari taruna',
+    'choose_job_title' => 'pilih jabatan',
+    'age_range' => 'rentang usia',
+    'accreditation' => 'akreditasi',
+    'school_accreditation' => 'akreditasi sekolah',
 ];

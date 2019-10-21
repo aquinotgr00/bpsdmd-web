@@ -2,11 +2,11 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Data {{ ucwords(trans('common.jobTitle')) }}</h1>
+        <h1>Data {{ ucwords(trans('common.job_title')) }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.jobTitle')) }}
+                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.job_title')) }}
                 </a>
             </li>
         </ol>
