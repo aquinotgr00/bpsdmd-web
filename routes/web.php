@@ -116,6 +116,49 @@ Route::group(['middleware' => ['authenticated']], function() {
         });
     });
 
+    Route::group(['prefix' => '/competency', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyController@create')->name('administrator.competency.create');
+        Route::any('/{competency}/update', 'Administrator\CompetencyController@update')->name('administrator.competency.update');
+        Route::get('/{competency}/delete', 'Administrator\CompetencyController@delete')->name('administrator.competency.delete');
+        Route::get('/{competency}', 'Administrator\CompetencyController@ajaxDetailCompetency')->name('administrator.competency.view');
+        Route::get('/', 'Administrator\CompetencyController@index')->name('administrator.competency.index');
+    });
+
+    Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyMainPurposeController@create')->name('administrator.competency.create');
+        Route::any('/{competencyMainPurpose}/update', 'Administrator\CompetencyMainPurposeController@update')->name('administrator.competencyMainPurpose.update');
+        Route::get('/{competencyMainPurpose}/delete', 'Administrator\CompetencyMainPurposeController@delete')->name('administrator.competencyMainPurpose.delete');
+        Route::get('/', 'Administrator\CompetencyMainPurposeController@index')->name('administrator.competencyMainPurpose.index');
+    });
+
+    Route::group(['prefix' => '/competency-key-function', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyKeyFunctionController@create')->name('administrator.competencyKeyFunction.create');
+        Route::any('/{competencyKeyFunction}/update', 'Administrator\CompetencyKeyFunctionController@update')->name('administrator.competencyKeyFunction.update');
+        Route::get('/{competencyKeyFunction}/delete', 'Administrator\CompetencyKeyFunctionController@delete')->name('administrator.competencyKeyFunction.delete');
+        Route::get('/', 'Administrator\CompetencyKeyFunctionController@index')->name('administrator.competencyKeyFunction.index');
+    });
+
+    Route::group(['prefix' => '/competency-main-function', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyMainFunctionController@create')->name('administrator.competencyMainFunction.create');
+        Route::any('/{competencyMainFunction}/update', 'Administrator\CompetencyMainFunctionController@update')->name('administrator.competencyMainFunction.update');
+        Route::get('/{competencyMainFunction}/delete', 'Administrator\CompetencyMainFunctionController@delete')->name('administrator.competencyMainFunction.delete');
+        Route::get('/', 'Administrator\CompetencyMainFunctionController@index')->name('administrator.competencyMainFunction.index');
+    });
+
+    Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyMainPurposeController@create')->name('administrator.competencyMainPurpose.create');
+        Route::any('/{competencyMainPurpose}/update', 'Administrator\CompetencyMainPurposeController@update')->name('administrator.competencyMainPurpose.update');
+        Route::get('/{competencyMainPurpose}/delete', 'Administrator\CompetencyMainPurposeController@delete')->name('administrator.competencyMainPurpose.delete');
+        Route::get('/', 'Administrator\CompetencyMainPurposeController@index')->name('administrator.competencyMainPurpose.index');
+    });
+
+    Route::group(['prefix' => '/competency-unit', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyUnitController@create')->name('administrator.competencyUnit.create');
+        Route::any('/{competencyUnit}/update', 'Administrator\CompetencyUnitController@update')->name('administrator.competencyUnit.update');
+        Route::get('/{competencyUnit}/delete', 'Administrator\CompetencyUnitController@delete')->name('administrator.competencyUnit.delete');
+        Route::get('/', 'Administrator\CompetencyUnitController@index')->name('administrator.competencyUnit.index');
+    });
+
     // supply routes
     Route::group(['prefix' => '/program', 'middleware' => ['only_supply']], function() {
         Route::any('/create', 'Supply\ProgramController@create')->name('supply.program.create');

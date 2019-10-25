@@ -33,6 +33,8 @@ return [
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
     'confirm_delete' => 'Apakah Anda yakin?',
+    'please_choose' => 'Silakan pilih :object.',
+    'invalid_option' => 'Pilihan :object tidak valid.',
 
     // table
     'view' => 'lihat',
@@ -199,4 +201,15 @@ return [
     'age_range' => 'rentang usia',
     'accreditation' => 'akreditasi',
     'school_accreditation' => 'akreditasi sekolah',
+
+    // manage competency
+    'competency' => 'kompetensi',
+    'competency_unit' => 'kompetensi unit',
+    'unit' => 'unit',
+    'competency_main_purpose' => 'kompetensi tujuan utama',
+    'main_purpose' => 'tujuan utama',
+    'competency_main_function' => 'kompetensi fungsi utama',
+    'main_function' => 'fungsi utama',
+    'competency_key_function' => 'kompetensi fungsi kunci',
+    'key_function' => 'fungsi kunci',
 ];
