@@ -100,11 +100,7 @@
                             <div class="form-group {{ $errors->has('cu') ? 'has-error' : '' }}">
                                 <label for="cu">{{ ucfirst(trans('common.unit')) }}</label>
                                 <select class="form-control" id="cu" name="cu">
-<<<<<<< HEAD
                                     <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.unit'))])) }}</option>
-=======
-                                    <option value="">{{ ucwords(trans('common.please_choose', ['object' => ucwords(trans('common.unit'))])) }}</option>
->>>>>>> added competency
                                     @if(!empty($cu))
                                         @foreach($cu as $item)
                                             @if (old('cu') == $item->getId())
@@ -118,11 +114,7 @@
                                 <span class="help-block ">{!! implode('', $errors->get('cu')) !!}</span>
                             </div>
 
-<<<<<<< HEAD
                             <div class="box-footer" style="text-align: right;min-height: 50px;">
-=======
-                            <div class="box-footer" style="text-align: right">
->>>>>>> added competency
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
                         </form>

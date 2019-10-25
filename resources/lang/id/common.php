@@ -33,11 +33,7 @@ return [
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
     'confirm_delete' => 'Apakah Anda yakin?',
-<<<<<<< HEAD
     'please_choose' => 'Silakan pilih :object',
-=======
-    'please_choose' => 'Silakan pilih :object.',
->>>>>>> added competency
     'invalid_option' => 'Pilihan :object tidak valid.',
 
     // table
@@ -205,16 +201,6 @@ return [
     'choose_job_title' => 'pilih jabatan',
     'age_range' => 'rentang usia',
     'school_accreditation' => 'akreditasi sekolah',
-    'position_offered' => 'jabatan yang ditawarkan',
-    'program_filter' => 'filter program studi dengan kompetensi yang dicari',
-    'minimum_age' => 'usia minimal 21 tahun',
-    'minimum_ipk' => 'IPK minimal pelamar adalah 2.5',
-    'all_gender' => 'semua jenis kelamin',
-    'all_accreditation' => 'semua akreditasi',
-    'find_taruna' => 'cari taruna',
-    'search_result' => 'hasil pencarian',
-    'list_candidate' => 'Daftar Penawaran Kandidat',
-    'invalid_job_title' => 'Jabatan yang Anda pilih tidak valid.',
 
     // manage competency
     'competency' => 'kompetensi',
@@ -226,10 +212,7 @@ return [
     'main_function' => 'fungsi utama',
     'competency_key_function' => 'kompetensi fungsi kunci',
     'key_function' => 'fungsi kunci',
-<<<<<<< HEAD
 
     // job function
     'job_function' => 'fungsi pekerjaan',
-=======
->>>>>>> added competency
 ];

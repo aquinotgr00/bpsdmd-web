@@ -162,16 +162,6 @@ return [
     'choose_job_title' => 'choose job title',
     'age_range' => 'age range',
     'school_accreditation' => 'school accreditation',
-    'position_offered' => 'position offered',
-    'program_filter' => 'filter study programs with the competencies ',
-    'minimum_age' => 'minimum age is 21 years',
-    'minimum_ipk' => 'minimum student IPK is 2.5',
-    'all_gender' => 'all gender',
-    'all_accreditation' => 'all accreditation',
-    'find_taruna' => 'find taruna',
-    'search_result' => 'search result',
-    'list_candidate' => 'List of Candidate Offers',
-    'invalid_job_title' => 'Chosen job title is invalid.',
 
     // manage competency
     'competency' => 'competency',
@@ -183,10 +173,7 @@ return [
     'main_function' => 'main function',
     'competency_key_function' => 'competency key function',
     'key_function' => 'key function',
-<<<<<<< HEAD
 
     // job function
     'job_function' => 'job function',
-=======
->>>>>>> added competency
 ];

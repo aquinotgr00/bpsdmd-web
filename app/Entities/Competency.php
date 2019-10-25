@@ -87,7 +87,6 @@ class Competency
     private $type;
 
     /**
-<<<<<<< HEAD
      * @var ArrayCollection|ShortCourseCompetency[]
      * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="competency")
      */
@@ -100,8 +99,6 @@ class Competency
     private $studyProgramCompetency;
 
     /**
-=======
->>>>>>> added competency
      * @return string
      */
     public function getId(): string
@@ -212,7 +209,6 @@ class Competency
     {
         $this->type = $type;
     }
-<<<<<<< HEAD
 
     /**
      * @return StudyProgramCompetency[]|ArrayCollection
@@ -229,6 +225,4 @@ class Competency
     {
         $this->studyProgramCompetency = $studyProgramCompetency;
     }
-=======
->>>>>>> added competency
 }

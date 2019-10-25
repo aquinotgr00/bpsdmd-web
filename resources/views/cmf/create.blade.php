@@ -27,11 +27,7 @@
                                 <span class="help-block ">{!! implode('', $errors->get('text')) !!}</span>
                             </div>
 
-<<<<<<< HEAD
                             <div class="box-footer" style="text-align: right;min-height: 50px;">
-=======
-                            <div class="box-footer" style="text-align: right">
->>>>>>> added competency
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
                         </form>

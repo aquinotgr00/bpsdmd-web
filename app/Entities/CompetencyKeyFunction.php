@@ -16,11 +16,7 @@ class CompetencyKeyFunction
     /**
      * @var string
      *
-<<<<<<< HEAD
      * @ORM\Column(name="id", type="bigint", nullable=false)
-=======
-     * @ORM\Column(name="id", type="string", nullable=false)
->>>>>>> added competency
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
