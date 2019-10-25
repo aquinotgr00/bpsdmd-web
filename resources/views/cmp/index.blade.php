@@ -27,7 +27,11 @@
                                     <th>No.</th>
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.main_purpose')) }}</th>
+<<<<<<< HEAD
                                     <th>{{ ucfirst(trans('common.action')) }}</th>
+=======
+                                    <th>Action</th>
+>>>>>>> added competency
                                 </tr>
                             </thead>
                             <tbody>

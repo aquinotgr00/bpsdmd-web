@@ -173,7 +173,10 @@ return [
     'main_function' => 'main function',
     'competency_key_function' => 'competency key function',
     'key_function' => 'key function',
+<<<<<<< HEAD
 
     // job function
     'job_function' => 'job function',
+=======
+>>>>>>> added competency
 ];

@@ -22,7 +22,11 @@ class Competency
     /**
      * @var string
      *
+<<<<<<< HEAD
      * @ORM\Column(name="id", type="bigint", nullable=false)
+=======
+     * @ORM\Column(name="id", type="string", nullable=false)
+>>>>>>> added competency
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -83,6 +87,7 @@ class Competency
     private $type;
 
     /**
+<<<<<<< HEAD
      * @var ArrayCollection|ShortCourseCompetency[]
      * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="competency")
      */
@@ -95,6 +100,8 @@ class Competency
     private $studyProgramCompetency;
 
     /**
+=======
+>>>>>>> added competency
      * @return string
      */
     public function getId(): string
@@ -205,6 +212,7 @@ class Competency
     {
         $this->type = $type;
     }
+<<<<<<< HEAD
 
     /**
      * @return StudyProgramCompetency[]|ArrayCollection
@@ -221,4 +229,6 @@ class Competency
     {
         $this->studyProgramCompetency = $studyProgramCompetency;
     }
+=======
+>>>>>>> added competency
 }

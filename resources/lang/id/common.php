@@ -33,7 +33,11 @@ return [
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
     'confirm_delete' => 'Apakah Anda yakin?',
+<<<<<<< HEAD
     'please_choose' => 'Silakan pilih :object',
+=======
+    'please_choose' => 'Silakan pilih :object.',
+>>>>>>> added competency
     'invalid_option' => 'Pilihan :object tidak valid.',
 
     // table
@@ -212,7 +216,10 @@ return [
     'main_function' => 'fungsi utama',
     'competency_key_function' => 'kompetensi fungsi kunci',
     'key_function' => 'fungsi kunci',
+<<<<<<< HEAD
 
     // job function
     'job_function' => 'fungsi pekerjaan',
+=======
+>>>>>>> added competency
 ];

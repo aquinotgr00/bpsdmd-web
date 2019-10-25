@@ -27,7 +27,11 @@
                                     <th>No.</th>
                                     <th>{{ ucfirst(trans('common.moda')) }}</th>
                                     <th>{{ ucfirst(trans('common.type')) }}</th>
+<<<<<<< HEAD
                                     <th>{{ ucfirst(trans('common.action')) }}</th>
+=======
+                                    <th>Action</th>
+>>>>>>> added competency
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,8 +142,11 @@
         });
 
         $('#modalDetailUser').on('hidden.bs.modal', function (e) {
+<<<<<<< HEAD
             let modalHtml = $('#modalDetailCompetency');
 
+=======
+>>>>>>> added competency
             modalHtml.find('.moda').html('');
             modalHtml.find('.type').html('');
             modalHtml.find('.ckf').html('');
