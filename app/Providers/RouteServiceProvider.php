@@ -61,6 +61,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('employeeCertificate', $bindToEntityOr404(Entities\EmployeeCertificate::class));
         Route::bind('jobTitle', $bindToEntityOr404(Entities\jobTitle::class));
         Route::bind('recruitment', $bindToEntityOr404(Entities\Recruitment::class));
+        Route::bind('competency', $bindToEntityOr404(Entities\Competency::class));
+        Route::bind('competencyKeyFunction', $bindToEntityOr404(Entities\CompetencyKeyFunction::class));
+        Route::bind('competencyMainFunction', $bindToEntityOr404(Entities\CompetencyMainFunction::class));
+        Route::bind('competencyMainPurpose', $bindToEntityOr404(Entities\CompetencyMainPurpose::class));
+        Route::bind('competencyUnit', $bindToEntityOr404(Entities\CompetencyUnit::class));
         parent::boot();
     }
 
