@@ -116,10 +116,34 @@ class Organization
     private $teachers;
 
     /**
+     * @var ArrayCollection|Employee[]
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="org")
+     */
+    private $company;
+
+    /**
+     * @var ArrayCollection|Employee[]
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="school")
+     */
+    private $alumni;
+
+    /**
      * @var ArrayCollection|Student[]
      * @ORM\OneToMany(targetEntity="Student", mappedBy="org")
      */
     private $students;
+
+    /**
+     * @var ArrayCollection|Recruitment[]
+     * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="org")
+     */
+    private $recruitment;
+
+    /**
+     * @var ArrayCollection|ShortCourse[]
+     * @ORM\OneToMany(targetEntity="ShortCourse", mappedBy="org")
+     */
+    private $shortCourses;
 
     /**
      * @return string
@@ -330,6 +354,38 @@ class Organization
     }
 
     /**
+     * @return Employee[]|ArrayCollection
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param Employee[]|ArrayCollection $company
+     */
+    public function setCompany($company): void
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return Employee[]|ArrayCollection
+     */
+    public function getAlumni()
+    {
+        return $this->alumni;
+    }
+
+    /**
+     * @param Employee[]|ArrayCollection $alumni
+     */
+    public function setAlumni($alumni): void
+    {
+        $this->alumni = $alumni;
+    }
+
+    /**
      * @return Student[]|ArrayCollection
      */
     public function getStudents()
@@ -343,5 +399,37 @@ class Organization
     public function setStudents($students): void
     {
         $this->students = $students;
+    }
+
+    /**
+     * @return Recruitment[]|ArrayCollection
+     */
+    public function getRecruitment()
+    {
+        return $this->recruitment;
+    }
+
+    /**
+     * @param Recruitment[]|ArrayCollection $recruitment
+     */
+    public function setRecruitment($recruitment): void
+    {
+        $this->recruitment = $recruitment;
+    }
+
+    /**
+     * @return ShortCourse[]|ArrayCollection
+     */
+    public function getShortCourses()
+    {
+        return $this->shortCourses;
+    }
+
+    /**
+     * @param ShortCourse[]|ArrayCollection $shortCourses
+     */
+    public function setShortCourses($shortCourses): void
+    {
+        $this->shortCourses = $shortCourses;
     }
 }

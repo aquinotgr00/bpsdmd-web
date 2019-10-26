@@ -135,8 +135,6 @@ class ShortCourseService
      * Delete ShortCourse
      *
      * @param ShortCourse $shortCourse
-     * @return bool
-     * @throws ProgramDeleteException
      */
     public function delete(ShortCourse $shortCourse)
     {
@@ -153,5 +151,22 @@ class ShortCourseService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Get short course by type
+     *
+     * @param string $type
+     * @return ShortCourse[]
+     */
+    public function getShortCourseByType($type = 'all')
+    {
+        if ($type == ShortCourse::TYPE_DPM) {
+            return $this->getRepository()->findBy(['type' => ShortCourse::TYPE_DPM]);
+        } elseif ($type == ShortCourse::TYPE_TEKNIS) {
+            return $this->getRepository()->findBy(['type' => ShortCourse::TYPE_TEKNIS]);
+        }
+
+        return $this->getRepository()->findAll();
     }
 }

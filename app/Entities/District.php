@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,7 +25,7 @@ class District
     /**
      * @var Province
      *
-     * @ORM\ManyToOne(targetEntity="Province", inversedBy="provinsis")
+     * @ORM\ManyToOne(targetEntity="Province", inversedBy="districts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="provinsi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
@@ -44,6 +45,12 @@ class District
      * @ORM\Column(name="kode", type="string", nullable=false)
      */
     private $code;
+
+    /**
+     * @var ArrayCollection|ShortCourseParticipant[]
+     * @ORM\OneToMany(targetEntity="ShortCourseParticipant", mappedBy="district")
+     */
+    private $shortCourseParticipants;
 
     /**
      * @return int
@@ -107,5 +114,21 @@ class District
     public function setCode($code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return ShortCourseParticipant[]|ArrayCollection
+     */
+    public function getShortCourseParticipants()
+    {
+        return $this->shortCourseParticipants;
+    }
+
+    /**
+     * @param ShortCourseParticipant[]|ArrayCollection $shortCourseParticipants
+     */
+    public function setShortCourseParticipants($shortCourseParticipants): void
+    {
+        $this->shortCourseParticipants = $shortCourseParticipants;
     }
 }

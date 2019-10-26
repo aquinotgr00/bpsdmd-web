@@ -24,7 +24,7 @@ class ShortCourseParticipant
     /**
      * @var ShortCourse
      *
-     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="shortCourses")
+     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="shortCourseParticipants")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="diklat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -34,7 +34,7 @@ class ShortCourseParticipant
     /**
      * @var Employee
      *
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="employees")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="shortCourseParticipants")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pegawai_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -44,7 +44,7 @@ class ShortCourseParticipant
     /**
      * @var District
      *
-     * @ORM\ManyToOne(targetEntity="District", inversedBy="districts")
+     * @ORM\ManyToOne(targetEntity="District", inversedBy="shortCourseParticipants")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="kabupaten_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -70,14 +70,14 @@ class ShortCourseParticipant
      *
      * @ORM\Column(name="sertifikat_kompetensi", type="string", nullable=false)
      */
-    private $competenceCertificat;
+    private $competenceCertificate;
 
     /**
      * @var string
      *
      * @ORM\Column(name="sertifikat_pelatihan", type="string", nullable=true)
      */
-    private $trainingCertificat;
+    private $trainingCertificate;
 
     /**
      * @return int
@@ -178,32 +178,32 @@ class ShortCourseParticipant
     /**
      * @return string
      */
-    public function getCompetenceCertificat(): ?string
+    public function getCompetenceCertificate(): ?string
     {
-        return $this->competenceCertificat;
+        return $this->competenceCertificate;
     }
 
     /**
-     * @param string $competenceCertificat
+     * @param string $competenceCertificate
      */
-    public function setCompetenceCertificat($competenceCertificat): void
+    public function setCompetenceCertificate($competenceCertificate): void
     {
-        $this->competenceCertificat = $competenceCertificat;
+        $this->competenceCertificate = $competenceCertificate;
     }
 
     /**
      * @return string
      */
-    public function getTrainingCertificat(): ?string
+    public function getTrainingCertificate(): ?string
     {
-        return $this->trainingCertificat;
+        return $this->trainingCertificate;
     }
 
     /**
-     * @param string $trainingCertificat
+     * @param string $trainingCertificate
      */
-    public function setTrainingCertificat($trainingCertificat): void
+    public function setTrainingCertificate($trainingCertificate): void
     {
-        $this->trainingCertificat = $trainingCertificat;
+        $this->trainingCertificate = $trainingCertificate;
     }
 }

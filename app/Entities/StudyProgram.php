@@ -60,6 +60,18 @@ class StudyProgram
     private $degree = NULL;
 
     /**
+     * @var ArrayCollection|Student[]
+     * @ORM\OneToMany(targetEntity="Student", mappedBy="studyProgram")
+     */
+    private $students;
+
+    /**
+     * @var ArrayCollection|LicenseStudyProgram[]
+     * @ORM\OneToMany(targetEntity="LicenseStudyProgram", mappedBy="studyProgram")
+     */
+    private $licenseStudyProgram;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -137,5 +149,37 @@ class StudyProgram
     public function setDegree($degree): void
     {
         $this->degree = $degree;
+    }
+
+    /**
+     * @return Student[]|ArrayCollection
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
+
+    /**
+     * @param Student[]|ArrayCollection $students
+     */
+    public function setStudents($students): void
+    {
+        $this->students = $students;
+    }
+
+    /**
+     * @return LicenseStudyProgram[]|ArrayCollection
+     */
+    public function getLicenseStudyProgram()
+    {
+        return $this->licenseStudyProgram;
+    }
+
+    /**
+     * @param LicenseStudyProgram[]|ArrayCollection $licenseStudyProgram
+     */
+    public function setLicenseStudyProgram($licenseStudyProgram): void
+    {
+        $this->licenseStudyProgram = $licenseStudyProgram;
     }
 }
