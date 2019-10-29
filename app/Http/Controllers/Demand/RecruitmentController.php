@@ -19,7 +19,7 @@ class RecruitmentController extends Controller
         if ($request->method() == 'POST') {
             $requestData = $request->all();
         }
-
+        
         $page = request()->get('page');
         $data = $recruitmentService->paginateRecruitment(request()->get('page'));
 
