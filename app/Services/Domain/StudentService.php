@@ -83,6 +83,7 @@ class StudentService
      */
     public function paginateRecruitment($page, Collection $search): LengthAwarePaginator
     {
+        var_dump($search);exit;
         $limit = 10;
         $query = $this->createQueryBuilder('s');
         if(!empty($search->get('ipk'))){
