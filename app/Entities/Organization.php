@@ -19,6 +19,10 @@ class Organization
     const MODA_UDARA = 'udara';
     const MODA_DARAT = 'darat';
     const MODA_KERETA = 'kereta api';
+    const ACCREDITATION_A = 'A';
+    const ACCREDITATION_B = 'B';
+    const ACCREDITATION_C = 'C';
+    const ACCREDITATION_NA = 'N/A';
     const UPLOAD_PATH = 'orgs/img';
 
     /**
@@ -85,6 +89,13 @@ class Organization
      * @ORM\Column(name="deskripsi", type="string", nullable=true)
      */
     private $description = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="akreditasi", type="string", nullable=true)
+     */
+    private $accreditation = NULL;
 
     /**
      * @var ArrayCollection|User[]
@@ -252,6 +263,22 @@ class Organization
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccreditation(): ?string
+    {
+        return $this->accreditation;
+    }
+
+    /**
+     * @param string $accreditation
+     */
+    public function setAccreditation($accreditation): void
+    {
+        $this->accreditation = $accreditation;
     }
 
     /**

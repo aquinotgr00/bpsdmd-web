@@ -81,6 +81,7 @@ return [
     'short_name' => 'nama pendek',
     'moda' => 'moda',
     'address' => 'alamat',
+    'accreditation' => 'akreditasi',
     'logo' => 'logo',
 
     //manage program
@@ -199,7 +200,6 @@ return [
     'find_student' => 'cari taruna',
     'choose_job_title' => 'pilih jabatan',
     'age_range' => 'rentang usia',
-    'accreditation' => 'akreditasi',
     'school_accreditation' => 'akreditasi sekolah',
 
     // manage competency

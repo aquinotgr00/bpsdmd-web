@@ -58,6 +58,15 @@
                                 <span class="help-block ">{!! implode('', $errors->get('identity_number')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
+                                <label for="gender">{{ ucwords(trans('common.gender')) }} :</label>
+                                <select id="gender" name="gender" class="form-control">
+                                    <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ old('gender') == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_MALE) }}</option>
+                                    <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_FEMALE) }}</option>
+                                </select>
+                                <span class="help-block ">{!! implode('', $errors->get('gender')) !!}</span>
+                            </div>
+
                             <div class="form-group {{ $errors->has('dateOfBirth') ? 'has-error' : '' }}">
                                 <label for="dateOfBirth">{{ ucwords(trans('common.date_of_birth')) }} :</label>
                                 <input type="text" class="date form-control" id="dateOfBirth" name="dateOfBirth" value="{{ old('dateOfBirth') }}">

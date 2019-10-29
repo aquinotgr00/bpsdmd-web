@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Student
 {
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
     const UPLOAD_PATH = 'students/img';
 
     /**
@@ -99,6 +101,13 @@ class Student
      * @ORM\Column(name="no_ktp", type="string", nullable=true)
      */
     private $identityNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jenis_kelamin", type="string", nullable=true)
+     */
+    private $gender = NULL;
 
     /**
      * @var string
@@ -295,6 +304,22 @@ class Student
     public function setIdentityNumber($identityNumber): void
     {
         $this->identityNumber = $identityNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender): void
+    {
+        $this->gender = $gender;
     }
 
     /**

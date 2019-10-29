@@ -78,6 +78,7 @@ return [
     'short_name' => 'short name',
     'moda' => 'moda',
     'address' => 'address',
+    'accreditation' => 'accreditation',
     'logo' => 'logo',
 
     //manage program
@@ -160,7 +161,6 @@ return [
     'find_student' => 'find student',
     'choose_job_title' => 'choose job title',
     'age_range' => 'age range',
-    'accreditation' => 'accreditation',
     'school_accreditation' => 'school accreditation',
 
     // manage competency

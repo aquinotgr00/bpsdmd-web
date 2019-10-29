@@ -59,10 +59,11 @@ class RecruitmentService
      * @param Collection $search
      * @return LengthAwarePaginator
      */
-    public function paginateRecruitment($page, Collection $search): LengthAwarePaginator
+    public function paginateRecruitment($page): LengthAwarePaginator
     {
+        // var_dump($search['ipk']);exit;
         $limit = 10;
-        $query = $this->createQueryBuilder('e')
+        $query = $this->createQueryBuilder('r')
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);

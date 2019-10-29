@@ -18,7 +18,8 @@
                     @include('layout.partial.alert')
                     <div class="col-xs-6 col-sm-3">
                         <div class="white-box">
-                            <form method="post" action="">
+                            <form method="post">
+                                @csrf
                                 <h3 class="box-title m-b-0">{{ ucwords(trans('common.detailed_search')) }}</h3>
                                 <hr>
                                 <div class="row">
@@ -53,8 +54,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group rentang-usia">
                                             <label class="control-label">{{ ucwords(trans('common.age_range')) }}</label><br>
-                                            <input type="number" id="usia" class="form-control" value="" placeholder="min." name="usia" step="1" min="21">
-                                            <input type="number" id="usia-max" class="form-control" value="" placeholder="max" name="usiamax" step="1" min="21">
+                                            <input type="number" id="age" class="form-control" value="" placeholder="min" name="age" step="1" min="21">
+                                            <input type="number" id="age-max" class="form-control" value="" placeholder="max" name="agemax" step="1" min="21">
                                             <span class="help-block">Usia minimal 21 tahun </span>
                                         </div>
                                     </div>
@@ -71,10 +72,10 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.gender')) }}</label>
-                                            <select class="form-control" id="gender" name="gender">
+                                            <select id="gender" name="gender" class="form-control">
                                                 <option value="" selected="">Semua</option>
-                                                <option value="L">Laki-laki</option>
-                                                <option value="P">Perempuan</option>
+                                                <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ old('gender') == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_MALE) }}</option>
+                                                <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_FEMALE) }}</option>
                                             </select>
                                             <span class="help-block">{{ ucwords(trans('common.gender')) }}</span>
                                         </div>
@@ -84,12 +85,12 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.accreditation')) }}</label>
-                                            <select class="form-control" id="akreditasi" name="akreditasi">
+                                            <select id="accreditation" name="accreditation" class="form-control">
                                                 <option value="" selected="">Semua</option>
-                                                <option value="A">A</option>
-                                                <option value="B">B</option>
-                                                <option value="C">C</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
+                                                <option value="{{ \App\Entities\Organization::ACCREDITATION_B }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_B ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_B) }}</option>
+                                                <option value="{{ \App\Entities\Organization::ACCREDITATION_C }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_C ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_C) }}</option>
+                                                <option value="{{ \App\Entities\Organization::ACCREDITATION_NA }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_NA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_NA) }}</option>
                                             </select>
                                             <span class="help-block">{{ ucwords(trans('common.school_accreditation')) }}</span>
                                         </div>
@@ -186,7 +187,7 @@
 
                                             @if(!count($student))
                                                 <tr class="even pointer">
-                                                    <td colspan="5">{{ ucfirst(trans('common.no_data')) }}</td>
+                                                    <td colspan="7">{{ ucfirst(trans('common.no_data')) }}</td>
                                                 </tr>
                                             @endif
                                         </tbody>

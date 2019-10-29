@@ -121,6 +121,11 @@
                                 <td class="studentIdentityNumber"></td>
                             </tr>
                             <tr>
+                                <th>{{ ucwords(trans('common.gender')) }}</th>
+                                <td>:</td>
+                                <td class="studentGender"></td>
+                            </tr>
+                            <tr>
                                 <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
                                 <td>:</td>
                                 <td class="studentDateOfBirth"></td>
@@ -200,6 +205,7 @@
                 modalHtml.find('.studentPeriod').html(student.period);
                 modalHtml.find('.studentCurriculum').html(student.curriculum);
                 modalHtml.find('.studentIdentityNumber').html(student.identity_number);
+                modalHtml.find('.studentGender').html(student.gender);
                 modalHtml.find('.studentDateOfBirth').html(student.date_of_birth);
                 modalHtml.find('.studentStatus').html(student.status);
                 modalHtml.find('.studentClass').html(student.class);
@@ -219,6 +225,7 @@
         modalHtml.find('.studentPeriod').html('');
         modalHtml.find('.studentCurriculum').html('');
         modalHtml.find('.studentIdentityNumber').html('');
+        modalHtml.find('.studentGender').html('');
         modalHtml.find('.studentDateOfBirth').html('');
         modalHtml.find('.studentStatus').html('');
         modalHtml.find('.studentClass').html('');

@@ -20,10 +20,15 @@ class RecruitmentController extends Controller
 {
     public function index(Request $request, RecruitmentService $recruitmentService, StudentService $studentService, ProgramService $programService)
     {
+        $requestData = null;
+        if ($request->method() == 'POST') {
+            $requestData = $request->all();
+        }
+        
         $page = request()->get('page');
-        $data = $recruitmentService->paginateRecruitment(request()->get('page'), collect($requestData));
+        $data = $recruitmentService->paginateRecruitment(request()->get('page'));
 
-        $student 		= $studentService->paginateRecruitment(request()->get('page'));
+        $student 		= $studentService->paginateRecruitment(request()->get('page'), collect($requestData));
         $dataProgram 	= $programService->getRepository()->findAll();
         $urlDetail 		= '/recruitment';
 

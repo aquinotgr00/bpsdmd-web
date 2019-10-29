@@ -8,6 +8,7 @@ use App\Entities\StudyProgram;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
@@ -79,11 +80,24 @@ class StudentService
      * @param $page\
      * @return LengthAwarePaginator
      */
-    public function paginateRecruitment($page): LengthAwarePaginator
+    public function paginateRecruitment($page, Collection $search): LengthAwarePaginator
     {
+        var_dump($search);exit;
         $limit = 10;
-        $query = $this->createQueryBuilder('e')
-            ->getQuery();
+        $query = $this->createQueryBuilder('s');
+        if(!empty($search->get('ipk'))){
+            $query->where('s.ipk = :ipk')->setParameter('ipk', $search->get('ipk'));
+        }
+        if(!empty($search->get('gender'))){
+            $query->where('s.gender = :gender')->setParameter('gender', $search->get('gender'));
+        }
+        if(!empty($search->get('age')) || !empty($search->get('agemax'))){
+            $from = Carbon::today()->subYears($search->get('age'));
+            $to = Carbon::today()->subYears($search->get('agemax'));
+            $query->where("s.dateOfBirth in (:age)")->setParameter('age', [$to, $from]);
+        }
+
+        $query = $query->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
     }
@@ -106,6 +120,7 @@ class StudentService
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
         $student->setIdentityNumber($data->get('identity_number'));
+        $student->setGender($data->get('gender'));
         $student->setStatus($data->get('status'));
         $student->setGraduationYear($data->get('graduationYear'));
 
@@ -147,6 +162,7 @@ class StudentService
         $student->setClass($data->get('class'));
         $student->setIpk($data->get('ipk'));
         $student->setIdentityNumber($data->get('identity_number'));
+        $student->setGender($data->get('gender'));
         $student->setStatus($data->get('status'));
         $student->setGraduationYear($data->get('graduationYear'));
 
