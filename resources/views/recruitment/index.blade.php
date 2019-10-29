@@ -34,7 +34,7 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <span class="help-block" id="span-helper"> Filter program studi dengan kompetensi yang dicari </span>
+                                            <span class="help-block" id="span-helper"> {{ ucfirst(trans('common.program_filter')) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                             <label class="control-label">{{ ucwords(trans('common.age_range')) }}</label><br>
                                             <input type="number" id="age" class="form-control" value="{{ old('age') }}" placeholder="min" name="age" step="1" min="21">
                                             <input type="number" id="age-max" class="form-control" value="{{ old('agemax') }}" placeholder="max" name="agemax" step="1" min="21">
-                                            <span class="help-block">Usia minimal 21 tahun </span>
+                                            <span class="help-block">{{ ucfirst(trans('common.minimum_age')) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Indeks Prestasi Kumulatif</label>
-                                            <input type="number" id="ipk" class="form-control" value="{{ old('ipk') }}" placeholder="" name="ipk" step="0.01" min="0" max="4"> <span class="help-block"> IPK Minimal pelamar adalah 2.5 </span>
+                                            <input type="number" id="ipk" class="form-control" value="{{ old('ipk') }}" placeholder="" name="ipk" step="0.01" min="0" max="4"> <span class="help-block"> {{ ucfirst(trans('common.minimum_ipk')) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.gender')) }}</label>
                                             <select id="gender" name="gender" class="form-control">
-                                                <option value="" selected="">Semua</option>
+                                                <option value="" selected="">{{ ucwords(trans('common.all_gender')) }}</option>
                                                 <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ old('gender') == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_MALE) }}</option>
                                                 <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_FEMALE) }}</option>
                                             </select>
@@ -85,7 +85,7 @@
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.accreditation')) }}</label>
                                             <select id="accreditation" name="accreditation" class="form-control">
-                                                <option value="" selected="">Semua</option>
+                                                <option value="" selected="">{{ ucwords(trans('common.all_accreditation')) }}</option>
                                                 <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
                                                 <option value="{{ \App\Entities\Organization::ACCREDITATION_B }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_B ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_B) }}</option>
                                                 <option value="{{ \App\Entities\Organization::ACCREDITATION_C }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_C ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_C) }}</option>
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <button class="btn btn-block btn-info m-t-10"><i class=" ti-search"></i> Cari Taruna</button>
+                                    <button class="btn btn-block btn-info m-t-10"><i class=" ti-search"></i> {{ ucwords(trans('common.find_taruna')) }}</button>
                                     <div class="clearfix"></div>
                                 </div>
                             </form>
@@ -119,9 +119,9 @@
                                                 <h3 class="counter text-right m-t-15"><?=count($student)?></h3>
                                             </li>
                                             <li class="col-middle">
-                                                <h4>Hasil Pencarian</h4>
+                                                <h4>{{ ucwords(trans('common.search_result')) }}</h4>
                                                 <div class="progress">
-                                                    <?php $searchPersen = (count($student) / count($allStudent))*100;?>
+                                                    <?php $searchPersen = (count($student) / (count($allStudent) ? count($allStudent) : 1))*100;?>
                                                     <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?=$searchPersen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$searchPersen?>%">
                                                         <span class="sr-only"><?=$searchPersen?>% Complete (success)</span>
                                                     </div>
@@ -138,9 +138,9 @@
                                                 <h3 class="counter text-right m-t-15"><?=count($data)?></h3>
                                             </li>
                                             <li class="col-middle">
-                                                <h4 style="font-size:14px;">Daftar Penawaran Kandidat</h4>
+                                                <h4 style="font-size:14px;">{{ (trans('common.list_candidate')) }}</h4>
                                                 <div class="progress">
-                                                    <?php $persen = (count($data) / count($allStudent))*100;?>
+                                                    <?php $persen = (count($data) / (count($allStudent) ? count($allStudent) : 1))*100;?>
                                                     <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%">
                                                         <span class="sr-only"><?=$persen?>% Complete (success)</span>
                                                     </div>
@@ -179,8 +179,7 @@
                                                     <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
                                                     <td>{{ $item->getGender() ? $item->getGender() : '-' }}</td>
                                                     <td>
-                                                        <a href="javascript:void(0)" class="btn btn-block btn-info viewStudent" data-student="{{ $item->getId() }}">Detail</a>
-                                                        <!-- <a href="{{ url(route('demand.recruitment.create', [$item->getId()])) }}" class="btn btn-block btn-info">{{ ucfirst(trans('common.add')) }}</a> -->
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-info viewStudent" data-student="{{ $item->getId() }}">{{ ucfirst(trans('common.view')) }}</a>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -274,6 +273,7 @@
                             </table>
                         </div>
                         <div class="modal-footer">
+                            <a href="" class="btn btn-info chart" style="width:50px"><i class="fa fa-shopping-cart"></i></a>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -307,6 +307,7 @@
                 modalHtml.find('.studentIpk').html(student.ipk);
                 modalHtml.find('.studentGraduationYear').html(student.graduation_year);
                 modalHtml.find('.studentPhoto').attr("src",student.photo);
+                modalHtml.find('.chart').attr("href",student.add_chart);
                 modalHtml.modal('show');
             }
         });
