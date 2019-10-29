@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +24,7 @@ class Recruitment
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="recruitments")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="recruitment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -35,7 +34,7 @@ class Recruitment
     /**
      * @var Student
      *
-     * @ORM\ManyToOne(targetEntity="Student", inversedBy="recruitments")
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="recruitment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="siswa_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -43,9 +42,9 @@ class Recruitment
     private $student;
 
     /**
-     * @var Organization
+     * @var JobTitle
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="recruitments")
+     * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="recruitment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })

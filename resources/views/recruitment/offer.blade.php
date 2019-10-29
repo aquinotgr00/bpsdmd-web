@@ -26,7 +26,7 @@
                                     <th>Jabatan yang Ditawarkan</th>
                                     <th>Sekolah</th>
                                     <th>IPK</th>
-                                    <th>Action</th>
+                                    <th>{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
                             <tbody>

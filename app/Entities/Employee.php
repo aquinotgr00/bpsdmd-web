@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,7 +29,7 @@ class Employee
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="alumni")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sekolah_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -39,7 +39,7 @@ class Employee
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="company")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -115,6 +115,18 @@ class Employee
      * @ORM\Column(name="email", type="string", nullable=true)
      */
     private $email = NULL;
+
+    /**
+     * @var ArrayCollection|EmployeeCertificate[]
+     * @ORM\OneToMany(targetEntity="EmployeeCertificate", mappedBy="employee")
+     */
+    private $employeeCertificates;
+
+    /**
+     * @var ArrayCollection|ShortCourseParticipant[]
+     * @ORM\OneToMany(targetEntity="ShortCourseParticipant", mappedBy="employee")
+     */
+    private $shortCourseParticipants;
 
     /**
      * @return int
@@ -322,5 +334,37 @@ class Employee
     public function setEmail($email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return EmployeeCertificate[]|ArrayCollection
+     */
+    public function getEmployeeCertificates()
+    {
+        return $this->employeeCertificates;
+    }
+
+    /**
+     * @param EmployeeCertificate[]|ArrayCollection $employeeCertificates
+     */
+    public function setEmployeeCertificates($employeeCertificates): void
+    {
+        $this->employeeCertificates = $employeeCertificates;
+    }
+
+    /**
+     * @return ShortCourseParticipant[]|ArrayCollection
+     */
+    public function getShortCourseParticipants()
+    {
+        return $this->shortCourseParticipants;
+    }
+
+    /**
+     * @param ShortCourseParticipant[]|ArrayCollection $shortCourseParticipants
+     */
+    public function setShortCourseParticipants($shortCourseParticipants): void
+    {
+        $this->shortCourseParticipants = $shortCourseParticipants;
     }
 }

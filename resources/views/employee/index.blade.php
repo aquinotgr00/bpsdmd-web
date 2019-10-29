@@ -178,6 +178,8 @@
     });
 
     $('#modalDetailEmployee').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailEmployee');
+
         modalHtml.find('.employeeCode').html('');
         modalHtml.find('.employeeName').html('');
         modalHtml.find('.employeeSchool').html('');

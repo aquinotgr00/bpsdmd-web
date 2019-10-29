@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +42,12 @@ class Province
      * @ORM\Column(name="singkatan", type="string", nullable=true)
      */
     private $shortName;
+
+    /**
+     * @var ArrayCollection|District[]
+     * @ORM\OneToMany(targetEntity="District", mappedBy="province")
+     */
+    private $districts;
 
     /**
      * @return int
@@ -104,5 +111,21 @@ class Province
     public function setShortName($shortName): void
     {
         $this->shortName = $shortName;
+    }
+
+    /**
+     * @return District[]|ArrayCollection
+     */
+    public function getDistricts()
+    {
+        return $this->districts;
+    }
+
+    /**
+     * @param District[]|ArrayCollection $districts
+     */
+    public function setDistricts($districts): void
+    {
+        $this->districts = $districts;
     }
 }

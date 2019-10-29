@@ -47,7 +47,8 @@ class StudentService
     public function getCountStudent()
     {
         try {
-            $qb = $this->createQueryBuilder('s');
+            $qb = $this->createQueryBuilder('s')
+                ->select('count(s.id)');
 
             return $qb->getQuery()->getSingleScalarResult();
         } catch (\Exception $e) {

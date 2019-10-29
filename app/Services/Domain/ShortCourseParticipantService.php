@@ -75,9 +75,9 @@ class ShortCourseParticipantService
         $shortCourseParticipant = new ShortCourseParticipant;
         $shortCourseParticipant->setBackground($data->get('background'));
         $shortCourseParticipant->setGraduate($data->get('graduate'));
-        $shortCourseParticipant->setCompetenceCertificat($data->get('competence_certificat'));
-        $shortCourseParticipant->setTrainingCertificat($data->get('training_certificat'));
-        
+        $shortCourseParticipant->setCompetenceCertificate($data->get('competence_certificat'));
+        $shortCourseParticipant->setTrainingCertificate($data->get('training_certificat'));
+
         if ($shortCourse instanceof ShortCourse) {
             $shortCourseParticipant->setShortCourse($shortCourse);
         }

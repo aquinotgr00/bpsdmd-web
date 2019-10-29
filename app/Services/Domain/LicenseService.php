@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App\Entities\License;
+use App\Entities\LicenseStudyProgram;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
@@ -119,5 +120,32 @@ class LicenseService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Get list license
+     *
+     * @param $exclude
+     * @return mixed
+     */
+    public function getAsList($exclude = [])
+    {
+        $excludeIds = [];
+
+        /** @var LicenseStudyProgram $item */
+        foreach ($exclude as $item) {
+            $excludeIds[] = $item->getLicense()->getId();
+        }
+
+        $qb = $this->createQueryBuilder('l');
+
+        if (count($excludeIds)) {
+            $query = $qb->where($qb->expr()->notIn('l.id', $excludeIds))
+                ->getQuery();
+        } else {
+            $query = $qb->getQuery();
+        }
+
+        return $query->getResult();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +24,7 @@ class EmployeeCertificate
     /**
      * @var Employee
      *
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="students")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="employeeCertificates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pegawai_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -35,7 +34,7 @@ class EmployeeCertificate
     /**
      * @var Certificate
      *
-     * @ORM\ManyToOne(targetEntity="Certificate", inversedBy="certificates")
+     * @ORM\ManyToOne(targetEntity="Certificate", inversedBy="employeeCertificates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sertifikat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })

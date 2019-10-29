@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use App\Interfaces\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Hash;
 
@@ -95,6 +96,12 @@ class User implements UserInterface
      * @ORM\Column(name="bahasa", type="string", nullable=false)
      */
     private $locale = 'id';
+
+    /**
+     * @var ArrayCollection|Feeder[]
+     * @ORM\OneToMany(targetEntity="Feeder", mappedBy="user")
+     */
+    private $feeders;
 
     /**
      * @return int
@@ -254,5 +261,21 @@ class User implements UserInterface
     public function setLocale($locale): void
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * @return Feeder[]|ArrayCollection
+     */
+    public function getFeeders()
+    {
+        return $this->feeders;
+    }
+
+    /**
+     * @param Feeder[]|ArrayCollection $feeders
+     */
+    public function setFeeders($feeders): void
+    {
+        $this->feeders = $feeders;
     }
 }

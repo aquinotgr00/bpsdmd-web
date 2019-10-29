@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -129,6 +129,12 @@ class Student
      * @ORM\Column(name="foto", type="string", nullable=true)
      */
     private $photo = NULL;
+
+    /**
+     * @var ArrayCollection|Recruitment[]
+     * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="student")
+     */
+    private $recruitment;
 
     /**
      * @return int
@@ -368,5 +374,21 @@ class Student
     public function setPhoto($photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return Recruitment[]|ArrayCollection
+     */
+    public function getRecruitment()
+    {
+        return $this->recruitment;
+    }
+
+    /**
+     * @param Recruitment[]|ArrayCollection $recruitment
+     */
+    public function setRecruitment($recruitment): void
+    {
+        $this->recruitment = $recruitment;
     }
 }

@@ -56,6 +56,12 @@ class License
     private $moda;
 
     /**
+     * @var ArrayCollection|LicenseStudyProgram[]
+     * @ORM\OneToMany(targetEntity="LicenseStudyProgram", mappedBy="license")
+     */
+    private $licenseStudyProgram;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -133,5 +139,21 @@ class License
     public function setModa($moda): void
     {
         $this->moda = $moda;
+    }
+
+    /**
+     * @return LicenseStudyProgram[]|ArrayCollection
+     */
+    public function getLicenseStudyProgram()
+    {
+        return $this->licenseStudyProgram;
+    }
+
+    /**
+     * @param LicenseStudyProgram[]|ArrayCollection $licenseStudyProgram
+     */
+    public function setLicenseStudyProgram($licenseStudyProgram): void
+    {
+        $this->licenseStudyProgram = $licenseStudyProgram;
     }
 }
