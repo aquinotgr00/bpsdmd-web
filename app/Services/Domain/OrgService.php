@@ -186,6 +186,7 @@ class OrgService
     {
         try {
             $qb = $this->createQueryBuilder('org')
+                ->select('count(org.id)')
                 ->where('org.type = :type')
                 ->setParameter('type', Organization::TYPE_SUPPLY);
 

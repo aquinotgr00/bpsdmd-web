@@ -24,7 +24,7 @@ class LicenseStudyProgram
     /**
      * @var License
      *
-     * @ORM\ManyToOne(targetEntity="License", inversedBy="licenseStudyProgram")
+     * @ORM\ManyToOne(targetEntity="License", inversedBy="licenseStudyProgram", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lisensi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -34,7 +34,7 @@ class LicenseStudyProgram
     /**
      * @var StudyProgram
      *
-     * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="licenseStudyProgram")
+     * @ORM\ManyToOne(targetEntity="StudyProgram", inversedBy="licenseStudyProgram",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="program_studi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })

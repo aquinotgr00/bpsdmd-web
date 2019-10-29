@@ -37,7 +37,7 @@
     @yield('style')
 
     <!-- datepicker -->
-    <script src="{{ asset('js/jquery.1.9.1.js') }}"></script>
+    <script src="{{ asset('js/jquery-1.12.4.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 </head>
 
@@ -142,7 +142,7 @@
 
 	<!-- gsStudentDashboard App -->
 	<script src="{{ asset('js/gsStudentDashboard/app.js') }}" type="text/javascript"></script>
-    
+
     <script src="{{ asset('js/bpsdm-scripts.js') }}" type="text/javascript"></script>
 
 	<!-- gsStudentDashboard dashboard -->

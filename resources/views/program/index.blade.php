@@ -96,6 +96,11 @@
                                 <td>:</td>
                                 <td class="programDegree"></td>
                             </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.license')) }}</th>
+                                <td>:</td>
+                                <td class="programLicense"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -115,24 +120,27 @@
             url = '{{ $urlDetail }}';
 
         modalHtml.modal('hide');
-        
+
         $.get(url+'/'+program, function(program, status){
             if (status === 'success') {
                 modalHtml.find('.programCode').html(program.code);
                 modalHtml.find('.programName').html(program.name);
                 modalHtml.find('.programInstitute').html(program.org);
                 modalHtml.find('.programDegree').html(program.degree);
+                modalHtml.find('.programLicense').html(program.license);
                 modalHtml.modal('show');
             }
         });
     });
 
     $('#modalDetailProgram').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailProgram');
+
         modalHtml.find('.programCode').html('');
         modalHtml.find('.programName').html('');
         modalHtml.find('.programInstitute').html('');
         modalHtml.find('.programDegree').html('');
+        modalHtml.find('.programLicense').html('');
     })
 </script>
 @endsection
-

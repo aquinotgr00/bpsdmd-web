@@ -198,6 +198,8 @@
 
         $.get(url+'/'+student, function(student, status){
             if (status === 'success') {
+                let modalHtml = $('#modalDetailStudent');
+
                 modalHtml.find('.studentCode').html(student.code);
                 modalHtml.find('.studentName').html(student.name);
                 modalHtml.find('.studentInstitute').html(student.org);

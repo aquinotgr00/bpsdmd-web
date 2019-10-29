@@ -182,4 +182,19 @@ class StudyProgram
     {
         $this->licenseStudyProgram = $licenseStudyProgram;
     }
+
+    /**
+     * @return array|string
+     */
+    public function getLicenseStudyProgramIds()
+    {
+        $licenses = $this->licenseStudyProgram;
+        $result = [];
+
+        foreach ($licenses as $license) {
+            $result[] = $license->getId();
+        }
+
+        return $result;
+    }
 }

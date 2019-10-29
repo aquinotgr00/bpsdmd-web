@@ -44,7 +44,8 @@ class ShortCourseService
     public function getCountShortCourse()
     {
         try {
-            $qb = $this->createQueryBuilder('sc');
+            $qb = $this->createQueryBuilder('sc')
+                ->select('count(sc.id)');
 
             return $qb->getQuery()->getSingleScalarResult();
         } catch (\Exception $e) {

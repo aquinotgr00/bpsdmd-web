@@ -47,7 +47,7 @@
                                 <input type="text" class="form-control" id="training_certificat" name="training_certificat" value="{{ old('training_certificat') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('training_certificat')) !!}</span>
                             </div>
-                            
+
                             <div class="form-group {{ $errors->has('graduate') ? 'has-error' : '' }}">
                                 <label for="graduate">{{ ucwords(trans('common.graduate')) }} :</label><br />
                                 <input class="form-control" type="radio" name="graduate" value="1" checked>{{ trans('common.done') }}
@@ -56,7 +56,7 @@
                             </div>
                         </div><!-- /.box-body -->
 
-                        <div class="box-footer" style="text-align: right">
+                        <div class="box-footer" style="text-align: right;min-height: 50px;">
                             <button class="btn btn-primary">{{ ucfirst(trans('common.add')) }}</button>
                         </div>
                     </form>

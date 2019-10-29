@@ -27,7 +27,7 @@
                                     <th>No.</th>
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.unit')) }}</th>
-                                    <th>Action</th>
+                                    <th>{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
                             <tbody>

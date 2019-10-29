@@ -172,6 +172,8 @@
     });
 
     $('#modalDetailUser').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailUser');
+
         modalHtml.find('.userPhoto').attr('src','');
         modalHtml.find('.userName').html('');
         modalHtml.find('.userEmail').html('');

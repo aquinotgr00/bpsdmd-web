@@ -33,7 +33,7 @@ return [
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
     'confirm_delete' => 'Apakah Anda yakin?',
-    'please_choose' => 'Silakan pilih :object.',
+    'please_choose' => 'Silakan pilih :object',
     'invalid_option' => 'Pilihan :object tidak valid.',
 
     // table

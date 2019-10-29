@@ -313,6 +313,8 @@
     });
 
     $('#modalDetailStudent').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailStudent');
+
         modalHtml.find('.studentCode').html('');
         modalHtml.find('.studentName').html('');
         modalHtml.find('.studentInstitute').html('');

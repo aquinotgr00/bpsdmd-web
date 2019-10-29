@@ -27,7 +27,7 @@
                                 <span class="help-block ">{!! implode('', $errors->get('text')) !!}</span>
                             </div>
 
-                            <div class="box-footer" style="text-align: right">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
                         </form>
