@@ -119,10 +119,14 @@ class ShortCourseController extends Controller
     ) {
         try {
             $shortCourseData = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $data->getId()]);
-            $shortCourseDataService->delete($shortCourseData);
+            if (!is_null($shortCourseData)) {
+                $shortCourseDataService->delete($shortCourseData);
+            }
 
             $shortCourseParticipant = $shortCourseParticipantService->getRepository()->findOneBy(['shortCourse' => $data->getId()]);
-            $shortCourseParticipantService->delete($shortCourseParticipant);
+            if (!is_null($shortCourseParticipant)) {
+                $shortCourseParticipantService->delete($shortCourseParticipant);
+            }
 
             $shortCourseService->delete($data);
             $alert = 'alert_success';
