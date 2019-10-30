@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\Demand;
 
 use App\Entities\Student;
-use App\Entities\Recruitment;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
-use App\Services\Domain\JobTitleService;
 use App\Services\Domain\ProgramService;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
-use Image;
 
 class RecruitmentController extends Controller
 {
@@ -24,7 +19,7 @@ class RecruitmentController extends Controller
         if ($request->method() == 'POST') {
             $requestData = $request->all();
         }
-        
+
         $page = request()->get('page');
         $data = $recruitmentService->paginateRecruitment(request()->get('page'));
 

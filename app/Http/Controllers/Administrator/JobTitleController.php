@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Domain\JobTitleService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
-use Image;
 
 class JobTitleController extends Controller
 {
@@ -73,7 +71,7 @@ class JobTitleController extends Controller
             try {
                 $requestData = $request->all();
 
-                $jobTitleService->update($data, collect($requestData), false, true);
+                $jobTitleService->update($data, collect($requestData), $org, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.job_title'))]);
             } catch (Exception $e) {

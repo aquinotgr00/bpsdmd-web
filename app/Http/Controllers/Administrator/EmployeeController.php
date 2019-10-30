@@ -156,7 +156,7 @@ class EmployeeController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $employeeService->update($data, collect($requestData), false, $school, true);
+                $employeeService->update($data, collect($requestData), $org, $school, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {

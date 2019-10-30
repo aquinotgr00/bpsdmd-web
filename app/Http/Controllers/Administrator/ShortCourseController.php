@@ -9,8 +9,6 @@ use App\Services\Domain\ShortCourseService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
-use App\Exceptions\ShortCourseDeleteException;
-use Image;
 use App\Services\Domain\FeederService;
 use App\Services\Application\AuthService;
 use App\Imports\ShortCourseImport;
@@ -138,7 +136,7 @@ class ShortCourseController extends Controller
 
         return abort(404);
     }
-    
+
     public function upload(Request $request, FeederService $feederService, AuthService $authService)
     {
         $this->validate($request, [

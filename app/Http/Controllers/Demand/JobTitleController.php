@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Demand;
 
 use App\Entities\JobTitle;
-use App\Entities\Organization;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\JobTitleService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
-use Image;
 
 class JobTitleController extends Controller
 {
@@ -71,10 +68,12 @@ class JobTitleController extends Controller
                 'name' => ucfirst(trans('common.name')),
             ]);
 
+            $org = currentUser()->getOrg();
+
             try {
                 $requestData = $request->all();
 
-                $jobTitleService->update($data, collect($requestData), false, true);
+                $jobTitleService->update($data, collect($requestData), $org, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.job_title'))]);
             } catch (Exception $e) {

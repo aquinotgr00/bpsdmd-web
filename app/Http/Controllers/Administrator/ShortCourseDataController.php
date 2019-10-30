@@ -32,7 +32,7 @@ class ShortCourseDataController extends Controller
         return view('shortCourseData.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'shortCourseParticipants'));
     }
 
-    public function create(Request $request, ShortCourseDataService $shortCourseDataService, ShortCourseService $shortCourseService, ShortCourse $shortCourse)
+    public function create(Request $request, ShortCourseDataService $shortCourseDataService, ShortCourse $shortCourse)
     {
         if ($request->method() == 'POST') {
             $validation = [
@@ -63,7 +63,7 @@ class ShortCourseDataController extends Controller
         return view('shortCourseData.create');
     }
 
-    public function update(Request $request, ShortCourseDataService $shortCourseDataService, ShortCourseService $shortCourseService, ShortCourse $shortCourse, ShortCourseData $data)
+    public function update(Request $request, ShortCourseDataService $shortCourseDataService, ShortCourse $shortCourse, ShortCourseData $data)
     {
         if ($request->method() == 'POST') {
             $validation = [
@@ -79,7 +79,7 @@ class ShortCourseDataController extends Controller
             try {
                 $requestData = $request->all();
 
-                $shortCourseDataService->update($data, collect($requestData), false, true);
+                $shortCourseDataService->update($data, collect($requestData), $shortCourse, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.short_course_data'))]);
             } catch (Exception $e) {

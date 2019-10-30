@@ -131,7 +131,7 @@ class StudentController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $studentService->update($data, collect($requestData), false, $studyProgram, true);
+                $studentService->update($data, collect($requestData), $org, $studyProgram, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.student'))]);
             } catch (Exception $e) {

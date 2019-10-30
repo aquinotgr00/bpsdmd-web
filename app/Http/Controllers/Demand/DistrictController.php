@@ -10,7 +10,7 @@ class DistrictController extends Controller
 {
     public function getByName(Request $request, DistrictService $districtService)
     {
-        $district = $districtService->findByName($request->q);
+        $district = $districtService->findByName($request->get('q'));
         return $district;
     }
 }

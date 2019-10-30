@@ -146,6 +146,12 @@ class Organization
     private $shortCourses;
 
     /**
+     * @var ArrayCollection|JobFunction[]
+     * @ORM\OneToMany(targetEntity="JobFunction", mappedBy="org")
+     */
+    private $jobFunctions;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -431,5 +437,21 @@ class Organization
     public function setShortCourses($shortCourses): void
     {
         $this->shortCourses = $shortCourses;
+    }
+
+    /**
+     * @return JobFunction[]|ArrayCollection
+     */
+    public function getJobFunctions()
+    {
+        return $this->jobFunctions;
+    }
+
+    /**
+     * @param JobFunction[]|ArrayCollection $jobFunctions
+     */
+    public function setJobFunctions($jobFunctions): void
+    {
+        $this->jobFunctions = $jobFunctions;
     }
 }
