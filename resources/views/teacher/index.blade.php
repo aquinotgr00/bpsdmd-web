@@ -188,6 +188,8 @@
     });
 
     $('#modalDetailTeacher').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailTeacher');
+
         modalHtml.find('.teacherNip').html('');
         modalHtml.find('.teacherName').html('');
         modalHtml.find('.teacherInstitute').html('');

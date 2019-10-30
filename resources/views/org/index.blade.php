@@ -152,6 +152,8 @@
     });
 
     $('#modalDetailOrg').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailOrg');
+
         modalHtml.find('.orgPhoto').attr('src','');
         modalHtml.find('.orgCode').html('');
         modalHtml.find('.orgName').html('');

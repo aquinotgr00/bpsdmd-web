@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Student
 {
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
     const UPLOAD_PATH = 'students/img';
 
     /**
@@ -103,6 +105,13 @@ class Student
     /**
      * @var string
      *
+     * @ORM\Column(name="jenis_kelamin", type="string", nullable=true)
+     */
+    private $gender = NULL;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="status", type="string", nullable=true)
      */
     private $status = NULL;
@@ -120,6 +129,12 @@ class Student
      * @ORM\Column(name="foto", type="string", nullable=true)
      */
     private $photo = NULL;
+
+    /**
+     * @var ArrayCollection|Recruitment[]
+     * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="student")
+     */
+    private $recruitment;
 
     /**
      * @return int
@@ -300,6 +315,22 @@ class Student
     /**
      * @return string
      */
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender): void
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string
+     */
     public function getStatus(): ?string
     {
         return $this->status;
@@ -343,5 +374,21 @@ class Student
     public function setPhoto($photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return Recruitment[]|ArrayCollection
+     */
+    public function getRecruitment()
+    {
+        return $this->recruitment;
+    }
+
+    /**
+     * @param Recruitment[]|ArrayCollection $recruitment
+     */
+    public function setRecruitment($recruitment): void
+    {
+        $this->recruitment = $recruitment;
     }
 }

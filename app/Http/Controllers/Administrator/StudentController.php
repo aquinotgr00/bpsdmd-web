@@ -44,12 +44,14 @@ class StudentController extends Controller
             $validation = [
                 'name' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
+                'gender' => 'in:' . Student::GENDER_MALE . ',' . Student::GENDER_FEMALE,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
+                'gender' => ucfirst(trans('common.gender')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
@@ -99,12 +101,14 @@ class StudentController extends Controller
             $validation = [
                 'name' => 'required',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
+                'gender' => 'in:' . Student::GENDER_MALE . ',' . Student::GENDER_FEMALE,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
+                'gender' => ucfirst(trans('common.gender')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
@@ -211,6 +215,7 @@ class StudentController extends Controller
                 'period' => $data->getPeriod() ? $data->getPeriod() : '-',
                 'curriculum' => $data->getCurriculum() ? $data->getCurriculum() : '-',
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
+                'gender' => $data->getGender() ? ucfirst($data->getGender()) : '-',
                 'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
                 'status' => $data->getStatus() ? $data->getStatus() : '-',
                 'class' => $data->getClass() ? $data->getClass() : '-',

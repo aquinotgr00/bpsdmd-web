@@ -33,6 +33,8 @@ return [
     'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
     'confirm_delete' => 'Are you sure?',
+    'please_choose' => 'Please choose :object',
+    'invalid_option' => ':object is invalid.',
 
     // table
     'view' => 'view',
@@ -76,6 +78,7 @@ return [
     'short_name' => 'short name',
     'moda' => 'moda',
     'address' => 'address',
+    'accreditation' => 'accreditation',
     'logo' => 'logo',
 
     //manage program
@@ -151,13 +154,23 @@ return [
 
     //manage job title
     'job_title' => 'job title',
-    
+
     //manage recruitment
     'recruitment' => 'recruitment',
     'detailed_search' => 'detailed search',
     'find_student' => 'find student',
     'choose_job_title' => 'choose job title',
     'age_range' => 'age range',
-    'accreditation' => 'accreditation',
     'school_accreditation' => 'school accreditation',
+
+    // manage competency
+    'competency' => 'competency',
+    'competency_unit' => 'competency unit',
+    'unit' => 'competency unit',
+    'competency_main_purpose' => 'competency main purpose',
+    'main_purpose' => 'main purpose',
+    'competency_main_function' => 'competency main function',
+    'main_function' => 'main function',
+    'competency_key_function' => 'competency key function',
+    'key_function' => 'key function',
 ];

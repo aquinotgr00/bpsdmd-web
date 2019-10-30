@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,7 +27,7 @@ class ShortCourse
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="diklats")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="shortCourses")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
@@ -46,6 +47,18 @@ class ShortCourse
      * @ORM\Column(name="tipe", type="string", nullable=false)
      */
     private $type;
+
+    /**
+     * @var ArrayCollection|ShortCourseData[]
+     * @ORM\OneToMany(targetEntity="ShortCourseData", mappedBy="shortCourse")
+     */
+    private $shortCourseData;
+
+    /**
+     * @var ArrayCollection|ShortCourseParticipant[]
+     * @ORM\OneToMany(targetEntity="ShortCourseParticipant", mappedBy="shortCourse")
+     */
+    private $shortCourseParticipants;
 
     /**
      * @return int
@@ -112,18 +125,34 @@ class ShortCourse
     }
 
     /**
-     * Get diklat by type
-     * @param string $type
-     * @return ShortCourse[]
+     * @return ShortCourseData[]|ArrayCollection
      */
-    public function getShortCourseByType($type = 'all')
+    public function getShortCourseData()
     {
-        if ($type == ShortCourse::TYPE_DPM) {
-            return $this->getRepository()->findBy(['type' => ShortCourse::TYPE_DPM]);
-        } elseif ($type == ShortCourse::TYPE_TEKNIS) {
-            return $this->getRepository()->findBy(['type' => ShortCourse::TYPE_TEKNIS]);
-        }
+        return $this->shortCourseData;
+    }
 
-        return $this->getRepository()->findAll();
+    /**
+     * @param ShortCourseData[]|ArrayCollection $shortCourseData
+     */
+    public function setShortCourseData($shortCourseData): void
+    {
+        $this->shortCourseData = $shortCourseData;
+    }
+
+    /**
+     * @return ShortCourseParticipant[]|ArrayCollection
+     */
+    public function getShortCourseParticipants()
+    {
+        return $this->shortCourseParticipants;
+    }
+
+    /**
+     * @param ShortCourseParticipant[]|ArrayCollection $shortCourseParticipants
+     */
+    public function setShortCourseParticipants($shortCourseParticipants): void
+    {
+        $this->shortCourseParticipants = $shortCourseParticipants;
     }
 }

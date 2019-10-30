@@ -154,6 +154,8 @@
     });
 
     $('#modalDetailEmployeeCertificate').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailEmployeeCertificate');
+
         modalHtml.find('.employeEemployee').html('');
         modalHtml.find('.employeeCertificate').html('');
         modalHtml.find('.employeeValidityPeriod').html('');

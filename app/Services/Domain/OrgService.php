@@ -79,6 +79,8 @@ class OrgService
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+        $org->setDescription($data->get('description'));
+        $org->setAccreditation($data->get('accreditation'));
 
         if ($data->get('uploaded_img')) {
             $org->setPhoto($data->get('uploaded_img'));
@@ -109,6 +111,8 @@ class OrgService
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+        $org->setDescription($data->get('description'));
+        $org->setAccreditation($data->get('accreditation'));
 
         if ($data->get('uploaded_img')) {
             @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
@@ -182,6 +186,7 @@ class OrgService
     {
         try {
             $qb = $this->createQueryBuilder('org')
+                ->select('count(org.id)')
                 ->where('org.type = :type')
                 ->setParameter('type', Organization::TYPE_SUPPLY);
 

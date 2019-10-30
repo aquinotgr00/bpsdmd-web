@@ -59,6 +59,19 @@
                                 <span class="help-block">{!! implode('', $errors->get('address')) !!}</span>
                             </div>
 
+                            @if($data->getType() == \App\Entities\Organization::TYPE_SUPPLY)
+                                <div class="form-group {{ $errors->has('accreditation') ? 'has-error' : '' }}">
+                                    <label for="accreditation">{{ ucfirst(trans('common.accreditation')) }} :</label>
+                                    <select id="accreditation" name="accreditation" class="form-control">
+                                        <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
+                                        <option value="{{ \App\Entities\Organization::ACCREDITATION_B }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_B ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_B) }}</option>
+                                        <option value="{{ \App\Entities\Organization::ACCREDITATION_C }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_C ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_C) }}</option>
+                                        <option value="{{ \App\Entities\Organization::ACCREDITATION_NA }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_NA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_NA) }}</option>
+                                    </select>
+                                    <span class="help-block">{!! implode('', $errors->get('accreditation')) !!}</span>
+                                </div>
+                            @endif
+
                             <div class="input-group {{ $errors->has('photo') ? 'has-error' : '' }}">
                                 <img src="">
                                 <div class="input-group-prepend">

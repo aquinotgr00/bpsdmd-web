@@ -433,12 +433,12 @@ ALTER TABLE public.kompetensi_id_seq OWNER TO postgres;
 
 CREATE TABLE public.kompetensi (
     id bigint DEFAULT nextval('public.kompetensi_id_seq'::regclass) NOT NULL,
-    moda character varying(30) NOT NULL,
     kompetensi_tujuan_utama_id bigint NOT NULL,
     kompetensi_fungsi_kunci_id bigint NOT NULL,
     kompetensi_fungsi_utama_id bigint NOT NULL,
     kompetensi_unit_id bigint NOT NULL,
-    tipe_kompetensi character varying NOT NULL
+    moda character varying(30) NOT NULL,
+    tipe character varying NOT NULL
 );
 
 
@@ -518,7 +518,7 @@ ALTER TABLE public.kompetensi_fungsi_utama_id_seq OWNER TO postgres;
 
 CREATE TABLE public.kompetensi_fungsi_utama (
     id bigint DEFAULT nextval('public.kompetensi_fungsi_utama_id_seq'::regclass) NOT NULL,
-    kode integer NOT NULL,
+    kode character varying NOT NULL,
     fungsi_utama text NOT NULL
 );
 
@@ -631,7 +631,7 @@ ALTER TABLE public.kompetensi_unit_id_seq OWNER TO postgres;
 CREATE TABLE public.kompetensi_unit (
     id bigint DEFAULT nextval('public.kompetensi_unit_id_seq'::regclass) NOT NULL,
     kode character varying NOT NULL,
-    kompetensi text NOT NULL
+    unit text NOT NULL
 );
 
 
@@ -1157,7 +1157,7 @@ COPY public.kabupaten (id, provinsi_id, kode, nama) FROM stdin;
 -- Data for Name: kompetensi; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.kompetensi (id, moda, kompetensi_tujuan_utama_id, kompetensi_fungsi_kunci_id, kompetensi_fungsi_utama_id, kompetensi_unit_id, tipe_kompetensi) FROM stdin;
+COPY public.kompetensi (id, kompetensi_tujuan_utama_id, kompetensi_fungsi_kunci_id, kompetensi_fungsi_utama_id, kompetensi_unit_id, moda, tipe) FROM stdin;
 \.
 
 
@@ -1213,7 +1213,7 @@ COPY public.kompetensi_tujuan_utama (id, kode, tujuan_utama) FROM stdin;
 -- Data for Name: kompetensi_unit; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.kompetensi_unit (id, kode, kompetensi) FROM stdin;
+COPY public.kompetensi_unit (id, kode, unit) FROM stdin;
 \.
 
 

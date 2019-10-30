@@ -1,6 +1,6 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
-    <li >
+    <li>
         <a href="{{ url(route('dashboard')) }}">
             <i class="fa fa-dashboard"></i>
             <span>{{ ucfirst(trans('common.dashboard')) }}</span>
@@ -20,6 +20,44 @@
                 <i class="fa fa-group"></i>
                 <span>{{ ucwords(trans('common.user_management')) }}</span>
             </a>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>Kompetensi</span>
+            </a>
+            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('administrator.competency.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('administrator.competencyUnit.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_unit')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('administrator.competencyMainPurpose.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_main_purpose')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('administrator.competencyMainFunction.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_main_function')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('administrator.competencyKeyFunction.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_key_function')) }}</span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li>
