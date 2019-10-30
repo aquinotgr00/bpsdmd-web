@@ -13,7 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         <form method="post" enctype="multipart/form-data">
-                        @csrf
+                            @csrf
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>

@@ -9,8 +9,6 @@ use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
-use Image;
 
 class ProgramController extends Controller
 {
@@ -32,7 +30,7 @@ class ProgramController extends Controller
         return view('program.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
     }
 
-    public function create(Request $request, ProgramService $programService, OrgService $orgService)
+    public function create(Request $request, ProgramService $programService)
     {
         if ($request->method() == 'POST') {
             $validation = [
@@ -65,7 +63,7 @@ class ProgramController extends Controller
         return view('program.create');
     }
 
-    public function update(Request $request, ProgramService $programService, OrgService $orgService, StudyProgram $data)
+    public function update(Request $request, ProgramService $programService, StudyProgram $data)
     {
         if ($request->method() == 'POST') {
             $validation = [

@@ -2,7 +2,7 @@
 
 namespace App\Services\Domain;
 
-use App\Entities\JobTitle;
+use App\Entities\JobFunction;
 use App\Entities\Organization;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
 
-class JobTitleService
+class JobFunctionService
 {
     use PaginatesFromParams;
 
@@ -24,7 +24,7 @@ class JobTitleService
     {
         return EntityManager::createQueryBuilder()
             ->select($alias)
-            ->from(JobTitle::class, $alias, $indexBy);
+            ->from(JobFunction::class, $alias, $indexBy);
     }
 
     /**
@@ -34,38 +34,22 @@ class JobTitleService
      */
     public function getRepository()
     {
-        return EntityManager::getRepository(JobTitle::class);
+        return EntityManager::getRepository(JobFunction::class);
     }
 
     /**
-     * Get count JobTitle
-     *
-     * @return int
-     */
-    public function getCountJobTitle()
-    {
-        try {
-            $qb = $this->createQueryBuilder('jt');
-
-            return $qb->getQuery()->getSingleScalarResult();
-        } catch (\Exception $e) {
-            return 0;
-        }
-    }
-
-    /**
-     * Paginate JobTitle
+     * Paginate JobFunction
      *
      * @param $page
      * @param Organization $org
      * @return LengthAwarePaginator
      */
-    public function paginateJobTitle($page, Organization $org): LengthAwarePaginator
+    public function paginateJobFunction($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
-        $query = $this->createQueryBuilder('jt')
-            ->andWhere('jt.org = :orgId')
-            ->orderBy('jt.id')
+        $query = $this->createQueryBuilder('jf')
+            ->andWhere('jf.org = :orgId')
+            ->orderBy('jf.id')
             ->setParameter('orgId', $org->getId())
             ->getQuery();
 
@@ -73,73 +57,73 @@ class JobTitleService
     }
 
     /**
-     * Create new JobTitle
+     * Create new JobFunction
      *
      * @param Collection $data
      * @param bool $org
      * @param bool $flush
-     * @return JobTitle
+     * @return JobFunction
      */
-    public function create(Collection $data, $org = false, $flush = true)
+    public function create(Collection $data, Organization $org, $flush = true)
     {
-        $jobTitle = new JobTitle;
-        $jobTitle->setName($data->get('name'));
+        $jobFunction = new JobFunction;
+        $jobFunction->setCode($data->get('code'));
+        $jobFunction->setName($data->get('name'));
+        $jobFunction->setOrg($org);
 
         if ($org instanceof Organization) {
-            $jobTitle->setOrg($org);
+            $jobFunction->setOrg($org);
         }
 
-        EntityManager::persist($jobTitle);
+        EntityManager::persist($jobFunction);
 
         if ($flush) {
             EntityManager::flush();
 
-            return $jobTitle;
+            return $jobFunction;
         }
     }
 
     /**
-     * Update JobTitle
+     * Update JobFunction
      *
-     * @param JobTitle $jobTitle
+     * @param JobFunction $jobFunction
      * @param Collection $data
      * @param bool $org
      * @param bool $flush
-     * @return JobTitle
+     * @return JobFunction
      */
-    public function update(JobTitle $jobTitle, Collection $data, $org = false, $flush = true)
+    public function update(JobFunction $jobFunction, Collection $data, Organization $org, $flush = true)
     {
-        $jobTitle->setName($data->get('name'));
+        $jobFunction->setCode($data->get('code'));
+        $jobFunction->setName($data->get('name'));
+        $jobFunction->setOrg($org);
 
-        if ($org instanceof Organization) {
-            $jobTitle->setOrg($org);
-        }
-
-        EntityManager::persist($jobTitle);
+        EntityManager::persist($jobFunction);
 
         if ($flush) {
             EntityManager::flush();
 
-            return $jobTitle;
+            return $jobFunction;
         }
     }
 
     /**
-     * Delete JobTitle
+     * Delete JobFunction
      *
-     * @param JobTitle $jobTitle
+     * @param JobFunction $jobFunction
      */
-    public function delete(JobTitle $jobTitle)
+    public function delete(JobFunction $jobFunction)
     {
-        EntityManager::remove($jobTitle);
+        EntityManager::remove($jobFunction);
         EntityManager::flush();
     }
 
     /**
-     * Find JobTitle by id
+     * Find JobFunction by id
      *
      * @param $id
-     * @return JobTitle
+     * @return JobFunction
      */
     public function findById($id)
     {
