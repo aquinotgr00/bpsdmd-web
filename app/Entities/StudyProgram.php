@@ -72,6 +72,12 @@ class StudyProgram
     private $licenseStudyProgram;
 
     /**
+     * @var ArrayCollection|StudyProgramCompetency[]
+     * @ORM\OneToMany(targetEntity="StudyProgramCompetency", mappedBy="studyProgram")
+     */
+    private $studyProgramCompetency;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -181,6 +187,22 @@ class StudyProgram
     public function setLicenseStudyProgram($licenseStudyProgram): void
     {
         $this->licenseStudyProgram = $licenseStudyProgram;
+    }
+
+    /**
+     * @return StudyProgramCompetency[]|ArrayCollection
+     */
+    public function getStudyProgramCompetency()
+    {
+        return $this->studyProgramCompetency;
+    }
+
+    /**
+     * @param StudyProgramCompetency[]|ArrayCollection $studyProgramCompetency
+     */
+    public function setStudyProgramCompetency($studyProgramCompetency): void
+    {
+        $this->studyProgramCompetency = $studyProgramCompetency;
     }
 
     /**

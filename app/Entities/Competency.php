@@ -89,6 +89,12 @@ class Competency
     private $shortCourseCompetency;
 
     /**
+     * @var ArrayCollection|StudyProgramCompetency[]
+     * @ORM\OneToMany(targetEntity="StudyProgramCompetency", mappedBy="competency")
+     */
+    private $studyProgramCompetency;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -198,5 +204,21 @@ class Competency
     public function setType($type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return StudyProgramCompetency[]|ArrayCollection
+     */
+    public function getStudyProgramCompetency()
+    {
+        return $this->studyProgramCompetency;
+    }
+
+    /**
+     * @param StudyProgramCompetency[]|ArrayCollection $studyProgramCompetency
+     */
+    public function setStudyProgramCompetency($studyProgramCompetency): void
+    {
+        $this->studyProgramCompetency = $studyProgramCompetency;
     }
 }
