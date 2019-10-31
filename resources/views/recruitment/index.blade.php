@@ -26,7 +26,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.job_title')) }}</label>
-                                            <select class="form-control" id="job_title">
+                                            <select class="form-control" id="studyProgram" name="studyProgram">
                                                 <option value="" selected="">--{{ ucwords(trans('common.choose_job_title')) }}--</option>
                                                 @if(!empty($dataProgram))
                                                     @foreach($dataProgram as $program)
@@ -34,7 +34,6 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <input type="hidden" name="job_title" value="" id="hidden-license-job-title">
                                             <span class="help-block" id="span-helper"> Filter program studi dengan kompetensi yang dicari </span>
                                         </div>
                                     </div>
@@ -54,8 +53,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group rentang-usia">
                                             <label class="control-label">{{ ucwords(trans('common.age_range')) }}</label><br>
-                                            <input type="number" id="age" class="form-control" value="" placeholder="min" name="age" step="1" min="21">
-                                            <input type="number" id="age-max" class="form-control" value="" placeholder="max" name="agemax" step="1" min="21">
+                                            <input type="number" id="age" class="form-control" value="{{ old('age') }}" placeholder="min" name="age" step="1" min="21">
+                                            <input type="number" id="age-max" class="form-control" value="{{ old('agemax') }}" placeholder="max" name="agemax" step="1" min="21">
                                             <span class="help-block">Usia minimal 21 tahun </span>
                                         </div>
                                     </div>
@@ -64,7 +63,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Indeks Prestasi Kumulatif</label>
-                                            <input type="number" id="ipk" class="form-control" value="" placeholder="" name="ipk" step="0.01" min="0" max="4"> <span class="help-block"> IPK Minimal pelamar adalah 2.5 </span>
+                                            <input type="number" id="ipk" class="form-control" value="{{ old('ipk') }}" placeholder="" name="ipk" step="0.01" min="0" max="4"> <span class="help-block"> IPK Minimal pelamar adalah 2.5 </span>
                                         </div>
                                     </div>
                                 </div>
@@ -117,13 +116,14 @@
                                     <div class="col-lg-3 col-sm-6 row-in-br hasil-pencarian b-r-none">
                                         <ul class="col-in">
                                             <li class="col-last">
-                                                <h3 class="counter text-right m-t-15">0</h3>
+                                                <h3 class="counter text-right m-t-15"><?=count($student)?></h3>
                                             </li>
                                             <li class="col-middle">
                                                 <h4>Hasil Pencarian</h4>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    <?php $searchPersen = (count($student) / count($allStudent))*100;?>
+                                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?=$searchPersen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$searchPersen?>%">
+                                                        <span class="sr-only"><?=$searchPersen?>% Complete (success)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -132,16 +132,17 @@
                                     <div class="col-lg-3 col-sm-6 daftar-penawaran b-0">
                                         <ul class="col-in">
                                             <li>
-                                                <a href=""><span class="circle circle-md bg-success"><i class=" ti-shopping-cart"></i></span></a>
+                                                <a href="{{ url(route('demand.offering.index')) }}"><span class="circle circle-md bg-success"><i class="fa fa-shopping-cart"></i></span></a>
                                             </li>
                                             <li class="col-last">
-                                                <h3 class="counter text-right m-t-15">0</h3>
+                                                <h3 class="counter text-right m-t-15"><?=count($data)?></h3>
                                             </li>
                                             <li class="col-middle">
                                                 <h4 style="font-size:14px;">Daftar Penawaran Kandidat</h4>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    <?php $persen = (count($data) / count($allStudent))*100;?>
+                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%">
+                                                        <span class="sr-only"><?=$persen?>% Complete (success)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -176,14 +177,13 @@
                                                     <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getDegree() : '-' }}</td>
                                                     <td>{{ $item->getGraduationYear() ? $item->getGraduationYear() : '-' }}</td>
                                                     <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
-                                                    <td>{{ '-' }}</td>
+                                                    <td>{{ $item->getGender() ? $item->getGender() : '-' }}</td>
                                                     <td>
                                                         <a href="javascript:void(0)" class="btn btn-block btn-info viewStudent" data-student="{{ $item->getId() }}">Detail</a>
+                                                        <!-- <a href="{{ url(route('demand.recruitment.create', [$item->getId()])) }}" class="btn btn-block btn-info">{{ ucfirst(trans('common.add')) }}</a> -->
                                                     </td>
                                                 </tr>
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php } ?>
 
                                             @if(!count($student))
                                                 <tr class="even pointer">

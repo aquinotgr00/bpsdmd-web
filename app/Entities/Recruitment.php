@@ -61,14 +61,14 @@ class Recruitment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_input", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_input", type="datetime", nullable=true)
      */
     private $inputDate = NULL;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_update", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_update", type="datetime", nullable=true)
      */
     private $updateDate = NULL;
 
@@ -82,7 +82,7 @@ class Recruitment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_email", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_email", type="datetime", nullable=true)
      */
     private $emailDate = NULL;
 

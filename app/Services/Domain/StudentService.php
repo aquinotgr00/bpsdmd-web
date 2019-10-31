@@ -81,21 +81,26 @@ class StudentService
      * @param $page\
      * @return LengthAwarePaginator
      */
-    public function paginateRecruitment($page, Collection $search): LengthAwarePaginator
+    public function paginateRecruitment($page, Collection $search, $studyProgram = false): LengthAwarePaginator
     {
-        var_dump($search);exit;
         $limit = 10;
-        $query = $this->createQueryBuilder('s');
+        $query = $this->createQueryBuilder('s')->leftJoin('s.org', 'o');
+        if($studyProgram instanceof StudyProgram){
+            $query->andWhere('s.studyProgram = :studyProgramId')->setParameter('studyProgramId', $studyProgram->getId());
+        }
         if(!empty($search->get('ipk'))){
-            $query->where('s.ipk = :ipk')->setParameter('ipk', $search->get('ipk'));
+            $query->andWhere('s.ipk = :ipk')->setParameter('ipk', $search->get('ipk'));
         }
         if(!empty($search->get('gender'))){
-            $query->where('s.gender = :gender')->setParameter('gender', $search->get('gender'));
+            $query->andWhere('s.gender = :gender')->setParameter('gender', $search->get('gender'));
         }
         if(!empty($search->get('age')) || !empty($search->get('agemax'))){
-            $from = Carbon::today()->subYears($search->get('age'));
-            $to = Carbon::today()->subYears($search->get('agemax'));
-            $query->where("s.dateOfBirth in (:age)")->setParameter('age', [$to, $from]);
+            $minDate = Carbon::today()->subYears($search->get('agemax'));
+            $maxDate = Carbon::today()->subYears($search->get('age'))->endOfDay();
+            $query->andWhere("s.dateOfBirth BETWEEN :minDate AND :maxDate")->setParameter('minDate', $minDate)->setParameter('maxDate', $maxDate);
+        }
+        if(!empty($search->get('accreditation'))){
+            $query->andWhere('o.accreditation = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
         }
 
         $query = $query->getQuery();

@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App\Entities\Recruitment;
+use App\Entities\Organization;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
@@ -59,11 +60,13 @@ class RecruitmentService
      * @param Collection $search
      * @return LengthAwarePaginator
      */
-    public function paginateRecruitment($page): LengthAwarePaginator
+    public function paginateRecruitment($page, Organization $org): LengthAwarePaginator
     {
-        // var_dump($search['ipk']);exit;
         $limit = 10;
         $query = $this->createQueryBuilder('r')
+            ->andWhere('r.org = :orgId')
+            ->orderBy('r.id')
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -80,10 +83,10 @@ class RecruitmentService
     {
         $recruitment = new Recruitment;
         $recruitment->setStatus($data->get('status'));
-        $recruitment->setInputDate(date_create_from_format('d-m-Y', $data->get('inputDate')));
-        $recruitment->setUpdateDate(date_create_from_format('d-m-Y', $data->get('updateDate')));
+        $recruitment->setInputDate(date('d-m-Y H:i:s'));
+        $recruitment->setUpdateDate(date('d-m-Y H:i:s'));
         $recruitment->setIsEmail($data->get('isEmail'));
-        $recruitment->setEmailDate(date_create_from_format('d-m-Y', $data->get('emailDate')));
+        $recruitment->setEmailDate(date_create_from_format('d-m-Y H:i:s', $data->get('emailDate')));
 
         EntityManager::persist($recruitment);
 
@@ -105,10 +108,10 @@ class RecruitmentService
     public function update(Recruitment $recruitment, Collection $data, $flush = true)
     {
         $recruitment->setStatus($data->get('status'));
-        $recruitment->setInputDate(date_create_from_format('d-m-Y', $data->get('inputDate')));
-        $recruitment->setUpdateDate(date_create_from_format('d-m-Y', $data->get('updateDate')));
+        $recruitment->setInputDate(date_create_from_format('d-m-Y H:i:s', $data->get('inputDate')));
+        $recruitment->setUpdateDate(date('d-m-Y H:i:s'));
         $recruitment->setIsEmail($data->get('isEmail'));
-        $recruitment->setEmailDate(date_create_from_format('d-m-Y', $data->get('emailDate')));
+        $recruitment->setEmailDate(date_create_from_format('d-m-Y H:i:s', $data->get('emailDate')));
 
         EntityManager::persist($recruitment);
 
