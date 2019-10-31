@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -80,6 +81,12 @@ class Competency
      * @ORM\Column(name="tipe", type="string", nullable=false)
      */
     private $type;
+
+    /**
+     * @var ArrayCollection|ShortCourseCompetency[]
+     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="competency")
+     */
+    private $shortCourseCompetency;
 
     /**
      * @return string

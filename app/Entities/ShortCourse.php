@@ -61,6 +61,12 @@ class ShortCourse
     private $shortCourseParticipants;
 
     /**
+     * @var ArrayCollection|ShortCourseCompetency[]
+     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="shortCourse")
+     */
+    private $shortCourseCompetency;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -154,5 +160,21 @@ class ShortCourse
     public function setShortCourseParticipants($shortCourseParticipants): void
     {
         $this->shortCourseParticipants = $shortCourseParticipants;
+    }
+
+    /**
+     * @return ShortCourseCompetency[]|ArrayCollection
+     */
+    public function getShortCourseCompetency()
+    {
+        return $this->shortCourseCompetency;
+    }
+
+    /**
+     * @param ShortCourseCompetency[]|ArrayCollection $shortCourseCompetency
+     */
+    public function setShortCourseCompetency($shortCourseCompetency): void
+    {
+        $this->shortCourseCompetency = $shortCourseCompetency;
     }
 }
