@@ -73,6 +73,13 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::get('/{jobTitle}/delete', 'Administrator\JobTitleController@delete')->name('administrator.jobTitle.delete');
             Route::get('/', 'Administrator\JobTitleController@index')->name('administrator.jobTitle.index');
         });
+
+        Route::group(['prefix' => '/{org_demand}/job-function', 'middleware' => ['only_admin']], function() {
+            Route::any('/create', 'Administrator\JobFunctionController@create')->name('administrator.jobFunction.create');
+            Route::any('/{jobFunction}/update', 'Administrator\JobFunctionController@update')->name('administrator.jobFunction.update');
+            Route::get('/{jobFunction}/delete', 'Administrator\JobFunctionController@delete')->name('administrator.jobFunction.delete');
+            Route::get('/', 'Administrator\JobFunctionController@index')->name('administrator.jobFunction.index');
+        });
     });
 
 
@@ -209,6 +216,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{jobTitle}/update', 'Demand\JobTitleController@update')->name('demand.jobTitle.update');
         Route::get('/{jobTitle}/delete', 'Demand\JobTitleController@delete')->name('demand.jobTitle.delete');
         Route::get('/', 'Demand\JobTitleController@index')->name('demand.jobTitle.index');
+    });
+
+    Route::group(['prefix' => '/job-function', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'Demand\JobFunctionController@create')->name('demand.jobFunction.create');
+        Route::any('/{jobFunction}/update', 'Demand\JobFunctionController@update')->name('demand.jobFunction.update');
+        Route::get('/{jobFunction}/delete', 'Demand\JobFunctionController@delete')->name('demand.jobFunction.delete');
+        Route::get('/', 'Demand\JobFunctionController@index')->name('demand.jobFunction.index');
     });
 
     Route::group(['prefix' => '/certificate', 'middleware' => ['only_demand']], function() {

@@ -114,7 +114,7 @@ class TeacherController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $teacherService->update($data, collect($requestData), false, true);
+                $teacherService->update($data, collect($requestData), $org, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.teacher'))]);
             } catch (Exception $e) {

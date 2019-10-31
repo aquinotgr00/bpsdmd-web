@@ -212,4 +212,7 @@ return [
     'main_function' => 'fungsi utama',
     'competency_key_function' => 'kompetensi fungsi kunci',
     'key_function' => 'fungsi kunci',
+
+    // job function
+    'job_function' => 'fungsi pekerjaan',
 ];

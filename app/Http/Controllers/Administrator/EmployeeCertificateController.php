@@ -8,14 +8,14 @@ use App\Entities\Certificate;
 use App\Entities\Organization;
 use App\Imports\EmployeeCertificateImport;
 use App\Http\Controllers\Controller;
+use App\Services\Application\AuthService;
 use App\Services\Domain\EmployeeCertificateService;
 use App\Services\Domain\CertificateService;
-use App\Services\Domain\EmployeeService;
 use App\Services\Domain\FeederService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeCertificateController extends Controller
 {
@@ -26,10 +26,10 @@ class EmployeeCertificateController extends Controller
 
         //build urls
         $urlCreate = url(route('administrator.employeeCertificate.create', [$org->getId(), $employee->getId()]));
-        $urlUpdate = function($id) use ($employee) {
+        $urlUpdate = function($id) use ($employee, $org) {
             return url(route('administrator.employeeCertificate.update', [$org->getId(), $employee->getId(), $id]));
         };
-        $urlDelete = function($id) use ($employee) {
+        $urlDelete = function($id) use ($employee, $org) {
             return url(route('administrator.employeeCertificate.delete', [$org->getId(), $employee->getId(), $id]));
         };
         $urlDetail = '/org/'.$org->getId().'/employee/'.$employee->getId().'/employee-certificate';
@@ -103,7 +103,8 @@ class EmployeeCertificateController extends Controller
             }
 
             try {
-                $employeeCertificateService->update($data, collect($requestData), false, $certificate, true);
+                $requestData = $request->all();
+                $employeeCertificateService->update($data, collect($requestData), $employee, $certificate, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.certificate'))]);
             } catch (Exception $e) {

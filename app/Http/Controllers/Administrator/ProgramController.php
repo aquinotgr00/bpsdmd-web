@@ -31,7 +31,7 @@ class ProgramController extends Controller
         return view('program.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
     }
 
-    public function create(Request $request, ProgramService $programService, OrgService $orgService, LicenseService $licenseService, Organization $org)
+    public function create(Request $request, ProgramService $programService, LicenseService $licenseService, Organization $org)
     {
         $licenses = $licenseService->getAsList($request->input('license', []));
 
@@ -66,7 +66,7 @@ class ProgramController extends Controller
         return view('program.create', compact('licenses'));
     }
 
-    public function update(Request $request, ProgramService $programService, OrgService $orgService, LicenseService $licenseService, Organization $org, StudyProgram $data)
+    public function update(Request $request, ProgramService $programService, LicenseService $licenseService, Organization $org, StudyProgram $data)
     {
         $licenses = $licenseService->getAsList($data->getLicenseStudyProgram());
 

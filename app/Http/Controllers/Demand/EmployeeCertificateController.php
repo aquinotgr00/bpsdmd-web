@@ -8,11 +8,9 @@ use App\Entities\Certificate;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\EmployeeCertificateService;
 use App\Services\Domain\CertificateService;
-use App\Services\Domain\EmployeeService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Image;
 
 class EmployeeCertificateController extends Controller
 {
@@ -100,7 +98,8 @@ class EmployeeCertificateController extends Controller
             }
 
             try {
-                $employeeCertificateService->update($data, collect($requestData), false, $certificate, true);
+                $requestData = $request->all();
+                $employeeCertificateService->update($data, collect($requestData), $employee, $certificate, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.certificate'))]);
             } catch (Exception $e) {

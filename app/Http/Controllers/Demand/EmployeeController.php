@@ -129,6 +129,7 @@ class EmployeeController extends Controller
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
+            $org = currentUser()->getOrg();
             $messageBag = new MessageBag;
 
             $school = false;
@@ -154,7 +155,7 @@ class EmployeeController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $employeeService->update($data, collect($requestData), false, $school, true);
+                $employeeService->update($data, collect($requestData), $org, $school, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {
@@ -212,7 +213,7 @@ class EmployeeController extends Controller
 
     public function getByName(Request $request, EmployeeService $employeeService)
     {
-        $employee = $employeeService->findByName($request->q);
+        $employee = $employeeService->findByName($request->get('q'));
         return $employee;
     }
 }
