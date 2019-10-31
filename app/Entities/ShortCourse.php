@@ -18,7 +18,7 @@ class ShortCourse
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -59,6 +59,12 @@ class ShortCourse
      * @ORM\OneToMany(targetEntity="ShortCourseParticipant", mappedBy="shortCourse")
      */
     private $shortCourseParticipants;
+
+    /**
+     * @var ArrayCollection|ShortCourseCompetency[]
+     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="shortCourse")
+     */
+    private $shortCourseCompetency;
 
     /**
      * @return int
@@ -154,5 +160,21 @@ class ShortCourse
     public function setShortCourseParticipants($shortCourseParticipants): void
     {
         $this->shortCourseParticipants = $shortCourseParticipants;
+    }
+
+    /**
+     * @return ShortCourseCompetency[]|ArrayCollection
+     */
+    public function getShortCourseCompetency()
+    {
+        return $this->shortCourseCompetency;
+    }
+
+    /**
+     * @param ShortCourseCompetency[]|ArrayCollection $shortCourseCompetency
+     */
+    public function setShortCourseCompetency($shortCourseCompetency): void
+    {
+        $this->shortCourseCompetency = $shortCourseCompetency;
     }
 }

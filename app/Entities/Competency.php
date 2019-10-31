@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,7 +22,7 @@ class Competency
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -80,6 +81,18 @@ class Competency
      * @ORM\Column(name="tipe", type="string", nullable=false)
      */
     private $type;
+
+    /**
+     * @var ArrayCollection|ShortCourseCompetency[]
+     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="competency")
+     */
+    private $shortCourseCompetency;
+
+    /**
+     * @var ArrayCollection|StudyProgramCompetency[]
+     * @ORM\OneToMany(targetEntity="StudyProgramCompetency", mappedBy="competency")
+     */
+    private $studyProgramCompetency;
 
     /**
      * @return string
@@ -191,5 +204,21 @@ class Competency
     public function setType($type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return StudyProgramCompetency[]|ArrayCollection
+     */
+    public function getStudyProgramCompetency()
+    {
+        return $this->studyProgramCompetency;
+    }
+
+    /**
+     * @param StudyProgramCompetency[]|ArrayCollection $studyProgramCompetency
+     */
+    public function setStudyProgramCompetency($studyProgramCompetency): void
+    {
+        $this->studyProgramCompetency = $studyProgramCompetency;
     }
 }

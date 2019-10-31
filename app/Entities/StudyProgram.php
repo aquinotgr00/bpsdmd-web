@@ -22,7 +22,7 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -70,6 +70,12 @@ class StudyProgram
      * @ORM\OneToMany(targetEntity="LicenseStudyProgram", mappedBy="studyProgram")
      */
     private $licenseStudyProgram;
+
+    /**
+     * @var ArrayCollection|StudyProgramCompetency[]
+     * @ORM\OneToMany(targetEntity="StudyProgramCompetency", mappedBy="studyProgram")
+     */
+    private $studyProgramCompetency;
 
     /**
      * @return string
@@ -181,6 +187,22 @@ class StudyProgram
     public function setLicenseStudyProgram($licenseStudyProgram): void
     {
         $this->licenseStudyProgram = $licenseStudyProgram;
+    }
+
+    /**
+     * @return StudyProgramCompetency[]|ArrayCollection
+     */
+    public function getStudyProgramCompetency()
+    {
+        return $this->studyProgramCompetency;
+    }
+
+    /**
+     * @param StudyProgramCompetency[]|ArrayCollection $studyProgramCompetency
+     */
+    public function setStudyProgramCompetency($studyProgramCompetency): void
+    {
+        $this->studyProgramCompetency = $studyProgramCompetency;
     }
 
     /**

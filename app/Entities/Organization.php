@@ -28,7 +28,7 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -58,16 +58,16 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="tipe", type="string", nullable=false)
+     * @ORM\Column(name="tipe", type="string", nullable=true)
      */
     private $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="moda", type="string", nullable=false)
+     * @ORM\Column(name="moda", type="string", nullable=true)
      */
-    private $moda = NULL;
+    private $moda;
 
     /**
      * @var string
