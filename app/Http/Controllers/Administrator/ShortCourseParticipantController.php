@@ -24,9 +24,9 @@ class ShortCourseParticipantController extends Controller
             $validation = [];
             $request->validate($validation, [], []);
 
-            $shortCourse = $shortCourseService->findById($request->short_course_id);
-            $employee = $employeeService->findById($request->employee_id);
-            $district = $districtService->findById($request->district_id);
+            $shortCourse = $shortCourseService->findById($request->get('short_course_id'));
+            $employee = $employeeService->findById($request->get('employee_id'));
+            $district = $districtService->findById($request->get('district_id'));
 
             try {
                 $shortCourseParticipantService->create(
@@ -44,7 +44,7 @@ class ShortCourseParticipantController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.short_course_participant'))]);
             }
 
-            return redirect()->route('administrator.shortCourseData.index', $request->short_course_id)->with($alert, $message);
+            return redirect()->route('administrator.shortCourseData.index', $request->get('short_course_id'))->with($alert, $message);
         }
 
         return view('shortCourseParticipant.create');
