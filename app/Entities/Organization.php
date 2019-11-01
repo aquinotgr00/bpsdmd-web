@@ -37,6 +37,13 @@ class Organization
     /**
      * @var string
      *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="kode", type="string", nullable=true)
      */
     private $code = NULL;
@@ -54,6 +61,41 @@ class Organization
      * @ORM\Column(name="singkatan", type="string", nullable=true)
      */
     private $shortName = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_pendirian", type="string", nullable=true)
+     */
+    private $letterOfEst = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_pendirian", type="date", nullable=true)
+     */
+    private $dateOfEst = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_operasional", type="string", nullable=true)
+     */
+    private $letterOfOpr;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_operasional", type="date", nullable=true)
+     */
+    private $dateOfOpr = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=true)
+     */
+    private $status;
 
     /**
      * @var string
@@ -93,9 +135,65 @@ class Organization
     /**
      * @var string
      *
+     * @ORM\Column(name="telepon", type="string", nullable=true)
+     */
+    private $phoneNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="faksimile", type="string", nullable=true)
+     */
+    private $fax = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="website", type="string", nullable=true)
+     */
+    private $website = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", nullable=true)
+     */
+    private $email = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status_milik", type="string", nullable=true)
+     */
+    private $ownershipStatus = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pembina", type="string", nullable=true)
+     */
+    private $underSupervision = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bentuk_pendidikan", type="string", nullable=true)
+     */
+    private $educationType = NULL;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="akreditasi", type="string", nullable=true)
      */
     private $accreditation = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_update", type="date", nullable=true)
+     */
+    private $lastUpdate = NULL;
 
     /**
      * @var ArrayCollection|User[]
@@ -170,6 +268,22 @@ class Organization
     /**
      * @return string
      */
+    public function getIdDikti(): ?string
+    {
+        return $this->idDikti;
+    }
+
+    /**
+     * @param string $idDikti
+     */
+    public function setIdDikti($idDikti): void
+    {
+        $this->idDikti = $idDikti;
+    }
+
+    /**
+     * @return string
+     */
     public function getCode(): ?string
     {
         return $this->code;
@@ -213,6 +327,86 @@ class Organization
     public function setShortName($shortName): void
     {
         $this->shortName = $shortName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLetterOfEst(): ?string
+    {
+        return $this->letterOfEst;
+    }
+
+    /**
+     * @param string $letterOfEst
+     */
+    public function setLetterOfEst($letterOfEst): void
+    {
+        $this->letterOfEst = $letterOfEst;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfEst()
+    {
+        return $this->dateOfEst;
+    }
+
+    /**
+     * @param \DateTime $dateOfEst
+     */
+    public function setDateOfEst($dateOfEst): void
+    {
+        $this->dateOfEst = $dateOfEst;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLetterOfOpr(): ?string
+    {
+        return $this->letterOfOpr;
+    }
+
+    /**
+     * @param string $letterOfOpr
+     */
+    public function setLetterOfOpr($letterOfOpr): void
+    {
+        $this->letterOfOpr = $letterOfOpr;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfOpr()
+    {
+        return $this->dateOfOpr;
+    }
+
+    /**
+     * @param \DateTime $dateOfOpr
+     */
+    public function setDateOfOpr($dateOfOpr): void
+    {
+        $this->dateOfOpr = $dateOfOpr;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
     }
 
     /**
@@ -298,6 +492,118 @@ class Organization
     /**
      * @return string
      */
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFax(): ?string
+    {
+        return $this->fax;
+    }
+
+    /**
+     * @param string $fax
+     */
+    public function setFax($fax): void
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    /**
+     * @param string $website
+     */
+    public function setWebsite($website): void
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnershipStatus(): ?string
+    {
+        return $this->ownershipStatus;
+    }
+
+    /**
+     * @param string $ownershipStatus
+     */
+    public function setOwnershipStatus($ownershipStatus): void
+    {
+        $this->ownershipStatus = $ownershipStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnderSupervision(): ?string
+    {
+        return $this->underSupervision;
+    }
+
+    /**
+     * @param string $underSupervision
+     */
+    public function setUnderSupervision($underSupervision): void
+    {
+        $this->underSupervision = $underSupervision;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEducationType(): ?string
+    {
+        return $this->educationType;
+    }
+
+    /**
+     * @param string $educationType
+     */
+    public function setEducationType($educationType): void
+    {
+        $this->educationType = $educationType;
+    }
+
+    /**
+     * @return string
+     */
     public function getAccreditation(): ?string
     {
         return $this->accreditation;
@@ -309,6 +615,22 @@ class Organization
     public function setAccreditation($accreditation): void
     {
         $this->accreditation = $accreditation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastUpdate(): ?string
+    {
+        return $this->lastUpdate;
+    }
+
+    /**
+     * @param string $lastUpdate
+     */
+    public function setLastUpdate($lastUpdate): void
+    {
+        $this->lastUpdate = $lastUpdate;
     }
 
     /**
