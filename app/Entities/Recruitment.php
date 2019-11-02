@@ -46,10 +46,10 @@ class Recruitment
      *
      * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="recruitment")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
-    private $jobTitle;
+    private $jobTitle = NULL;
 
     /**
      * @var integer
@@ -145,7 +145,7 @@ class Recruitment
     /**
      * @param Organization $jobTitle
      */
-    public function setJobTitle(Organization $jobTitle): void
+    public function setJobTitle(JobTitle $jobTitle): void
     {
         $this->jobTitle = $jobTitle;
     }

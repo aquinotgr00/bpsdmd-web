@@ -40,7 +40,7 @@ class StudentImport implements ToCollection
                 $studyProgram   = $programService->getRepository()->findOneBy(['name' => $col[7], 'org' => $this->org]);
                 if ($studyProgram == null) {
                   $data = collect(['code' => substr($col[4], strpos($col[4], "-") + 1), 'name' => $col[7]]);
-                  $programService->create($data, $this->org);
+                  $programService->create($data, [], $this->org);
                   $studyProgram = $programService->getRepository()->findOneBy(['name' => $col[7]]);
                 }
             }

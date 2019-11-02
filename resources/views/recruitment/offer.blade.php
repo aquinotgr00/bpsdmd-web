@@ -21,16 +21,42 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama Lengkap</th>
-                                    <th>Jurusan</th>
-                                    <th>Jabatan yang Ditawarkan</th>
-                                    <th>Sekolah</th>
-                                    <th>IPK</th>
+                                    <th>{{ ucfirst(trans('common.name')) }}</th>
+                                    <th>{{ ucwords(trans('common.study_program')) }}</th>
+                                    <th>{{ ucwords(trans('common.position_offered')) }}</th>
+                                    <th>{{ ucfirst(trans('common.school')) }}</th>
+                                    <th>{{ strtoupper(trans('common.ipk')) }}</th>
                                     <th>{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
+                                /** @var \App\Entities\Recruitment $item */
+                                foreach ($data as $item) {
+                                    $student = $item->getStudent() instanceof \App\Entities\Student ? $item->getStudent() : '-';
+                                ?>
+                                    <tr class="even pointer">
+                                        <td>{{ $no++ }}.</td>
+                                        <td>{{ $student->getName() ? $student->getName() : '-' }}</td>
+                                        <td>{{ $student->getStudyProgram() instanceof \App\Entities\StudyProgram ? $student->getStudyProgram()->getName() : '-' }}</td>
+                                        <td>{{ $item->getJobTitle() instanceof \App\Entities\JobTitle ? $item->getJobTitle()->getName() : '-' }}</td>
+                                        <td>{{ $student->getOrg() instanceof \App\Entities\Organization ? $student->getOrg()->getName() : '-' }}</td>
+                                        <td>{{ $student->getIpk() ? $student->getIpk() : '-' }}</td>
+                                        <td>
+                                            <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                            <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
 
+                                @if(!count($data))
+                                    <tr class="even pointer">
+                                        <td colspan="7">{{ ucfirst(trans('common.no_data')) }}</td>
+                                    </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
