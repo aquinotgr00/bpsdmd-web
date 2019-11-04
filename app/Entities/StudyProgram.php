@@ -90,6 +90,34 @@ class StudyProgram
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="tgl_berdiri", type="date", nullable=true)
+     */
+    private $estDate = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_selenggara", type="string", nullable=true)
+     */
+    private $letterOfEst = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_pendirian", type="date", nullable=true)
+     */
+    private $dateOfEst = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sks_lulus", type="bigint", nullable=false)
+     */
+    private $passingGradeCredits;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="last_update", type="date", nullable=true)
      */
     private $lastUpdate = NULL;
@@ -238,6 +266,70 @@ class StudyProgram
     public function setDegree($degree): void
     {
         $this->degree = $degree;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEstDate()
+    {
+        return $this->estDate;
+    }
+
+    /**
+     * @param \DateTime $estDate
+     */
+    public function setEstDate($estDate): void
+    {
+        $this->estDate = $estDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLetterOfEst(): ?string
+    {
+        return $this->letterOfEst;
+    }
+
+    /**
+     * @param string $letterOfEst
+     */
+    public function setLetterOfEst($letterOfEst): void
+    {
+        $this->letterOfEst = $letterOfEst;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfEst()
+    {
+        return $this->dateOfEst;
+    }
+
+    /**
+     * @param \DateTime $dateOfEst
+     */
+    public function setDateOfEst($dateOfEst): void
+    {
+        $this->dateOfEst = $dateOfEst;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassingGradeCredits(): ?string
+    {
+        return $this->passingGradeCredits;
+    }
+
+    /**
+     * @param string $passingGradeCredits
+     */
+    public function setPassingGradeCredits($passingGradeCredits): void
+    {
+        $this->passingGradeCredits = $passingGradeCredits;
     }
 
     /**
