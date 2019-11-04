@@ -41,6 +41,13 @@ class StudyProgram
     /**
      * @var string
      *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="kode", type="string", nullable=true)
      */
     private $code = NULL;
@@ -55,9 +62,65 @@ class StudyProgram
     /**
      * @var string
      *
+     * @ORM\Column(name="status", type="string", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="visi", type="string", nullable=false)
+     */
+    private $vision;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="misi", type="string", nullable=false)
+     */
+    private $mission;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="jenjang", type="string", nullable=true)
      */
     private $degree = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_berdiri", type="date", nullable=true)
+     */
+    private $estDate = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_selenggara", type="string", nullable=true)
+     */
+    private $letterOfEst = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_pendirian", type="date", nullable=true)
+     */
+    private $dateOfEst = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sks_lulus", type="bigint", nullable=false)
+     */
+    private $passingGradeCredits;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_update", type="date", nullable=true)
+     */
+    private $lastUpdate = NULL;
 
     /**
      * @var ArrayCollection|Student[]
@@ -112,6 +175,22 @@ class StudyProgram
     /**
      * @return string
      */
+    public function getIdDikti(): string
+    {
+        return $this->idDikti;
+    }
+
+    /**
+     * @param string $idDikti
+     */
+    public function setIdDikti(string $idDikti): void
+    {
+        $this->idDikti = $idDikti;
+    }
+
+    /**
+     * @return string
+     */
     public function getCode(): ?string
     {
         return $this->code;
@@ -144,6 +223,54 @@ class StudyProgram
     /**
      * @return string
      */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVision(): ?string
+    {
+        return $this->vision;
+    }
+
+    /**
+     * @param string $vision
+     */
+    public function setVision($vision): void
+    {
+        $this->vision = $vision;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMission(): ?string
+    {
+        return $this->mission;
+    }
+
+    /**
+     * @param string $mission
+     */
+    public function setMission($mission): void
+    {
+        $this->mission = $mission;
+    }
+
+    /**
+     * @return string
+     */
     public function getDegree(): ?string
     {
         return $this->degree;
@@ -155,6 +282,86 @@ class StudyProgram
     public function setDegree($degree): void
     {
         $this->degree = $degree;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEstDate()
+    {
+        return $this->estDate;
+    }
+
+    /**
+     * @param \DateTime $estDate
+     */
+    public function setEstDate($estDate): void
+    {
+        $this->estDate = $estDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLetterOfEst(): ?string
+    {
+        return $this->letterOfEst;
+    }
+
+    /**
+     * @param string $letterOfEst
+     */
+    public function setLetterOfEst($letterOfEst): void
+    {
+        $this->letterOfEst = $letterOfEst;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfEst()
+    {
+        return $this->dateOfEst;
+    }
+
+    /**
+     * @param \DateTime $dateOfEst
+     */
+    public function setDateOfEst($dateOfEst): void
+    {
+        $this->dateOfEst = $dateOfEst;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassingGradeCredits(): ?string
+    {
+        return $this->passingGradeCredits;
+    }
+
+    /**
+     * @param string $passingGradeCredits
+     */
+    public function setPassingGradeCredits($passingGradeCredits): void
+    {
+        $this->passingGradeCredits = $passingGradeCredits;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastUpdate(): ?string
+    {
+        return $this->lastUpdate;
+    }
+
+    /**
+     * @param string $lastUpdate
+     */
+    public function setLastUpdate($lastUpdate): void
+    {
+        $this->lastUpdate = $lastUpdate;
     }
 
     /**

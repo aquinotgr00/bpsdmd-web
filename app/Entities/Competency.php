@@ -99,6 +99,12 @@ class Competency
     private $studyProgramCompetency;
 
     /**
+     * @var ArrayCollection|JobLicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="competency")
+     */
+    private $jobLicenseCompetency;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -176,6 +182,22 @@ class Competency
     public function setCompetencyUnit(CompetencyUnit $competencyUnit): void
     {
         $this->competencyUnit = $competencyUnit;
+    }
+
+    /**
+     * @return JobLicenseCompetency[]|ArrayCollection
+     */
+    public function getJobLicenseCompetency()
+    {
+        return $this->jobLicenseCompetency;
+    }
+
+    /**
+     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     */
+    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    {
+        $this->jobLicenseCompetency = $jobLicenseCompetency;
     }
 
     /**
