@@ -175,6 +175,22 @@ class StudyProgram
     /**
      * @return string
      */
+    public function getIdDikti(): string
+    {
+        return $this->idDikti;
+    }
+
+    /**
+     * @param string $idDikti
+     */
+    public function setIdDikti(string $idDikti): void
+    {
+        $this->idDikti = $idDikti;
+    }
+
+    /**
+     * @return string
+     */
     public function getCode(): ?string
     {
         return $this->code;
