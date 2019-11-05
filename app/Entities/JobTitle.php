@@ -16,7 +16,7 @@ class JobTitle
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -44,6 +44,12 @@ class JobTitle
      * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="jobTitle")
      */
     private $recruitment;
+
+    /**
+     * @var ArrayCollection|JobLicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="jobTitle")
+     */
+    private $jobLicenseCompetency;
 
     /**
      * @return int
@@ -107,5 +113,21 @@ class JobTitle
     public function setRecruitment($recruitment): void
     {
         $this->recruitment = $recruitment;
+    }
+
+    /**
+     * @return JobLicenseCompetency[]|ArrayCollection
+     */
+    public function getJobLicenseCompetency()
+    {
+        return $this->jobLicenseCompetency;
+    }
+
+    /**
+     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     */
+    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    {
+        $this->jobLicenseCompetency = $jobLicenseCompetency;
     }
 }

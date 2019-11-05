@@ -73,11 +73,23 @@ return [
 
     //manage org
     'institute_information' => 'institute information',
+    'id_dikti' => 'id dikti',
     'code' => 'code',
     'type' => 'type',
     'short_name' => 'short name',
+    'letter_of_est' => 'letter of establishment',
+    'date_of_est' => 'date of establishment',
+    'letter_of_opr' => 'letter of operational',
+    'date_of_opr' => 'date of operational',
     'moda' => 'moda',
     'address' => 'address',
+    'description' => 'description',
+    'phone_number' => 'phone number',
+    'fax' => 'fax',
+    'website' => 'website',
+    'ownership_status' => 'ownership status',
+    'under_supervision' => 'under supervision',
+    'education_type' => 'education type',
     'accreditation' => 'accreditation',
     'logo' => 'logo',
 

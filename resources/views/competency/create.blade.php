@@ -15,6 +15,12 @@
                         <form method="post">
                             @csrf
 
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
+                            </div>
+
                             <div class="form-group {{ $errors->has('moda') ? 'has-error' : '' }}">
                                 <label for="moda">{{ ucfirst(trans('common.moda')) }} :</label>
                                 <select id="moda" name="moda" class="form-control">

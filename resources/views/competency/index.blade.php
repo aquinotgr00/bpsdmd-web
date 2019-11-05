@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th>{{ ucfirst(trans('common.moda')) }}</th>
                                     <th>{{ ucfirst(trans('common.type')) }}</th>
                                     <th>{{ ucfirst(trans('common.action')) }}</th>
@@ -38,6 +39,7 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
+                                    <td>{{ $item->getName() }}</td>
                                     <td>{{ ucwords($item->getModa()) }}</td>
                                     <td>{{ $item->getType() }}</td>
                                     <td>
@@ -139,7 +141,6 @@
 
         $('#modalDetailUser').on('hidden.bs.modal', function (e) {
             let modalHtml = $('#modalDetailCompetency');
-
             modalHtml.find('.moda').html('');
             modalHtml.find('.type').html('');
             modalHtml.find('.ckf').html('');

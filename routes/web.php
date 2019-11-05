@@ -234,10 +234,14 @@ Route::group(['middleware' => ['authenticated']], function() {
 
     Route::group(['prefix' => '/recruitment', 'middleware' => ['only_demand']], function() {
         Route::any('/', 'Demand\RecruitmentController@index')->name('demand.recruitment.index');
+        Route::any('/{student}/create', 'Demand\RecruitmentController@create')->name('demand.recruitment.create');
         Route::get('/{student}', 'Demand\RecruitmentController@ajaxDetailStudent')->name('demand.recruitment.view');
     });
     Route::group(['prefix' => '/offering', 'middleware' => ['only_demand']], function() {
-        Route::get('/', 'Demand\OfferingController@index')->name('demand.recruitment.offer');
+        Route::get('/', 'Demand\OfferingController@index')->name('demand.offering.index');
+        Route::get('/{student}', 'Demand\OfferingController@ajaxDetailStudent')->name('demand.offering.view');
+        Route::any('/{recruitment}/update', 'Demand\OfferingController@update')->name('demand.offering.update');
+        Route::get('/{recruitment}/delete', 'Demand\OfferingController@delete')->name('demand.offering.delete');
     });
 
     // utils routes

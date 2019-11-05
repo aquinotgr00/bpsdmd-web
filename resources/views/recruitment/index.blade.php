@@ -26,7 +26,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.job_title')) }}</label>
-                                            <select class="form-control" id="job_title">
+                                            <select class="form-control" id="studyProgram" name="studyProgram">
                                                 <option value="" selected="">--{{ ucwords(trans('common.choose_job_title')) }}--</option>
                                                 @if(!empty($dataProgram))
                                                     @foreach($dataProgram as $program)
@@ -34,8 +34,7 @@
                                                     @endforeach
                                                 @endif
                                             </select>
-                                            <input type="hidden" name="job_title" value="" id="hidden-license-job-title">
-                                            <span class="help-block" id="span-helper"> Filter program studi dengan kompetensi yang dicari </span>
+                                            <span class="help-block" id="span-helper"> {{ ucfirst(trans('common.program_filter')) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -54,9 +53,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group rentang-usia">
                                             <label class="control-label">{{ ucwords(trans('common.age_range')) }}</label><br>
-                                            <input type="number" id="age" class="form-control" value="" placeholder="min" name="age" step="1" min="21">
-                                            <input type="number" id="age-max" class="form-control" value="" placeholder="max" name="agemax" step="1" min="21">
-                                            <span class="help-block">Usia minimal 21 tahun </span>
+                                            <input type="number" id="age" class="form-control" value="{{ old('age') }}" placeholder="min" name="age" step="1" min="21">
+                                            <input type="number" id="age-max" class="form-control" value="{{ old('agemax') }}" placeholder="max" name="agemax" step="1" min="21">
+                                            <span class="help-block">{{ ucfirst(trans('common.minimum_age')) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +63,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Indeks Prestasi Kumulatif</label>
-                                            <input type="number" id="ipk" class="form-control" value="" placeholder="" name="ipk" step="0.01" min="0" max="4"> <span class="help-block"> IPK Minimal pelamar adalah 2.5 </span>
+                                            <input type="number" id="ipk" class="form-control" value="{{ old('ipk') }}" placeholder="" name="ipk" step="0.01" min="0" max="4"> <span class="help-block"> {{ ucfirst(trans('common.minimum_ipk')) }} </span>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +72,7 @@
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.gender')) }}</label>
                                             <select id="gender" name="gender" class="form-control">
-                                                <option value="" selected="">Semua</option>
+                                                <option value="" selected="">{{ ucwords(trans('common.all_gender')) }}</option>
                                                 <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ old('gender') == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_MALE) }}</option>
                                                 <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_FEMALE) }}</option>
                                             </select>
@@ -86,7 +85,7 @@
                                         <div class="form-group">
                                             <label class="control-label">{{ ucwords(trans('common.accreditation')) }}</label>
                                             <select id="accreditation" name="accreditation" class="form-control">
-                                                <option value="" selected="">Semua</option>
+                                                <option value="" selected="">{{ ucwords(trans('common.all_accreditation')) }}</option>
                                                 <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
                                                 <option value="{{ \App\Entities\Organization::ACCREDITATION_B }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_B ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_B) }}</option>
                                                 <option value="{{ \App\Entities\Organization::ACCREDITATION_C }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_C ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_C) }}</option>
@@ -97,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <button class="btn btn-block btn-info m-t-10"><i class=" ti-search"></i> Cari Taruna</button>
+                                    <button class="btn btn-block btn-info m-t-10"><i class=" ti-search"></i> {{ ucwords(trans('common.find_taruna')) }}</button>
                                     <div class="clearfix"></div>
                                 </div>
                             </form>
@@ -117,13 +116,14 @@
                                     <div class="col-lg-3 col-sm-6 row-in-br hasil-pencarian b-r-none">
                                         <ul class="col-in">
                                             <li class="col-last">
-                                                <h3 class="counter text-right m-t-15">0</h3>
+                                                <h3 class="counter text-right m-t-15"><?=count($student)?></h3>
                                             </li>
                                             <li class="col-middle">
-                                                <h4>Hasil Pencarian</h4>
+                                                <h4>{{ ucwords(trans('common.search_result')) }}</h4>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    <?php $searchPersen = (count($student) / (count($allStudent) ? count($allStudent) : 1))*100;?>
+                                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?=$searchPersen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$searchPersen?>%">
+                                                        <span class="sr-only"><?=$searchPersen?>% Complete (success)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -132,16 +132,17 @@
                                     <div class="col-lg-3 col-sm-6 daftar-penawaran b-0">
                                         <ul class="col-in">
                                             <li>
-                                                <a href=""><span class="circle circle-md bg-success"><i class=" ti-shopping-cart"></i></span></a>
+                                                <a href="{{ url(route('demand.offering.index')) }}"><span class="circle circle-md bg-success"><i class="fa fa-shopping-cart"></i></span></a>
                                             </li>
                                             <li class="col-last">
-                                                <h3 class="counter text-right m-t-15">0</h3>
+                                                <h3 class="counter text-right m-t-15"><?=count($data)?></h3>
                                             </li>
                                             <li class="col-middle">
-                                                <h4 style="font-size:14px;">Daftar Penawaran Kandidat</h4>
+                                                <h4 style="font-size:14px;">{{ (trans('common.list_candidate')) }}</h4>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    <?php $persen = (count($data) / (count($allStudent) ? count($allStudent) : 1))*100;?>
+                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%">
+                                                        <span class="sr-only"><?=$persen?>% Complete (success)</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -176,14 +177,12 @@
                                                     <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getDegree() : '-' }}</td>
                                                     <td>{{ $item->getGraduationYear() ? $item->getGraduationYear() : '-' }}</td>
                                                     <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
-                                                    <td>{{ '-' }}</td>
+                                                    <td>{{ $item->getGender() ? $item->getGender() : '-' }}</td>
                                                     <td>
-                                                        <a href="javascript:void(0)" class="btn btn-block btn-info viewStudent" data-student="{{ $item->getId() }}">Detail</a>
+                                                        <a href="javascript:void(0)" class="btn btn-block btn-info viewStudent" data-student="{{ $item->getId() }}">{{ ucfirst(trans('common.view')) }}</a>
                                                     </td>
                                                 </tr>
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php } ?>
 
                                             @if(!count($student))
                                                 <tr class="even pointer">
@@ -274,6 +273,7 @@
                             </table>
                         </div>
                         <div class="modal-footer">
+                            <a href="" class="btn btn-info chart" style="width:50px"><i class="fa fa-shopping-cart"></i></a>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -307,6 +307,7 @@
                 modalHtml.find('.studentIpk').html(student.ipk);
                 modalHtml.find('.studentGraduationYear').html(student.graduation_year);
                 modalHtml.find('.studentPhoto').attr("src",student.photo);
+                modalHtml.find('.chart').attr("href",student.add_chart);
                 modalHtml.modal('show');
             }
         });

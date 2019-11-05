@@ -76,11 +76,23 @@ return [
 
     //manage org
     'institute_information' => 'informasi instansi',
+    'id_dikti' => 'id dikti',
     'code' => 'kode',
     'type' => 'tipe',
     'short_name' => 'nama pendek',
+    'letter_of_est' => 'SK pendirian',
+    'date_of_est' => 'tanggal SK pendirian',
+    'letter_of_opr' => 'SK operasional',
+    'date_of_opr' => 'tanggal SK operasional',
     'moda' => 'moda',
     'address' => 'alamat',
+    'description' => 'deskripsi',
+    'phone_number' => 'telepon',
+    'fax' => 'faksimile',
+    'website' => 'website',
+    'ownership_status' => 'status milik',
+    'under_supervision' => 'pembina',
+    'education_type' => 'bentuk pendidikan',
     'accreditation' => 'akreditasi',
     'logo' => 'logo',
 

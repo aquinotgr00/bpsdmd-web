@@ -15,7 +15,7 @@ class JobFunction
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -44,6 +44,12 @@ class JobFunction
      * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
+
+    /**
+     * @var ArrayCollection|JobLicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="jobFunction")
+     */
+    private $jobLicenseCompetency;
 
     /**
      * @return string
@@ -107,5 +113,21 @@ class JobFunction
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return JobLicenseCompetency[]|ArrayCollection
+     */
+    public function getJobLicenseCompetency()
+    {
+        return $this->jobLicenseCompetency;
+    }
+
+    /**
+     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     */
+    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    {
+        $this->jobLicenseCompetency = $jobLicenseCompetency;
     }
 }

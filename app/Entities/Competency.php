@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,11 +22,18 @@ class Competency
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nama", type="string", nullable=false)
+     */
+    private $name;
 
     /**
      * @var CompetencyMainPurpose
@@ -82,6 +90,24 @@ class Competency
     private $type;
 
     /**
+     * @var ArrayCollection|ShortCourseCompetency[]
+     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="competency")
+     */
+    private $shortCourseCompetency;
+
+    /**
+     * @var ArrayCollection|StudyProgramCompetency[]
+     * @ORM\OneToMany(targetEntity="StudyProgramCompetency", mappedBy="competency")
+     */
+    private $studyProgramCompetency;
+
+    /**
+     * @var ArrayCollection|JobLicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="competency")
+     */
+    private $jobLicenseCompetency;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -95,6 +121,22 @@ class Competency
     public function setId(string $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -162,6 +204,22 @@ class Competency
     }
 
     /**
+     * @return JobLicenseCompetency[]|ArrayCollection
+     */
+    public function getJobLicenseCompetency()
+    {
+        return $this->jobLicenseCompetency;
+    }
+
+    /**
+     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     */
+    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    {
+        $this->jobLicenseCompetency = $jobLicenseCompetency;
+    }
+
+    /**
      * @return string
      */
     public function getModa(): ?string
@@ -191,5 +249,37 @@ class Competency
     public function setType($type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return ShortCourseCompetency[]|ArrayCollection
+     */
+    public function getShortCourseCompetency()
+    {
+        return $this->shortCourseCompetency;
+    }
+
+    /**
+     * @param ShortCourseCompetency[]|ArrayCollection $shortCourseCompetency
+     */
+    public function setShortCourseCompetency($shortCourseCompetency): void
+    {
+        $this->shortCourseCompetency = $shortCourseCompetency;
+    }
+
+    /**
+     * @return StudyProgramCompetency[]|ArrayCollection
+     */
+    public function getStudyProgramCompetency()
+    {
+        return $this->studyProgramCompetency;
+    }
+
+    /**
+     * @param StudyProgramCompetency[]|ArrayCollection $studyProgramCompetency
+     */
+    public function setStudyProgramCompetency($studyProgramCompetency): void
+    {
+        $this->studyProgramCompetency = $studyProgramCompetency;
     }
 }

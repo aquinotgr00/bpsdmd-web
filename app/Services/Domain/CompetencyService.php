@@ -69,6 +69,7 @@ class CompetencyService
     public function create(CompetencyKeyFunction $ckf, CompetencyMainFunction $cmf, CompetencyMainPurpose $cmp, CompetencyUnit $cu, Collection $data, $flush = true)
     {
         $competency = new Competency;
+        $competency->setName($data->get('name'));
         $competency->setModa($data->get('moda'));
         $competency->setType($data->get('type'));
         $competency->setCompetencyKeyFunction($ckf);
@@ -99,6 +100,7 @@ class CompetencyService
      */
     public function update(Competency $competency, CompetencyKeyFunction $ckf, CompetencyMainFunction $cmf, CompetencyMainPurpose $cmp, CompetencyUnit $cu, Collection $data, $flush = true)
     {
+        $competency->setName($data->get('name'));
         $competency->setModa($data->get('moda'));
         $competency->setType($data->get('type'));
         $competency->setCompetencyKeyFunction($ckf);

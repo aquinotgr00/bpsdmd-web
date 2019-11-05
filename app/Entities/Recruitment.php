@@ -15,7 +15,7 @@ class Recruitment
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -46,10 +46,10 @@ class Recruitment
      *
      * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="recruitment")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
-    private $jobTitle;
+    private $jobTitle = NULL;
 
     /**
      * @var integer
@@ -61,14 +61,14 @@ class Recruitment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_input", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_input", type="datetime", nullable=true)
      */
     private $inputDate = NULL;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_update", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_update", type="datetime", nullable=true)
      */
     private $updateDate = NULL;
 
@@ -82,7 +82,7 @@ class Recruitment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_email", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_email", type="datetime", nullable=true)
      */
     private $emailDate = NULL;
 
@@ -145,7 +145,7 @@ class Recruitment
     /**
      * @param Organization $jobTitle
      */
-    public function setJobTitle(Organization $jobTitle): void
+    public function setJobTitle(JobTitle $jobTitle): void
     {
         $this->jobTitle = $jobTitle;
     }
