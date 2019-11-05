@@ -23,6 +23,16 @@ class Certificate
     private $id;
 
     /**
+     * @var Employee
+     *
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="certificate")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="pegawai_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     * })
+     */
+    private $employee;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nama", type="string", nullable=false)
@@ -34,6 +44,13 @@ class Certificate
      * @ORM\OneToMany(targetEntity="EmployeeCertificate", mappedBy="certificate")
      */
     private $employeeCertificates;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="masa_berlaku", type="date", nullable=true)
+     */
+    private $validityPeriod = NULL;
 
     /**
      * @return int
@@ -49,6 +66,22 @@ class Certificate
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return Employee
+     */
+    public function getEmployee(): Employee
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee(Employee $employee): void
+    {
+        $this->employee = $employee;
     }
 
     /**
@@ -81,5 +114,21 @@ class Certificate
     public function setEmployeeCertificates($employeeCertificates): void
     {
         $this->employeeCertificates = $employeeCertificates;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidityPeriod(): ?string
+    {
+        return $this->validityPeriod;
+    }
+
+    /**
+     * @param string $validityPeriod
+     */
+    public function setValidityPeriod($validityPeriod): void
+    {
+        $this->validityPeriod = $validityPeriod;
     }
 }

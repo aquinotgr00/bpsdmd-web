@@ -129,6 +129,12 @@ class Employee
     private $shortCourseParticipants;
 
     /**
+     * @var ArrayCollection|Certificate[]
+     * @ORM\OneToMany(targetEntity="Certificate", mappedBy="employee")
+     */
+    private $certificate;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -366,5 +372,21 @@ class Employee
     public function setShortCourseParticipants($shortCourseParticipants): void
     {
         $this->shortCourseParticipants = $shortCourseParticipants;
+    }
+
+    /**
+     * @return Certificate[]|ArrayCollection
+     */
+    public function getCertificate()
+    {
+        return $this->certificate;
+    }
+
+    /**
+     * @param Certificate[]|ArrayCollection $certificate
+     */
+    public function setCertificate($certificate): void
+    {
+        $this->certificate = $certificate;
     }
 }
