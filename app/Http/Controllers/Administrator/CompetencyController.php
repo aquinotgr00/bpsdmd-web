@@ -43,6 +43,7 @@ class CompetencyController extends Controller
             ];
 
             $request->validate([
+                'name' => 'required',
                 'type' => 'required',
                 'moda' => 'required|in:'.implode(',', array_flip($moda)),
                 'ckf' => 'required',
@@ -50,6 +51,7 @@ class CompetencyController extends Controller
                 'cmp' => 'required',
                 'cu' => 'required'
             ], [], [
+                'name' => ucfirst(trans('common.name')),
                 'type' => ucfirst(trans('common.type')),
                 'ckf' => ucfirst(trans('common.competency_key_function')),
                 'cmf' => ucfirst(trans('common.competency_main_function')),
@@ -132,6 +134,7 @@ class CompetencyController extends Controller
             ];
 
             $request->validate([
+                'name' => 'required',
                 'type' => 'required',
                 'moda' => 'required|in:'.implode(',', array_flip($moda)),
                 'ckf' => 'required',
@@ -139,6 +142,7 @@ class CompetencyController extends Controller
                 'cmp' => 'required',
                 'cu' => 'required'
             ], [], [
+                'name' => ucfirst(trans('common.name')),
                 'text' => ucfirst(trans('common.unit')),
                 'ckf' => ucfirst(trans('common.competency_key_function')),
                 'cmf' => ucfirst(trans('common.competency_main_function')),
@@ -223,6 +227,7 @@ class CompetencyController extends Controller
     {
         if ($request->ajax()) {
             $data = [
+                'name' => ucwords($competency->getName()),
                 'moda' => ucwords($competency->getModa()),
                 'type' => $competency->getType(),
                 'ckf' => $competency->getCompetencyKeyFunction()->getKeyFunction(),
