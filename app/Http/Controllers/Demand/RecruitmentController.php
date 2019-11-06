@@ -7,6 +7,7 @@ use App\Entities\Recruitment;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
+use App\Mail\RecruitmentMail;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
 use App\Services\Domain\JobTitleService;
@@ -16,6 +17,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Image;
+use Mail;
 
 class RecruitmentController extends Controller
 {
@@ -46,7 +48,10 @@ class RecruitmentController extends Controller
         $org = currentUser()->getOrg();
         try {
             $requestData = $request->all();
-            $recruitmentService->create(collect($requestData), $org, $student);
+            $recruitment = $recruitmentService->create(collect($requestData), $org, $student);
+            $url = env('APP_URL') .'/offering';
+            Mail::to($student->getEmail())->send(new RecruitmentMail($url));                // send recruitment email
+
             $alert = 'alert_success';
             $message = trans('common.create_success', ['object' => ucfirst(trans('common.recruitment'))]);
         } catch (Exception $e) {

@@ -210,9 +210,18 @@ return [
     'recruitment' => 'penawaran siswa',
     'detailed_search' => 'pencarian detail',
     'find_student' => 'cari taruna',
+    'search_result' => 'hasil pencarian',
     'choose_job_title' => 'pilih jabatan',
     'age_range' => 'rentang usia',
     'school_accreditation' => 'akreditasi sekolah',
+    'program_filter' => 'filter program studi dengan kompetensi yang dicari',
+    'minimum_age' => 'usia minimal 21 tahun',
+    'minimum_ipk' => 'IPK minimal pelamar adalah 2.5',
+    'all_gender' => 'semua jenis kelamin',
+    'all_accreditation' => 'semua akreditasi',
+    'find_taruna' => 'cari taruna',
+    'list_candidate' => 'daftar penawaran kandidat',
+    'position_offered' => 'jabatan yang ditawarkan',
 
     // manage competency
     'competency' => 'kompetensi',

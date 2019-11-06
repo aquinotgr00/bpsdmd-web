@@ -171,9 +171,18 @@ return [
     'recruitment' => 'recruitment',
     'detailed_search' => 'detailed search',
     'find_student' => 'find student',
+    'search_result' => 'search result',
     'choose_job_title' => 'choose job title',
     'age_range' => 'age range',
     'school_accreditation' => 'school accreditation',
+    'program_filter' => 'filter study programs with the competencies',
+    'minimum_age' => 'Minimum age is 21 years old',
+    'minimum_ipk' => 'Minimum IPK is 2.5',
+    'all_gender' => 'all gender',
+    'all_accreditation' => 'all accreditation',
+    'find_taruna' => 'find taruna',
+    'list_candidate' => 'list candidate',
+    'position_offered' => 'position offered',
 
     // manage competency
     'competency' => 'competency',

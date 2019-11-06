@@ -83,7 +83,6 @@ class StudentService
      */
     public function paginateRecruitment($page, Collection $search, $studyProgram = false): LengthAwarePaginator
     {
-        var_dump($search);exit;
         $limit = 10;
         $query = $this->createQueryBuilder('s')->leftJoin('s.org', 'o');
         if($studyProgram instanceof StudyProgram){
