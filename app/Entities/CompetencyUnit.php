@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CompetencyUnit
 {
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -43,17 +43,17 @@ class CompetencyUnit
     private $competencies;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param int $id
      */
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -61,7 +61,7 @@ class CompetencyUnit
     /**
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -77,7 +77,7 @@ class CompetencyUnit
     /**
      * @return string
      */
-    public function getUnit(): string
+    public function getUnit(): ?string
     {
         return $this->unit;
     }
