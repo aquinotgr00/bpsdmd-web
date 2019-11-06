@@ -101,7 +101,6 @@ class Version20191031144445 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE pengguna DROP CONSTRAINT FK_3C109A2A10675A27');
         $this->addSql('ALTER TABLE dosen DROP CONSTRAINT FK_2DE2C47110675A27');
         $this->addSql('ALTER TABLE program_studi DROP CONSTRAINT FK_65A1F4DB10675A27');

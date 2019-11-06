@@ -102,10 +102,10 @@ class Competency
     private $studyProgramCompetency;
 
     /**
-     * @var ArrayCollection|JobLicenseCompetency[]
-     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="competency")
+     * @var ArrayCollection|LicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="LicenseCompetency", mappedBy="competency")
      */
-    private $jobLicenseCompetency;
+    private $licenseCompetency;
 
     /**
      * @return string
@@ -204,19 +204,19 @@ class Competency
     }
 
     /**
-     * @return JobLicenseCompetency[]|ArrayCollection
+     * @return LicenseCompetency[]|ArrayCollection
      */
-    public function getJobLicenseCompetency()
+    public function getLicenseCompetency()
     {
-        return $this->jobLicenseCompetency;
+        return $this->licenseCompetency;
     }
 
     /**
-     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     * @param LicenseCompetency[]|ArrayCollection $licenseCompetency
      */
-    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    public function setLicenseCompetency($licenseCompetency): void
     {
-        $this->jobLicenseCompetency = $jobLicenseCompetency;
+        $this->licenseCompetency = $licenseCompetency;
     }
 
     /**

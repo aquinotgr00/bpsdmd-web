@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,10 +47,10 @@ class JobFunction
     private $name;
 
     /**
-     * @var ArrayCollection|JobLicenseCompetency[]
-     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="jobFunction")
+     * @var ArrayCollection|JobTitleFunction[]
+     * @ORM\OneToMany(targetEntity="JobTitleFunction", mappedBy="jobFunction")
      */
-    private $jobLicenseCompetency;
+    private $jobTitleFunction;
 
     /**
      * @return string
@@ -116,18 +117,18 @@ class JobFunction
     }
 
     /**
-     * @return JobLicenseCompetency[]|ArrayCollection
+     * @return JobTitleFunction[]|ArrayCollection
      */
-    public function getJobLicenseCompetency()
+    public function getJobTitleFunction()
     {
-        return $this->jobLicenseCompetency;
+        return $this->jobTitleFunction;
     }
 
     /**
-     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     * @param JobTitleFunction[]|ArrayCollection $jobTitleFunction
      */
-    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    public function setJobTitleFunction($jobTitleFunction): void
     {
-        $this->jobLicenseCompetency = $jobLicenseCompetency;
+        $this->jobTitleFunction = $jobTitleFunction;
     }
 }
