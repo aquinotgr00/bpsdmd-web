@@ -135,7 +135,7 @@ class Recruitment
     }
 
     /**
-     * @return Organization
+     * @return JobTitle
      */
     public function getJobTitle()
     {
@@ -143,7 +143,7 @@ class Recruitment
     }
 
     /**
-     * @param Organization $jobTitle
+     * @param JobTitle $jobTitle
      */
     public function setJobTitle(JobTitle $jobTitle): void
     {

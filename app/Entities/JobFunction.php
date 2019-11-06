@@ -52,6 +52,12 @@ class JobFunction
     private $jobLicenseCompetency;
 
     /**
+     * @var ArrayCollection|JobTitleFunction[]
+     * @ORM\OneToMany(targetEntity="JobTitleFunction", mappedBy="jobFunction")
+     */
+    private $jobTitleFunction;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -129,5 +135,21 @@ class JobFunction
     public function setJobLicenseCompetency($jobLicenseCompetency): void
     {
         $this->jobLicenseCompetency = $jobLicenseCompetency;
+    }
+
+    /**
+     * @return JobTitleFunction[]|ArrayCollection
+     */
+    public function getJobTitleFunction()
+    {
+        return $this->jobTitleFunction;
+    }
+
+    /**
+     * @param JobTitleFunction[]|ArrayCollection $jobTitleFunction
+     */
+    public function setJobTitleFunction($jobTitleFunction): void
+    {
+        $this->jobTitleFunction = $jobTitleFunction;
     }
 }

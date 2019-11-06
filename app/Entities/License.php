@@ -68,6 +68,12 @@ class License
     private $jobLicenseCompetency;
 
     /**
+     * @var ArrayCollection|LicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="LicenseCompetency", mappedBy="license")
+     */
+    private $licenseCompetency;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -177,5 +183,21 @@ class License
     public function setJobLicenseCompetency($jobLicenseCompetency): void
     {
         $this->jobLicenseCompetency = $jobLicenseCompetency;
+    }
+
+    /**
+     * @return LicenseCompetency[]|ArrayCollection
+     */
+    public function getLicenseCompetency()
+    {
+        return $this->licenseCompetency;
+    }
+
+    /**
+     * @param LicenseCompetency[]|ArrayCollection $licenseCompetency
+     */
+    public function setLicenseCompetency($licenseCompetency): void
+    {
+        $this->licenseCompetency = $licenseCompetency;
     }
 }

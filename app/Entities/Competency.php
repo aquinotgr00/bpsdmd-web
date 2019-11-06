@@ -29,6 +29,13 @@ class Competency
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nama", type="string", nullable=false)
+     */
+    private $name;
+
+    /**
      * @var CompetencyMainPurpose
      *
      * @ORM\ManyToOne(targetEntity="CompetencyMainPurpose", inversedBy="competencies")
@@ -101,6 +108,12 @@ class Competency
     private $jobLicenseCompetency;
 
     /**
+     * @var ArrayCollection|LicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="LicenseCompetency", mappedBy="competency")
+     */
+    private $licenseCompetency;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -114,6 +127,22 @@ class Competency
     public function setId(string $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -197,6 +226,22 @@ class Competency
     }
 
     /**
+     * @return LicenseCompetency[]|ArrayCollection
+     */
+    public function getLicenseCompetency()
+    {
+        return $this->licenseCompetency;
+    }
+
+    /**
+     * @param LicenseCompetency[]|ArrayCollection $licenseCompetency
+     */
+    public function setLicenseCompetency($licenseCompetency): void
+    {
+        $this->licenseCompetency = $licenseCompetency;
+    }
+
+    /**
      * @return string
      */
     public function getModa(): ?string
@@ -226,6 +271,22 @@ class Competency
     public function setType($type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return ShortCourseCompetency[]|ArrayCollection
+     */
+    public function getShortCourseCompetency()
+    {
+        return $this->shortCourseCompetency;
+    }
+
+    /**
+     * @param ShortCourseCompetency[]|ArrayCollection $shortCourseCompetency
+     */
+    public function setShortCourseCompetency($shortCourseCompetency): void
+    {
+        $this->shortCourseCompetency = $shortCourseCompetency;
     }
 
     /**
