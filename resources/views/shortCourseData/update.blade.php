@@ -78,11 +78,6 @@
                             <div class="box-footer">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
-                            <script type="text/javascript">
-                                $('.date').datepicker({
-                                    format: 'dd-mm-yyyy' // HTML 5
-                                });
-                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

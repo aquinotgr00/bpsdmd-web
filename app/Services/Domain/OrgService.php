@@ -78,9 +78,7 @@ class OrgService
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
         $org->setLetterOfEst($data->get('letter_of_est'));
-        $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
         $org->setLetterOfOpr($data->get('letter_of_opr'));
-        $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
         $org->setStatus($data->get('status'));
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
@@ -96,6 +94,12 @@ class OrgService
         $org->setAccreditation($data->get('accreditation'));
         $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('date_of_est')) {
+            $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
+        if ($data->get('date_of_opr')) {
+            $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
+        }
         if ($data->get('uploaded_img')) {
             $org->setPhoto($data->get('uploaded_img'));
         }
@@ -124,9 +128,7 @@ class OrgService
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
         $org->setLetterOfEst($data->get('letter_of_est'));
-        $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
         $org->setLetterOfOpr($data->get('letter_of_opr'));
-        $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
         $org->setStatus($data->get('status'));
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
@@ -142,6 +144,12 @@ class OrgService
         $org->setAccreditation($data->get('accreditation'));
         $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('date_of_est')) {
+            $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
+        if ($data->get('date_of_opr')) {
+            $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
+        }
         if ($data->get('uploaded_img')) {
             @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
             $org->setPhoto($data->get('uploaded_img'));
