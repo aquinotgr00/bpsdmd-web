@@ -33,9 +33,12 @@ class JobTitleFunctionLicense
     private $jobTitleFunction;
 
     /**
-     * @var string
+     * @var License
      *
-     * @ORM\Column(name="lisensi", type="string", nullable=false)
+     * @ORM\ManyToOne(targetEntity="License", inversedBy="jobTitleFunctionLicense")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="lisensi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     * })
      */
     private $license;
 
@@ -66,23 +69,23 @@ class JobTitleFunctionLicense
     /**
      * @param JobTitleFunction $jobTitleFunction
      */
-    public function setJobTitleFunction(Organization $jobTitleFunction): void
+    public function setJobTitleFunction(JobTitleFunction $jobTitleFunction): void
     {
         $this->jobTitleFunction = $jobTitleFunction;
     }
 
     /**
-     * @return string
+     * @return License
      */
-    public function getLicense(): ?string
+    public function getLicense(): License
     {
         return $this->license;
     }
 
     /**
-     * @param string $license
+     * @param License $license
      */
-    public function setLicense($license): void
+    public function setLicense(License $license): void
     {
         $this->license = $license;
     }

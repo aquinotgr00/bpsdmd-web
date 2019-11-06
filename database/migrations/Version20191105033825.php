@@ -26,7 +26,6 @@ class Version20191105033825 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE program_studi DROP kompetensi');
         $this->addSql('ALTER TABLE program_studi ALTER visi SET NOT NULL');
         $this->addSql('ALTER TABLE program_studi ALTER misi SET NOT NULL');

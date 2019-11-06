@@ -62,16 +62,16 @@ class License
     private $licenseStudyProgram;
 
     /**
-     * @var ArrayCollection|JobLicenseCompetency[]
-     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="license")
-     */
-    private $jobLicenseCompetency;
-
-    /**
      * @var ArrayCollection|LicenseCompetency[]
      * @ORM\OneToMany(targetEntity="LicenseCompetency", mappedBy="license")
      */
     private $licenseCompetency;
+
+    /**
+     * @var ArrayCollection|JobTitleFunctionLicense[]
+     * @ORM\OneToMany(targetEntity="JobTitleFunctionLicense", mappedBy="license")
+     */
+    private $jobTitleFunctionLicense;
 
     /**
      * @return string
@@ -170,22 +170,6 @@ class License
     }
 
     /**
-     * @return JobLicenseCompetency[]|ArrayCollection
-     */
-    public function getJobLicenseCompetency()
-    {
-        return $this->jobLicenseCompetency;
-    }
-
-    /**
-     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
-     */
-    public function setJobLicenseCompetency($jobLicenseCompetency): void
-    {
-        $this->jobLicenseCompetency = $jobLicenseCompetency;
-    }
-
-    /**
      * @return LicenseCompetency[]|ArrayCollection
      */
     public function getLicenseCompetency()
@@ -199,5 +183,21 @@ class License
     public function setLicenseCompetency($licenseCompetency): void
     {
         $this->licenseCompetency = $licenseCompetency;
+    }
+
+    /**
+     * @return JobTitleFunctionLicense[]|ArrayCollection
+     */
+    public function getJobTitleFunctionLicense()
+    {
+        return $this->jobTitleFunctionLicense;
+    }
+
+    /**
+     * @param JobTitleFunctionLicense[]|ArrayCollection $jobTitleFunctionLicense
+     */
+    public function setJobTitleFunctionLicense($jobTitleFunctionLicense): void
+    {
+        $this->jobTitleFunctionLicense = $jobTitleFunctionLicense;
     }
 }

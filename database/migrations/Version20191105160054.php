@@ -27,7 +27,6 @@ class Version20191105160054 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE sertifikat DROP CONSTRAINT FK_EF95F27998300D9');
         $this->addSql('DROP INDEX IDX_EF95F27998300D9');
         $this->addSql('ALTER TABLE sertifikat DROP pegawai_id');
