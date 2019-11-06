@@ -32,3 +32,4 @@ class Version20191105033825 extends AbstractMigration
         $this->addSql('ALTER TABLE program_studi ALTER misi SET NOT NULL');
     }
 }
+// stage

@@ -40,3 +40,4 @@ class Version20191105033253 extends AbstractMigration
         $this->addSql('ALTER TABLE penawaran_siswa ALTER tanggal_email DROP DEFAULT');
     }
 }
+// stage

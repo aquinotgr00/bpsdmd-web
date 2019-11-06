@@ -34,3 +34,4 @@ class Version20191105160054 extends AbstractMigration
         $this->addSql('ALTER TABLE sertifikat DROP masa_berlaku');
     }
 }
+// stage
