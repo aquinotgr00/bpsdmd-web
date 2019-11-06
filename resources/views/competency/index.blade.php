@@ -106,6 +106,11 @@
                                 <td>:</td>
                                 <td class="cu"></td>
                             </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.license')) }}</th>
+                                <td>:</td>
+                                <td class="competencyLicense"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -133,6 +138,7 @@
                     modalHtml.find('.cmf').html(competency.cmf);
                     modalHtml.find('.cmp').html(competency.cmp);
                     modalHtml.find('.cu').html(competency.cu);
+                    modalHtml.find('.competencyLicense').html(competency.license);
 
                     modalHtml.modal('show');
                 }
@@ -147,6 +153,7 @@
             modalHtml.find('.cmf').html('');
             modalHtml.find('.cmp').show();
             modalHtml.find('.cu').html('');
+            modalHtml.find('.competencyLicense').html('');
         })
     </script>
 @endsection

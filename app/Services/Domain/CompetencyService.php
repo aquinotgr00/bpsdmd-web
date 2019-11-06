@@ -7,6 +7,7 @@ use App\Entities\CompetencyKeyFunction;
 use App\Entities\CompetencyMainFunction;
 use App\Entities\CompetencyMainPurpose;
 use App\Entities\CompetencyUnit;
+use App\Entities\License;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
@@ -77,6 +78,10 @@ class CompetencyService
         $competency->setCompetencyMainPurpose($cmp);
         $competency->setCompetencyUnit($cu);
 
+        if($data->get('license', [])){
+            $this->setLicenses($competency, $data->get('license'));
+        }
+
         EntityManager::persist($competency);
 
         if ($flush) {
@@ -108,12 +113,45 @@ class CompetencyService
         $competency->setCompetencyMainPurpose($cmp);
         $competency->setCompetencyUnit($cu);
 
+        if($data->get('license', [])){
+            $this->setLicenses($competency, $data->get('license'), 'update');
+        }
+
         EntityManager::persist($competency);
 
         if ($flush) {
             EntityManager::flush();
 
             return $competency;
+        }
+    }
+
+    /**
+     * Set license competency
+     *
+     * @param Competency $competency
+     * @param array $licenses
+     * @param string $type
+     */
+    private function setLicenses(Competency $competency, array $licenses = [], $type = 'create')
+    {
+        /** @var LicenseService $licenseService */
+        $licenseService = app(LicenseService::class);
+        /** @var LicenseCompetencyService $licenseCompetencyService */
+        $licenseCompetencyService = app(LicenseCompetencyService::class);
+
+        if ($type == 'update') {
+            $licenseCompetencyService->delete($competency);
+        }
+
+        if (count($licenses)) {
+            foreach ($licenses as $licenseId) {
+                $license = $licenseService->findById($licenseId);
+
+                if ($license instanceof License) {
+                    $licenseCompetencyService->create($competency, $license);
+                }
+            }
         }
     }
 

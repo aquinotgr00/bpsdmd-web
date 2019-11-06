@@ -59,7 +59,7 @@ class ProgramController extends Controller
             try {
                 $requestData = $request->all();
 
-                $programService->create(collect($requestData), $request->input('license', []), $org);
+                $programService->create(collect($requestData), $org);
                 $alert = 'alert_success';
                 $message = trans('common.create_success', ['object' => ucfirst(trans('common.study_program'))]);
             } catch (Exception $e) {
@@ -106,7 +106,7 @@ class ProgramController extends Controller
             try {
                 $requestData = $request->all();
 
-                $programService->update($data, collect($requestData), $request->input('license', []), false, true);
+                $programService->update($data, collect($requestData), false, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.study_program'))]);
             } catch (Exception $e) {

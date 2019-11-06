@@ -130,7 +130,7 @@ class JobTitle
     /**
      * @return string
      */
-    public function getEductionMinimal(): string
+    public function getEductionMinimal(): ?string
     {
         return $this->eductionMinimal;
     }
@@ -146,7 +146,7 @@ class JobTitle
     /**
      * @return string
      */
-    public function getGpaMinimal(): string
+    public function getGpaMinimal(): ?string
     {
         return $this->gpaMinimal;
     }
@@ -162,7 +162,7 @@ class JobTitle
     /**
      * @return string
      */
-    public function getExperienceMinimal(): string
+    public function getExperienceMinimal(): ?string
     {
         return $this->experienceMinimal;
     }
@@ -178,7 +178,7 @@ class JobTitle
     /**
      * @return string
      */
-    public function getAgeMinimal(): string
+    public function getAgeMinimal(): ?string
     {
         return $this->ageMinimal;
     }

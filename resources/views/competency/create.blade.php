@@ -108,6 +108,29 @@
                                 <span class="help-block ">{!! implode('', $errors->get('cu')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('license') ? 'has-error' : '' }}">
+                                <label for="license">{{ ucfirst(trans('common.license')) }} :</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select id="license" class="form-control">
+                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.license'))])) }}</option>
+                                            @if(!empty($licenses))
+                                                @foreach($licenses as $license)
+                                                    <option value="{{ $license->getId() }}" data-id="{{ $license->getId() }}" data-label="{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}">{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="javascript:void(0)" class="btn btn-default btnChooser">Pilih</a>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 20px">
+                                        <ul class="list-group"></ul>
+                                    </div>
+                                </div>
+                                <span class="help-block">{!! implode('', $errors->get('license')) !!}</span>
+                            </div>
+
                             <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
@@ -117,4 +140,48 @@
             </div>
         </div>
     </section><!-- /.content -->
+@endsection
+
+@section('script')
+    <script>
+        $('a.btnChooser').live('click', function () {
+            var listing = $('.list-group'),
+                input = $(document).find('select#license option:selected'),
+                template = '<li class="list-group-item">\n' +
+                    '<input type="hidden" name="license[]" value="">\n' +
+                    '<span class="name"></span>\n' +
+                    '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemove">\n' +
+                    '<span class="glyphicon glyphicon-remove"></span>\n' +
+                    '</a>\n' +
+                    '</li>';
+
+            if (input.val()) {
+                var rendered = $(template);
+
+                rendered.find('input').val(input.data('id'));
+                rendered.find('span.name').html(input.data('label'));
+
+                listing.append(rendered);
+                input.remove();
+            }
+        });
+
+        $('a.btnRemove').live('click', function () {
+            var selector = $(this).parent(),
+                id = selector.find('input').val(),
+                label = selector.find('span.name').html(),
+                template = '<option value="" data-id="" data-label=""></option>',
+                input = $('select#license');
+
+            var rendered = $(template);
+
+            rendered.attr('value', id);
+            rendered.attr('data-id', id);
+            rendered.attr('data-label', label);
+            rendered.text(label);
+
+            input.append(rendered);
+            $(this).parent().remove();
+        });
+    </script>
 @endsection

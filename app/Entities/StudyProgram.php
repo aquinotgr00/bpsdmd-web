@@ -182,7 +182,7 @@ class StudyProgram
     /**
      * @return string
      */
-    public function getIdDikti(): string
+    public function getIdDikti(): ?string
     {
         return $this->idDikti;
     }

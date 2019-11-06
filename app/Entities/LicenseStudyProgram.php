@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class LicenseStudyProgram
 {
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -42,17 +42,17 @@ class LicenseStudyProgram
     private $studyProgram;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param int $id
      */
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
