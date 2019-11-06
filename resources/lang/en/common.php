@@ -96,6 +96,10 @@ return [
     //manage program
     'study_program' => 'study program',
     'degree' => 'degree',
+    'vision' => 'vision',
+    'mission' => 'mission',
+    'est_date' => 'establishment date',
+    'passing_grade_credits' => 'passing grade credits',
 
     //manage student
     'student_information' => 'student information',

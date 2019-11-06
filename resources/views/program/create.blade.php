@@ -15,6 +15,12 @@
                         <form method="post" enctype="multipart/form-data">
                             @csrf
 
+                            <div class="form-group {{ $errors->has('id_dikti') ? 'has-error' : '' }}">
+                                <label for="id_dikti">{{ strtoupper(trans('common.id_dikti')) }} :</label>
+                                <input type="text" class="form-control" id="id_dikti" name="id_dikti" value="{{ old('id_dikti') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('id_dikti')) !!}</span>
+                            </div>
+
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
                                 <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}">
@@ -27,6 +33,24 @@
                                 <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                                <label for="status">{{ ucfirst(trans('common.status')) }} :</label>
+                                <input type="text" class="form-control" id="status" name="status" value="{{ old('status') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('status')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('vision') ? 'has-error' : '' }}">
+                                <label for="vision">{{ ucfirst(trans('common.vision')) }} :</label>
+                                <input type="text" class="form-control" id="vision" name="vision" value="{{ old('vision') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('vision')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('mission') ? 'has-error' : '' }}">
+                                <label for="mission">{{ ucfirst(trans('common.mission')) }} :</label>
+                                <input type="text" class="form-control" id="mission" name="mission" value="{{ old('mission') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('mission')) !!}</span>
+                            </div>
+
                             <div class="form-group {{ $errors->has('degree') ? 'has-error' : '' }}">
                                 <label for="degree">{{ ucfirst(trans('common.degree')) }} :</label>
                                 <select id="degree" name="degree" class="form-control">
@@ -37,6 +61,24 @@
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_S2 }}" {{ old('degree') == \App\Entities\StudyProgram::DEGREE_S2 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S2) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('degree')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('est_date') ? 'has-error' : '' }}">
+                                <label for="est_date">{{ ucwords(trans('common.est_date')) }} :</label>
+                                <input type="text" class="date form-control" id="est_date" name="est_date" value="{{ old('est_date') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('est_date')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('letter_of_est') ? 'has-error' : '' }}">
+                                <label for="letter_of_est">{{ ucwords(trans('common.letter_of_est')) }} :</label>
+                                <input type="text" class="form-control" id="letter_of_est" name="letter_of_est" value="{{ old('letter_of_est') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('letter_of_est')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('date_of_est') ? 'has-error' : '' }}">
+                                <label for="date_of_est">{{ ucwords(trans('common.date_of_est')) }} :</label>
+                                <input type="text" class="date form-control" id="date_of_est" name="date_of_est" value="{{ old('date_of_est') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('date_of_est')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('license') ? 'has-error' : '' }}">

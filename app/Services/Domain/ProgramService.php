@@ -70,15 +70,30 @@ class ProgramService
     public function create(Collection $data, array $licenses = [], $org = false, $flush = true)
     {
         $program = new StudyProgram;
+        $program->setIdDikti($data->get('id_dikti'));
         $program->setCode($data->get('code'));
         $program->setName($data->get('name'));
+        $program->setStatus($data->get('status'));
+        $program->setVision($data->get('vision'));
+        $program->setMission($data->get('mission'));
         $program->setDegree($data->get('degree'));
+        $program->setLetterOfEst($data->get('letter_of_est'));
+        $program->setPassingGradeCredits($data->get('passing_grade_credits'));
+        $program->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('est_date')) {
+            $program->setEstDate(date_create_from_format('d-m-Y', $data->get('est_date')));
+        }
+        if ($data->get('date_of_est')) {
+            $program->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
         if ($org instanceof Organization) {
             $program->setOrg($org);
         }
-
-        $this->setLicenses($program, $licenses);
+        
+        if($licenses){
+            $this->setLicenses($program, $licenses);
+        }
 
         EntityManager::persist($program);
 
@@ -101,15 +116,30 @@ class ProgramService
      */
     public function update(StudyProgram $program, Collection $data, array $licenses = [], $org = false, $flush = true)
     {
+        $program->setIdDikti($data->get('id_dikti'));
         $program->setCode($data->get('code'));
         $program->setName($data->get('name'));
+        $program->setStatus($data->get('status'));
+        $program->setVision($data->get('vision'));
+        $program->setMission($data->get('mission'));
         $program->setDegree($data->get('degree'));
+        $program->setLetterOfEst($data->get('letter_of_est'));
+        $program->setPassingGradeCredits($data->get('passing_grade_credits'));
+        $program->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('est_date')) {
+            $program->setEstDate(date_create_from_format('d-m-Y', $data->get('est_date')));
+        }
+        if ($data->get('date_of_est')) {
+            $program->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
         if ($org instanceof Organization) {
             $program->setOrg($org);
         }
 
-        $this->setLicenses($program, $licenses);
+        if($licenses){
+            $this->setLicenses($program, $licenses);
+        }
 
         EntityManager::persist($program);
 

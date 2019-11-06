@@ -99,6 +99,10 @@ return [
     //manage program
     'study_program' => 'program studi',
     'degree' => 'jenjang',
+    'vision' => 'visi',
+    'mission' => 'misi',
+    'est_date' => 'tanggal berdiri',
+    'passing_grade_credits' => 'sks lulus',
 
     //manage student
     'student' => 'siswa',

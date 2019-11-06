@@ -35,12 +35,22 @@ class ProgramController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
+                'status' => 'required',
+                'vision' => 'required',
+                'mission' => 'required',
+                'passing_grade_credits' => 'required',
                 'degree' => 'required|in:'.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
+                'license' => 'array',
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
+                'status' => ucfirst(trans('common.status')),
+                'vision' => ucfirst(trans('common.vision')),
+                'mission' => ucfirst(trans('common.mission')),
+                'passing_grade_credits' => ucfirst(trans('common.passing_grade_credits')),
                 'degree' => ucfirst(trans('common.degree')),
+                'license' => ucfirst(trans('common.license')),
             ]);
 
             $org = currentUser()->getOrg();
@@ -48,7 +58,7 @@ class ProgramController extends Controller
             try {
                 $requestData = $request->all();
 
-                $programService->create(collect($requestData), $org);
+                $programService->create(collect($requestData), $request->input('license', []), $org);
                 $alert = 'alert_success';
                 $message = trans('common.create_success', ['object' => ucfirst(trans('common.study_program'))]);
             } catch (Exception $e) {
@@ -68,12 +78,22 @@ class ProgramController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
+                'status' => 'required',
+                'vision' => 'required',
+                'mission' => 'required',
+                'passing_grade_credits' => 'required',
                 'degree' => 'required|in:'.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
+                'license' => 'array',
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
+                'status' => ucfirst(trans('common.status')),
+                'vision' => ucfirst(trans('common.vision')),
+                'mission' => ucfirst(trans('common.mission')),
+                'passing_grade_credits' => ucfirst(trans('common.passing_grade_credits')),
                 'degree' => ucfirst(trans('common.degree')),
+                'license' => ucfirst(trans('common.license')),
             ]);
 
             try {
