@@ -90,7 +90,7 @@ class ProgramService
             $program->setOrg($org);
         }
 
-        if($data->get('license', [])){
+        if($data->get('license')){
             $this->setLicenses($program, $data->get('license'));
         }
 
@@ -135,7 +135,7 @@ class ProgramService
             $program->setOrg($org);
         }
 
-        if($data->get('license', [])){
+        if($data->get('license')){
             $this->setLicenses($program, $data->get('license'), 'update');
         }
 

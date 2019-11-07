@@ -97,6 +97,7 @@ return [
     'logo' => 'logo',
 
     //manage program
+    'program_information' => 'informasi program studi',
     'study_program' => 'program studi',
     'degree' => 'jenjang',
     'vision' => 'visi',

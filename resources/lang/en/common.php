@@ -94,6 +94,7 @@ return [
     'logo' => 'logo',
 
     //manage program
+    'program_information' => 'study program information',
     'study_program' => 'study program',
     'degree' => 'degree',
     'vision' => 'vision',

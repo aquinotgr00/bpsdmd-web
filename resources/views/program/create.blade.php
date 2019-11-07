@@ -51,6 +51,12 @@
                                 <span class="help-block ">{!! implode('', $errors->get('mission')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('passing_grade_credits') ? 'has-error' : '' }}">
+                                <label for="passing_grade_credits">{{ ucwords(trans('common.passing_grade_credits')) }} :</label>
+                                <input type="text" class="form-control" id="passing_grade_credits" name="passing_grade_credits" value="{{ old('passing_grade_credits') }}">
+                                <span class="help-block ">{!! implode('', $errors->get('passing_grade_credits')) !!}</span>
+                            </div>
+
                             <div class="form-group {{ $errors->has('degree') ? 'has-error' : '' }}">
                                 <label for="degree">{{ ucfirst(trans('common.degree')) }} :</label>
                                 <select id="degree" name="degree" class="form-control">
