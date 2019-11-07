@@ -31,7 +31,7 @@ class Student
      *
      * @ORM\Column(name="udid", type="string", nullable=true)
      */
-    private $idDikti;
+    private $idDikti = NULL;
 
     /**
      * @var Organization

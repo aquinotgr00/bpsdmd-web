@@ -46,6 +46,8 @@ return [
     'import' => 'import',
     'done' => 'sudah',
     'not_yet' => 'belum',
+    'yes' => 'iya',
+    'no' => 'tidak',
 
     // manage user
     'user_information' => 'informasi pengguna',

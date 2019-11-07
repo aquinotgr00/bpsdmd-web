@@ -108,13 +108,15 @@
 
                             <div class="form-group {{ $errors->has('foreign_citizen') ? 'has-error' : '' }}">
                                 <label for="foreign_citizen">{{ strtoupper(trans('common.foreign_citizen')) }} :</label>
-                                <input type="text" class="form-control" id="foreign_citizen" name="foreign_citizen" value="{{ old('foreign_citizen') }}">
+                                <input class="form-control" type="radio" name="foreign_citizen" value="t" checked>{{ trans('common.yes') }}
+                                <input class="form-control" type="radio" name="foreign_citizen" value="f">{{ trans('common.no') }}
                                 <span class="help-block ">{!! implode('', $errors->get('foreign_citizen')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('social_protection_card') ? 'has-error' : '' }}">
                                 <label for="social_protection_card">{{ ucwords(trans('common.social_protection_card')) }} :</label>
-                                <input type="text" class="form-control" id="social_protection_card" name="social_protection_card" value="{{ old('social_protection_card') }}">
+                                <input class="form-control" type="radio" name="social_protection_card" value="t" checked>{{ trans('common.yes') }}
+                                <input class="form-control" type="radio" name="social_protection_card" value="f">{{ trans('common.no') }}
                                 <span class="help-block ">{!! implode('', $errors->get('social_protection_card')) !!}</span>
                             </div>
 

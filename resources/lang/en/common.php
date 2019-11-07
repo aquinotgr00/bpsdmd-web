@@ -43,6 +43,11 @@ return [
     'delete' => 'delete',
     'action' => 'action',
     'no_data' => 'No data available.',
+    'import' => 'import',
+    'done' => 'done',
+    'not_yet' => 'not yet',
+    'yes' => 'yes',
+    'no' => 'no',
 
     // manage user
     'user_information' => 'user information',
