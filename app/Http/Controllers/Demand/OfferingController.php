@@ -7,6 +7,7 @@ use App\Entities\Recruitment;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
+use App\Mail\RecruitmentMail;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
 use App\Services\Domain\JobTitleService;
@@ -16,6 +17,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Image;
+use Mail;
 
 class OfferingController extends Controller
 {
@@ -32,8 +34,11 @@ class OfferingController extends Controller
         $urlDelete = function($id) {
             return url(route('demand.offering.delete', [$id]));
         };
+        $urlEmail = function($id) {
+            return url(route('demand.offering.email', [$id]));
+        };
 
-        return view('recruitment.offer', compact('data', 'page', 'urlUpdate', 'urlDelete'));
+        return view('recruitment.offer', compact('data', 'page', 'urlUpdate', 'urlDelete', 'urlEmail'));
     }
 
     public function update(Request $request, RecruitmentService $recruitmentService, Recruitment $data, StudentService $studentService, JobTitleService $jobTitleService)
@@ -73,7 +78,7 @@ class OfferingController extends Controller
 
     public function delete(RecruitmentService $recruitmentService, Recruitment $data)
     {
-    	$org = currentUser()->getOrg();
+        $org = currentUser()->getOrg();
         try {
             $recruitmentService->delete($data);
             $alert = 'alert_success';
@@ -82,6 +87,24 @@ class OfferingController extends Controller
             report($e);
             $alert = 'alert_error';
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.recruitment'))]);
+        }
+
+        return redirect()->route('demand.offering.index', ['org' => $org->getId()])->with($alert, $message);
+    }
+
+    public function email(RecruitmentService $recruitmentService, Recruitment $data)
+    {
+        $org = currentUser()->getOrg();
+        try {
+            $url = env('APP_URL') .'/offering';
+            // Mail::to($data->getStudent()->getEmail())->send(new RecruitmentMail($url));                // send recruitment email
+
+            $alert = 'alert_success';
+            $message = trans('common.email_success', ['object' => ucfirst(trans('common.recruitment'))]);
+        } catch (Exception $e) {
+            report($e);
+            $alert = 'alert_error';
+            $message = trans('common.email_failed', ['object' => ucfirst(trans('common.recruitment'))]);
         }
 
         return redirect()->route('demand.offering.index', ['org' => $org->getId()])->with($alert, $message);

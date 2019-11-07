@@ -49,8 +49,6 @@ class RecruitmentController extends Controller
         try {
             $requestData = $request->all();
             $recruitment = $recruitmentService->create(collect($requestData), $org, $student);
-            $url = env('APP_URL') .'/offering';
-            Mail::to($student->getEmail())->send(new RecruitmentMail($url));                // send recruitment email
 
             $alert = 'alert_success';
             $message = trans('common.create_success', ['object' => ucfirst(trans('common.recruitment'))]);

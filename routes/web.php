@@ -242,6 +242,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{student}', 'Demand\OfferingController@ajaxDetailStudent')->name('demand.offering.view');
         Route::any('/{recruitment}/update', 'Demand\OfferingController@update')->name('demand.offering.update');
         Route::get('/{recruitment}/delete', 'Demand\OfferingController@delete')->name('demand.offering.delete');
+        Route::get('/{recruitment}/email', 'Demand\OfferingController@email')->name('demand.offering.email');
     });
 
     // utils routes

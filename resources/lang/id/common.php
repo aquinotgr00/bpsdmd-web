@@ -31,6 +31,8 @@ return [
     'delete_failed' => ':object gagal dihapus. Silakan kontak administrator web.',
     'feeder_success' => 'Feeder :object berhasil diunggah.',
     'feeder_failed' => 'Feeder :object gagal diunggah. Silakan kontak administrator web.',
+    'email_success' => 'Email :object berhasil dikirim.',
+    'email_failed' => 'Email :object gagal dikirim. Silakan kontak administrator web.',
     'self_delete_failed' => 'Tidak dapat menghapus diri sendiri.',
     'confirm_delete' => 'Apakah Anda yakin?',
     'please_choose' => 'Silakan pilih :object',
@@ -242,6 +244,7 @@ return [
     'find_taruna' => 'cari taruna',
     'list_candidate' => 'daftar penawaran kandidat',
     'position_offered' => 'jabatan yang ditawarkan',
+    'send_email' => 'kirim email',
 
     // manage competency
     'competency' => 'kompetensi',

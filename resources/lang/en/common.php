@@ -31,6 +31,8 @@ return [
     'delete_failed' => ':object failed to delete. Please contact web administrator.',
     'feeder_success' => 'Feeder :object uploaded successfully.',
     'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
+    'email_success' => 'Email :object send successfully.',
+    'email_failed' => 'Email :object failed to send. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
     'confirm_delete' => 'Are you sure?',
     'please_choose' => 'Please choose :object',
@@ -206,6 +208,7 @@ return [
     'find_taruna' => 'find taruna',
     'list_candidate' => 'list candidate',
     'position_offered' => 'position offered',
+    'send_email' => 'send email',
 
     // manage competency
     'competency' => 'competency',
