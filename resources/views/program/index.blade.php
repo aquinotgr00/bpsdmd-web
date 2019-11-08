@@ -34,7 +34,7 @@
                             <tbody>
                                 <?php
                                 $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
-                                /** @var \App\Entities\Organization $item */
+                                /** @var \App\Entities\StudyProgram $item */
                                 foreach ($data as $item) {
                                 ?>
                                 <tr class="even pointer">
@@ -92,9 +92,44 @@
                                 <td class="programInstitute"></td>
                             </tr>
                             <tr>
+                                <th>{{ ucwords(trans('common.status')) }}</th>
+                                <td>:</td>
+                                <td class="programStatus"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.vision')) }}</th>
+                                <td>:</td>
+                                <td class="programVision"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.mission')) }}</th>
+                                <td>:</td>
+                                <td class="programMission"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.passing_grade_credits')) }}</th>
+                                <td>:</td>
+                                <td class="programPassingGradeCredits"></td>
+                            </tr>
+                            <tr>
                                 <th>{{ ucwords(trans('common.degree')) }}</th>
                                 <td>:</td>
                                 <td class="programDegree"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.est_date')) }}</th>
+                                <td>:</td>
+                                <td class="programEstDate"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.letter_of_est')) }}</th>
+                                <td>:</td>
+                                <td class="programLetterOfEst"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.date_of_est')) }}</th>
+                                <td>:</td>
+                                <td class="programDateOfEst"></td>
                             </tr>
                             <tr>
                                 <th>{{ ucwords(trans('common.license')) }}</th>
@@ -126,7 +161,14 @@
                 modalHtml.find('.programCode').html(program.code);
                 modalHtml.find('.programName').html(program.name);
                 modalHtml.find('.programInstitute').html(program.org);
+                modalHtml.find('.programStatus').html(program.status);
+                modalHtml.find('.programVision').html(program.vision);
+                modalHtml.find('.programMission').html(program.mission);
+                modalHtml.find('.programPassingGradeCredits').html(program.passing_grade_credits);
                 modalHtml.find('.programDegree').html(program.degree);
+                modalHtml.find('.programEstDate').html(program.est_date);
+                modalHtml.find('.programLetterOfEst').html(program.letter_of_est);
+                modalHtml.find('.programDateOfEst').html(program.date_of_est);
                 modalHtml.find('.programLicense').html(program.license);
                 modalHtml.modal('show');
             }
@@ -139,7 +181,14 @@
         modalHtml.find('.programCode').html('');
         modalHtml.find('.programName').html('');
         modalHtml.find('.programInstitute').html('');
+        modalHtml.find('.programStatus').html('');
+        modalHtml.find('.programVision').html('');
+        modalHtml.find('.programMission').html('');
+        modalHtml.find('.programPassingGradeCredits').html('');
         modalHtml.find('.programDegree').html('');
+        modalHtml.find('.programEstDate').html('');
+        modalHtml.find('.programLetterOfEst').html('');
+        modalHtml.find('.programDateOfEst').html('');
         modalHtml.find('.programLicense').html('');
     })
 </script>

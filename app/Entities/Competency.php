@@ -20,7 +20,7 @@ class Competency
     const TYPE_PM7 = 'PM7';
 
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -102,23 +102,23 @@ class Competency
     private $studyProgramCompetency;
 
     /**
-     * @var ArrayCollection|JobLicenseCompetency[]
-     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="competency")
+     * @var ArrayCollection|LicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="LicenseCompetency", mappedBy="competency")
      */
-    private $jobLicenseCompetency;
+    private $licenseCompetency;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param int $id
      */
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -126,7 +126,7 @@ class Competency
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -204,19 +204,19 @@ class Competency
     }
 
     /**
-     * @return JobLicenseCompetency[]|ArrayCollection
+     * @return LicenseCompetency[]|ArrayCollection
      */
-    public function getJobLicenseCompetency()
+    public function getLicenseCompetency()
     {
-        return $this->jobLicenseCompetency;
+        return $this->licenseCompetency;
     }
 
     /**
-     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     * @param LicenseCompetency[]|ArrayCollection $licenseCompetency
      */
-    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    public function setLicenseCompetency($licenseCompetency): void
     {
-        $this->jobLicenseCompetency = $jobLicenseCompetency;
+        $this->licenseCompetency = $licenseCompetency;
     }
 
     /**

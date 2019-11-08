@@ -13,6 +13,7 @@ use App\Services\Domain\CompetencyMainFunctionService;
 use App\Services\Domain\CompetencyMainPurposeService;
 use App\Services\Domain\CompetencyService;
 use App\Services\Domain\CompetencyUnitService;
+use App\Services\Domain\LicenseService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -27,8 +28,17 @@ class CompetencyController extends Controller
         return view('competency.index', compact('data', 'page'));
     }
 
-    public function create(Request $request, CompetencyService $competencyService, CompetencyKeyFunctionService $ckfService, CompetencyMainFunctionService $cmfService, CompetencyMainPurposeService $cmpService, CompetencyUnitService $cuService)
+    public function create(Request $request,
+        CompetencyService $competencyService,
+        CompetencyKeyFunctionService $ckfService,
+        CompetencyMainFunctionService $cmfService,
+        CompetencyMainPurposeService $cmpService,
+        CompetencyUnitService $cuService,
+        LicenseService $licenseService
+    )
     {
+        $licenses = $licenseService->getAsList($request->input('license', []));
+
         $ckf = false;
         $cmf = false;
         $cmp = false;
@@ -115,11 +125,20 @@ class CompetencyController extends Controller
         $cmp = $cmpService->getRepository()->findAll();
         $cu = $cuService->getRepository()->findAll();
 
-        return view('competency.create', compact('moda', 'ckf', 'cmf', 'cmp', 'cu'));
+        return view('competency.create', compact('licenses','moda', 'ckf', 'cmf', 'cmp', 'cu'));
     }
 
-    public function update(Request $request, CompetencyService $competencyService, CompetencyKeyFunctionService $ckfService, CompetencyMainFunctionService $cmfService, CompetencyMainPurposeService $cmpService, CompetencyUnitService $cuService, Competency $competency)
+    public function update(Request $request,
+        CompetencyService $competencyService,
+        CompetencyKeyFunctionService $ckfService,
+        CompetencyMainFunctionService $cmfService,
+        CompetencyMainPurposeService $cmpService,
+        CompetencyUnitService $cuService,
+        LicenseService $licenseService,
+        Competency $competency
+    )
     {
+        $licenses = $licenseService->getAsList($competency->getLicenseCompetency());
         $ckf = false;
         $cmf = false;
         $cmp = false;
@@ -205,7 +224,7 @@ class CompetencyController extends Controller
         $cmp = $cmpService->getRepository()->findAll();
         $cu = $cuService->getRepository()->findAll();
 
-        return view('competency.update', compact('competency', 'moda', 'ckf', 'cmf', 'cmp', 'cu'));
+        return view('competency.update', compact('competency', 'licenses', 'moda', 'ckf', 'cmf', 'cmp', 'cu'));
     }
 
     public function delete(CompetencyService $competencyService, Competency $competency)
@@ -226,6 +245,12 @@ class CompetencyController extends Controller
     public function ajaxDetailCompetency(Request $request, Competency $competency)
     {
         if ($request->ajax()) {
+            $license = '';
+
+            foreach ($competency->getLicenseCompetency() as $item) {
+                $license .= $item->getLicense()->getCode().' '.$item->getLicense()->getChapter().' - '.$item->getLicense()->getName().'<br>';
+            }
+
             $data = [
                 'name' => ucwords($competency->getName()),
                 'moda' => ucwords($competency->getModa()),
@@ -233,7 +258,8 @@ class CompetencyController extends Controller
                 'ckf' => $competency->getCompetencyKeyFunction()->getKeyFunction(),
                 'cmp' => $competency->getCompetencyMainPurpose()->getMainPurpose(),
                 'cmf' => $competency->getCompetencyMainFunction()->getMainFunction(),
-                'cu' => $competency->getCompetencyUnit()->getUnit()
+                'cu' => $competency->getCompetencyUnit()->getUnit(),
+                'license' => $license,
             ];
 
             return response()->json($data);

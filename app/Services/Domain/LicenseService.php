@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App\Entities\License;
+use App\Entities\LicenseCompetency;
 use App\Entities\LicenseStudyProgram;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -132,9 +133,8 @@ class LicenseService
     {
         $excludeIds = [];
 
-        /** @var LicenseStudyProgram $item */
         foreach ($exclude as $item) {
-            $excludeIds[] = $item->getLicense()->getId();
+            $excludeIds[] = ($item instanceof LicenseStudyProgram || $item instanceof LicenseCompetency) ? $item->getLicense()->getId() : $item;
         }
 
         $qb = $this->createQueryBuilder('l');

@@ -35,10 +35,6 @@
     -->
     <link href="{{ asset('img/favicon.png') }}" rel="SHORTCUT ICON" />
     @yield('style')
-
-    <!-- datepicker -->
-    <script src="{{ asset('js/jquery-1.12.4.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 </head>
 
 <body class="skin-blue">
@@ -128,6 +124,9 @@
 	<script src="{{ asset('js/highcharts/highcharts.js') }}"></script>
 	<script src="{{ asset('js/highcharts/highcharts-3d.js') }}"></script>
 	<script src="{{ asset('js/highcharts/modules/drilldown.js') }}"></script>
+
+    <!-- datepicker -->
+    <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 
 	<!-- jQuery UI 1.10.3 -->
 	<script src="{{ asset('js/jquery-ui-1.10.3.min.js') }}" type="text/javascript"></script>

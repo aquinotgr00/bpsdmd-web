@@ -43,7 +43,7 @@ class StudyProgram
      *
      * @ORM\Column(name="udid", type="string", nullable=true)
      */
-    private $idDikti;
+    private $idDikti = NULL;
 
     /**
      * @var string
@@ -69,16 +69,23 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="visi", type="string", nullable=false)
+     * @ORM\Column(name="visi", type="string", nullable=true)
      */
     private $vision;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="misi", type="string", nullable=false)
+     * @ORM\Column(name="misi", type="string", nullable=true)
      */
     private $mission;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kompetensi", type="string", nullable=true)
+     */
+    private $competency;
 
     /**
      * @var string
@@ -175,7 +182,7 @@ class StudyProgram
     /**
      * @return string
      */
-    public function getIdDikti(): string
+    public function getIdDikti(): ?string
     {
         return $this->idDikti;
     }
@@ -183,7 +190,7 @@ class StudyProgram
     /**
      * @param string $idDikti
      */
-    public function setIdDikti(string $idDikti): void
+    public function setIdDikti($idDikti): void
     {
         $this->idDikti = $idDikti;
     }
@@ -266,6 +273,22 @@ class StudyProgram
     public function setMission($mission): void
     {
         $this->mission = $mission;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompetency(): ?string
+    {
+        return $this->competency;
+    }
+
+    /**
+     * @param string $competency
+     */
+    public function setCompetency($competency): void
+    {
+        $this->competency = $competency;
     }
 
     /**

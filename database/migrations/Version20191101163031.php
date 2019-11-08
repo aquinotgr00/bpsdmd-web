@@ -65,7 +65,6 @@ class Version20191101163031 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE instansi DROP udid');
         $this->addSql('ALTER TABLE instansi DROP sk_pendirian');
         $this->addSql('ALTER TABLE instansi DROP tgl_sk_pendirian');

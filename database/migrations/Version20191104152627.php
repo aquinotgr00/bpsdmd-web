@@ -30,7 +30,6 @@ class Version20191104152627 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE penawaran_siswa ALTER jabatan_id SET NOT NULL');
         $this->addSql('ALTER TABLE penawaran_siswa ALTER tanggal_input TYPE DATE');
         $this->addSql('ALTER TABLE penawaran_siswa ALTER tanggal_input DROP DEFAULT');

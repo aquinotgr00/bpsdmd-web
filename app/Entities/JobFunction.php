@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class JobFunction
 {
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -46,23 +47,23 @@ class JobFunction
     private $name;
 
     /**
-     * @var ArrayCollection|JobLicenseCompetency[]
-     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="jobFunction")
+     * @var ArrayCollection|JobTitleFunction[]
+     * @ORM\OneToMany(targetEntity="JobTitleFunction", mappedBy="jobFunction")
      */
-    private $jobLicenseCompetency;
+    private $jobTitleFunction;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param int $id
      */
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -86,7 +87,7 @@ class JobFunction
     /**
      * @return string
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -102,7 +103,7 @@ class JobFunction
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -116,18 +117,18 @@ class JobFunction
     }
 
     /**
-     * @return JobLicenseCompetency[]|ArrayCollection
+     * @return JobTitleFunction[]|ArrayCollection
      */
-    public function getJobLicenseCompetency()
+    public function getJobTitleFunction()
     {
-        return $this->jobLicenseCompetency;
+        return $this->jobTitleFunction;
     }
 
     /**
-     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     * @param JobTitleFunction[]|ArrayCollection $jobTitleFunction
      */
-    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    public function setJobTitleFunction($jobTitleFunction): void
     {
-        $this->jobLicenseCompetency = $jobLicenseCompetency;
+        $this->jobTitleFunction = $jobTitleFunction;
     }
 }

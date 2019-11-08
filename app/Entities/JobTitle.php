@@ -40,16 +40,44 @@ class JobTitle
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="pendidikan_minimal", type="string", nullable=true)
+     */
+    private $eductionMinimal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ipk_minimal", type="string", nullable=true)
+     */
+    private $gpaMinimal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pengalaman_minimal", type="string", nullable=true)
+     */
+    private $experienceMinimal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usia_minimal", type="string", nullable=true)
+     */
+    private $ageMinimal;
+
+    /**
      * @var ArrayCollection|Recruitment[]
      * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="jobTitle")
      */
     private $recruitment;
 
     /**
-     * @var ArrayCollection|JobLicenseCompetency[]
-     * @ORM\OneToMany(targetEntity="JobLicenseCompetency", mappedBy="jobTitle")
+     * @var ArrayCollection|JobTitleFunction[]
+     * @ORM\OneToMany(targetEntity="JobTitleFunction", mappedBy="jobTitle")
      */
-    private $jobLicenseCompetency;
+    private $jobTitleFunction;
 
     /**
      * @return int
@@ -100,6 +128,70 @@ class JobTitle
     }
 
     /**
+     * @return string
+     */
+    public function getEductionMinimal(): ?string
+    {
+        return $this->eductionMinimal;
+    }
+
+    /**
+     * @param string $eductionMinimal
+     */
+    public function setEductionMinimal(string $eductionMinimal): void
+    {
+        $this->eductionMinimal = $eductionMinimal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGpaMinimal(): ?string
+    {
+        return $this->gpaMinimal;
+    }
+
+    /**
+     * @param string $gpaMinimal
+     */
+    public function setGpaMinimal(string $gpaMinimal): void
+    {
+        $this->gpaMinimal = $gpaMinimal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExperienceMinimal(): ?string
+    {
+        return $this->experienceMinimal;
+    }
+
+    /**
+     * @param string $experienceMinimal
+     */
+    public function setExperienceMinimal(string $experienceMinimal): void
+    {
+        $this->experienceMinimal = $experienceMinimal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAgeMinimal(): ?string
+    {
+        return $this->ageMinimal;
+    }
+
+    /**
+     * @param string $ageMinimal
+     */
+    public function setAgeMinimal(string $ageMinimal): void
+    {
+        $this->ageMinimal = $ageMinimal;
+    }
+
+    /**
      * @return Recruitment[]|ArrayCollection
      */
     public function getRecruitment()
@@ -116,18 +208,18 @@ class JobTitle
     }
 
     /**
-     * @return JobLicenseCompetency[]|ArrayCollection
+     * @return JobTitleFunction[]|ArrayCollection
      */
-    public function getJobLicenseCompetency()
+    public function getJobTitleFunction()
     {
-        return $this->jobLicenseCompetency;
+        return $this->jobTitleFunction;
     }
 
     /**
-     * @param JobLicenseCompetency[]|ArrayCollection $jobLicenseCompetency
+     * @param JobTitleFunction[]|ArrayCollection $jobTitleFunction
      */
-    public function setJobLicenseCompetency($jobLicenseCompetency): void
+    public function setJobTitleFunction($jobTitleFunction): void
     {
-        $this->jobLicenseCompetency = $jobLicenseCompetency;
+        $this->jobTitleFunction = $jobTitleFunction;
     }
 }

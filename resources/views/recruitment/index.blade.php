@@ -138,7 +138,7 @@
                                                 <h3 class="counter text-right m-t-15"><?=count($data)?></h3>
                                             </li>
                                             <li class="col-middle">
-                                                <h4 style="font-size:14px;">{{ (trans('common.list_candidate')) }}</h4>
+                                                <h4 style="font-size:14px;">{{ ucwords(trans('common.list_candidate')) }}</h4>
                                                 <div class="progress">
                                                     <?php $persen = (count($data) / (count($allStudent) ? count($allStudent) : 1))*100;?>
                                                     <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%">
