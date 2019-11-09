@@ -24,12 +24,6 @@
                                 <span class="help-block ">{!! implode('', $errors->get('name')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('district') ? 'has-error' : '' }}">
-                                <label for="district">{{ ucwords(trans('common.district')) }} :</label>
-                                <select class="form-control" name="district_id" id="district"></select>
-                                <span class="help-block ">{!! implode('', $errors->get('district')) !!}</span>
-                            </div>
-
                             <div class="form-group {{ $errors->has('background') ? 'has-error' : '' }}">
                                 <label for="background">{{ ucwords(trans('common.background')) }} :</label>
                                 <input type="text" class="form-control" id="background" name="background" value="{{ old('background') }}">
@@ -75,27 +69,6 @@
       ajax: {
         type: 'POST',
         url: `{{ route('demand.employee.get_by_name') }}`,
-        dataType: 'json',
-        delay: 250,
-        processResults: function (data) {
-          return {
-            results:  $.map(data, function (item) {
-              return {
-                text: item.name,
-                id: item.id
-              }
-            })
-          };
-        },
-        cache: true
-      }
-    });
-
-    $('#district').select2({
-      placeholder: 'Cari kabupaten',
-      ajax: {
-        type: 'POST',
-        url: `{{ route('demand.district.get_by_name') }}`,
         dataType: 'json',
         delay: 250,
         processResults: function (data) {

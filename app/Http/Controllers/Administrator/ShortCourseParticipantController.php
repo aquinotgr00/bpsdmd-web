@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\Domain\ShortCourseService;
 use App\Services\Domain\ShortCourseDataService;
-use App\Services\Domain\DistrictService;
 use App\Services\Domain\EmployeeService;
 use App\Services\Domain\ShortCourseParticipantService;
 use Exception;
@@ -18,7 +17,6 @@ class ShortCourseParticipantController extends Controller
       ShortCourseService $shortCourseService,
       ShortCourseDataService $shortCourseDataService,
       ShortCourseParticipantService $shortCourseParticipantService,
-      DistrictService $districtService,
       EmployeeService $employeeService
     )
     {
@@ -30,14 +28,12 @@ class ShortCourseParticipantController extends Controller
             $shortCourseData = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $shortCourse->getId()]);
             $shortCourseData->setTotalRealization($shortCourseData->getTotalRealization() + 1);
             $employee = $employeeService->findById($request->get('employee_id'));
-            $district = $districtService->findById($request->get('district_id'));
 
             try {
                 $shortCourseParticipantService->create(
                     collect($request->only(['background', 'graduate', 'competence_certificat', 'training_certificat'])),
                     $shortCourse,
                     $employee,
-                    $district
                 );
 
                 $alert = 'alert_success';
