@@ -22,6 +22,8 @@ class AuthController extends Controller
                 'email' => 'required|email',
                 'password' => 'required',
                 'g-recaptcha-response' => 'required|captcha'
+            ], [], [
+                'g-recaptcha-response' => 'Recaptcha'
             ]);
 
             try {

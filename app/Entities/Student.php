@@ -31,7 +31,7 @@ class Student
      *
      * @ORM\Column(name="udid", type="string", nullable=true)
      */
-    private $idDikti;
+    private $idDikti = NULL;
 
     /**
      * @var Organization
@@ -147,7 +147,7 @@ class Student
     /**
      * @var boolean
      *
-     * @ORM\Column(name="wna", type="boolean", nullable=false)
+     * @ORM\Column(name="wna", type="string", nullable=false)
      */
     private $foreignCitizen;
 

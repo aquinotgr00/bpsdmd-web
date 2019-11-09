@@ -25,7 +25,7 @@ class LicenseCompetency
     /**
      * @var Competency
      *
-     * @ORM\ManyToOne(targetEntity="Competency", inversedBy="licenseCompetency")
+     * @ORM\ManyToOne(targetEntity="Competency", inversedBy="licenseCompetency", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="kompetensi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })

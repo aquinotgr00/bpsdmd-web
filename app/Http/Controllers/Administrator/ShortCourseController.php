@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Services\Domain\FeederService;
 use App\Services\Application\AuthService;
 use App\Imports\ShortCourseImport;
+use App\Services\Domain\ShortCourseDataService;
+use App\Services\Domain\ShortCourseParticipantService;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ShortCourseController extends Controller
@@ -107,9 +109,23 @@ class ShortCourseController extends Controller
         return view('shortCourse.update', compact('data', 'dataOrg'));
     }
 
-    public function delete(ShortCourseService $shortCourseService, ShortCourse $data)
-    {
+    public function delete(
+        ShortCourseService $shortCourseService,
+        ShortCourse $data,
+        ShortCourseDataService $shortCourseDataService,
+        ShortCourseParticipantService $shortCourseParticipantService
+    ) {
         try {
+            $shortCourseData = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $data->getId()]);
+            if (!is_null($shortCourseData)) {
+                $shortCourseDataService->delete($shortCourseData);
+            }
+
+            $shortCourseParticipant = $shortCourseParticipantService->getRepository()->findOneBy(['shortCourse' => $data->getId()]);
+            if (!is_null($shortCourseParticipant)) {
+                $shortCourseParticipantService->delete($shortCourseParticipant);
+            }
+
             $shortCourseService->delete($data);
             $alert = 'alert_success';
             $message = trans('common.delete_success', ['object' => ucfirst(trans('common.short_course'))]);
@@ -170,7 +186,8 @@ class ShortCourseController extends Controller
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.feeder_failed', ['object' => trans('common.short_course')]);
+            // $message = trans('common.feeder_failed', ['object' => trans('common.short_course')]);
+            $message = trans('common.feeder_failed', ['object' => $e]);
         }
 
         return redirect()->route('administrator.shortCourse.index')->with($alert, $message);

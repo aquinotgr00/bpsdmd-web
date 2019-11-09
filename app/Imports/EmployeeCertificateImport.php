@@ -10,6 +10,7 @@ use App\Entities\Certificate;
 use App\Services\Application\AuthService;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class EmployeeCertificateImport implements ToCollection
 {
@@ -35,7 +36,9 @@ class EmployeeCertificateImport implements ToCollection
             }
 
             $employeeCertificate = new EmployeeCertificate;
-            $employeeCertificate->setValidityPeriod($col[14]);
+            if ($col[14]) {
+                $employeeCertificate->setValidityPeriod(date_format(Date::excelToDateTimeObject($col[14]), 'd-m-Y'));
+            }
 
             EntityManager::persist($employeeCertificate);
             EntityManager::flush();

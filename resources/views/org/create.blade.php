@@ -169,27 +169,26 @@
                             <div class="box-footer" style="text-align: right">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
-                            <script type="text/javascript">
-                                $(function(){
-                                    $('#type').change(function(){
-                                        var value = $(this).val();
-                                        if(value == "<?= \App\Entities\Organization::TYPE_SUPPLY ?>"){
-                                            $('.accreditation').show();
-                                        }else{
-                                            $('.accreditation').hide();
-                                        }
-                                    });
-
-                                    $('#type').change();
-                                });
-                                $('.date').datepicker({
-                                    format: 'dd-mm-yyyy' // HTML 5
-                                });
-                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>
         </div>
     </section><!-- /.content -->
+@endsection
+
+@section('script')
+<script>
+    $(function(){
+        $('#type').change(function(){
+            var value = $(this).val();
+            if(value == "<?= \App\Entities\Organization::TYPE_SUPPLY ?>"){
+                $('.accreditation').show();
+            }else{
+                $('.accreditation').hide();
+            }
+        });
+        $('#type').change();
+    });
+</script>
 @endsection

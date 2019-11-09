@@ -43,7 +43,7 @@ class StudyProgram
      *
      * @ORM\Column(name="udid", type="string", nullable=true)
      */
-    private $idDikti;
+    private $idDikti = NULL;
 
     /**
      * @var string
@@ -182,7 +182,7 @@ class StudyProgram
     /**
      * @return string
      */
-    public function getIdDikti(): string
+    public function getIdDikti(): ?string
     {
         return $this->idDikti;
     }
@@ -190,7 +190,7 @@ class StudyProgram
     /**
      * @param string $idDikti
      */
-    public function setIdDikti(string $idDikti): void
+    public function setIdDikti($idDikti): void
     {
         $this->idDikti = $idDikti;
     }

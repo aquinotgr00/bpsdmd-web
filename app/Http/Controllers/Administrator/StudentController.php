@@ -43,6 +43,12 @@ class StudentController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
+                'nim' => 'required',
+                'foreign_citizen' => 'required',
+                'social_protection_card' => 'required',
+                'start_semester' => 'required|numeric',
+                'current_semester' => 'required|numeric',
+                'student_credits' => 'required|numeric',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
                 'gender' => 'in:' . Student::GENDER_MALE . ',' . Student::GENDER_FEMALE,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
@@ -50,6 +56,12 @@ class StudentController extends Controller
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
+                'nim' => strtoupper(trans('common.nim')),
+                'foreign_citizen' => ucfirst(trans('common.foreign_citizen')),
+                'social_protection_card' => ucfirst(trans('common.social_protection_card')),
+                'start_semester' => ucfirst(trans('common.start_semester')),
+                'current_semester' => ucfirst(trans('common.current_semester')),
+                'student_credits' => ucfirst(trans('common.student_credits')),
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
                 'gender' => ucfirst(trans('common.gender')),
                 'photo' => ucfirst(trans('common.photo')),
@@ -100,6 +112,12 @@ class StudentController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
+                'nim' => 'required',
+                'foreign_citizen' => 'required',
+                'social_protection_card' => 'required',
+                'start_semester' => 'required|numeric',
+                'current_semester' => 'required|numeric',
+                'student_credits' => 'required|numeric',
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
                 'gender' => 'in:' . Student::GENDER_MALE . ',' . Student::GENDER_FEMALE,
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
@@ -107,6 +125,12 @@ class StudentController extends Controller
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
+                'nim' => strtoupper(trans('common.nim')),
+                'foreign_citizen' => ucfirst(trans('common.foreign_citizen')),
+                'social_protection_card' => ucfirst(trans('common.social_protection_card')),
+                'start_semester' => ucfirst(trans('common.start_semester')),
+                'current_semester' => ucfirst(trans('common.current_semester')),
+                'student_credits' => ucfirst(trans('common.student_credits')),
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
                 'gender' => ucfirst(trans('common.gender')),
                 'photo' => ucfirst(trans('common.photo')),

@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th>{{ ucfirst(trans('common.moda')) }}</th>
                                     <th>{{ ucfirst(trans('common.type')) }}</th>
                                     <th>{{ ucfirst(trans('common.action')) }}</th>
@@ -38,6 +39,7 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
+                                    <td>{{ $item->getName() }}</td>
                                     <td>{{ ucwords($item->getModa()) }}</td>
                                     <td>{{ $item->getType() }}</td>
                                     <td>
@@ -104,6 +106,11 @@
                                 <td>:</td>
                                 <td class="cu"></td>
                             </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.license')) }}</th>
+                                <td>:</td>
+                                <td class="competencyLicense"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -131,6 +138,7 @@
                     modalHtml.find('.cmf').html(competency.cmf);
                     modalHtml.find('.cmp').html(competency.cmp);
                     modalHtml.find('.cu').html(competency.cu);
+                    modalHtml.find('.competencyLicense').html(competency.license);
 
                     modalHtml.modal('show');
                 }
@@ -145,6 +153,7 @@
             modalHtml.find('.cmf').html('');
             modalHtml.find('.cmp').show();
             modalHtml.find('.cu').html('');
+            modalHtml.find('.competencyLicense').html('');
         })
     </script>
 @endsection

@@ -142,7 +142,7 @@ class EmployeeCertificateController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fs_'.$employee->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fc_'.$employee->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {
@@ -160,11 +160,11 @@ class EmployeeCertificateController extends Controller
             $feederService->activeFeeder($feeder);
 
             $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+            $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.feeder_failed', ['object' => trans('common.student')]);
+            $message = trans('common.feeder_failed', ['object' => trans('common.certificate')]);
         }
 
         return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId(), 'employee' => $employee->getId()])->with($alert, $message);

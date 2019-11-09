@@ -46,6 +46,7 @@
                                         <td>
                                             <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                             <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                            <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlEmail($item->getId()) }}" ><i class="fa fa-envelope"></i> {{ ucfirst(trans('common.send_email')) }}</a>
                                         </td>
                                     </tr>
                                 <?php
