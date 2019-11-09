@@ -106,8 +106,6 @@ class ShortCourseDataService
      */
     public function update(ShortCourseData $shortCourseData, Collection $data, $shortCourse = false, $flush = true)
     {
-        $shortCourseData->setStartDate(date_create_from_format('d-m-Y', $data->get('startDate')));
-        $shortCourseData->setEndDate(date_create_from_format('d-m-Y', $data->get('endDate')));
         $shortCourseData->setTotalTarget($data->get('totalTarget'));
         $shortCourseData->setTotalRealization($data->get('totalRealization'));
         $shortCourseData->setOpenSk($data->get('openSk'));
@@ -116,6 +114,13 @@ class ShortCourseDataService
         $shortCourseData->setYear($data->get('year'));
         $shortCourseData->setShortCourseTime($data->get('shortCourseTime'));
         $shortCourseData->setPlace($data->get('place'));
+
+        if ($data->get('startDate')) {
+            $shortCourseData->setStartDate(date_create_from_format('d-m-Y', $data->get('startDate')));
+        }
+        if ($data->get('endDate')) {
+            $shortCourseData->setEndDate(date_create_from_format('d-m-Y', $data->get('endDate')));
+        }
 
         if ($shortCourse instanceof ShortCourse) {
             $shortCourseData->setShortCourse($shortCourse);

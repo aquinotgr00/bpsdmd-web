@@ -33,9 +33,9 @@ class EmployeeService
     public function findByName(string $name)
     {
         $query = $this->createQueryBuilder('s')
-            ->where('s.name LIKE :name')
+            ->where('LOWER(s.name) LIKE :name')
             ->orderBy('s.name', 'asc')
-            ->setParameter('name', "%$name%")
+            ->setParameter('name', "%{$name}%")
             ->getQuery()
             ->getArrayResult();
 

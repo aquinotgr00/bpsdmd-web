@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administrator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\Domain\ShortCourseService;
+use App\Services\Domain\ShortCourseDataService;
 use App\Services\Domain\DistrictService;
 use App\Services\Domain\EmployeeService;
 use App\Services\Domain\ShortCourseParticipantService;
@@ -15,6 +16,7 @@ class ShortCourseParticipantController extends Controller
     public function create(
       Request $request,
       ShortCourseService $shortCourseService,
+      ShortCourseDataService $shortCourseDataService,
       ShortCourseParticipantService $shortCourseParticipantService,
       DistrictService $districtService,
       EmployeeService $employeeService
@@ -25,15 +27,17 @@ class ShortCourseParticipantController extends Controller
             $request->validate($validation, [], []);
 
             $shortCourse = $shortCourseService->findById($request->get('short_course_id'));
+            $shortCourseData = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $shortCourse->getId()]);
+            $shortCourseData->setTotalRealization($shortCourseData->getTotalRealization() + 1);
             $employee = $employeeService->findById($request->get('employee_id'));
             $district = $districtService->findById($request->get('district_id'));
 
             try {
                 $shortCourseParticipantService->create(
-                  collect($request->only(['background', 'graduate', 'competence_certificat', 'training_certificat'])),
-                  $shortCourse,
-                  $employee,
-                  $district
+                    collect($request->only(['background', 'graduate', 'competence_certificat', 'training_certificat'])),
+                    $shortCourse,
+                    $employee,
+                    $district
                 );
 
                 $alert = 'alert_success';
