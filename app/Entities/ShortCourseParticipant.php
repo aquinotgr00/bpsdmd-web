@@ -42,16 +42,6 @@ class ShortCourseParticipant
     private $employee;
 
     /**
-     * @var District
-     *
-     * @ORM\ManyToOne(targetEntity="District", inversedBy="shortCourseParticipants")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kabupaten_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     * })
-     */
-    private $district;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="latar_belakang", type="string", nullable=false)
@@ -125,22 +115,6 @@ class ShortCourseParticipant
     public function setEmployee(Employee $employee): void
     {
         $this->employee = $employee;
-    }
-
-    /**
-     * @return District
-     */
-    public function getDistrict(): District
-    {
-        return $this->district;
-    }
-
-    /**
-     * @param District $district
-     */
-    public function setDistrict(District $district): void
-    {
-        $this->district = $district;
     }
 
     /**
