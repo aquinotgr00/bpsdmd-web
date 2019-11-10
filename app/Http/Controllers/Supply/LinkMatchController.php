@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Supply;
 
 use App\Entities\JobTitle;
 use App\Entities\LicenseStudyProgram;
@@ -9,41 +9,15 @@ use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Services\Application\LinkMatchService;
 use App\Services\Domain\JobTitleService;
-use App\Services\Domain\OrgService;
 use Illuminate\Http\Request;
 
 class LinkMatchController extends Controller
 {
-    public function supply(OrgService $orgService)
+    public function supply()
     {
-        $schools = $orgService->getSchoolAsList();
+        $programs = currentUser()->getOrg()->getPrograms();
 
-        return view('linkMatch.supply', compact('schools'));
-    }
-
-    public function demand()
-    {
-        return view('linkMatch.demand');
-    }
-
-    public function program(Request $request, Organization $organization)
-    {
-        if ($request->ajax()) {
-            $result = [];
-            $programs = $organization->getPrograms();
-
-            /** @var StudyProgram $program */
-            foreach ($programs as $program) {
-                $result[] = [
-                    'id' => $program->getId(),
-                    'name' => $program->getName()
-                ];
-            }
-
-            return response()->json($result);
-        }
-
-        return abort(404);
+        return view('linkMatch.supply-user', compact('programs'));
     }
 
     public function programLicense(Request $request, StudyProgram $studyProgram)

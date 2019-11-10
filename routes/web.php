@@ -210,6 +210,12 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Supply\TeacherController@index')->name('supply.teacher.index');
     });
 
+    Route::group(['prefix' => '/link-match-supply', 'middleware' => ['only_supply']], function() {
+        Route::get('/program-license/{program}', 'Supply\LinkMatchController@programLicense')->name('supply.link-match.program-license');
+        Route::get('/demand-by-program/{program}', 'Supply\LinkMatchController@demandByProgram')->name('supply.link-match.demand-by-program');
+        Route::get('/', 'Supply\LinkMatchController@supply')->name('supply.link-match');
+    });
+
     // demand routes
     Route::group(['prefix' => '/employee', 'middleware' => ['only_demand']], function() {
         Route::any('/create', 'Demand\EmployeeController@create')->name('demand.employee.create');

@@ -163,21 +163,25 @@ class JobTitleService
             $licenseIds[] = $license->getId();
         }
 
-        $qb = EntityManager::createQueryBuilder()
-        ->select('jfl')
-        ->from(JobTitleFunctionLicense::class, 'jfl');
+        if (count($licenseIds)) {
+            $qb = EntityManager::createQueryBuilder()
+                ->select('jfl')
+                ->from(JobTitleFunctionLicense::class, 'jfl');
 
-        $query = $qb->where($qb->expr()->in('jfl.license', array_unique($licenseIds)))
-            ->getQuery();
+            $query = $qb->where($qb->expr()->in('jfl.license', array_unique($licenseIds)))
+                ->getQuery();
 
-        $jfls = $query->getResult();
+            $jfls = $query->getResult();
 
-        /** @var JobTitleFunctionLicense $jfl */
-        foreach ($jfls as $jfl) {
-            $jobTitle[] = $jfl->getJobTitleFunction()->getJobTitle();
+            /** @var JobTitleFunctionLicense $jfl */
+            foreach ($jfls as $jfl) {
+                $jobTitle[] = $jfl->getJobTitleFunction()->getJobTitle();
+            }
+
+            return $jobTitle;
         }
 
-        return $jobTitle;
+        return [];
     }
 
     /**
