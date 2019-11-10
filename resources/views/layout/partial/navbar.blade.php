@@ -139,6 +139,13 @@
                 <span>{{ ucwords(trans('common.teacher')) }}</span>
             </a>
         </li>
+
+        <li>
+            <a href="{{ url(route('supply.link-match')) }}">
+                <i class="fa fa-file"></i>
+                <span>Link and Match</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))

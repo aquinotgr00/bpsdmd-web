@@ -11,7 +11,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Link and Match - Supply</h1>
+        <h1>Link and Match</h1>
         <ol class="breadcrumb">
             <li>
             </li>
@@ -28,34 +28,17 @@
                     <section class="content" id="subcontent-element">
                         <section class="content">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="box">
-                                        <form action="" method="post">
-                                            <div class="box-body">
-                                                <div class="form-group">
-                                                    <label>{{ ucwords(trans('common.school_name')) }}</label>
-                                                    <select name="sekolah" id="sekolah-selector" class="form-control">
-                                                    <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.school'))])) }}</option>
-                                                        @if(!empty($schools))
-                                                            @foreach($schools as $id => $name)
-                                                               <option value="{{ $id }}">{{ $name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                	</select>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4 col-xs-4" style="padding: 0px;">
                                     <div style="padding: 10px;padding-top: 0px;">
                                         <div class="box">
                                             <div class="box-header" style="cursor: move;">
                                                 <h3 class="box-title" style="padding-bottom: 6px;background-color: #666666;width:100%;color: #FFFFFF;" id="box-title-one">Program Studi</h3>
                                             </div>
-                                            <div class="box-body" id="list-prodi"></div>
+                                            <div class="box-body" id="list-prodi">
+                                                @foreach($programs as $program)
+                                                    <div class="list-prodi-item" data-id="{{ $program->getId() }}">{{ $program->getName() }}</div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -92,41 +75,14 @@
 
 @section('script')
     <script>
-        let listingProdi = 'div#list-prodi',
-            defProdi = '<div class="list-prodi-item">{{ trans('common.no_data') }}</div>',
-            listingSupply = 'ul.kompetensi-prodi',
+        let listingSupply = 'ul.kompetensi-prodi',
             defSupply = '<li>{{ trans('common.no_data') }}</li>',
             listingDemand = 'div#demand-list',
             defDemand = '<div class="row"><div class="col-xs-12 col-md-12"><div class="lowongan-item"><span>{{ trans('common.no_data') }}</span></div></div></div>';
 
-        function clearListing() {
-            $(listingProdi).html(defProdi);
-            $(listingSupply).html(defSupply);
-            $(listingDemand).html(defDemand);
-        }
-
         // init page
-        clearListing();
-
-        $('select#sekolah-selector').live('change', function () {
-            let id = $(this).val();
-
-            clearListing();
-
-            if (id > 0) {
-                $.get('/link-match/program/'+id, function(programs, status){
-                    if (status === 'success') {
-                        let html = '';
-
-                        $.each(programs, function( index, data ) {
-                            html = html + '<div class="list-prodi-item" data-id="'+data.id+'">'+data.name+'</div>';
-                        });
-
-                        $(listingProdi).html(html);
-                    }
-                });
-            }
-        });
+        $(listingSupply).html(defSupply);
+        $(listingDemand).html(defDemand);
 
         $('div.list-prodi-item').live('click', function () {
             let id = $(this).data('id');
@@ -138,7 +94,7 @@
             if (id > 0) {
                 $(this).addClass('active');
 
-                $.get('/link-match/program-license/'+id, function(licenses, status){
+                $.get('/link-match-supply/program-license/'+id, function(licenses, status){
                     if (status === 'success') {
                         let html = '';
 
@@ -152,7 +108,7 @@
                     }
                 });
 
-                $.get('/link-match/demand-by-program/'+id, function(jobTitles, status){
+                $.get('/link-match-supply/demand-by-program/'+id, function(jobTitles, status){
                     if (status === 'success') {
                         let html = '';
 
