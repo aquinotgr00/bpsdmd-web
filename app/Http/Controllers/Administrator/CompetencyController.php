@@ -43,15 +43,14 @@ class CompetencyController extends Controller
         $cmf = false;
         $cmp = false;
         $cu = false;
+        $moda = [
+            Competency::MODA_KERETA => ucfirst(Competency::MODA_KERETA),
+            Competency::MODA_DARAT => ucfirst(Competency::MODA_DARAT),
+            Competency::MODA_LAUT => ucfirst(Competency::MODA_LAUT),
+            Competency::MODA_UDARA => ucfirst(Competency::MODA_UDARA)
+        ];
 
         if ($request->method() == 'POST') {
-            $moda = [
-                Competency::MODA_KERETA => ucfirst(Competency::MODA_KERETA),
-                Competency::MODA_DARAT => ucfirst(Competency::MODA_DARAT),
-                Competency::MODA_LAUT => ucfirst(Competency::MODA_LAUT),
-                Competency::MODA_UDARA => ucfirst(Competency::MODA_UDARA)
-            ];
-
             $request->validate([
                 'name' => 'required',
                 'type' => 'required',
@@ -143,15 +142,14 @@ class CompetencyController extends Controller
         $cmf = false;
         $cmp = false;
         $cu = false;
+        $moda = [
+            Competency::MODA_KERETA => ucfirst(Competency::MODA_KERETA),
+            Competency::MODA_DARAT => ucfirst(Competency::MODA_DARAT),
+            Competency::MODA_LAUT => ucfirst(Competency::MODA_LAUT),
+            Competency::MODA_UDARA => ucfirst(Competency::MODA_UDARA)
+        ];
 
         if ($request->method() == 'POST') {
-            $moda = [
-                Competency::MODA_KERETA => ucfirst(Competency::MODA_KERETA),
-                Competency::MODA_DARAT => ucfirst(Competency::MODA_DARAT),
-                Competency::MODA_LAUT => ucfirst(Competency::MODA_LAUT),
-                Competency::MODA_UDARA => ucfirst(Competency::MODA_UDARA)
-            ];
-
             $request->validate([
                 'name' => 'required',
                 'type' => 'required',
