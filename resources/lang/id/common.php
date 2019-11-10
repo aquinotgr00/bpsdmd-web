@@ -219,8 +219,11 @@ return [
 
     //manage certificate
     'certificate' => 'sertifikat',
+    'certificate_information' => 'informasi sertifikat',
+    'employee_certificate_information' => 'informasi sertifikat pegawai',
     'validity_period' => 'masa berlaku',
     'employee_certificate' => 'sertifikat pegawai',
+    'choose_employee' => 'pilih pegawai',
     'choose_certificate' => 'pilih sertifikat',
     'invalid_certificate' => 'Sertifikat yang Anda pilih tidak valid.',
     'certificate_feeder' => 'unggah feeder data sertifikat pegawai',

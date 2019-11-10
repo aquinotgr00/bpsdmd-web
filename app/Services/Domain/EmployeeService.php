@@ -103,10 +103,12 @@ class EmployeeService
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
         $employee->setPlaceOfBirth($data->get('placeOfBirth'));
-        $employee->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $employee->setLanguage($data->get('language'));
         $employee->setNationality($data->get('nationality'));
 
+        if ($data->get('dateOfBirth')) {
+            $employee->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
+        }
         if ($org instanceof Organization) {
             $employee->setOrg($org);
         }
@@ -143,10 +145,12 @@ class EmployeeService
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
         $employee->setPlaceOfBirth($data->get('placeOfBirth'));
-        $employee->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $employee->setLanguage($data->get('language'));
         $employee->setNationality($data->get('nationality'));
 
+        if ($data->get('dateOfBirth')) {
+            $employee->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
+        }
         if ($org instanceof Organization) {
             $employee->setOrg($org);
         }
