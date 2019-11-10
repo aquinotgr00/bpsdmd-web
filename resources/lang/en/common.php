@@ -199,6 +199,7 @@ return [
     'search_result' => 'search result',
     'choose_job_title' => 'choose job title',
     'age_range' => 'age range',
+    'school_name' => 'school name',
     'school_accreditation' => 'school accreditation',
     'program_filter' => 'filter study programs with the competencies',
     'minimum_age' => 'Minimum age is 21 years old',

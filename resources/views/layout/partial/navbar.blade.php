@@ -111,6 +111,13 @@
                 <span>{{ ucwords(trans('common.short_course')) }}</span>
             </a>
         </li>
+
+        <li>
+            <a href="{{ url(route('administrator.link-match.supply')) }}">
+                <i class="fa fa-file"></i>
+                <span>Link and Match - Supply</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))

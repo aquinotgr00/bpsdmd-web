@@ -3,6 +3,9 @@
 namespace App\Services\Domain;
 
 use App\Entities\JobTitle;
+use App\Entities\JobTitleFunction;
+use App\Entities\JobTitleFunctionLicense;
+use App\Entities\License;
 use App\Entities\Organization;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -144,5 +147,65 @@ class JobTitleService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * @param array $licenses
+     * @return array|JobTitle[]
+     */
+    public function findJobTitleFromLicenses(array $licenses)
+    {
+        $licenseIds = [];
+        $jobTitle = [];
+
+        /** @var License $license */
+        foreach ($licenses as $license) {
+            $licenseIds[] = $license->getId();
+        }
+
+        $qb = EntityManager::createQueryBuilder()
+        ->select('jfl')
+        ->from(JobTitleFunctionLicense::class, 'jfl');
+
+        $query = $qb->where($qb->expr()->in('jfl.license', array_unique($licenseIds)))
+            ->getQuery();
+
+        $jfls = $query->getResult();
+
+        /** @var JobTitleFunctionLicense $jfl */
+        foreach ($jfls as $jfl) {
+            $jobTitle[] = $jfl->getJobTitleFunction()->getJobTitle();
+        }
+
+        return $jobTitle;
+    }
+
+    /**
+     * @param JobTitle $jobTitle
+     * @return array
+     */
+    public function getCompetencyJobTitle(JobTitle $jobTitle)
+    {
+        $licenses = [];
+        /** @var CompetencyService $competencyService */
+        $competencyService = app(CompetencyService::class);
+
+        $qb = EntityManager::createQueryBuilder()
+            ->select('jtf')
+            ->from(JobTitleFunction::class, 'jtf')
+            ->where('jtf.jobTitle = :jobTitle')
+            ->setParameter('jobTitle', $jobTitle);
+
+        $jtfs = $qb->getQuery()->getResult();
+
+        /** @var JobTitleFunction $jtf */
+        foreach ($jtfs as $jtf) {
+            /** @var JobTitleFunctionLicense $item */
+            foreach ($jtf->getJobTitleFunctionLicense() as $item) {
+                $licenses[$item->getLicense()->getId()] = $item->getLicense()->getId();
+            }
+        }
+
+        return $competencyService->getCompetencyByLicenses($licenses);
     }
 }

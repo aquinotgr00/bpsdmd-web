@@ -233,6 +233,29 @@ class OrgService
     }
 
     /**
+     * Get list school
+     *
+     * @return array
+     */
+    public function getSchoolAsList()
+    {
+        $result = [];
+        $qb = $this->createQueryBuilder('org')
+            ->where('org.type = :type')
+            ->orderBy('org.name')
+            ->setParameter('type', Organization::TYPE_SUPPLY);
+
+        $schools = $qb->getQuery()->getResult();
+
+        /** @var Organization $school */
+        foreach ($schools as $school) {
+            $result[$school->getId()] = $school->getName();
+        }
+
+        return $result;
+    }
+
+    /**
      * Get org and total students
      *
      * @return string

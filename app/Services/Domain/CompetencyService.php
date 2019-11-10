@@ -8,6 +8,7 @@ use App\Entities\CompetencyMainFunction;
 use App\Entities\CompetencyMainPurpose;
 use App\Entities\CompetencyUnit;
 use App\Entities\License;
+use App\Entities\LicenseCompetency;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
@@ -164,5 +165,25 @@ class CompetencyService
     {
         EntityManager::remove($competency);
         EntityManager::flush();
+    }
+
+    public function getCompetencyByLicenses(array $licenses)
+    {
+        $competencies = [];
+
+        $qb = EntityManager::createQueryBuilder()
+            ->select('lc')
+            ->from(LicenseCompetency::class, 'lc');
+
+        $result = $qb->where($qb->expr()->in('lc.license', array_unique($licenses)))
+            ->getQuery()
+            ->getResult();
+
+        /** @var LicenseCompetency $item */
+        foreach ($result as $item) {
+            $competencies[$item->getCompetency()->getCompetencyMainFunction()->getId()] = $item->getCompetency()->getCompetencyMainFunction()->getMainFunction();
+        }
+
+        return $competencies;
     }
 }
