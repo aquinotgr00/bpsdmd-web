@@ -111,6 +111,13 @@
                 <span>{{ ucwords(trans('common.short_course')) }}</span>
             </a>
         </li>
+
+        <li>
+            <a href="{{ url(route('administrator.link-match.supply')) }}">
+                <i class="fa fa-file"></i>
+                <span>Link and Match - Supply</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))
@@ -130,6 +137,13 @@
             <a href="{{ route('supply.teacher.index') }}">
                 <i class="fa fa-user"></i>
                 <span>{{ ucwords(trans('common.teacher')) }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url(route('supply.link-match')) }}">
+                <i class="fa fa-file"></i>
+                <span>Link and Match</span>
             </a>
         </li>
     @endif

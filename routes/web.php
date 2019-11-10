@@ -22,8 +22,6 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{org}', 'Administrator\OrgController@ajaxDetailOrg')->name('administrator.org.view');
         Route::get('/', 'Administrator\OrgController@index')->name('administrator.org.index');
 
-        Route::get('/link-match', 'Administrator\LinkMatchController@index')->name('administrator.linkmatch.index');
-
         Route::group(['prefix' => '/{org_supply}/program', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\ProgramController@create')->name('administrator.program.create');
             Route::any('/{program}/update', 'Administrator\ProgramController@update')->name('administrator.program.update');
@@ -82,9 +80,12 @@ Route::group(['middleware' => ['authenticated']], function() {
         });
     });
 
-
     Route::group(['prefix' => '/link-match', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\LinkMatchController@index')->name('administrator.linkmatch.index');
+        Route::get('/supply', 'Administrator\LinkMatchController@supply')->name('administrator.link-match.supply');
+        Route::get('/demand', 'Administrator\LinkMatchController@demand')->name('administrator.link-match.demand');
+        Route::get('/program/{org_supply}', 'Administrator\LinkMatchController@program')->name('administrator.link-match.program');
+        Route::get('/program-license/{program}', 'Administrator\LinkMatchController@programLicense')->name('administrator.link-match.program-license');
+        Route::get('/demand-by-program/{program}', 'Administrator\LinkMatchController@demandByProgram')->name('administrator.link-match.demand-by-program');
     });
 
     Route::group(['prefix' => '/user', 'middleware' => ['only_admin']], function() {
@@ -207,6 +208,12 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{teacher}', 'Supply\TeacherController@ajaxDetailTeacher')->name('supply.teacher.view');
         Route::any('/upload', 'Supply\TeacherController@upload')->name('supply.teacher.upload');
         Route::get('/', 'Supply\TeacherController@index')->name('supply.teacher.index');
+    });
+
+    Route::group(['prefix' => '/link-match-supply', 'middleware' => ['only_supply']], function() {
+        Route::get('/program-license/{program}', 'Supply\LinkMatchController@programLicense')->name('supply.link-match.program-license');
+        Route::get('/demand-by-program/{program}', 'Supply\LinkMatchController@demandByProgram')->name('supply.link-match.demand-by-program');
+        Route::get('/', 'Supply\LinkMatchController@supply')->name('supply.link-match');
     });
 
     // demand routes

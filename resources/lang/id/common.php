@@ -235,6 +235,7 @@ return [
     'search_result' => 'hasil pencarian',
     'choose_job_title' => 'pilih jabatan',
     'age_range' => 'rentang usia',
+    'school_name' => 'nama sekolah',
     'school_accreditation' => 'akreditasi sekolah',
     'program_filter' => 'filter program studi dengan kompetensi yang dicari',
     'minimum_age' => 'usia minimal 21 tahun',
