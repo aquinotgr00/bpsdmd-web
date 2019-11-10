@@ -42,9 +42,9 @@ class EmployeeCertificate
     private $certificate;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="masa_berlaku", type="date", nullable=true)
+     * @ORM\Column(name="masa_berlaku", type="string", nullable=true)
      */
     private $validityPeriod = NULL;
 
@@ -97,15 +97,15 @@ class EmployeeCertificate
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
-    public function getValidityPeriod()
+    public function getValidityPeriod(): ?string
     {
         return $this->validityPeriod;
     }
 
     /**
-     * @param \DateTime $validityPeriod
+     * @param string $validityPeriod
      */
     public function setValidityPeriod($validityPeriod): void
     {
