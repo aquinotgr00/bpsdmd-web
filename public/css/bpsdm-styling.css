@@ -145,3 +145,8 @@ element.style {
 .lowongan-item {
     padding: 5px 20px;
 }
+
+/* Graph view */
+.graph-view {
+    display: none;
+}

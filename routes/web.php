@@ -131,6 +131,22 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\CompetencyController@index')->name('administrator.competency.index');
     });
 
+    Route::group(['prefix' => '/analytics/lulusan', 'middleware' => ['only_admin']], function() {
+        Route::get('/', 'Administrator\AnalyticsController@index')->name('administrator.analytics.index');
+    });
+    Route::group(['prefix' => '/analytics/siswa', 'middleware' => ['only_admin']], function() {
+        Route::get('/', 'Administrator\AnalyticsController@students')->name('administrator.analytics.students');
+    });
+    Route::group(['prefix' => '/analytics/diklat', 'middleware' => ['only_admin']], function() {
+        Route::get('/', 'Administrator\AnalyticsController@shortcourse')->name('administrator.analytics.shortcourse');
+    });
+    Route::group(['prefix' => '/analytics/jurusan', 'middleware' => ['only_admin']], function() {
+        Route::get('/', 'Administrator\AnalyticsController@studyprogram')->name('administrator.analytics.studyprogram');
+    });
+    Route::group(['prefix' => '/analytics/pegawai', 'middleware' => ['only_admin']], function() {
+        Route::get('/', 'Administrator\AnalyticsController@employee')->name('administrator.analytics.employee');
+    });
+
     Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['only_admin']], function() {
         Route::any('/create', 'Administrator\CompetencyMainPurposeController@create')->name('administrator.competency.create');
         Route::any('/{competencyMainPurpose}/update', 'Administrator\CompetencyMainPurposeController@update')->name('administrator.competencyMainPurpose.update');
