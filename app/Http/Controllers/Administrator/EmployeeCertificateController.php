@@ -195,7 +195,7 @@ class EmployeeCertificateController extends Controller
             $data = [
                 'employee' => ($data->getEmployee() instanceof Employee) ? $data->getEmployee()->getName() : false,
                 'certificate' => ($data->getCertificate() instanceof Certificate) ? $data->getCertificate()->getName() : false,
-                'validity_period' => $data->getValidityPeriod() ? $data->getValidityPeriod() : '-',
+                'validity_period' => $data->getValidityPeriod() ? $data->getValidityPeriod().' tahun' : '-',
             ];
 
             return response()->json($data);
