@@ -7,6 +7,44 @@
         </a>
     </li>
 
+    <li class="treeview">
+        <a href="#">
+            <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-codepen"></i> <span>{{ ucfirst(trans('common.graph_data')) }}</span>
+        </a>
+        <ul class="treeview-menu" style="display: none; overflow: hidden;">
+            <li>
+                <a href="{{ url(route('administrator.analytics.students')) }}">
+                    <i class="fa fa-street-view"></i>
+                    <span>{{ ucfirst(trans('common.student')) }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url(route('administrator.analytics.index')) }}">
+                    <i class="fa fa-graduation-cap"></i>
+                    <span>{{ ucfirst(trans('common.graduates')) }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url(route('administrator.analytics.shortcourse')) }}">
+                    <i class="fa fa-binoculars"></i>
+                    <span>{{ ucfirst(trans('common.short_course')) }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url(route('administrator.analytics.employee')) }}">
+                    <i class="fa fa-black-tie"></i>
+                    <span>{{ ucfirst(trans('common.employee')) }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url(route('administrator.analytics.studyprogram')) }}">
+                    <i class="fa fa-indent"></i>
+                    <span>{{ ucfirst(trans('common.graph_study_program')) }}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
     @if(checkAuthorization(\App\Entities\User::ROLE_ADMIN))
         <li>
             <a href="{{ url(route('administrator.org.index')) }}">
