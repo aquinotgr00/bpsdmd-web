@@ -15,6 +15,18 @@
                         <form method="post" enctype="multipart/form-data">
                         @csrf
 
+                            <div class="form-group {{ $errors->has('employee') ? 'has-error' : '' }}">
+                                <label for="employee">{{ ucfirst(trans('common.employee')) }}</label>
+                                <select class="form-control" id="employee" name="employee">
+                                    <option value="">{{ ucwords(trans('common.choose_employee')) }}</option>
+                                    @if(!empty($dataEmployee))
+                                        @foreach($dataEmployee as $employee)
+                                        <option value="{{ $employee->getId() }}" {!! $data->getEmployee()->getId() == $employee->getId() ? 'selected':'' !!}>{{ $employee->getName() }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <span class="help-block ">{!! implode('', $errors->get('employee')) !!}</span>
+                            </div>
                             <div class="form-group {{ $errors->has('certificate') ? 'has-error' : '' }}">
                                 <label for="certificate">{{ ucfirst(trans('common.certificate')) }}</label>
                                 <select class="form-control" id="certificate" name="certificate">
@@ -30,7 +42,7 @@
 
                             <div class="form-group {{ $errors->has('validityPeriod') ? 'has-error' : '' }}">
                                 <label for="validityPeriod">{{ ucwords(trans('common.validity_period')) }} :</label>
-                                <input type="text" class="date form-control" id="validityPeriod" name="validityPeriod" value="{{ $data->getValidityPeriod() instanceof \DateTime ? $data->getValidityPeriod()->format('d-m-Y') : '' }}">
+                                <input type="text" class="form-control" id="validityPeriod" name="validityPeriod" value="{{ $data->getValidityPeriod() ? $data->getValidityPeriod() : '' }}">
                                 <span class="help-block">{!! implode('', $errors->get('validityPeriod')) !!}</span>
                             </div>
 

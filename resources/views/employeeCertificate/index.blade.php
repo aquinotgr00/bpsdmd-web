@@ -45,7 +45,7 @@
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCertificate() instanceof \App\Entities\Certificate ? $item->getCertificate()->getName() : '-' }}</td>
-                                    <td>{{ $item->getValidityPeriod() instanceof \DateTime ? $item->getValidityPeriod()->format('d F Y') : '' }}</td>
+                                    <td>{{ $item->getValidityPeriod() ? $item->getValidityPeriod() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewEmployeeCertificate" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a>
                                         @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))

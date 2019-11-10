@@ -183,8 +183,10 @@ return [
     //manage certificate
     'certificate' => 'sertifikat',
     'certificate_information' => 'certificate information',
+    'employee_certificate_information' => 'employee certificate information',
     'validity_period' => 'validity period',
     'employee_certificate' => 'employee certificate',
+    'choose_employee' => 'choose employee',
     'choose_certificate' => 'choose certificate',
     'invalid_certificate' => 'Chosen certificate is invalid.',
     'certificate_feeder' => 'unggah feeder data employee certificate',
