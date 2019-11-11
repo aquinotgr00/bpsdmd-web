@@ -58,7 +58,7 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="singkatan", type="string", nullable=true)
+     * @ORM\Column(name="nama_singkat", type="string", nullable=true)
      */
     private $shortName = NULL;
 
