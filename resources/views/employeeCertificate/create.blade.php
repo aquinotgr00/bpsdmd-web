@@ -15,6 +15,18 @@
                         <form method="post" enctype="multipart/form-data">
                             @csrf
 
+                            <div class="form-group {{ $errors->has('employee') ? 'has-error' : '' }}">
+                                <label for="employee">{{ ucfirst(trans('common.employee')) }}</label>
+                                <select class="form-control" id="employee" name="employee">
+                                    <option value="">{{ ucwords(trans('common.choose_employee')) }}</option>
+                                    @if(!empty($dataEmployee))
+                                        @foreach($dataEmployee as $employee)
+                                        <option value="{{ $employee->getId() }}" {!! old('employee') == $employee->getId() ? 'selected':'' !!}>{{ $employee->getName() }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <span class="help-block ">{!! implode('', $errors->get('employee')) !!}</span>
+                            </div>
                             <div class="form-group {{ $errors->has('certificate') ? 'has-error' : '' }}">
                                 <label for="certificate">{{ ucfirst(trans('common.certificate')) }}</label>
                                 <select class="form-control" id="certificate" name="certificate">
@@ -29,18 +41,13 @@
                             </div>
                             <div class="form-group {{ $errors->has('validityPeriod') ? 'has-error' : '' }}">
                                 <label for="validityPeriod">{{ ucwords(trans('common.validity_period')) }} :</label>
-                                <input type="text" class="date form-control" id="validityPeriod" name="validityPeriod" value="{{ old('validityPeriod') }}">
+                                <input type="text" class="form-control" id="validityPeriod" name="validityPeriod" value="{{ old('validityPeriod') }}">
                                 <span class="help-block">{!! implode('', $errors->get('validityPeriod')) !!}</span>
                             </div>
 
-                            <div class="box-footer" style="text-align: right">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
-                            <script type="text/javascript">
-                                $('.date').datepicker({
-                                    format: 'dd-mm-yyyy' // HTML 5
-                                });
-                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

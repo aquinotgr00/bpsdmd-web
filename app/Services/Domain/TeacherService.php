@@ -45,7 +45,8 @@ class TeacherService
     public function getCountTeacher()
     {
         try {
-            $qb = $this->createQueryBuilder('t');
+            $qb = $this->createQueryBuilder('t')
+                ->select('count(t.id)');
 
             return $qb->getQuery()->getSingleScalarResult();
         } catch (\Exception $e) {

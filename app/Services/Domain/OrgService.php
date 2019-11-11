@@ -73,13 +73,33 @@ class OrgService
     public function create(Collection $data, $flush = true)
     {
         $org = new Organization;
+        $org->setIdDikti($data->get('id_dikti'));
         $org->setCode($data->get('code'));
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
+        $org->setLetterOfEst($data->get('letter_of_est'));
+        $org->setLetterOfOpr($data->get('letter_of_opr'));
+        $org->setStatus($data->get('status'));
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+        $org->setDescription($data->get('description'));
+        $org->setPhoneNumber($data->get('phone_number'));
+        $org->setFax($data->get('fax'));
+        $org->setWebsite($data->get('website'));
+        $org->setEmail($data->get('email'));
+        $org->setOwnershipStatus($data->get('ownership_status'));
+        $org->setUnderSupervision($data->get('under_supervision'));
+        $org->setEducationType($data->get('education_type'));
+        $org->setAccreditation($data->get('accreditation'));
+        $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('date_of_est')) {
+            $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
+        if ($data->get('date_of_opr')) {
+            $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
+        }
         if ($data->get('uploaded_img')) {
             $org->setPhoto($data->get('uploaded_img'));
         }
@@ -103,13 +123,33 @@ class OrgService
      */
     public function update(Organization $org, Collection $data, $flush = true)
     {
+        $org->setIdDikti($data->get('id_dikti'));
         $org->setCode($data->get('code'));
         $org->setName($data->get('name'));
         $org->setShortName($data->get('short_name'));
+        $org->setLetterOfEst($data->get('letter_of_est'));
+        $org->setLetterOfOpr($data->get('letter_of_opr'));
+        $org->setStatus($data->get('status'));
         $org->setType($data->get('type'));
         $org->setModa($data->get('moda'));
         $org->setAddress($data->get('address'));
+        $org->setDescription($data->get('description'));
+        $org->setPhoneNumber($data->get('phone_number'));
+        $org->setFax($data->get('fax'));
+        $org->setWebsite($data->get('website'));
+        $org->setEmail($data->get('email'));
+        $org->setOwnershipStatus($data->get('ownership_status'));
+        $org->setUnderSupervision($data->get('under_supervision'));
+        $org->setEducationType($data->get('education_type'));
+        $org->setAccreditation($data->get('accreditation'));
+        $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('date_of_est')) {
+            $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
+        if ($data->get('date_of_opr')) {
+            $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
+        }
         if ($data->get('uploaded_img')) {
             @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
             $org->setPhoto($data->get('uploaded_img'));
@@ -182,6 +222,7 @@ class OrgService
     {
         try {
             $qb = $this->createQueryBuilder('org')
+                ->select('count(org.id)')
                 ->where('org.type = :type')
                 ->setParameter('type', Organization::TYPE_SUPPLY);
 
@@ -189,6 +230,29 @@ class OrgService
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    /**
+     * Get list school
+     *
+     * @return array
+     */
+    public function getSchoolAsList()
+    {
+        $result = [];
+        $qb = $this->createQueryBuilder('org')
+            ->where('org.type = :type')
+            ->orderBy('org.name')
+            ->setParameter('type', Organization::TYPE_SUPPLY);
+
+        $schools = $qb->getQuery()->getResult();
+
+        /** @var Organization $school */
+        foreach ($schools as $school) {
+            $result[$school->getId()] = $school->getName();
+        }
+
+        return $result;
     }
 
     /**

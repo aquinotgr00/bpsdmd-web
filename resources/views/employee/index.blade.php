@@ -5,6 +5,9 @@
         <h1>Data {{ ucfirst(trans('common.employee')) }}</h1>
         <ol class="breadcrumb">
             <li>
+                <a href="{{ $urlCertificate }}" class="btn btn-primary" style="padding:4px 6px;font-size:12px;color:#fff">
+                    <i class="fa fa-envelope"></i> {{ ucwords(trans('common.certificate')) }}
+                </a>
                 <a href="{{ $urlCreate }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucfirst(trans('common.employee')) }}
                 </a>
@@ -48,8 +51,7 @@
                                     <td>
                                         <a href="javascript:void(0)" class="viewEmployee" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a> |
-                                        <a href="{{ $urlCertificate($item->getId()) }}"><i class="fa fa-envelope"></i> {{ ucwords(trans('common.certificate')) }}</a>
+                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a> 
                                     </td>
                                 </tr>
                                 <?php
@@ -178,6 +180,8 @@
     });
 
     $('#modalDetailEmployee').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailEmployee');
+
         modalHtml.find('.employeeCode').html('');
         modalHtml.find('.employeeName').html('');
         modalHtml.find('.employeeSchool').html('');

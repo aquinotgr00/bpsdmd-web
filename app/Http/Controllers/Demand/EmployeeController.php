@@ -28,9 +28,7 @@ class EmployeeController extends Controller
             return url(route('demand.employee.delete', [$id]));
         };
         $urlDetail = '/employee';
-        $urlCertificate = function($id){
-            return url(route('demand.employeeCertificate.index', [$id]));
-        };
+        $urlCertificate = url(route('demand.employeeCertificate.index'));
 
         return view('employee.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlCertificate'));
     }
@@ -129,6 +127,7 @@ class EmployeeController extends Controller
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
+            $org = currentUser()->getOrg();
             $messageBag = new MessageBag;
 
             $school = false;
@@ -154,7 +153,7 @@ class EmployeeController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $employeeService->update($data, collect($requestData), false, $school, true);
+                $employeeService->update($data, collect($requestData), $org, $school, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {
@@ -192,7 +191,7 @@ class EmployeeController extends Controller
             $data = [
                 'code' => $data->getCode() ? $data->getCode() : '-',
                 'name' => $data->getName(),
-                'email' => $data->getEmail(),
+                'email' => $data->getEmail() ? $data->getEmail() : '-',
                 'school' => ($data->getSchool() instanceof Organization) ? $data->getSchool()->getName() : false,
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
@@ -208,5 +207,11 @@ class EmployeeController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function getByName(Request $request, EmployeeService $employeeService)
+    {
+        $employee = $employeeService->findByName($request->get('q'));
+        return $employee;
     }
 }

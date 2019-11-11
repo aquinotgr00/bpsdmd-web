@@ -36,7 +36,7 @@ class ShortCourseImport implements ToCollection
 
             $shortCourse = new ShortCourse;
             $shortCourse->setName($col[1]);
-            $shortCourse->setType(1);
+            $shortCourse->setType('teknis');
             $shortCourse->setOrg($org);
 
             EntityManager::persist($shortCourse);

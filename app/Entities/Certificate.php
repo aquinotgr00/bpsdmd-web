@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +16,7 @@ class Certificate
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -28,6 +28,12 @@ class Certificate
      * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
+
+    /**
+     * @var ArrayCollection|EmployeeCertificate[]
+     * @ORM\OneToMany(targetEntity="EmployeeCertificate", mappedBy="certificate")
+     */
+    private $employeeCertificates;
 
     /**
      * @return int
@@ -59,5 +65,21 @@ class Certificate
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return EmployeeCertificate[]|ArrayCollection
+     */
+    public function getEmployeeCertificates()
+    {
+        return $this->employeeCertificates;
+    }
+
+    /**
+     * @param EmployeeCertificate[]|ArrayCollection $employeeCertificates
+     */
+    public function setEmployeeCertificates($employeeCertificates): void
+    {
+        $this->employeeCertificates = $employeeCertificates;
     }
 }

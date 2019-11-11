@@ -8,6 +8,7 @@ use App\Entities\StudyProgram;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
@@ -46,7 +47,8 @@ class StudentService
     public function getCountStudent()
     {
         try {
-            $qb = $this->createQueryBuilder('s');
+            $qb = $this->createQueryBuilder('s')
+                ->select('count(s.id)');
 
             return $qb->getQuery()->getSingleScalarResult();
         } catch (\Exception $e) {
@@ -74,6 +76,39 @@ class StudentService
     }
 
     /**
+     * Paginate Recruitment
+     *
+     * @param $page\
+     * @return LengthAwarePaginator
+     */
+    public function paginateRecruitment($page, Collection $search, $studyProgram = false): LengthAwarePaginator
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('s')->leftJoin('s.org', 'o');
+        if($studyProgram instanceof StudyProgram){
+            $query->andWhere('s.studyProgram = :studyProgramId')->setParameter('studyProgramId', $studyProgram->getId());
+        }
+        if(!empty($search->get('ipk'))){
+            $query->andWhere('s.ipk = :ipk')->setParameter('ipk', $search->get('ipk'));
+        }
+        if(!empty($search->get('gender'))){
+            $query->andWhere('s.gender = :gender')->setParameter('gender', $search->get('gender'));
+        }
+        if(!empty($search->get('age')) || !empty($search->get('agemax'))){
+            $minDate = Carbon::today()->subYears($search->get('agemax'));
+            $maxDate = Carbon::today()->subYears($search->get('age'))->endOfDay();
+            $query->andWhere("s.dateOfBirth BETWEEN :minDate AND :maxDate")->setParameter('minDate', $minDate)->setParameter('maxDate', $maxDate);
+        }
+        if(!empty($search->get('accreditation'))){
+            $query->andWhere('o.accreditation = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
+    /**
      * Create new Student
      *
      * @param Collection $data
@@ -83,17 +118,47 @@ class StudentService
     public function create(Collection $data, $org = false, $studyProgram = false, $flush = true)
     {
         $student = new Student;
+        $student->setIdDikti($data->get('id_dikti'));
         $student->setCode($data->get('code'));
+        $student->setNim($data->get('nim'));
         $student->setName($data->get('name'));
+        $student->setGender($data->get('gender'));
+        $student->setPlaceOfBirth($data->get('placeOfBirth'));
+        $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
+        $student->setAddress($data->get('address'));
+        $student->setPhoneNumber($data->get('phone_number'));
+        $student->setMobilePhoneNumber($data->get('mobile_phone_number'));
+        $student->setEmail($data->get('email'));
+        $student->setReligion($data->get('religion'));
+        $student->setMotherName($data->get('mother_name'));
+        $student->setNationality($data->get('nationality'));
+        $student->setForeignCitizen($data->get('foreign_citizen'));
+        $student->setSocialProtectionCard($data->get('social_protection_card'));
+        $student->setOccupationType($data->get('occupation_type'));
+        $student->setIdentityNumber($data->get('identity_number'));
+        $student->setStartSemester($data->get('start_semester'));
+        $student->setCurrentSemester($data->get('current_semester'));
+        $student->setStudentCredits($data->get('student_credits'));
+        $student->setIpk($data->get('ipk'));
+        $student->setCertificateNumber($data->get('certificate_number'));
+        $student->setEnrollmentType($data->get('enrollment_type'));
+        $student->setGraduationType($data->get('graduation_type'));
         $student->setPeriod($data->get('period'));
         $student->setCurriculum($data->get('curriculum'));
-        $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
-        $student->setIpk($data->get('ipk'));
-        $student->setIdentityNumber($data->get('identity_number'));
         $student->setStatus($data->get('status'));
         $student->setGraduationYear($data->get('graduationYear'));
+        $student->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('enrollment_date_start')) {
+            $student->setEnrollmentDateStart(date_create_from_format('d-m-Y', $data->get('enrollment_date_start')));
+        }
+        if ($data->get('enrollment_date_end')) {
+            $student->setEnrollmentDateEnd(date_create_from_format('d-m-Y', $data->get('enrollment_date_end')));
+        }
+        if ($data->get('graduation_judgement_date')) {
+            $student->setGraduationJudgementDate(date_create_from_format('d-m-Y', $data->get('graduation_judgement_date')));
+        }
         if ($org instanceof Organization) {
             $student->setOrg($org);
         }
@@ -124,17 +189,47 @@ class StudentService
      */
     public function update(Student $student, Collection $data, $org = false, $studyProgram = false, $flush = true)
     {
+        $student->setIdDikti($data->get('id_dikti'));
         $student->setCode($data->get('code'));
+        $student->setNim($data->get('nim'));
         $student->setName($data->get('name'));
+        $student->setGender($data->get('gender'));
+        $student->setPlaceOfBirth($data->get('placeOfBirth'));
+        $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
+        $student->setAddress($data->get('address'));
+        $student->setPhoneNumber($data->get('phone_number'));
+        $student->setMobilePhoneNumber($data->get('mobile_phone_number'));
+        $student->setEmail($data->get('email'));
+        $student->setReligion($data->get('religion'));
+        $student->setMotherName($data->get('mother_name'));
+        $student->setNationality($data->get('nationality'));
+        $student->setForeignCitizen($data->get('foreign_citizen'));
+        $student->setSocialProtectionCard($data->get('social_protection_card'));
+        $student->setOccupationType($data->get('occupation_type'));
+        $student->setIdentityNumber($data->get('identity_number'));
+        $student->setStartSemester($data->get('start_semester'));
+        $student->setCurrentSemester($data->get('current_semester'));
+        $student->setStudentCredits($data->get('student_credits'));
+        $student->setIpk($data->get('ipk'));
+        $student->setCertificateNumber($data->get('certificate_number'));
+        $student->setEnrollmentType($data->get('enrollment_type'));
+        $student->setGraduationType($data->get('graduation_type'));
         $student->setPeriod($data->get('period'));
         $student->setCurriculum($data->get('curriculum'));
-        $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setClass($data->get('class'));
-        $student->setIpk($data->get('ipk'));
-        $student->setIdentityNumber($data->get('identity_number'));
         $student->setStatus($data->get('status'));
         $student->setGraduationYear($data->get('graduationYear'));
+        $student->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('enrollment_date_start')) {
+            $student->setEnrollmentDateStart(date_create_from_format('d-m-Y', $data->get('enrollment_date_start')));
+        }
+        if ($data->get('enrollment_date_end')) {
+            $student->setEnrollmentDateEnd(date_create_from_format('d-m-Y', $data->get('enrollment_date_end')));
+        }
+        if ($data->get('graduation_judgement_date')) {
+            $student->setGraduationJudgementDate(date_create_from_format('d-m-Y', $data->get('graduation_judgement_date')));
+        }
         if ($org instanceof Organization) {
             $student->setOrg($org);
         }

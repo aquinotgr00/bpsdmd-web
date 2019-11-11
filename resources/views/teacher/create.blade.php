@@ -69,14 +69,9 @@
                                 </div>
                             </div>
 
-                            <div class="box-footer" style="text-align: right">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
-                            <script type="text/javascript">
-                                $('.date').datepicker({
-                                    format: 'dd-mm-yyyy' // HTML 5
-                                });
-                            </script>
                         </form>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

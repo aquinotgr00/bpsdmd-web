@@ -29,7 +29,7 @@
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.chapter')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
-                                    <th>Action</th>
+                                    <th>{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
                             <tbody>

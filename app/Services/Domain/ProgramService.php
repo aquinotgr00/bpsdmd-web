@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App;
+use App\Entities\License;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use Doctrine\ORM\EntityRepository;
@@ -61,18 +62,36 @@ class ProgramService
      * Create new StudyProgram
      *
      * @param Collection $data
+     * @param bool $org
      * @param bool $flush
      * @return StudyProgram
      */
     public function create(Collection $data, $org = false, $flush = true)
     {
         $program = new StudyProgram;
+        $program->setIdDikti($data->get('id_dikti'));
         $program->setCode($data->get('code'));
         $program->setName($data->get('name'));
+        $program->setStatus($data->get('status'));
+        $program->setVision($data->get('vision'));
+        $program->setMission($data->get('mission'));
         $program->setDegree($data->get('degree'));
+        $program->setLetterOfEst($data->get('letter_of_est'));
+        $program->setPassingGradeCredits($data->get('passing_grade_credits'));
+        $program->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('est_date')) {
+            $program->setEstDate(date_create_from_format('d-m-Y', $data->get('est_date')));
+        }
+        if ($data->get('date_of_est')) {
+            $program->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
         if ($org instanceof Organization) {
             $program->setOrg($org);
+        }
+
+        if($data->get('license')){
+            $this->setLicenses($program, $data->get('license'));
         }
 
         EntityManager::persist($program);
@@ -89,17 +108,35 @@ class ProgramService
      *
      * @param StudyProgram $program
      * @param Collection $data
+     * @param bool $org
      * @param bool $flush
      * @return StudyProgram
      */
     public function update(StudyProgram $program, Collection $data, $org = false, $flush = true)
     {
+        $program->setIdDikti($data->get('id_dikti'));
         $program->setCode($data->get('code'));
         $program->setName($data->get('name'));
+        $program->setStatus($data->get('status'));
+        $program->setVision($data->get('vision'));
+        $program->setMission($data->get('mission'));
         $program->setDegree($data->get('degree'));
+        $program->setLetterOfEst($data->get('letter_of_est'));
+        $program->setPassingGradeCredits($data->get('passing_grade_credits'));
+        $program->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
+        if ($data->get('est_date')) {
+            $program->setEstDate(date_create_from_format('d-m-Y', $data->get('est_date')));
+        }
+        if ($data->get('date_of_est')) {
+            $program->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
+        }
         if ($org instanceof Organization) {
             $program->setOrg($org);
+        }
+
+        if($data->get('license')){
+            $this->setLicenses($program, $data->get('license'), 'update');
         }
 
         EntityManager::persist($program);
@@ -112,11 +149,38 @@ class ProgramService
     }
 
     /**
+     * Set license program
+     *
+     * @param StudyProgram $studyProgram
+     * @param array $licenses
+     * @param string $type
+     */
+    private function setLicenses(StudyProgram $studyProgram, array $licenses = [], $type = 'create')
+    {
+        /** @var LicenseService $licenseService */
+        $licenseService = app(LicenseService::class);
+        /** @var LicenseProgramService $licenseProgramService */
+        $licenseProgramService = app(LicenseProgramService::class);
+
+        if ($type == 'update') {
+            $licenseProgramService->delete($studyProgram);
+        }
+
+        if (count($licenses)) {
+            foreach ($licenses as $licenseId) {
+                $license = $licenseService->findById($licenseId);
+
+                if ($license instanceof License) {
+                    $licenseProgramService->create($studyProgram, $license);
+                }
+            }
+        }
+    }
+
+    /**
      * Delete StudyProgram
      *
      * @param StudyProgram $program
-     * @return bool
-     * @throws ProgramDeleteException
      */
     public function delete(StudyProgram $program)
     {
@@ -137,6 +201,7 @@ class ProgramService
 
     /**
      * Get StudyProgram by org
+     *
      * @param string $org
      * @return StudyProgram[]
      */

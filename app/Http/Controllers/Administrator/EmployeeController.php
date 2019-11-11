@@ -28,9 +28,7 @@ class EmployeeController extends Controller
             return url(route('administrator.employee.delete', [$org->getId(), $id]));
         };
         $urlDetail = '/org/'.$org->getId().'/employee';
-        $urlCertificate = function($id) use ($org) {
-            return url(route('administrator.employeeCertificate.index', [$org->getId(), $id]));
-        };
+        $urlCertificate = url(route('administrator.employeeCertificate.index', [$org->getId()]));
 
         return view('employee.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlCertificate'));
     }
@@ -156,7 +154,7 @@ class EmployeeController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $employeeService->update($data, collect($requestData), false, $school, true);
+                $employeeService->update($data, collect($requestData), $org, $school, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {
@@ -200,7 +198,7 @@ class EmployeeController extends Controller
             $data = [
                 'code' => $data->getCode() ? $data->getCode() : '-',
                 'name' => $data->getName(),
-                'email' => $data->getEmail(),
+                'email' => $data->getEmail() ? $data->getEmail() : '-',
                 'school' => ($data->getSchool() instanceof Organization) ? $data->getSchool()->getName() : false,
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',

@@ -9,11 +9,11 @@ use App\Services\Domain\ShortCourseService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
-use App\Exceptions\ShortCourseDeleteException;
-use Image;
 use App\Services\Domain\FeederService;
 use App\Services\Application\AuthService;
 use App\Imports\ShortCourseImport;
+use App\Services\Domain\ShortCourseDataService;
+use App\Services\Domain\ShortCourseParticipantService;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ShortCourseController extends Controller
@@ -31,7 +31,7 @@ class ShortCourseController extends Controller
         $urlDelete = function($id) {
             return url(route('administrator.shortCourse.delete', [$id]));
         };
-        $urlDetail = '/shortCourse';
+        $urlDetail = '/short-course';
 
         return view('shortCourse.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
     }
@@ -109,9 +109,23 @@ class ShortCourseController extends Controller
         return view('shortCourse.update', compact('data', 'dataOrg'));
     }
 
-    public function delete(ShortCourseService $shortCourseService, ShortCourse $data)
-    {
+    public function delete(
+        ShortCourseService $shortCourseService,
+        ShortCourse $data,
+        ShortCourseDataService $shortCourseDataService,
+        ShortCourseParticipantService $shortCourseParticipantService
+    ) {
         try {
+            $shortCourseData = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $data->getId()]);
+            if (!is_null($shortCourseData)) {
+                $shortCourseDataService->delete($shortCourseData);
+            }
+
+            $shortCourseParticipant = $shortCourseParticipantService->getRepository()->findOneBy(['shortCourse' => $data->getId()]);
+            if (!is_null($shortCourseParticipant)) {
+                $shortCourseParticipantService->delete($shortCourseParticipant);
+            }
+
             $shortCourseService->delete($data);
             $alert = 'alert_success';
             $message = trans('common.delete_success', ['object' => ucfirst(trans('common.short_course'))]);
@@ -138,7 +152,7 @@ class ShortCourseController extends Controller
 
         return abort(404);
     }
-    
+
     public function upload(Request $request, FeederService $feederService, AuthService $authService)
     {
         $this->validate($request, [
@@ -146,7 +160,12 @@ class ShortCourseController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fd_'.$authService->user()->getOrg()->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        if ($authService->user()->getEmail() === 'admin@bpsdm.com') {
+            $orgId = 0;
+        } else {
+            $orgId = $authService->user()->getOrg()->getId();
+        }
+        $nama_file = 'fd_'.$orgId.'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {
@@ -167,7 +186,8 @@ class ShortCourseController extends Controller
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.feeder_failed', ['object' => trans('common.short_course')]);
+            // $message = trans('common.feeder_failed', ['object' => trans('common.short_course')]);
+            $message = trans('common.feeder_failed', ['object' => $e]);
         }
 
         return redirect()->route('administrator.shortCourse.index')->with($alert, $message);

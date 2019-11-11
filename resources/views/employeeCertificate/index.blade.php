@@ -32,6 +32,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>{{ ucfirst(trans('common.employee')) }}</th>
                                     <th>{{ ucfirst(trans('common.certificate')) }}</th>
                                     <th>{{ ucwords(trans('common.validity_period')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
@@ -44,8 +45,9 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
+                                    <td>{{ $item->getEmployee() instanceof \App\Entities\Employee ? $item->getEmployee()->getName() : '-' }}</td>
                                     <td>{{ $item->getCertificate() instanceof \App\Entities\Certificate ? $item->getCertificate()->getName() : '-' }}</td>
-                                    <td>{{ $item->getValidityPeriod() instanceof \DateTime ? $item->getValidityPeriod()->format('d F Y') : '' }}</td>
+                                    <td>{{ $item->getValidityPeriod() ? $item->getValidityPeriod().' tahun' : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewEmployeeCertificate" data-employee="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a>
                                         @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))
@@ -154,6 +156,8 @@
     });
 
     $('#modalDetailEmployeeCertificate').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailEmployeeCertificate');
+
         modalHtml.find('.employeEemployee').html('');
         modalHtml.find('.employeeCertificate').html('');
         modalHtml.find('.employeeValidityPeriod').html('');

@@ -23,9 +23,9 @@ $(function() {
             y = date.getFullYear();
 
     //Fix for charts under tabs
-    $('.box ul.nav a').on('shown.bs.tab', function(e) {
-        area.redraw();
-        donut.redraw();
-    });
+    // $('.box ul.nav a').on('shown.bs.tab', function(e) {
+    //     area.redraw();
+    //     donut.redraw();
+    // });
 
 });

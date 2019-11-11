@@ -136,7 +136,7 @@
         let shortCourse = $(this).data('shortcourse'),
             modalHtml = $('#modalDetailShortCourse');
             url = '{{ $urlDetail }}';
-            
+
         $.get(url+'/'+shortCourse, function(shortCourse, status){
             if (status === 'success') {
                 modalHtml.find('.shortCourseName').html(shortCourse.name);
@@ -148,6 +148,8 @@
     });
 
     $('#modalDetailShortCourse').on('hidden.bs.modal', function (e) {
+        let modalHtml = $('#modalDetailShortCourse');
+
         modalHtml.find('.shortCourseName').html('');
         modalHtml.find('.shortCourseType').html('');
         modalHtml.find('.shortCourseInstitute').html('');

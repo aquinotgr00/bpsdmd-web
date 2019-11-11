@@ -4,6 +4,7 @@ namespace App\Services\Domain;
 
 use App\Entities\Employee;
 use App\Entities\Certificate;
+use App\Entities\Organization;
 use App\Entities\EmployeeCertificate;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -61,13 +62,13 @@ class EmployeeCertificateService
      * @param Employee $employee
      * @return LengthAwarePaginator
      */
-    public function paginateEmployeeCertificate($page, Employee $employee): LengthAwarePaginator
+    public function paginateEmployeeCertificate($page, Organization $org): LengthAwarePaginator
     {
         $limit = 10;
-        $query = $this->createQueryBuilder('ec')
-            ->andWhere('ec.employee = :employeeId')
+        $query = $this->createQueryBuilder('ec')->leftJoin('ec.employee', 'e')
+            ->andWhere('e.org = :orgId')
             ->orderBy('ec.id')
-            ->setParameter('employeeId', $employee->getId())
+            ->setParameter('orgId', $org->getId())
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -83,7 +84,7 @@ class EmployeeCertificateService
     public function create(Collection $data, $employee = false, $certificate = false, $flush = true)
     {
         $employeecertificate = new EmployeeCertificate;
-        $employeecertificate->setValidityPeriod(date_create_from_format('d-m-Y', $data->get('validityPeriod')));
+        $employeecertificate->setValidityPeriod($data->get('validityPeriod'));
 
         if ($employee instanceof Employee) {
             $employeecertificate->setEmployee($employee);
@@ -111,7 +112,7 @@ class EmployeeCertificateService
      */
     public function update(EmployeeCertificate $employeecertificate, Collection $data, $employee = false, $certificate = false, $flush = true)
     {
-        $employeecertificate->setValidityPeriod(date_create_from_format('d-m-Y', $data->get('validityPeriod')));
+        $employeecertificate->setValidityPeriod($data->get('validityPeriod'));
 
         if ($employee instanceof Employee) {
             $employeecertificate->setEmployee($employee);

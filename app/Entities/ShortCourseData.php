@@ -15,7 +15,7 @@ class ShortCourseData
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,7 +24,7 @@ class ShortCourseData
     /**
      * @var ShortCourse
      *
-     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="shortCourseDatas")
+     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="shortCourseData")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="diklat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })

@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,16 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Student
 {
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
     const UPLOAD_PATH = 'students/img';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti = NULL;
 
     /**
      * @var Organization
@@ -54,9 +63,191 @@ class Student
     /**
      * @var string
      *
+     * @ORM\Column(name="nim", type="string", nullable=false)
+     */
+    private $nim;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jenis_kelamin", type="string", nullable=true)
+     */
+    private $gender = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tempat_lahir", type="string", nullable=true)
+     */
+    private $placeOfBirth = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tanggal_lahir", type="date", nullable=true)
+     */
+    private $dateOfBirth = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alamat", type="string", nullable=true)
+     */
+    private $address = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telepon", type="string", nullable=true)
+     */
+    private $phoneNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="handphone", type="string", nullable=true)
+     */
+    private $mobilePhoneNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", nullable=true)
+     */
+    private $email = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="agama", type="string", nullable=true)
+     */
+    private $religion = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ibu_kandung", type="string", nullable=true)
+     */
+    private $motherName = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kewarganegaraan", type="string", nullable=true)
+     */
+    private $nationality = NULL;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="wna", type="string", nullable=false)
+     */
+    private $foreignCitizen;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="penerima_kps", type="boolean", nullable=false)
+     */
+    private $socialProtectionCard;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jenis_tinggal", type="string", nullable=true)
+     */
+    private $occupationType = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="no_ktp", type="string", nullable=true)
+     */
+    private $identityNumber = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_masuk", type="date", nullable=true)
+     */
+    private $enrollmentDateStart = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_keluar", type="date", nullable=true)
+     */
+    private $enrollmentDateEnd = NULL;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="smt_mulai", type="bigint", nullable=false)
+     */
+    private $startSemester;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="smt_tempuh", type="bigint", nullable=false)
+     */
+    private $currentSemester;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sks", type="bigint", nullable=false)
+     */
+    private $studentCredits;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ipk", type="string", nullable=true)
+     */
+    private $ipk = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="no_ijazah", type="string", nullable=true)
+     */
+    private $certificateNumber = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_yudisium", type="date", nullable=true)
+     */
+    private $graduationJudgementDate = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jenis_daftar", type="string", nullable=true)
+     */
+    private $enrollmentType = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jenis_keluar", type="string", nullable=true)
+     */
+    private $graduationType = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_update", type="date", nullable=true)
+     */
+    private $lastUpdate = NULL;
 
     /**
      * @var string
@@ -73,32 +264,11 @@ class Student
     private $curriculum = NULL;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="tanggal_lahir", type="date", nullable=true)
-     */
-    private $dateOfBirth = NULL;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="kelas", type="string", nullable=true)
      */
     private $class = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ipk", type="string", nullable=true)
-     */
-    private $ipk = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="no_ktp", type="string", nullable=true)
-     */
-    private $identityNumber = NULL;
 
     /**
      * @var string
@@ -122,6 +292,12 @@ class Student
     private $photo = NULL;
 
     /**
+     * @var ArrayCollection|Recruitment[]
+     * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="student")
+     */
+    private $recruitment;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -135,6 +311,22 @@ class Student
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdDikti(): ?string
+    {
+        return $this->idDikti;
+    }
+
+    /**
+     * @param string $idDikti
+     */
+    public function setIdDikti($idDikti): void
+    {
+        $this->idDikti = $idDikti;
     }
 
     /**
@@ -188,6 +380,22 @@ class Student
     /**
      * @return string
      */
+    public function getNim(): ?string
+    {
+        return $this->nim;
+    }
+
+    /**
+     * @param string $nim
+     */
+    public function setNim($nim): void
+    {
+        $this->nim = $nim;
+    }
+
+    /**
+     * @return string
+     */
     public function getName(): ?string
     {
         return $this->name;
@@ -234,6 +442,22 @@ class Student
     }
 
     /**
+     * @return string
+     */
+    public function getPlaceOfBirth(): ?string
+    {
+        return $this->placeOfBirth;
+    }
+
+    /**
+     * @param string $placeOfBirth
+     */
+    public function setPlaceOfBirth($placeOfBirth): void
+    {
+        $this->placeOfBirth = $placeOfBirth;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getDateOfBirth()
@@ -247,6 +471,166 @@ class Student
     public function setDateOfBirth($dateOfBirth): void
     {
         $this->dateOfBirth = $dateOfBirth;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMobilePhoneNumber(): ?string
+    {
+        return $this->mobilePhoneNumber;
+    }
+
+    /**
+     * @param string $mobilePhoneNumber
+     */
+    public function setMobilePhoneNumber($mobilePhoneNumber): void
+    {
+        $this->mobilePhoneNumber = $mobilePhoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReligion(): ?string
+    {
+        return $this->religion;
+    }
+
+    /**
+     * @param string $religion
+     */
+    public function setReligion($religion): void
+    {
+        $this->religion = $religion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMotherName(): ?string
+    {
+        return $this->motherName;
+    }
+
+    /**
+     * @param string $motherName
+     */
+    public function setMotherName($motherName): void
+    {
+        $this->motherName = $motherName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @param string $nationality
+     */
+    public function setNationality($nationality): void
+    {
+        $this->nationality = $nationality;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getForeignCitizen(): ?bool
+    {
+        return $this->foreignCitizen;
+    }
+
+    /**
+     * @param boolean $foreignCitizen
+     */
+    public function setForeignCitizen($foreignCitizen): void
+    {
+        $this->foreignCitizen = $foreignCitizen;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getSocialProtectionCard(): ?bool
+    {
+        return $this->socialProtectionCard;
+    }
+
+    /**
+     * @param boolean $socialProtectionCard
+     */
+    public function setSocialProtectionCard($socialProtectionCard): void
+    {
+        $this->socialProtectionCard = $socialProtectionCard;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOccupationType(): ?string
+    {
+        return $this->occupationType;
+    }
+
+    /**
+     * @param string $occupationType
+     */
+    public function setOccupationType($occupationType): void
+    {
+        $this->occupationType = $occupationType;
     }
 
     /**
@@ -284,6 +668,86 @@ class Student
     /**
      * @return string
      */
+    public function getCertificateNumber(): ?string
+    {
+        return $this->certificateNumber;
+    }
+
+    /**
+     * @param string $certificateNumber
+     */
+    public function setCertificateNumber($certificateNumber): void
+    {
+        $this->certificateNumber = $certificateNumber;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getGraduationJudgementDate()
+    {
+        return $this->graduationJudgementDate;
+    }
+
+    /**
+     * @param \DateTime $graduationJudgementDate
+     */
+    public function setGraduationJudgementDate($graduationJudgementDate): void
+    {
+        $this->graduationJudgementDate = $graduationJudgementDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnrollmentType(): ?string
+    {
+        return $this->enrollmentType;
+    }
+
+    /**
+     * @param string $enrollmentType
+     */
+    public function setEnrollmentType($enrollmentType): void
+    {
+        $this->enrollmentType = $enrollmentType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGraduationType(): ?string
+    {
+        return $this->graduationType;
+    }
+
+    /**
+     * @param string $graduationType
+     */
+    public function setGraduationType($graduationType): void
+    {
+        $this->graduationType = $graduationType;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastUpdate(): ?string
+    {
+        return $this->lastUpdate;
+    }
+
+    /**
+     * @return \DateTime $lastUpdate
+     */
+    public function setLastUpdate($lastUpdate): void
+    {
+        $this->lastUpdate = $lastUpdate;
+    }
+
+    /**
+     * @return string
+     */
     public function getIdentityNumber(): ?string
     {
         return $this->identityNumber;
@@ -295,6 +759,102 @@ class Student
     public function setIdentityNumber($identityNumber): void
     {
         $this->identityNumber = $identityNumber;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnrollmentDateStart()
+    {
+        return $this->enrollmentDateStart;
+    }
+
+    /**
+     * @param \DateTime $enrollmentDateStart
+     */
+    public function setEnrollmentDateStart($enrollmentDateStart): void
+    {
+        $this->enrollmentDateStart = $enrollmentDateStart;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnrollmentDateEnd()
+    {
+        return $this->enrollmentDateEnd;
+    }
+
+    /**
+     * @param \DateTime $enrollmentDateEnd
+     */
+    public function setEnrollmentDateEnd($enrollmentDateEnd): void
+    {
+        $this->enrollmentDateEnd = $enrollmentDateEnd;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartSemester(): int
+    {
+        return $this->startSemester;
+    }
+
+    /**
+     * @param int $startSemester
+     */
+    public function setStartSemester(int $startSemester): void
+    {
+        $this->startSemester = $startSemester;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentSemester(): int
+    {
+        return $this->currentSemester;
+    }
+
+    /**
+     * @param int $currentSemester
+     */
+    public function setCurrentSemester(int $currentSemester): void
+    {
+        $this->currentSemester = $currentSemester;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStudentCredits(): int
+    {
+        return $this->studentCredits;
+    }
+
+    /**
+     * @param int $studentCredits
+     */
+    public function setStudentCredits(int $studentCredits): void
+    {
+        $this->studentCredits = $studentCredits;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender): void
+    {
+        $this->gender = $gender;
     }
 
     /**
@@ -343,5 +903,21 @@ class Student
     public function setPhoto($photo): void
     {
         $this->photo = $photo;
+    }
+
+    /**
+     * @return Recruitment[]|ArrayCollection
+     */
+    public function getRecruitment()
+    {
+        return $this->recruitment;
+    }
+
+    /**
+     * @param Recruitment[]|ArrayCollection $recruitment
+     */
+    public function setRecruitment($recruitment): void
+    {
+        $this->recruitment = $recruitment;
     }
 }

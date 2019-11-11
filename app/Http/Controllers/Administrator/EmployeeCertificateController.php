@@ -8,41 +8,42 @@ use App\Entities\Certificate;
 use App\Entities\Organization;
 use App\Imports\EmployeeCertificateImport;
 use App\Http\Controllers\Controller;
+use App\Services\Application\AuthService;
 use App\Services\Domain\EmployeeCertificateService;
-use App\Services\Domain\CertificateService;
 use App\Services\Domain\EmployeeService;
+use App\Services\Domain\CertificateService;
 use App\Services\Domain\FeederService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeCertificateController extends Controller
 {
-    public function index(EmployeeCertificateService $employeeCertificateService, Organization $org, Employee $employee)
+    public function index(EmployeeCertificateService $employeeCertificateService, Organization $org)
     {
         $page = request()->get('page');
-        $data = $employeeCertificateService->paginateEmployeeCertificate(request()->get('page'), $employee);
+        $data = $employeeCertificateService->paginateEmployeeCertificate(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.employeeCertificate.create', [$org->getId(), $employee->getId()]));
-        $urlUpdate = function($id) use ($employee) {
-            return url(route('administrator.employeeCertificate.update', [$org->getId(), $employee->getId(), $id]));
+        $urlCreate = url(route('administrator.employeeCertificate.create', [$org->getId()]));
+        $urlUpdate = function($id) use ($org) {
+            return url(route('administrator.employeeCertificate.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($employee) {
-            return url(route('administrator.employeeCertificate.delete', [$org->getId(), $employee->getId(), $id]));
+        $urlDelete = function($id) use ($org) {
+            return url(route('administrator.employeeCertificate.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/employee/'.$employee->getId().'/employeeCertificate';
-        $urlUpload = url(route('administrator.employeeCertificate.upload', [$org->getId(), $employee->getId()]));
+        $urlDetail = '/org/'.$org->getId().'/employee-certificate';
+        $urlUpload = url(route('administrator.employeeCertificate.upload', [$org->getId()]));
 
-        return view('employeeCertificate.index', compact('data', 'page', 'employee', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('employeeCertificate.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
     }
 
-    public function create(Request $request, EmployeeCertificateService $employeeCertificateService, CertificateService $certificateService, Organization $org, Employee $employee)
+    public function create(Request $request, EmployeeCertificateService $employeeCertificateService, EmployeeService $employeeService, CertificateService $certificateService, Organization $org)
     {
         if ($request->method() == 'POST') {
             $validation = [
-                'validityPeriod' => 'required|date_format:"d-m-Y"',
+                'validityPeriod' => 'required|numeric',
             ];
 
             $request->validate($validation, [], [
@@ -51,13 +52,21 @@ class EmployeeCertificateController extends Controller
 
             $messageBag = new MessageBag;
 
+            $employee = false;
+            if ($request->get('employee')) {
+                $employee = $employeeService->findById($request->get('employee'));
+            }
+            if (!$employee) {
+                $messageBag->add('employee', trans('common.invalid_employee'));
+                return redirect()->route('administrator.employeeCertificate.create', ['org' => $org->getId()])->withErrors($messageBag);
+            }
             $certificate = false;
             if ($request->get('certificate')) {
                 $certificate = $certificateService->findById($request->get('certificate'));
             }
             if (!$certificate) {
                 $messageBag->add('certificate', trans('common.invalid_certificate'));
-                return redirect()->route('administrator.employeeCertificate.create', ['org' => $org->getId(), 'employee' => $employee->getId()])->withErrors($messageBag);
+                return redirect()->route('administrator.employeeCertificate.create', ['org' => $org->getId()])->withErrors($messageBag);
             }
 
             try {
@@ -72,19 +81,20 @@ class EmployeeCertificateController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.certificate'))]);
             }
 
-            return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId(), 'employee' => $employee->getId()])->with($alert, $message);
+            return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
-        $dataCertificate     = $certificateService->getRepository()->findAll();
+        $dataEmployee       = $employeeService->getRepository()->findBy(['org' => $org->getId()]);
+        $dataCertificate    = $certificateService->getRepository()->findAll();
 
-        return view('employeeCertificate.create', ['dataCertificate' => $dataCertificate]);
+        return view('employeeCertificate.create', ['dataEmployee' => $dataEmployee, 'dataCertificate' => $dataCertificate]);
     }
 
-    public function update(Request $request, EmployeeCertificateService $employeeCertificateService, CertificateService $certificateService, Organization $org, Employee $employee, EmployeeCertificate $data)
+    public function update(Request $request, EmployeeCertificateService $employeeCertificateService, EmployeeService $employeeService, CertificateService $certificateService, Organization $org, EmployeeCertificate $data)
     {
         if ($request->method() == 'POST') {
             $validation = [
-                'validityPeriod' => 'required|date_format:"d-m-Y"',
+                'validityPeriod' => 'required|numeric',
             ];
 
             $request->validate($validation, [], [
@@ -93,17 +103,26 @@ class EmployeeCertificateController extends Controller
 
             $messageBag = new MessageBag;
 
+            $employee = false;
+            if ($request->get('employee')) {
+                $employee = $employeeService->findById($request->get('employee'));
+            }
+            if (!$employee) {
+                $messageBag->add('employee', trans('common.invalid_employee'));
+                return redirect()->route('administrator.employeeCertificate.update', ['org' => $org->getId()])->withErrors($messageBag);
+            }
             $certificate = false;
             if ($request->get('certificate')) {
                 $certificate = $certificateService->findById($request->get('certificate'));
             }
             if (!$certificate) {
                 $messageBag->add('certificate', trans('common.invalid_certificate'));
-                return redirect()->route('administrator.employeeCertificate.update', ['org' => $org->getId(), 'employee' => $employee->getId()])->withErrors($messageBag);
+                return redirect()->route('administrator.employeeCertificate.update', ['org' => $org->getId()])->withErrors($messageBag);
             }
 
             try {
-                $employeeCertificateService->update($data, collect($requestData), false, $certificate, true);
+                $requestData = $request->all();
+                $employeeCertificateService->update($data, collect($requestData), $employee, $certificate, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.certificate'))]);
             } catch (Exception $e) {
@@ -114,12 +133,13 @@ class EmployeeCertificateController extends Controller
             return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId(), 'employee' => $employee->getId()])->with($alert, $message);
         }
 
-        $dataCertificate     = $certificateService->getRepository()->findAll();
+        $dataEmployee       = $employeeService->getRepository()->findBy(['org' => $org->getId()]);
+        $dataCertificate    = $certificateService->getRepository()->findAll();
 
-        return view('employeeCertificate.update', compact('data', 'dataCertificate'));
+        return view('employeeCertificate.update', compact('data', 'dataEmployee', 'dataCertificate'));
     }
 
-    public function delete(EmployeeCertificateService $employeeCertificateService, Organization $org, Employee $employee, EmployeeCertificate $data)
+    public function delete(EmployeeCertificateService $employeeCertificateService, Organization $org, EmployeeCertificate $data)
     {
         try {
             $employeeCertificateService->delete($data);
@@ -131,17 +151,17 @@ class EmployeeCertificateController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.certificate'))]);
         }
 
-        return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId(), 'employee' => $employee->getId()])->with($alert, $message);
+        return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId()])->with($alert, $message);
     }
 
-    public function upload(Request $request, FeederService $feederService, AuthService $authService, Organization $org, Employee $employee)
+    public function upload(Request $request, FeederService $feederService, AuthService $authService, Organization $org)
     {
         $this->validate($request, [
             'file' => 'required|mimes:csv,xls,xlsx'
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fs_'.$employee->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fc_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {
@@ -150,7 +170,7 @@ class EmployeeCertificateController extends Controller
             $idFeeder = $feederService->create(collect($dataFeeder))->getId();
 
             $importer = new EmployeeCertificateImport;
-            $importer->setEmployee($employee);
+            $importer->setOrg($org);
 
             Excel::import($importer, public_path('/excel/'.$nama_file));
 
@@ -159,23 +179,23 @@ class EmployeeCertificateController extends Controller
             $feederService->activeFeeder($feeder);
 
             $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+            $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.feeder_failed', ['object' => trans('common.student')]);
+            $message = trans('common.feeder_failed', ['object' => trans('common.certificate')]);
         }
 
-        return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId(), 'employee' => $employee->getId()])->with($alert, $message);
+        return redirect()->route('administrator.employeeCertificate.index', ['org' => $org->getId()])->with($alert, $message);
     }
 
-    public function ajaxDetailEmployeeCertificate(Request $request, Employee $employee, Certificate $certificate, EmployeeCertificate $data)
+    public function ajaxDetailEmployeeCertificate(Request $request, Organization $org, Employee $employee, Certificate $certificate, EmployeeCertificate $data)
     {
         if ($request->ajax()) {
             $data = [
                 'employee' => ($data->getEmployee() instanceof Employee) ? $data->getEmployee()->getName() : false,
                 'certificate' => ($data->getCertificate() instanceof Certificate) ? $data->getCertificate()->getName() : false,
-                'validity_period' => $data->getValidityPeriod() instanceof \DateTime ? $data->getValidityPeriod()->format('d F Y') : '-',
+                'validity_period' => $data->getValidityPeriod() ? $data->getValidityPeriod().' tahun' : '-',
             ];
 
             return response()->json($data);

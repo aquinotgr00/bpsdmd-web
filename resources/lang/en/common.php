@@ -31,8 +31,12 @@ return [
     'delete_failed' => ':object failed to delete. Please contact web administrator.',
     'feeder_success' => 'Feeder :object uploaded successfully.',
     'feeder_failed' => 'Feeder :object failed to upload. Please contact web administrator.',
+    'email_success' => 'Email :object send successfully.',
+    'email_failed' => 'Email :object failed to send. Please contact web administrator.',
     'self_delete_failed' => 'You cannot delete yourself.',
     'confirm_delete' => 'Are you sure?',
+    'please_choose' => 'Please choose :object',
+    'invalid_option' => ':object is invalid.',
 
     // table
     'view' => 'view',
@@ -41,6 +45,11 @@ return [
     'delete' => 'delete',
     'action' => 'action',
     'no_data' => 'No data available.',
+    'import' => 'import',
+    'done' => 'done',
+    'not_yet' => 'not yet',
+    'yes' => 'yes',
+    'no' => 'no',
 
     // manage user
     'user_information' => 'user information',
@@ -71,28 +80,59 @@ return [
 
     //manage org
     'institute_information' => 'institute information',
+    'id_dikti' => 'id dikti',
     'code' => 'code',
     'type' => 'type',
     'short_name' => 'short name',
+    'letter_of_est' => 'letter of establishment',
+    'date_of_est' => 'date of establishment',
+    'letter_of_opr' => 'letter of operational',
+    'date_of_opr' => 'date of operational',
     'moda' => 'moda',
     'address' => 'address',
+    'description' => 'description',
+    'phone_number' => 'phone number',
+    'fax' => 'fax',
+    'website' => 'website',
+    'ownership_status' => 'ownership status',
+    'under_supervision' => 'under supervision',
+    'education_type' => 'education type',
+    'accreditation' => 'accreditation',
     'logo' => 'logo',
 
     //manage program
+    'program_information' => 'study program information',
     'study_program' => 'study program',
     'degree' => 'degree',
+    'vision' => 'vision',
+    'mission' => 'mission',
+    'est_date' => 'establishment date',
+    'passing_grade_credits' => 'passing grade credits',
 
     //manage student
     'student_information' => 'student information',
     'student' => 'student',
     'choose_program' => 'choose study program',
     'invalid_program' => 'Chosen study program is invalid.',
+    'nim' => 'nim',
     'period' => 'period',
     'curriculum' => 'curriculum',
     'date_of_birth' => 'date of birth',
     'class' => 'class',
     'ipk' => 'ipk',
     'graduation_year' => 'graduation year',
+    'mobile_phone_number' => 'mobile phone number',
+    'religion' => 'religion',
+    'mother_name' => 'mother name',
+    'foreign_citizen' => 'foreign citizen',
+    'social_protection_card' => 'social protection card',
+    'occupation_type' => 'occupation type',
+    'start_semester' => 'start semester',
+    'current_semester' => 'current semester',
+    'student_credits' => 'student credits',
+    'certificate_number' => 'certificate number',
+    'enrollment_type' => 'enrollment type',
+    'graduation_type' => 'graduation type',
     'student_feeder' => 'upload feeder data student',
 
     //manage teacher
@@ -143,12 +183,47 @@ return [
     //manage certificate
     'certificate' => 'sertifikat',
     'certificate_information' => 'certificate information',
+    'employee_certificate_information' => 'employee certificate information',
     'validity_period' => 'validity period',
     'employee_certificate' => 'employee certificate',
+    'choose_employee' => 'choose employee',
     'choose_certificate' => 'choose certificate',
     'invalid_certificate' => 'Chosen certificate is invalid.',
     'certificate_feeder' => 'unggah feeder data employee certificate',
-    
+
+    //manage job title
+    'job_title' => 'job title',
+
     //manage recruitment
     'recruitment' => 'recruitment',
+    'detailed_search' => 'detailed search',
+    'find_student' => 'find student',
+    'search_result' => 'search result',
+    'choose_job_title' => 'choose job title',
+    'age_range' => 'age range',
+    'school_name' => 'school name',
+    'school_accreditation' => 'school accreditation',
+    'program_filter' => 'filter study programs with the competencies',
+    'minimum_age' => 'Minimum age is 21 years old',
+    'minimum_ipk' => 'Minimum IPK is 2.5',
+    'all_gender' => 'all gender',
+    'all_accreditation' => 'all accreditation',
+    'find_taruna' => 'find taruna',
+    'list_candidate' => 'list candidate',
+    'position_offered' => 'position offered',
+    'send_email' => 'send email',
+
+    // manage competency
+    'competency' => 'competency',
+    'competency_unit' => 'competency unit',
+    'unit' => 'competency unit',
+    'competency_main_purpose' => 'competency main purpose',
+    'main_purpose' => 'main purpose',
+    'competency_main_function' => 'competency main function',
+    'main_function' => 'main function',
+    'competency_key_function' => 'competency key function',
+    'key_function' => 'key function',
+
+    // job function
+    'job_function' => 'job function',
 ];

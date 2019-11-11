@@ -22,17 +22,33 @@ class OrgController extends Controller
 
     public function create(Request $request, OrgService $orgService)
     {
+        $moda = [
+            Organization::MODA_KERETA => ucfirst(Organization::MODA_KERETA),
+            Organization::MODA_DARAT => ucfirst(Organization::MODA_DARAT),
+            Organization::MODA_LAUT => ucfirst(Organization::MODA_LAUT),
+            Organization::MODA_UDARA => ucfirst(Organization::MODA_UDARA)
+        ];
+        $accreditation = [
+            Organization::ACCREDITATION_A => ucfirst(Organization::ACCREDITATION_A),
+            Organization::ACCREDITATION_B => ucfirst(Organization::ACCREDITATION_B),
+            Organization::ACCREDITATION_C => ucfirst(Organization::ACCREDITATION_C),
+            Organization::ACCREDITATION_NA => ucfirst(Organization::ACCREDITATION_NA)
+        ];
+
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
+                'moda' => 'required|in:'.implode(',', array_flip($moda)),
+                'accreditation' => 'required|in:'.implode(',', array_flip($accreditation)),
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
                 'type' => ucfirst(trans('common.type')),
+                'moda' => ucfirst(trans('common.moda')),
+                'accreditation' => ucfirst(trans('common.accreditation')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
@@ -67,17 +83,33 @@ class OrgController extends Controller
 
     public function update(Request $request, OrgService $orgService, Organization $data)
     {
+        $moda = [
+            Organization::MODA_KERETA => ucfirst(Organization::MODA_KERETA),
+            Organization::MODA_DARAT => ucfirst(Organization::MODA_DARAT),
+            Organization::MODA_LAUT => ucfirst(Organization::MODA_LAUT),
+            Organization::MODA_UDARA => ucfirst(Organization::MODA_UDARA)
+        ];
+        $accreditation = [
+            Organization::ACCREDITATION_A => ucfirst(Organization::ACCREDITATION_A),
+            Organization::ACCREDITATION_B => ucfirst(Organization::ACCREDITATION_B),
+            Organization::ACCREDITATION_C => ucfirst(Organization::ACCREDITATION_C),
+            Organization::ACCREDITATION_NA => ucfirst(Organization::ACCREDITATION_NA)
+        ];
+
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
                 'type' => 'required|in:' . Organization::TYPE_SUPPLY . ',' . Organization::TYPE_DEMAND,
-                'moda' => 'required|in:' . Organization::MODA_LAUT . ',' . Organization::MODA_UDARA . ',' . Organization::MODA_DARAT . ',' . Organization::MODA_KERETA,
+                'moda' => 'required|in:'.implode(',', array_flip($moda)),
+                'accreditation' => 'required|in:'.implode(',', array_flip($accreditation)),
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
                 'type' => ucfirst(trans('common.type')),
+                'moda' => ucfirst(trans('common.moda')),
+                'accreditation' => ucfirst(trans('common.accreditation')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
@@ -132,12 +164,27 @@ class OrgController extends Controller
     {
         if ($request->ajax()) {
             $data = [
+                'id_dikti' => $org->getIdDikti() ? $org->getIdDikti() : '-',
                 'code' => $org->getCode() ? $org->getCode() : '-',
                 'name' => $org->getName(),
                 'short_name' => $org->getShortName() ? $org->getShortName() : '-',
+                'letter_of_est' => $org->getLetterOfEst() ? $org->getLetterOfEst() : '-',
+                'date_of_est' => $org->getDateOfEst() instanceof \DateTime ? $org->getDateOfEst()->format('d F Y') : '-',
+                'letter_of_opr' => $org->getLetterOfOpr() ? $org->getLetterOfOpr() : '-',
+                'date_of_opr' => $org->getDateOfOpr() instanceof \DateTime ? $org->getDateOfOpr()->format('d F Y') : '-',
+                'status' => $org->getStatus() ? $org->getStatus() : '-',
                 'type' => ucfirst($org->getType()),
                 'moda' => ucfirst($org->getModa()),
                 'address' => $org->getAddress() ? $org->getAddress() : '-',
+                'description' => $org->getDescription() ? $org->getDescription() : '-',
+                'phone_number' => $org->getPhoneNumber() ? $org->getPhoneNumber() : '-',
+                'fax' => $org->getFax() ? $org->getFax() : '-',
+                'website' => $org->getWebsite() ? $org->getWebsite() : '-',
+                'email' => $org->getEmail() ? $org->getEmail() : '-',
+                'ownership_status' => $org->getOwnershipStatus() ? $org->getOwnershipStatus() : '-',
+                'under_supervision' => $org->getUnderSupervision() ? $org->getUnderSupervision() : '-',
+                'education_type' => $org->getEducationType() ? $org->getEducationType() : '-',
+                'accreditation' => $org->getAccreditation() ? $org->getAccreditation() : '-',
                 'photo' => $org->getPhoto() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
             ];
 

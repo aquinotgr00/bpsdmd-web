@@ -19,16 +19,27 @@ class Organization
     const MODA_UDARA = 'udara';
     const MODA_DARAT = 'darat';
     const MODA_KERETA = 'kereta api';
+    const ACCREDITATION_A = 'A';
+    const ACCREDITATION_B = 'B';
+    const ACCREDITATION_C = 'C';
+    const ACCREDITATION_NA = 'N/A';
     const UPLOAD_PATH = 'orgs/img';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti;
 
     /**
      * @var string
@@ -54,16 +65,51 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="tipe", type="string", nullable=false)
+     * @ORM\Column(name="sk_pendirian", type="string", nullable=true)
+     */
+    private $letterOfEst = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_pendirian", type="date", nullable=true)
+     */
+    private $dateOfEst = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sk_operasional", type="string", nullable=true)
+     */
+    private $letterOfOpr;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tgl_sk_operasional", type="date", nullable=true)
+     */
+    private $dateOfOpr = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipe", type="string", nullable=true)
      */
     private $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="moda", type="string", nullable=false)
+     * @ORM\Column(name="moda", type="string", nullable=true)
      */
-    private $moda = NULL;
+    private $moda;
 
     /**
      * @var string
@@ -87,6 +133,69 @@ class Organization
     private $description = NULL;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="telepon", type="string", nullable=true)
+     */
+    private $phoneNumber = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="faksimile", type="string", nullable=true)
+     */
+    private $fax = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="website", type="string", nullable=true)
+     */
+    private $website = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", nullable=true)
+     */
+    private $email = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status_milik", type="string", nullable=true)
+     */
+    private $ownershipStatus = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pembina", type="string", nullable=true)
+     */
+    private $underSupervision = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bentuk_pendidikan", type="string", nullable=true)
+     */
+    private $educationType = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="akreditasi", type="string", nullable=true)
+     */
+    private $accreditation = NULL;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_update", type="date", nullable=true)
+     */
+    private $lastUpdate = NULL;
+
+    /**
      * @var ArrayCollection|User[]
      * @ORM\OneToMany(targetEntity="User", mappedBy="org")
      */
@@ -105,10 +214,40 @@ class Organization
     private $teachers;
 
     /**
+     * @var ArrayCollection|Employee[]
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="org")
+     */
+    private $company;
+
+    /**
+     * @var ArrayCollection|Employee[]
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="school")
+     */
+    private $alumni;
+
+    /**
      * @var ArrayCollection|Student[]
      * @ORM\OneToMany(targetEntity="Student", mappedBy="org")
      */
     private $students;
+
+    /**
+     * @var ArrayCollection|Recruitment[]
+     * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="org")
+     */
+    private $recruitment;
+
+    /**
+     * @var ArrayCollection|ShortCourse[]
+     * @ORM\OneToMany(targetEntity="ShortCourse", mappedBy="org")
+     */
+    private $shortCourses;
+
+    /**
+     * @var ArrayCollection|JobFunction[]
+     * @ORM\OneToMany(targetEntity="JobFunction", mappedBy="org")
+     */
+    private $jobFunctions;
 
     /**
      * @return string
@@ -124,6 +263,22 @@ class Organization
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdDikti(): ?string
+    {
+        return $this->idDikti;
+    }
+
+    /**
+     * @param string $idDikti
+     */
+    public function setIdDikti($idDikti): void
+    {
+        $this->idDikti = $idDikti;
     }
 
     /**
@@ -172,6 +327,86 @@ class Organization
     public function setShortName($shortName): void
     {
         $this->shortName = $shortName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLetterOfEst(): ?string
+    {
+        return $this->letterOfEst;
+    }
+
+    /**
+     * @param string $letterOfEst
+     */
+    public function setLetterOfEst($letterOfEst): void
+    {
+        $this->letterOfEst = $letterOfEst;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfEst()
+    {
+        return $this->dateOfEst;
+    }
+
+    /**
+     * @param \DateTime $dateOfEst
+     */
+    public function setDateOfEst($dateOfEst): void
+    {
+        $this->dateOfEst = $dateOfEst;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLetterOfOpr(): ?string
+    {
+        return $this->letterOfOpr;
+    }
+
+    /**
+     * @param string $letterOfOpr
+     */
+    public function setLetterOfOpr($letterOfOpr): void
+    {
+        $this->letterOfOpr = $letterOfOpr;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateOfOpr()
+    {
+        return $this->dateOfOpr;
+    }
+
+    /**
+     * @param \DateTime $dateOfOpr
+     */
+    public function setDateOfOpr($dateOfOpr): void
+    {
+        $this->dateOfOpr = $dateOfOpr;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
     }
 
     /**
@@ -255,6 +490,150 @@ class Organization
     }
 
     /**
+     * @return string
+     */
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFax(): ?string
+    {
+        return $this->fax;
+    }
+
+    /**
+     * @param string $fax
+     */
+    public function setFax($fax): void
+    {
+        $this->fax = $fax;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    /**
+     * @param string $website
+     */
+    public function setWebsite($website): void
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnershipStatus(): ?string
+    {
+        return $this->ownershipStatus;
+    }
+
+    /**
+     * @param string $ownershipStatus
+     */
+    public function setOwnershipStatus($ownershipStatus): void
+    {
+        $this->ownershipStatus = $ownershipStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnderSupervision(): ?string
+    {
+        return $this->underSupervision;
+    }
+
+    /**
+     * @param string $underSupervision
+     */
+    public function setUnderSupervision($underSupervision): void
+    {
+        $this->underSupervision = $underSupervision;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEducationType(): ?string
+    {
+        return $this->educationType;
+    }
+
+    /**
+     * @param string $educationType
+     */
+    public function setEducationType($educationType): void
+    {
+        $this->educationType = $educationType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccreditation(): ?string
+    {
+        return $this->accreditation;
+    }
+
+    /**
+     * @param string $accreditation
+     */
+    public function setAccreditation($accreditation): void
+    {
+        $this->accreditation = $accreditation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastUpdate(): ?string
+    {
+        return $this->lastUpdate;
+    }
+
+    /**
+     * @param string $lastUpdate
+     */
+    public function setLastUpdate($lastUpdate): void
+    {
+        $this->lastUpdate = $lastUpdate;
+    }
+
+    /**
      * @return User[]|ArrayCollection
      */
     public function getUsers()
@@ -303,6 +682,38 @@ class Organization
     }
 
     /**
+     * @return Employee[]|ArrayCollection
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param Employee[]|ArrayCollection $company
+     */
+    public function setCompany($company): void
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return Employee[]|ArrayCollection
+     */
+    public function getAlumni()
+    {
+        return $this->alumni;
+    }
+
+    /**
+     * @param Employee[]|ArrayCollection $alumni
+     */
+    public function setAlumni($alumni): void
+    {
+        $this->alumni = $alumni;
+    }
+
+    /**
      * @return Student[]|ArrayCollection
      */
     public function getStudents()
@@ -316,5 +727,53 @@ class Organization
     public function setStudents($students): void
     {
         $this->students = $students;
+    }
+
+    /**
+     * @return Recruitment[]|ArrayCollection
+     */
+    public function getRecruitment()
+    {
+        return $this->recruitment;
+    }
+
+    /**
+     * @param Recruitment[]|ArrayCollection $recruitment
+     */
+    public function setRecruitment($recruitment): void
+    {
+        $this->recruitment = $recruitment;
+    }
+
+    /**
+     * @return ShortCourse[]|ArrayCollection
+     */
+    public function getShortCourses()
+    {
+        return $this->shortCourses;
+    }
+
+    /**
+     * @param ShortCourse[]|ArrayCollection $shortCourses
+     */
+    public function setShortCourses($shortCourses): void
+    {
+        $this->shortCourses = $shortCourses;
+    }
+
+    /**
+     * @return JobFunction[]|ArrayCollection
+     */
+    public function getJobFunctions()
+    {
+        return $this->jobFunctions;
+    }
+
+    /**
+     * @param JobFunction[]|ArrayCollection $jobFunctions
+     */
+    public function setJobFunctions($jobFunctions): void
+    {
+        $this->jobFunctions = $jobFunctions;
     }
 }

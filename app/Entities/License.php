@@ -21,7 +21,7 @@ class License
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -54,6 +54,24 @@ class License
      * @ORM\Column(name="moda", type="string", nullable=false)
      */
     private $moda;
+
+    /**
+     * @var ArrayCollection|LicenseStudyProgram[]
+     * @ORM\OneToMany(targetEntity="LicenseStudyProgram", mappedBy="license")
+     */
+    private $licenseStudyProgram;
+
+    /**
+     * @var ArrayCollection|LicenseCompetency[]
+     * @ORM\OneToMany(targetEntity="LicenseCompetency", mappedBy="license")
+     */
+    private $licenseCompetency;
+
+    /**
+     * @var ArrayCollection|JobTitleFunctionLicense[]
+     * @ORM\OneToMany(targetEntity="JobTitleFunctionLicense", mappedBy="license")
+     */
+    private $jobTitleFunctionLicense;
 
     /**
      * @return string
@@ -133,5 +151,53 @@ class License
     public function setModa($moda): void
     {
         $this->moda = $moda;
+    }
+
+    /**
+     * @return LicenseStudyProgram[]|ArrayCollection
+     */
+    public function getLicenseStudyProgram()
+    {
+        return $this->licenseStudyProgram;
+    }
+
+    /**
+     * @param LicenseStudyProgram[]|ArrayCollection $licenseStudyProgram
+     */
+    public function setLicenseStudyProgram($licenseStudyProgram): void
+    {
+        $this->licenseStudyProgram = $licenseStudyProgram;
+    }
+
+    /**
+     * @return LicenseCompetency[]|ArrayCollection
+     */
+    public function getLicenseCompetency()
+    {
+        return $this->licenseCompetency;
+    }
+
+    /**
+     * @param LicenseCompetency[]|ArrayCollection $licenseCompetency
+     */
+    public function setLicenseCompetency($licenseCompetency): void
+    {
+        $this->licenseCompetency = $licenseCompetency;
+    }
+
+    /**
+     * @return JobTitleFunctionLicense[]|ArrayCollection
+     */
+    public function getJobTitleFunctionLicense()
+    {
+        return $this->jobTitleFunctionLicense;
+    }
+
+    /**
+     * @param JobTitleFunctionLicense[]|ArrayCollection $jobTitleFunctionLicense
+     */
+    public function setJobTitleFunctionLicense($jobTitleFunctionLicense): void
+    {
+        $this->jobTitleFunctionLicense = $jobTitleFunctionLicense;
     }
 }

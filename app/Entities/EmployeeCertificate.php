@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +15,7 @@ class EmployeeCertificate
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -25,7 +24,7 @@ class EmployeeCertificate
     /**
      * @var Employee
      *
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="students")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="employeeCertificates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pegawai_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -35,7 +34,7 @@ class EmployeeCertificate
     /**
      * @var Certificate
      *
-     * @ORM\ManyToOne(targetEntity="Certificate", inversedBy="certificates")
+     * @ORM\ManyToOne(targetEntity="Certificate", inversedBy="employeeCertificates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="sertifikat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -43,9 +42,9 @@ class EmployeeCertificate
     private $certificate;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="masa_berlaku", type="date", nullable=true)
+     * @ORM\Column(name="masa_berlaku", type="string", nullable=true)
      */
     private $validityPeriod = NULL;
 
@@ -98,15 +97,15 @@ class EmployeeCertificate
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
-    public function getValidityPeriod()
+    public function getValidityPeriod(): ?string
     {
         return $this->validityPeriod;
     }
 
     /**
-     * @param \DateTime $validityPeriod
+     * @param string $validityPeriod
      */
     public function setValidityPeriod($validityPeriod): void
     {

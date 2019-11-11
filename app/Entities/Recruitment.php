@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +15,7 @@ class Recruitment
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -25,7 +24,7 @@ class Recruitment
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="recruitments")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="recruitment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -35,7 +34,7 @@ class Recruitment
     /**
      * @var Student
      *
-     * @ORM\ManyToOne(targetEntity="Student", inversedBy="recruitments")
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="recruitment")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="siswa_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -43,14 +42,14 @@ class Recruitment
     private $student;
 
     /**
-     * @var Organization
+     * @var JobTitle
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="recruitments")
+     * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="recruitment")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      * })
      */
-    private $jobTitle;
+    private $jobTitle = NULL;
 
     /**
      * @var integer
@@ -62,14 +61,14 @@ class Recruitment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_input", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_input", type="datetime", nullable=true)
      */
     private $inputDate = NULL;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_update", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_update", type="datetime", nullable=true)
      */
     private $updateDate = NULL;
 
@@ -83,7 +82,7 @@ class Recruitment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_email", type="date", nullable=true)
+     * @ORM\Column(name="tanggal_email", type="datetime", nullable=true)
      */
     private $emailDate = NULL;
 
@@ -136,7 +135,7 @@ class Recruitment
     }
 
     /**
-     * @return Organization
+     * @return JobTitle
      */
     public function getJobTitle()
     {
@@ -144,9 +143,9 @@ class Recruitment
     }
 
     /**
-     * @param Organization $jobTitle
+     * @param JobTitle $jobTitle
      */
-    public function setJobTitle(Organization $jobTitle): void
+    public function setJobTitle(JobTitle $jobTitle): void
     {
         $this->jobTitle = $jobTitle;
     }
