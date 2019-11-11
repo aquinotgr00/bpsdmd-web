@@ -100,13 +100,6 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="tipe", type="string", nullable=true)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="moda", type="string", nullable=true)
      */
     private $moda;
@@ -180,13 +173,6 @@ class Organization
      * @ORM\Column(name="bentuk_pendidikan", type="string", nullable=true)
      */
     private $educationType = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="akreditasi", type="string", nullable=true)
-     */
-    private $accreditation = NULL;
 
     /**
      * @var \DateTime
@@ -412,22 +398,6 @@ class Organization
     /**
      * @return string
      */
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return string
-     */
     public function getModa(): ?string
     {
         return $this->moda;
@@ -599,22 +569,6 @@ class Organization
     public function setEducationType($educationType): void
     {
         $this->educationType = $educationType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAccreditation(): ?string
-    {
-        return $this->accreditation;
-    }
-
-    /**
-     * @param string $accreditation
-     */
-    public function setAccreditation($accreditation): void
-    {
-        $this->accreditation = $accreditation;
     }
 
     /**
