@@ -58,7 +58,7 @@ class License
     /**
      * @var string
      *
-     * @ORM\Column(name="kepala", type="string", nullable=false)
+     * @ORM\Column(name="kepala", type="string", nullable=true)
      */
     private $head;
 

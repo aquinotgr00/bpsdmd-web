@@ -32,7 +32,7 @@ class CompetencyUnit
     /**
      * @var string
      *
-     * @ORM\Column(name="kompetensi", type="string", nullable=false)
+     * @ORM\Column(name="kompetensi", type="text", nullable=false)
      */
     private $competency;
 

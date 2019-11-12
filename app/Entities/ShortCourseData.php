@@ -48,14 +48,14 @@ class ShortCourseData
     /**
      * @var integer
      *
-     * @ORM\Column(name="target_jumlah_peserta", type="integer", nullable=true)
+     * @ORM\Column(name="target_jumlah_peserta", type="bigint", nullable=true)
      */
     private $totalTarget = NULL;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="realisasi_jumlah_peserta", type="integer", nullable=true)
+     * @ORM\Column(name="realisasi_jumlah_peserta", type="bigint", nullable=true)
      */
     private $totalRealization = NULL;
 
@@ -83,14 +83,14 @@ class ShortCourseData
     /**
      * @var integer
      *
-     * @ORM\Column(name="tahun", type="integer", nullable=true)
+     * @ORM\Column(name="tahun", type="bigint", nullable=true)
      */
     private $year = NULL;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="lama_diklat", type="integer", nullable=true)
+     * @ORM\Column(name="lama_diklat", type="bigint", nullable=true)
      */
     private $shortCourseTime = NULL;
 

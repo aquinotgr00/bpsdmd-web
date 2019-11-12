@@ -68,6 +68,13 @@ class JobTitle
     private $experienceMinimal;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="kode", type="string", nullable=true)
+     */
+    private $code;
+
+    /**
      * @var ArrayCollection|Recruitment[]
      * @ORM\OneToMany(targetEntity="Recruitment", mappedBy="jobTitle")
      */
@@ -189,6 +196,22 @@ class JobTitle
     public function setAgeMinimal(string $ageMinimal): void
     {
         $this->ageMinimal = $ageMinimal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
     }
 
     /**

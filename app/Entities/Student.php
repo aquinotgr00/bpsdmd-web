@@ -49,7 +49,7 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="nim", type="string", nullable=false)
+     * @ORM\Column(name="nim", type="string", nullable=true)
      */
     private $nim;
 
@@ -80,13 +80,6 @@ class Student
      * @ORM\Column(name="udid", type="string", nullable=true)
      */
     private $idDikti = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="kode", type="string", nullable=true)
-     */
-    private $code = NULL;
 
     /**
      * @var string
@@ -161,14 +154,14 @@ class Student
     /**
      * @var boolean
      *
-     * @ORM\Column(name="wna", type="string", nullable=false)
+     * @ORM\Column(name="wna", type="boolean", nullable=true)
      */
     private $foreignCitizen;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="penerima_kps", type="boolean", nullable=false)
+     * @ORM\Column(name="penerima_kps", type="boolean", nullable=true)
      */
     private $socialProtectionCard;
 
@@ -203,21 +196,21 @@ class Student
     /**
      * @var integer
      *
-     * @ORM\Column(name="smt_mulai", type="bigint", nullable=false)
+     * @ORM\Column(name="smt_mulai", type="bigint", nullable=true)
      */
     private $startSemester;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="smt_tempuh", type="bigint", nullable=false)
+     * @ORM\Column(name="smt_tempuh", type="bigint", nullable=true)
      */
     private $currentSemester;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="sks", type="bigint", nullable=false)
+     * @ORM\Column(name="sks", type="bigint", nullable=true)
      */
     private $studentCredits;
 
@@ -259,7 +252,7 @@ class Student
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_update", type="date", nullable=true)
+     * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
     private $lastUpdate = NULL;
 
@@ -359,22 +352,6 @@ class Student
     public function setStudyProgram(StudyProgram $studyProgram): void
     {
         $this->studyProgram = $studyProgram;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code): void
-    {
-        $this->code = $code;
     }
 
     /**

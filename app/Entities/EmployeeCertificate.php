@@ -44,7 +44,7 @@ class EmployeeCertificate
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="masa_berlaku", type="date", nullable=true)
+     * @ORM\Column(name="masa_berlaku", type="date", nullable=false)
      */
     private $validityPeriod = NULL;
 

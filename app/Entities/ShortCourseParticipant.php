@@ -34,14 +34,14 @@ class ShortCourseParticipant
     /**
      * @var string
      *
-     * @ORM\Column(name="latar_belakang", type="string", nullable=false)
+     * @ORM\Column(name="latar_belakang", type="string", nullable=true)
      */
     private $background;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="lulus", type="boolean", nullable=false)
+     * @ORM\Column(name="lulus", type="boolean", nullable=true)
      */
     private $graduate;
 
@@ -65,7 +65,7 @@ class ShortCourseParticipant
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", nullable=false)
+     * @ORM\Column(name="status", type="string", nullable=true)
      */
     private $status;
 

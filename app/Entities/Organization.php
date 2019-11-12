@@ -206,17 +206,11 @@ class Organization
      */
     private $teachers;
 
-    // /**
-    //  * @var ArrayCollection|Employee[]
-    //  * @ORM\OneToMany(targetEntity="Employee", mappedBy="org")
-    //  */
-    // private $company;
-
     /**
      * @var ArrayCollection|Employee[]
      * @ORM\OneToMany(targetEntity="Employee", mappedBy="org")
      */
-    private $alumni;
+    private $employees;
 
     /**
      * @var ArrayCollection|Student[]
@@ -659,36 +653,20 @@ class Organization
         $this->teachers = $teachers;
     }
 
-    // /**
-    //  * @return Employee[]|ArrayCollection
-    //  */
-    // public function getCompany()
-    // {
-    //     return $this->company;
-    // }
-    //
-    // /**
-    //  * @param Employee[]|ArrayCollection $company
-    //  */
-    // public function setCompany($company): void
-    // {
-    //     $this->company = $company;
-    // }
-
     /**
      * @return Employee[]|ArrayCollection
      */
-    public function getAlumni()
+    public function getEmployees()
     {
-        return $this->alumni;
+        return $this->employees;
     }
 
     /**
-     * @param Employee[]|ArrayCollection $alumni
+     * @param Employee[]|ArrayCollection $employees
      */
-    public function setAlumni($alumni): void
+    public function setCompany($employees): void
     {
-        $this->alumni = $alumni;
+        $this->employees = $employees;
     }
 
     /**

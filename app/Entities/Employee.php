@@ -29,7 +29,7 @@ class Employee
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="org")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="employees")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -123,7 +123,7 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="major", type="string", nullable=false)
+     * @ORM\Column(name="major", type="string", nullable=true)
      */
     private $major = NULL;
 

@@ -33,7 +33,7 @@ class StudyProgram
      *
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="programs")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
     private $org = NULL;
@@ -69,7 +69,7 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", nullable=false)
+     * @ORM\Column(name="status", type="string", nullable=true)
      */
     private $status;
 
@@ -118,7 +118,7 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="sks_lulus", type="bigint", nullable=false)
+     * @ORM\Column(name="sks_lulus", type="bigint", nullable=true)
      */
     private $passingGradeCredits;
 

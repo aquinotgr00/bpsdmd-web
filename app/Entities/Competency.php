@@ -85,7 +85,7 @@ class Competency
     /**
      * @var string
      *
-     * @ORM\Column(name="nama_kompetensi", type="string", nullable=false)
+     * @ORM\Column(name="nama_kompetensi", type="string", nullable=true)
      */
     private $name;
 

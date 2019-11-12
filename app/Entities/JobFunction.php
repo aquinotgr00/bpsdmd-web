@@ -35,14 +35,14 @@ class JobFunction
     /**
      * @var string
      *
-     * @ORM\Column(name="kode", type="string", nullable=false)
+     * @ORM\Column(name="kode", type="string", nullable=true)
      */
     private $code = NULL;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nama", type="string", nullable=true)
+     * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
 
