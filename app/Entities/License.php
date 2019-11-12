@@ -56,6 +56,13 @@ class License
     private $moda;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="kepala", type="string", nullable=false)
+     */
+    private $head;
+
+    /**
      * @var ArrayCollection|LicenseStudyProgram[]
      * @ORM\OneToMany(targetEntity="LicenseStudyProgram", mappedBy="license")
      */
@@ -72,6 +79,12 @@ class License
      * @ORM\OneToMany(targetEntity="JobTitleFunctionLicense", mappedBy="license")
      */
     private $jobTitleFunctionLicense;
+
+    /**
+     * @var ArrayCollection|ShortCourseLicense[]
+     * @ORM\OneToMany(targetEntity="ShortCourseLicense", mappedBy="license")
+     */
+    private $shortCourseLicense;
 
     /**
      * @return string
@@ -154,6 +167,22 @@ class License
     }
 
     /**
+     * @return string
+     */
+    public function getHead(): ?string
+    {
+        return $this->head;
+    }
+
+    /**
+     * @param string $head
+     */
+    public function setHead($head): void
+    {
+        $this->head = $head;
+    }
+
+    /**
      * @return LicenseStudyProgram[]|ArrayCollection
      */
     public function getLicenseStudyProgram()
@@ -199,5 +228,21 @@ class License
     public function setJobTitleFunctionLicense($jobTitleFunctionLicense): void
     {
         $this->jobTitleFunctionLicense = $jobTitleFunctionLicense;
+    }
+
+    /**
+     * @return ShortCourseLicense[]|ArrayCollection
+     */
+    public function getShortCourseLicense()
+    {
+        return $this->shortCourseLicense;
+    }
+
+    /**
+     * @param ShortCourseLicense[]|ArrayCollection $shortCourseLicense
+     */
+    public function setShortCourseLicense($shortCourseLicense): void
+    {
+        $this->shortCourseLicense = $shortCourseLicense;
     }
 }

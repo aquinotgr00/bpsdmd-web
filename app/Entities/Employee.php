@@ -29,17 +29,7 @@ class Employee
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="alumni")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sekolah_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     * })
-     */
-    private $school;
-
-    /**
-     * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="company")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="org")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -56,14 +46,14 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="nama", type="string", nullable=false)
+     * @ORM\Column(name="nama", type="string", nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="no_ktp", type="string", nullable=false)
+     * @ORM\Column(name="no_ktp", type="string", nullable=true)
      */
     private $identityNumber;
 
@@ -105,6 +95,41 @@ class Employee
     /**
      * @var string
      *
+     * @ORM\Column(name="gelar", type="string", nullable=true)
+     */
+    private $degree = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="level_pendidikan", type="string", nullable=true)
+     */
+    private $educationLevel = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lokasi", type="string", nullable=false)
+     */
+    private $location = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="durasi", type="string", nullable=false)
+     */
+    private $duration = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="major", type="string", nullable=false)
+     */
+    private $major = NULL;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="foto", type="string", nullable=true)
      */
     private $photo = NULL;
@@ -115,6 +140,13 @@ class Employee
      * @ORM\Column(name="email", type="string", nullable=true)
      */
     private $email = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="no_hp", type="string", nullable=true)
+     */
+    private $phoneNumber = NULL;
 
     /**
      * @var ArrayCollection|EmployeeCertificate[]
@@ -142,22 +174,6 @@ class Employee
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return Organization
-     */
-    public function getSchool(): Organization
-    {
-        return $this->school;
-    }
-
-    /**
-     * @param Organization $school
-     */
-    public function setSchool(Organization $school): void
-    {
-        $this->school = $school;
     }
 
     /**
@@ -307,6 +323,86 @@ class Employee
     /**
      * @return string
      */
+    public function getDegree(): ?string
+    {
+        return $this->degree;
+    }
+
+    /**
+     * @param string $degree
+     */
+    public function setDegree($degree): void
+    {
+        $this->degree = $degree;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEducationLevel(): ?string
+    {
+        return $this->educationLevel;
+    }
+
+    /**
+     * @param string $educationLevel
+     */
+    public function setEducationLevel($educationLevel): void
+    {
+        $this->educationLevel = $educationLevel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation($location): void
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDuration(): ?string
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param string $duration
+     */
+    public function setDuration($duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMajor(): ?string
+    {
+        return $this->major;
+    }
+
+    /**
+     * @param string $major
+     */
+    public function setMajor($major): void
+    {
+        $this->major = $major;
+    }
+
+    /**
+     * @return string
+     */
     public function getPhoto(): ?string
     {
         return $this->photo;
@@ -334,6 +430,22 @@ class Employee
     public function setEmail($email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber): void
+    {
+        $this->phoneNumber = $phoneNumber;
     }
 
     /**

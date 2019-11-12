@@ -32,16 +32,6 @@ class ShortCourseParticipant
     private $shortCourse;
 
     /**
-     * @var Employee
-     *
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="shortCourseParticipants")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pegawai_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     * })
-     */
-    private $employee;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="latar_belakang", type="string", nullable=false)
@@ -63,11 +53,21 @@ class ShortCourseParticipant
     private $competenceCertificate;
 
     /**
+     * @var Employee
+     *
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="shortCourseParticipants")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="pegawai_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     * })
+     */
+    private $employee;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="sertifikat_pelatihan", type="string", nullable=true)
+     * @ORM\Column(name="status", type="string", nullable=false)
      */
-    private $trainingCertificate;
+    private $status;
 
     /**
      * @return int
@@ -168,16 +168,16 @@ class ShortCourseParticipant
     /**
      * @return string
      */
-    public function getTrainingCertificate(): ?string
+    public function getStatus(): ?string
     {
-        return $this->trainingCertificate;
+        return $this->status;
     }
 
     /**
-     * @param string $trainingCertificate
+     * @param string $status
      */
-    public function setTrainingCertificate($trainingCertificate): void
+    public function setStatus($status): void
     {
-        $this->trainingCertificate = $trainingCertificate;
+        $this->status = $status;
     }
 }

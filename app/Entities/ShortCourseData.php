@@ -34,14 +34,14 @@ class ShortCourseData
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_mulai", type="date", nullable=false)
+     * @ORM\Column(name="tanggal_mulai", type="date", nullable=true)
      */
     private $startDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_selesai", type="date", nullable=false)
+     * @ORM\Column(name="tanggal_selesai", type="date", nullable=true)
      */
     private $endDate;
 
@@ -74,9 +74,9 @@ class ShortCourseData
     private $closeSk = NULL;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="angkatan", type="integer", nullable=true)
+     * @ORM\Column(name="angkatan", type="string", nullable=true)
      */
     private $generation = NULL;
 
@@ -230,7 +230,7 @@ class ShortCourseData
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getGeneration()
     {
@@ -238,7 +238,7 @@ class ShortCourseData
     }
 
     /**
-     * @param int $generation
+     * @param string $generation
      */
     public function setGeneration($generation): void
     {

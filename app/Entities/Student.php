@@ -27,13 +27,6 @@ class Student
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="udid", type="string", nullable=true)
-     */
-    private $idDikti = NULL;
-
-    /**
      * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
@@ -56,13 +49,6 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="kode", type="string", nullable=true)
-     */
-    private $code = NULL;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="nim", type="string", nullable=false)
      */
     private $nim;
@@ -73,6 +59,34 @@ class Student
      * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="periode_masuk", type="string", nullable=true)
+     */
+    private $period = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tahun_kurikulum", type="string", nullable=true)
+     */
+    private $curriculum = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="kode", type="string", nullable=true)
+     */
+    private $code = NULL;
 
     /**
      * @var string
@@ -252,20 +266,6 @@ class Student
     /**
      * @var string
      *
-     * @ORM\Column(name="periode_masuk", type="string", nullable=true)
-     */
-    private $period = NULL;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="tahun_kurikulum", type="string", nullable=true)
-     */
-    private $curriculum = NULL;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="kelas", type="string", nullable=true)
      */
     private $class = NULL;
@@ -426,7 +426,7 @@ class Student
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getCurriculum()
     {
@@ -434,7 +434,7 @@ class Student
     }
 
     /**
-     * @param \DateTime $curriculum
+     * @param string $curriculum
      */
     public function setCurriculum($curriculum): void
     {

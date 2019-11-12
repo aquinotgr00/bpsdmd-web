@@ -30,6 +30,13 @@ class Certificate
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="jenis", type="string", nullable=false)
+     */
+    private $type;
+
+    /**
      * @var ArrayCollection|EmployeeCertificate[]
      * @ORM\OneToMany(targetEntity="EmployeeCertificate", mappedBy="certificate")
      */
@@ -65,6 +72,22 @@ class Certificate
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type): void
+    {
+        $this->type = $type;
     }
 
     /**

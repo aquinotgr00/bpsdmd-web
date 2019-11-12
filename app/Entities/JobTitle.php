@@ -56,16 +56,16 @@ class JobTitle
     /**
      * @var string
      *
-     * @ORM\Column(name="pengalaman_minimal", type="string", nullable=true)
+     * @ORM\Column(name="usia_minimal", type="string", nullable=true)
      */
-    private $experienceMinimal;
+    private $ageMinimal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="usia_minimal", type="string", nullable=true)
+     * @ORM\Column(name="pengalaman_minimal", type="string", nullable=true)
      */
-    private $ageMinimal;
+    private $experienceMinimal;
 
     /**
      * @var ArrayCollection|Recruitment[]

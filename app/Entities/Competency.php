@@ -31,9 +31,9 @@ class Competency
     /**
      * @var string
      *
-     * @ORM\Column(name="nama", type="string", nullable=false)
+     * @ORM\Column(name="moda", type="string", nullable=false)
      */
-    private $name;
+    private $moda;
 
     /**
      * @var CompetencyMainPurpose
@@ -78,16 +78,16 @@ class Competency
     /**
      * @var string
      *
-     * @ORM\Column(name="moda", type="string", nullable=false)
+     * @ORM\Column(name="tipe_kompetensi", type="string", nullable=false)
      */
-    private $moda;
+    private $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tipe", type="string", nullable=false)
+     * @ORM\Column(name="nama_kompetensi", type="string", nullable=false)
      */
-    private $type;
+    private $name;
 
     /**
      * @var ArrayCollection|ShortCourseCompetency[]

@@ -41,13 +41,6 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="udid", type="string", nullable=true)
-     */
-    private $idDikti = NULL;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="kode", type="string", nullable=true)
      */
     private $code = NULL;
@@ -58,6 +51,20 @@ class StudyProgram
      * @ORM\Column(name="nama", type="string", nullable=false)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="jenjang_didik", type="string", nullable=true)
+     */
+    private $degree = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti = NULL;
 
     /**
      * @var string
@@ -88,13 +95,6 @@ class StudyProgram
     private $competency;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="jenjang", type="string", nullable=true)
-     */
-    private $degree = NULL;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="tgl_berdiri", type="date", nullable=true)
@@ -111,7 +111,7 @@ class StudyProgram
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tgl_sk_pendirian", type="date", nullable=true)
+     * @ORM\Column(name="tgl_sk_selenggara", type="date", nullable=true)
      */
     private $dateOfEst = NULL;
 
@@ -125,7 +125,7 @@ class StudyProgram
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_update", type="date", nullable=true)
+     * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
     private $lastUpdate = NULL;
 
