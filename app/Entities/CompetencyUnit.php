@@ -32,9 +32,9 @@ class CompetencyUnit
     /**
      * @var string
      *
-     * @ORM\Column(name="unit", type="string", nullable=false)
+     * @ORM\Column(name="kompetensi", type="text", nullable=false)
      */
-    private $unit;
+    private $competency;
 
     /**
      * @var ArrayCollection|Competency[]
@@ -77,17 +77,17 @@ class CompetencyUnit
     /**
      * @return string
      */
-    public function getUnit(): ?string
+    public function getCompetency(): ?string
     {
-        return $this->unit;
+        return $this->competency;
     }
 
     /**
-     * @param string $unit
+     * @param string $competency
      */
-    public function setUnit(string $unit): void
+    public function setCompetency(string $competency): void
     {
-        $this->unit = $unit;
+        $this->competency = $competency;
     }
 
     /**

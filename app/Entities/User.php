@@ -63,18 +63,18 @@ class User implements UserInterface
     private $authority;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="aktif", type="integer", nullable=false)
+     * @ORM\Column(name="aktif", type="string", nullable=false)
      */
-    private $isActive = 0;
+    private $isActive;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="hapus", type="integer", nullable=false)
+     * @ORM\Column(name="hapus", type="string", nullable=false)
      */
-    private $isDeleted = 0;
+    private $isDeleted;
 
     /**
      * @var string
@@ -184,33 +184,33 @@ class User implements UserInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIsActive(): int
+    public function getIsActive(): string
     {
         return $this->isActive;
     }
 
     /**
-     * @param int $isActive
+     * @param string $isActive
      */
-    public function setIsActive(int $isActive): void
+    public function setIsActive(string $isActive): void
     {
         $this->isActive = $isActive;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getIsDeleted(): int
+    public function getIsDeleted(): string
     {
         return $this->isDeleted;
     }
 
     /**
-     * @param int $isDeleted
+     * @param string $isDeleted
      */
-    public function setIsDeleted(int $isDeleted): void
+    public function setIsDeleted(string $isDeleted): void
     {
         $this->isDeleted = $isDeleted;
     }

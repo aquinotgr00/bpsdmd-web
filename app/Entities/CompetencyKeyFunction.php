@@ -32,7 +32,7 @@ class CompetencyKeyFunction
     /**
      * @var string
      *
-     * @ORM\Column(name="fungsi_kunci", type="string", nullable=false)
+     * @ORM\Column(name="fungsi_kunci", type="text", nullable=false)
      */
     private $keyFunction;
 

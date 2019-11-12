@@ -37,13 +37,6 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="udid", type="string", nullable=true)
-     */
-    private $idDikti;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="kode", type="string", nullable=true)
      */
     private $code = NULL;
@@ -61,6 +54,48 @@ class Organization
      * @ORM\Column(name="nama_singkat", type="string", nullable=true)
      */
     private $shortName = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipe", type="string", nullable=false)
+     */
+    private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="moda", type="string", nullable=false)
+     */
+    private $moda;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="alamat", type="string", nullable=true)
+     */
+    private $address = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", nullable=true)
+     */
+    private $logo = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deskripsi", type="string", nullable=true)
+     */
+    private $description = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti;
 
     /**
      * @var string
@@ -96,34 +131,6 @@ class Organization
      * @ORM\Column(name="status", type="string", nullable=true)
      */
     private $status;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="moda", type="string", nullable=true)
-     */
-    private $moda;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="alamat", type="string", nullable=true)
-     */
-    private $address = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="foto", type="string", nullable=true)
-     */
-    private $photo = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="deskripsi", type="string", nullable=true)
-     */
-    private $description = NULL;
 
     /**
      * @var string
@@ -203,13 +210,7 @@ class Organization
      * @var ArrayCollection|Employee[]
      * @ORM\OneToMany(targetEntity="Employee", mappedBy="org")
      */
-    private $company;
-
-    /**
-     * @var ArrayCollection|Employee[]
-     * @ORM\OneToMany(targetEntity="Employee", mappedBy="school")
-     */
-    private $alumni;
+    private $employees;
 
     /**
      * @var ArrayCollection|Student[]
@@ -314,6 +315,23 @@ class Organization
     {
         $this->shortName = $shortName;
     }
+
+    /**
+     * @return string
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type): void
+    {
+        $this->type = $type;
+    }
+
 
     /**
      * @return string
@@ -430,17 +448,17 @@ class Organization
     /**
      * @return string
      */
-    public function getPhoto(): ?string
+    public function getLogo(): ?string
     {
-        return $this->photo;
+        return $this->logo;
     }
 
     /**
      * @param string $photo
      */
-    public function setPhoto($photo): void
+    public function setLogo($logo): void
     {
-        $this->photo = $photo;
+        $this->logo = $logo;
     }
 
     /**
@@ -638,33 +656,17 @@ class Organization
     /**
      * @return Employee[]|ArrayCollection
      */
-    public function getCompany()
+    public function getEmployees()
     {
-        return $this->company;
+        return $this->employees;
     }
 
     /**
-     * @param Employee[]|ArrayCollection $company
+     * @param Employee[]|ArrayCollection $employees
      */
-    public function setCompany($company): void
+    public function setCompany($employees): void
     {
-        $this->company = $company;
-    }
-
-    /**
-     * @return Employee[]|ArrayCollection
-     */
-    public function getAlumni()
-    {
-        return $this->alumni;
-    }
-
-    /**
-     * @param Employee[]|ArrayCollection $alumni
-     */
-    public function setAlumni($alumni): void
-    {
-        $this->alumni = $alumni;
+        $this->employees = $employees;
     }
 
     /**

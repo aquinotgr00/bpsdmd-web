@@ -34,28 +34,28 @@ class ShortCourseData
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_mulai", type="date", nullable=false)
+     * @ORM\Column(name="tanggal_mulai", type="date", nullable=true)
      */
     private $startDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tanggal_selesai", type="date", nullable=false)
+     * @ORM\Column(name="tanggal_selesai", type="date", nullable=true)
      */
     private $endDate;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="target_jumlah_peserta", type="integer", nullable=true)
+     * @ORM\Column(name="target_jumlah_peserta", type="bigint", nullable=true)
      */
     private $totalTarget = NULL;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="realisasi_jumlah_peserta", type="integer", nullable=true)
+     * @ORM\Column(name="realisasi_jumlah_peserta", type="bigint", nullable=true)
      */
     private $totalRealization = NULL;
 
@@ -74,23 +74,23 @@ class ShortCourseData
     private $closeSk = NULL;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="angkatan", type="integer", nullable=true)
+     * @ORM\Column(name="angkatan", type="string", nullable=true)
      */
     private $generation = NULL;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="tahun", type="integer", nullable=true)
+     * @ORM\Column(name="tahun", type="bigint", nullable=true)
      */
     private $year = NULL;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="lama_diklat", type="integer", nullable=true)
+     * @ORM\Column(name="lama_diklat", type="bigint", nullable=true)
      */
     private $shortCourseTime = NULL;
 
@@ -230,7 +230,7 @@ class ShortCourseData
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getGeneration()
     {
@@ -238,7 +238,7 @@ class ShortCourseData
     }
 
     /**
-     * @param int $generation
+     * @param string $generation
      */
     public function setGeneration($generation): void
     {
