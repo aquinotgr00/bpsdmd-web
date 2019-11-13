@@ -184,8 +184,8 @@ class OrgController extends Controller
                 'ownership_status' => $org->getOwnershipStatus() ? $org->getOwnershipStatus() : '-',
                 'under_supervision' => $org->getUnderSupervision() ? $org->getUnderSupervision() : '-',
                 'education_type' => $org->getEducationType() ? $org->getEducationType() : '-',
-                'accreditation' => $org->getAccreditation() ? $org->getAccreditation() : '-',
-                'photo' => $org->getPhoto() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
+                'accreditation' => $org->getStatus() ? $org->getStatus() : '-',
+                'photo' => $org->getLogo() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getLogo())) : url('img/avatar.png'),
             ];
 
             return response()->json($data);

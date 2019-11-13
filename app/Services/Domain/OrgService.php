@@ -91,15 +91,17 @@ class OrgService
         $org->setOwnershipStatus($data->get('ownership_status'));
         $org->setUnderSupervision($data->get('under_supervision'));
         $org->setEducationType($data->get('education_type'));
-        $org->setAccreditation($data->get('accreditation'));
+        $org->setStatus($data->get('accreditation'));
         $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
         if ($data->get('date_of_est')) {
             $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
         }
+
         if ($data->get('date_of_opr')) {
             $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
         }
+
         if ($data->get('uploaded_img')) {
             $org->setPhoto($data->get('uploaded_img'));
         }
@@ -141,18 +143,20 @@ class OrgService
         $org->setOwnershipStatus($data->get('ownership_status'));
         $org->setUnderSupervision($data->get('under_supervision'));
         $org->setEducationType($data->get('education_type'));
-        $org->setAccreditation($data->get('accreditation'));
+        $org->setStatus($data->get('accreditation'));
         $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
         if ($data->get('date_of_est')) {
             $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
         }
+
         if ($data->get('date_of_opr')) {
             $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
         }
+
         if ($data->get('uploaded_img')) {
-            @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
-            $org->setPhoto($data->get('uploaded_img'));
+            @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getLogo());
+            $org->setLogo($data->get('uploaded_img'));
         }
 
         EntityManager::persist($org);
