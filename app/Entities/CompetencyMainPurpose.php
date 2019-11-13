@@ -32,7 +32,7 @@ class CompetencyMainPurpose
     /**
      * @var string
      *
-     * @ORM\Column(name="tujuan_utama", type="string", nullable=false)
+     * @ORM\Column(name="tujuan_utama", type="text", nullable=false)
      */
     private $mainPurpose;
 

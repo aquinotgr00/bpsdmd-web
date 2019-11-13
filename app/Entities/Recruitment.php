@@ -46,15 +46,15 @@ class Recruitment
      *
      * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="recruitment")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
     private $jobTitle = NULL;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="status", type="string", nullable=true)
      */
     private $status = NULL;
 
@@ -73,9 +73,9 @@ class Recruitment
     private $updateDate = NULL;
 
     /**
-     * @var integer
+     * @var bool
      *
-     * @ORM\Column(name="sudah_diemail", type="integer", nullable=true)
+     * @ORM\Column(name="sudah_diemail", type="boolean", nullable=true)
      */
     private $isEmail = NULL;
 
@@ -151,7 +151,7 @@ class Recruitment
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getStatus()
     {
@@ -159,7 +159,7 @@ class Recruitment
     }
 
     /**
-     * @param int $status
+     * @param string $status
      */
     public function setStatus($status): void
     {
@@ -199,7 +199,7 @@ class Recruitment
     }
 
     /**
-     * @return int
+     * @return bool
      */
     public function getIsEmail()
     {
@@ -207,7 +207,7 @@ class Recruitment
     }
 
     /**
-     * @param int $isEmail
+     * @param bool $isEmail
      */
     public function setIsEmail($isEmail): void
     {

@@ -33,17 +33,10 @@ class StudyProgram
      *
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="programs")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
+     *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
     private $org = NULL;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="udid", type="string", nullable=true)
-     */
-    private $idDikti = NULL;
 
     /**
      * @var string
@@ -62,7 +55,21 @@ class StudyProgram
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", nullable=false)
+     * @ORM\Column(name="jenjang_didik", type="string", nullable=true)
+     */
+    private $degree = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="udid", type="string", nullable=true)
+     */
+    private $idDikti = NULL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=true)
      */
     private $status;
 
@@ -88,13 +95,6 @@ class StudyProgram
     private $competency;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="jenjang", type="string", nullable=true)
-     */
-    private $degree = NULL;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="tgl_berdiri", type="date", nullable=true)
@@ -111,21 +111,21 @@ class StudyProgram
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="tgl_sk_pendirian", type="date", nullable=true)
+     * @ORM\Column(name="tgl_sk_selenggara", type="date", nullable=true)
      */
     private $dateOfEst = NULL;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sks_lulus", type="bigint", nullable=false)
+     * @ORM\Column(name="sks_lulus", type="bigint", nullable=true)
      */
     private $passingGradeCredits;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_update", type="date", nullable=true)
+     * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
     private $lastUpdate = NULL;
 

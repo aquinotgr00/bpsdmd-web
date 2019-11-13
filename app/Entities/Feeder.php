@@ -22,13 +22,6 @@ class Feeder
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nama_file", type="string", nullable=false)
-     */
-    private $filename;
-
-    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="feeders")
@@ -41,14 +34,21 @@ class Feeder
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", nullable=true)
+     * @ORM\Column(name="nama_file", type="string", nullable=false)
+     */
+    private $filename;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=false)
      */
     private $status = NULL;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="date", nullable=true)
+     * @ORM\Column(name="created_at", type="date", nullable=false)
      */
     private $createdAt = NULL;
 
@@ -70,22 +70,6 @@ class Feeder
     }
 
     /**
-     * @return string
-     */
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @param string $filename
-     */
-    public function setFilename($filename): void
-    {
-        $this->filename = $filename;
-    }
-
-    /**
      * @return User
      */
     public function getUser()
@@ -99,6 +83,22 @@ class Feeder
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string $filename
+     */
+    public function setFilename($filename): void
+    {
+        $this->filename = $filename;
     }
 
     /**

@@ -16,7 +16,7 @@ class JobTitleFunction
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -41,13 +41,6 @@ class JobTitleFunction
      * })
      */
     private $jobFunction;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="kepala", type="string", nullable=false)
-     */
-    private $head;
 
     /**
      * @var ArrayCollection|JobTitleFunctionLicense[]
@@ -101,22 +94,6 @@ class JobTitleFunction
     public function setJobFunction(JobFunction $jobFunction): void
     {
         $this->jobFunction = $jobFunction;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHead(): ?string
-    {
-        return $this->head;
-    }
-
-    /**
-     * @param string $head
-     */
-    public function setHead($head): void
-    {
-        $this->head = $head;
     }
 
     /**

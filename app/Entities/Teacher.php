@@ -36,13 +36,6 @@ class Teacher
     /**
      * @var string
      *
-     * @ORM\Column(name="kode", type="string", nullable=true)
-     */
-    private $code = NULL;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="nip", type="string", nullable=true)
      */
     private $nip = NULL;
@@ -85,16 +78,16 @@ class Teacher
     /**
      * @var string
      *
-     * @ORM\Column(name="foto", type="string", nullable=true)
+     * @ORM\Column(name="nidn", type="string", nullable=true)
      */
-    private $photo = NULL;
+    private $nidn = NULL;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nidn", type="string", nullable=true)
+     * @ORM\Column(name="kode", type="string", nullable=true)
      */
-    private $nidn = NULL;
+    private $code = NULL;
 
     /**
      * @return int
@@ -126,22 +119,6 @@ class Teacher
     public function setOrg(Organization $org): void
     {
         $this->org = $org;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode($code): void
-    {
-        $this->code = $code;
     }
 
     /**
@@ -259,16 +236,17 @@ class Teacher
     /**
      * @return string
      */
-    public function getPhoto(): ?string
+    public function getCode(): ?string
     {
-        return $this->photo;
+        return $this->code;
     }
 
     /**
-     * @param string $photo
+     * @param string $code
      */
-    public function setPhoto($photo): void
+    public function setCode($code): void
     {
-        $this->photo = $photo;
+        $this->code = $code;
     }
+
 }

@@ -5,37 +5,36 @@ namespace App\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LicenseCompetency
+ * ShortCourseLicense
  *
- * @ORM\Table(name="lisensi_kompetensi")
+ * @ORM\Table(name="lisensi_diklat")
  * @ORM\Entity
  */
-
-class LicenseCompetency
+class ShortCourseLicense
 {
     /**
-     * @var int
+     * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var Competency
+     * @var ShortCourse
      *
-     * @ORM\ManyToOne(targetEntity="Competency", inversedBy="licenseCompetency", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="shortCourseLicense")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kompetensi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     *   @ORM\JoinColumn(name="diklat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
      */
-    private $competency;
+    private $shortCourse;
 
     /**
      * @var License
      *
-     * @ORM\ManyToOne(targetEntity="License", inversedBy="licenseCompetency", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="License", inversedBy="shortCourseLicense", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lisensi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -59,19 +58,19 @@ class LicenseCompetency
     }
 
     /**
-     * @return Competency
+     * @return ShortCourse
      */
-    public function getCompetency(): Competency
+    public function getShortCourse(): ShortCourse
     {
-        return $this->competency;
+        return $this->shortCourse;
     }
 
     /**
-     * @param Competency $competency
+     * @param ShortCourse $shortCourse
      */
-    public function setCompetency(Competency $competency): void
+    public function setShortCourse(ShortCourse $shortCourse): void
     {
-        $this->competency = $competency;
+        $this->shortCourse = $shortCourse;
     }
 
     /**

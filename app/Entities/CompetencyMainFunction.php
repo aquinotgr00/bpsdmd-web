@@ -32,7 +32,7 @@ class CompetencyMainFunction
     /**
      * @var string
      *
-     * @ORM\Column(name="fungsi_utama", type="string", nullable=false)
+     * @ORM\Column(name="fungsi_utama", type="text", nullable=false)
      */
     private $mainFunction;
 

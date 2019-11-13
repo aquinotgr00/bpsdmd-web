@@ -32,6 +32,27 @@ class ShortCourseParticipant
     private $shortCourse;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="latar_belakang", type="string", nullable=true)
+     */
+    private $background;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="lulus", type="boolean", nullable=true)
+     */
+    private $graduate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sertifikat_kompetensi", type="string", nullable=false)
+     */
+    private $competenceCertificate;
+
+    /**
      * @var Employee
      *
      * @ORM\ManyToOne(targetEntity="Employee", inversedBy="shortCourseParticipants")
@@ -44,30 +65,9 @@ class ShortCourseParticipant
     /**
      * @var string
      *
-     * @ORM\Column(name="latar_belakang", type="string", nullable=false)
+     * @ORM\Column(name="status", type="string", nullable=true)
      */
-    private $background;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="lulus", type="boolean", nullable=false)
-     */
-    private $graduate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sertifikat_kompetensi", type="string", nullable=false)
-     */
-    private $competenceCertificate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sertifikat_pelatihan", type="string", nullable=true)
-     */
-    private $trainingCertificate;
+    private $status;
 
     /**
      * @return int
@@ -168,16 +168,16 @@ class ShortCourseParticipant
     /**
      * @return string
      */
-    public function getTrainingCertificate(): ?string
+    public function getStatus(): ?string
     {
-        return $this->trainingCertificate;
+        return $this->status;
     }
 
     /**
-     * @param string $trainingCertificate
+     * @param string $status
      */
-    public function setTrainingCertificate($trainingCertificate): void
+    public function setStatus($status): void
     {
-        $this->trainingCertificate = $trainingCertificate;
+        $this->status = $status;
     }
 }
