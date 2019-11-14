@@ -86,7 +86,12 @@ class JobTitleService
     public function create(Collection $data, $org = false, $flush = true)
     {
         $jobTitle = new JobTitle;
+        $jobTitle->setCode($data->get('code'));
         $jobTitle->setName($data->get('name'));
+        $jobTitle->setEducationMinimal($data->get('education_minimal'));
+        $jobTitle->setGpaMinimal($data->get('gpa_minimal'));
+        $jobTitle->setAgeMinimal($data->get('age_minimal'));
+        $jobTitle->setExperienceMinimal($data->get('experience_minimal'));
 
         if ($org instanceof Organization) {
             $jobTitle->setOrg($org);
@@ -112,7 +117,12 @@ class JobTitleService
      */
     public function update(JobTitle $jobTitle, Collection $data, $org = false, $flush = true)
     {
+        $jobTitle->setCode($data->get('code'));
         $jobTitle->setName($data->get('name'));
+        $jobTitle->setEducationMinimal($data->get('education_minimal'));
+        $jobTitle->setGpaMinimal($data->get('gpa_minimal'));
+        $jobTitle->setAgeMinimal($data->get('age_minimal'));
+        $jobTitle->setExperienceMinimal($data->get('experience_minimal'));
 
         if ($org instanceof Organization) {
             $jobTitle->setOrg($org);

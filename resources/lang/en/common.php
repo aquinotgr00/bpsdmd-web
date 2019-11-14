@@ -196,6 +196,10 @@ return [
 
     //manage job title
     'job_title' => 'job title',
+    'education_minimal' => 'education minimal',
+    'gpa_minimal' => 'gpa minimal',
+    'age_minimal' => 'age minimal',
+    'experience_minimal' => 'experience minimal',
 
     //manage recruitment
     'recruitment' => 'recruitment',

@@ -44,35 +44,35 @@ class JobTitle
      *
      * @ORM\Column(name="pendidikan_minimal", type="string", nullable=true)
      */
-    private $eductionMinimal;
+    private $educationMinimal = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ipk_minimal", type="string", nullable=true)
      */
-    private $gpaMinimal;
+    private $gpaMinimal = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usia_minimal", type="string", nullable=true)
      */
-    private $ageMinimal;
+    private $ageMinimal = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="pengalaman_minimal", type="string", nullable=true)
      */
-    private $experienceMinimal;
+    private $experienceMinimal = NULL;
 
     /**
      * @var string
      *
      * @ORM\Column(name="kode", type="string", nullable=true)
      */
-    private $code;
+    private $code = NULL;
 
     /**
      * @var ArrayCollection|Recruitment[]
@@ -137,17 +137,17 @@ class JobTitle
     /**
      * @return string
      */
-    public function getEductionMinimal(): ?string
+    public function getEducationMinimal(): ?string
     {
-        return $this->eductionMinimal;
+        return $this->educationMinimal;
     }
 
     /**
-     * @param string $eductionMinimal
+     * @param string $educationMinimal
      */
-    public function setEductionMinimal(string $eductionMinimal): void
+    public function setEducationMinimal($educationMinimal): void
     {
-        $this->eductionMinimal = $eductionMinimal;
+        $this->educationMinimal = $educationMinimal;
     }
 
     /**
@@ -161,7 +161,7 @@ class JobTitle
     /**
      * @param string $gpaMinimal
      */
-    public function setGpaMinimal(string $gpaMinimal): void
+    public function setGpaMinimal($gpaMinimal): void
     {
         $this->gpaMinimal = $gpaMinimal;
     }
@@ -177,7 +177,7 @@ class JobTitle
     /**
      * @param string $experienceMinimal
      */
-    public function setExperienceMinimal(string $experienceMinimal): void
+    public function setExperienceMinimal($experienceMinimal): void
     {
         $this->experienceMinimal = $experienceMinimal;
     }
@@ -193,7 +193,7 @@ class JobTitle
     /**
      * @param string $ageMinimal
      */
-    public function setAgeMinimal(string $ageMinimal): void
+    public function setAgeMinimal($ageMinimal): void
     {
         $this->ageMinimal = $ageMinimal;
     }
@@ -209,7 +209,7 @@ class JobTitle
     /**
      * @param string $code
      */
-    public function setCode(string $code): void
+    public function setCode($code): void
     {
         $this->code = $code;
     }

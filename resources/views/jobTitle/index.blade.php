@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
+                                    <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
@@ -36,6 +37,7 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
+                                    <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |

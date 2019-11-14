@@ -233,6 +233,10 @@ return [
 
     //manage job title
     'job_title' => 'jabatan',
+    'education_minimal' => 'minimal pendidikan',
+    'gpa_minimal' => 'minimal IPK',
+    'age_minimal' => 'minimal usia',
+    'experience_minimal' => 'minimal pengalaman',
 
     //manage recruitment
     'recruitment' => 'penawaran siswa',
