@@ -47,7 +47,6 @@ class StudentImport implements ToCollection
             }
 
             $student = new Student;
-            $student->setCode(substr($col[0], strpos($col[0], "-") + 1));
             $student->setIdDikti($col[1]);
             $student->setNim($col[4]);
             $student->setName($col[5]);

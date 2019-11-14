@@ -119,11 +119,10 @@ class StudentService
     {
         $student = new Student;
         $student->setIdDikti($data->get('id_dikti'));
-        $student->setCode($data->get('code'));
         $student->setNim($data->get('nim'));
         $student->setName($data->get('name'));
         $student->setGender($data->get('gender'));
-        $student->setPlaceOfBirth($data->get('placeOfBirth'));
+        $student->setPlaceOfBirth($data->get('place_of_birth'));
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setAddress($data->get('address'));
         $student->setPhoneNumber($data->get('phone_number'));
@@ -190,11 +189,10 @@ class StudentService
     public function update(Student $student, Collection $data, $org = false, $studyProgram = false, $flush = true)
     {
         $student->setIdDikti($data->get('id_dikti'));
-        $student->setCode($data->get('code'));
         $student->setNim($data->get('nim'));
         $student->setName($data->get('name'));
         $student->setGender($data->get('gender'));
-        $student->setPlaceOfBirth($data->get('placeOfBirth'));
+        $student->setPlaceOfBirth($data->get('place_of_birth'));
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setAddress($data->get('address'));
         $student->setPhoneNumber($data->get('phone_number'));

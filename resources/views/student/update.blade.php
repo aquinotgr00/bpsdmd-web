@@ -21,12 +21,6 @@
                                 <span class="help-block ">{!! implode('', $errors->get('id_dikti')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
-                                <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
-                                <input type="text" class="form-control" id="code" name="code" value="{{ $data->getCode() }}">
-                                <span class="help-block">{!! implode('', $errors->get('code')) !!}</span>
-                            </div>
-
                             <div class="form-group {{ $errors->has('nim') ? 'has-error' : '' }}">
                                 <label for="nim">{{ strtoupper(trans('common.nim')) }} :</label>
                                 <input type="text" class="form-control" id="nim" name="nim" value="{{ $data->getNim() }}">
@@ -52,10 +46,10 @@
                                 <span class="help-block ">{!! implode('', $errors->get('studyProgram')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('placeOfBirth') ? 'has-error' : '' }}">
-                                <label for="placeOfBirth">{{ ucwords(trans('common.place_of_birth')) }} :</label>
-                                <input type="text" class="form-control" id="placeOfBirth" name="placeOfBirth" value="{{  $data->getPlaceOfBirth() }}">
-                                <span class="help-block ">{!! implode('', $errors->get('placeOfBirth')) !!}</span>
+                            <div class="form-group {{ $errors->has('place_of_birth') ? 'has-error' : '' }}">
+                                <label for="place_of_birth">{{ ucwords(trans('common.place_of_birth')) }} :</label>
+                                <input type="text" class="form-control" id="place_of_birth" name="place_of_birth" value="{{  $data->getPlaceOfBirth() }}">
+                                <span class="help-block ">{!! implode('', $errors->get('place_of_birth')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('dateOfBirth') ? 'has-error' : '' }}">
@@ -107,16 +101,16 @@
                             </div>
 
                             <div class="form-group {{ $errors->has('foreign_citizen') ? 'has-error' : '' }}">
-                                <label for="foreign_citizen">{{ strtoupper(trans('common.foreign_citizen')) }} :</label>
-                                <input class="form-control" type="radio" name="foreign_citizen" value="t" {{ $data->getForeignCitizen() == 't' ? 'checked' : '' }}> {{ trans('common.yes') }}
-                                <input class="form-control" type="radio" name="foreign_citizen" value="f" {{ $data->getForeignCitizen() == 'f' ? 'checked' : '' }}> {{ trans('common.no') }}
+                                <label for="foreign_citizen">{{ strtoupper(trans('common.foreign_citizen')) }} :</label></br>
+                                <input class="form-control" type="radio" name="foreign_citizen" value="t" {{ $data->getForeignCitizen() == '1' ? 'checked' : '' }}> {{ trans('common.yes') }}
+                                <input class="form-control" type="radio" name="foreign_citizen" value="f" {{ $data->getForeignCitizen() == '0' ? 'checked' : '' }}> {{ trans('common.no') }}
                                 <span class="help-block ">{!! implode('', $errors->get('foreign_citizen')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('social_protection_card') ? 'has-error' : '' }}">
-                                <label for="social_protection_card">{{ ucwords(trans('common.social_protection_card')) }} :</label>
-                                <input class="form-control" type="radio" name="social_protection_card" value="t" {{ $data->getSocialProtectionCard() == 't' ? 'checked' : '' }}> {{ trans('common.yes') }}
-                                <input class="form-control" type="radio" name="social_protection_card" value="f" {{ $data->getSocialProtectionCard() == 'f' ? 'checked' : '' }}> {{ trans('common.no') }}
+                                <label for="social_protection_card">{{ ucwords(trans('common.social_protection_card')) }} :</label></br>
+                                <input class="form-control" type="radio" name="social_protection_card" value="t" {{ $data->getSocialProtectionCard() == '1' ? 'checked' : '' }}> {{ trans('common.yes') }}
+                                <input class="form-control" type="radio" name="social_protection_card" value="f" {{ $data->getSocialProtectionCard() == '0' ? 'checked' : '' }}> {{ trans('common.no') }}
                                 <span class="help-block ">{!! implode('', $errors->get('social_protection_card')) !!}</span>
                             </div>
 
@@ -142,6 +136,18 @@
                                 <label for="identity_number">{{ ucwords(trans('common.identity_number')) }} :</label>
                                 <input type="text" class="form-control" id="identity_number" name="identity_number" value="{{ $data->getIdentityNumber() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('identity_number')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('enrollment_date_start') ? 'has-error' : '' }}">
+                                <label for="enrollment_date_start">{{ ucwords(trans('common.enrollment_date_start')) }} :</label>
+                                <input type="text" class="date form-control" id="enrollment_date_start" name="enrollment_date_start" value="{{ $data->getEnrollmentDateStart() instanceof \DateTime ? $data->getEnrollmentDateStart()->format('d-m-Y') : '' }}">
+                                <span class="help-block ">{!! implode('', $errors->get('enrollment_date_start')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('enrollment_date_end') ? 'has-error' : '' }}">
+                                <label for="enrollment_date_end">{{ ucwords(trans('common.enrollment_date_end')) }} :</label>
+                                <input type="text" class="date form-control" id="enrollment_date_end" name="enrollment_date_end" value="{{ $data->getEnrollmentDateEnd() instanceof \DateTime ? $data->getEnrollmentDateEnd()->format('d-m-Y') : '' }}">
+                                <span class="help-block ">{!! implode('', $errors->get('enrollment_date_end')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('start_semester') ? 'has-error' : '' }}">
@@ -187,6 +193,12 @@
                                 <label for="certificate_number">{{ ucwords(trans('common.certificate_number')) }} :</label>
                                 <input type="text" class="form-control" id="certificate_number" name="certificate_number" value="{{ $data->getCertificateNumber() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('certificate_number')) !!}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('graduation_judgement_date') ? 'has-error' : '' }}">
+                                <label for="graduation_judgement_date">{{ ucwords(trans('common.graduation_judgement_date')) }} :</label>
+                                <input type="text" class="date form-control" id="graduation_judgement_date" name="graduation_judgement_date" value="{{ $data->getGraduationJudgementDate() instanceof \DateTime ? $data->getGraduationJudgementDate()->format('d-m-Y') : '' }}">
+                                <span class="help-block ">{!! implode('', $errors->get('graduation_judgement_date')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('enrollment_type') ? 'has-error' : '' }}">
