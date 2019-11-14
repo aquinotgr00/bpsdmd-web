@@ -157,6 +157,10 @@ return [
     'gender' => 'gender',
     'place_of_birth' => 'place of birth',
     'nationality' => 'nationality',
+    'education_level' => 'education level',
+    'location' => 'location',
+    'duration' => 'duration',
+    'major' => 'major',
 
     //manage feeder
     'feeder' => 'feeder',

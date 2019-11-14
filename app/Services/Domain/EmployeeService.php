@@ -94,7 +94,7 @@ class EmployeeService
      * @param bool $flush
      * @return Employee
      */
-    public function create(Collection $data, $org = false, $school = false, $flush = true)
+    public function create(Collection $data, $org = false, $flush = true)
     {
         $employee = new Employee;
         $employee->setCode($data->get('code'));
@@ -102,18 +102,22 @@ class EmployeeService
         $employee->setEmail($data->get('email'));
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
-        $employee->setPlaceOfBirth($data->get('placeOfBirth'));
+        $employee->setPlaceOfBirth($data->get('place_of_birth'));
         $employee->setLanguage($data->get('language'));
         $employee->setNationality($data->get('nationality'));
+        $employee->setDegree($data->get('degree'));
+        $employee->setEducationLevel($data->get('education_level'));
+        $employee->setLocation($data->get('location'));
+        $employee->setDuration($data->get('duration'));
+        $employee->setMajor($data->get('major'));
+        $employee->setEmail($data->get('email'));
+        $employee->setPhoneNumber($data->get('phone_number'));
 
         if ($data->get('dateOfBirth')) {
             $employee->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         }
         if ($org instanceof Organization) {
             $employee->setOrg($org);
-        }
-        if ($school instanceof Organization) {
-            $employee->setSchool($school);
         }
 
         if ($data->get('uploaded_img')) {
@@ -137,25 +141,29 @@ class EmployeeService
      * @param bool $flush
      * @return Employee
      */
-    public function update(Employee $employee, Collection $data, $org = false, $school = false, $flush = true)
+    public function update(Employee $employee, Collection $data, $org = false, $flush = true)
     {
         $employee->setCode($data->get('code'));
         $employee->setName($data->get('name'));
         $employee->setEmail($data->get('email'));
         $employee->setIdentityNumber($data->get('identity_number'));
         $employee->setGender($data->get('gender'));
-        $employee->setPlaceOfBirth($data->get('placeOfBirth'));
+        $employee->setPlaceOfBirth($data->get('place_of_birth'));
         $employee->setLanguage($data->get('language'));
         $employee->setNationality($data->get('nationality'));
+        $employee->setDegree($data->get('degree'));
+        $employee->setEducationLevel($data->get('education_level'));
+        $employee->setLocation($data->get('location'));
+        $employee->setDuration($data->get('duration'));
+        $employee->setMajor($data->get('major'));
+        $employee->setEmail($data->get('email'));
+        $employee->setPhoneNumber($data->get('phone_number'));
 
         if ($data->get('dateOfBirth')) {
             $employee->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         }
         if ($org instanceof Organization) {
             $employee->setOrg($org);
-        }
-        if ($school instanceof Organization) {
-            $employee->setSchool($school);
         }
 
         if ($data->get('uploaded_img')) {

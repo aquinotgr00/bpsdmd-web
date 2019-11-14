@@ -30,7 +30,6 @@
                                     <th>No.</th>
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
-                                    <th>{{ ucfirst(trans('common.school')) }}</th>
                                     <th>{{ ucfirst(trans('common.institute')) }}</th>
                                     <th>{{ ucwords(trans('common.identity_number')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
@@ -45,7 +44,6 @@
                                     <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
-                                    <td>{{ $item->getSchool() instanceof \App\Entities\Organization ? $item->getSchool()->getName() : '-' }}</td>
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
                                     <td>{{ $item->getIdentityNumber() ? $item->getIdentityNumber() : '-' }}</td>
                                     <td>
@@ -101,11 +99,6 @@
                                 <td class="employeeEmail"></td>
                             </tr>
                             <tr>
-                                <th>{{ ucfirst(trans('common.school')) }}</th>
-                                <td>:</td>
-                                <td class="employeeSchool"></td>
-                            </tr>
-                            <tr>
                                 <th>{{ ucfirst(trans('common.institute')) }}</th>
                                 <td>:</td>
                                 <td class="employeeInstitute"></td>
@@ -140,6 +133,36 @@
                                 <td>:</td>
                                 <td class="employeeNationality"></td>
                             </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.degree')) }}</th>
+                                <td>:</td>
+                                <td class="employeeDegree"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.education_level')) }}</th>
+                                <td>:</td>
+                                <td class="employeeEducationLevel"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.location')) }}</th>
+                                <td>:</td>
+                                <td class="employeeLocation"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.duration')) }}</th>
+                                <td>:</td>
+                                <td class="employeeDuration"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.major')) }}</th>
+                                <td>:</td>
+                                <td class="employeeMajor"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.phone_number')) }}</th>
+                                <td>:</td>
+                                <td class="employeePhoneNumber"></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
@@ -173,6 +196,12 @@
                 modalHtml.find('.employeeDateOfBirth').html(employee.date_of_birth);
                 modalHtml.find('.employeeLanguage').html(employee.language);
                 modalHtml.find('.employeeNationality').html(employee.nationality);
+                modalHtml.find('.employeeDegree').html(employee.degree);
+                modalHtml.find('.employeeEducationLevel').html(employee.education_level);
+                modalHtml.find('.employeeLocation').html(employee.location);
+                modalHtml.find('.employeeDuration').html(employee.duration);
+                modalHtml.find('.employeeMajor').html(employee.major);
+                modalHtml.find('.employeePhoneNumber').html(employee.phone_number);
                 modalHtml.find('.employeePhoto').attr("src",employee.photo);
                 modalHtml.modal('show');
             }
@@ -192,6 +221,12 @@
         modalHtml.find('.employeeDateOfBirth').html('');
         modalHtml.find('.employeeLanguage').html('');
         modalHtml.find('.employeeNationality').html('');
+        modalHtml.find('.employeeDegree').html('');
+        modalHtml.find('.employeeEducationLevel').html('');
+        modalHtml.find('.employeeLocation').html('');
+        modalHtml.find('.employeeDuration').html('');
+        modalHtml.find('.employeeMajor').html('');
+        modalHtml.find('.employeePhoneNumber').html('');
         modalHtml.find('.employeePhoto').attr('src','');
     })
 </script>

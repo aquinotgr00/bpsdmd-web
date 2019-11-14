@@ -159,6 +159,10 @@ return [
     'place_of_birth' => 'tempat lahir',
     'nationality' => 'kewarganegaraan',
     'graduate' => 'lulus',
+    'education_level' => 'level pendidikan',
+    'location' => 'lokasi',
+    'duration' => 'durasi',
+    'major' => 'major',
 
     // LOGIN
     'login_header' => 'Masuk ke akun anda.',

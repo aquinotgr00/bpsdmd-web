@@ -146,10 +146,10 @@
                             <div class="form-group accreditation {{ $errors->has('accreditation') ? 'has-error' : '' }}">
                                 <label for="accreditation">{{ ucfirst(trans('common.accreditation')) }} :</label>
                                 <select id="accreditation" name="accreditation" class="form-control">
-                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
-                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_B }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_B ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_B) }}</option>
-                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_C }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_C ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_C) }}</option>
-                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_NA }}" {{ $data->getAccreditation() == \App\Entities\Organization::ACCREDITATION_NA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_NA) }}</option>
+                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ $data->getStatus() == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
+                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_B }}" {{ $data->getStatus() == \App\Entities\Organization::ACCREDITATION_B ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_B) }}</option>
+                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_C }}" {{ $data->getStatus() == \App\Entities\Organization::ACCREDITATION_C ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_C) }}</option>
+                                    <option value="{{ \App\Entities\Organization::ACCREDITATION_NA }}" {{ $data->getStatus() == \App\Entities\Organization::ACCREDITATION_NA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_NA) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('accreditation')) !!}</span>
                             </div>
@@ -168,7 +168,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <img src="{{ $data->getPhoto() ? url(\App\Entities\Organization::UPLOAD_PATH.'/'.$data->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
+                                <img src="{{ $data->getLogo() ? url(\App\Entities\Organization::UPLOAD_PATH.'/'.$data->getLogo()) : url('img/avatar.png') }}" width="100px" height="100px">
                             </div>
 
                             <div class="box-footer">

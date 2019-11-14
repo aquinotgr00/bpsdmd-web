@@ -55,7 +55,7 @@ class Employee
      *
      * @ORM\Column(name="no_ktp", type="string", nullable=true)
      */
-    private $identityNumber;
+    private $identityNumber = NULL;
 
     /**
      * @var string
@@ -111,14 +111,14 @@ class Employee
      *
      * @ORM\Column(name="lokasi", type="string", nullable=false)
      */
-    private $location = NULL;
+    private $location;
 
     /**
      * @var string
      *
      * @ORM\Column(name="durasi", type="string", nullable=false)
      */
-    private $duration = NULL;
+    private $duration;
 
     /**
      * @var string
