@@ -14,6 +14,16 @@ deploy_staging:
     name: staging
     url: bpsdm.datains.id
   script:
-    - ssh cent@bpsdm.datains.id -p 222 "cd ~/htdocs && git fetch --all && git checkout master && git pull origin dev && composer install --no-dev && sudo service php-fpm restart && php artisan doctrine:migrations:migrate && php artisan doctrine:generate:proxies && exit"
+    - ssh cent@bpsdm.datains.id -p 222 "cd ~/htdocs && git fetch --all && git checkout dev && git pull origin dev && composer install --no-dev && sudo service php-fpm restart && php artisan doctrine:migrations:migrate && php artisan doctrine:generate:proxies && exit"
   only:
     - dev
+
+deploy_production:
+  type: deploy
+  environment:
+    name: production
+    url: simsdmtranas.bpsdm.dephub.go.id
+  script:
+    - ssh bpsdm@simsdmtranas.bpsdm.dephub.go.id -p 1402 "cd /apps/bpsdm-webapps && git fetch --all && git checkout master && git pull origin master && composer install --no-dev && sudo service php-fpm restart && php artisan doctrine:migrations:migrate && php artisan doctrine:generate:proxies && exit"
+  only:
+    - master
