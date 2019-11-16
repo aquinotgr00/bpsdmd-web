@@ -37,6 +37,8 @@ return [
     'confirm_delete' => 'Apakah Anda yakin?',
     'please_choose' => 'Silakan pilih :object',
     'invalid_option' => 'Pilihan :object tidak valid.',
+    'male' => 'pria',
+    'female' => 'wanita',
 
     // table
     'view' => 'lihat',

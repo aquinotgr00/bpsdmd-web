@@ -20,7 +20,7 @@
                                 <input type="text" class="form-control" id="code" name="code" value="{{ $data->getCode() }}">
                                 <span class="help-block">{!! implode('', $errors->get('code')) !!}</span>
                             </div>
-                            
+
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ $data->getName() }}">
@@ -44,14 +44,14 @@
                                 <input type="text" class="form-control" id="age_minimal" name="age_minimal" value="{{ $data->getExperienceMinimal() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('age_minimal')) !!}</span>
                             </div>
-                            
+
                             <div class="form-group {{ $errors->has('experience_minimal') ? 'has-error' : '' }}">
                                 <label for="experience_minimal">{{ ucwords(trans('common.experience_minimal')) }} :</label>
                                 <input type="text" class="form-control" id="experience_minimal" name="experience_minimal" value="{{ $data->getAgeMinimal() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('experience_minimal')) !!}</span>
                             </div>
 
-                            <div class="box-footer">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>

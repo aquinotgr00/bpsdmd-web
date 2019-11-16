@@ -181,13 +181,17 @@ class OrgService
         $count_program = count($org->getPrograms());
 
         if (!$count_user && !$count_program) {
+            if ($org->getLogo()) {
+                @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getLogo());
+            }
+
             EntityManager::remove($org);
             EntityManager::flush();
 
             return true;
         }
 
-        throw new OrgDeleteException('Cannot delete organization due to existing ' . $count . ' users!');
+        throw new OrgDeleteException('Cannot delete organization due to existing ' . $count_user . ' users!');
     }
 
     /**

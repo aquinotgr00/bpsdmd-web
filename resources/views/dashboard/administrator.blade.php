@@ -17,10 +17,6 @@
                     <div class="icon">
                         <i class="fa fa-area-chart"></i>
                     </div>
-                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
-                        Info Lebih Lanjut
-                        <i class="fa fa-arrow-circle-right"></i>
-                    </a>
                 </div>
             </div>
             <!--  -->
@@ -33,10 +29,6 @@
                     <div class="icon">
                         <i class="fa fa-users"></i>
                     </div>
-                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
-                        Info Lebih Lanjut
-                        <i class="fa fa-arrow-circle-right"></i>
-                    </a>
                 </div>
             </div>
             <div class="col-lg-6 col-xs-6">
@@ -49,10 +41,6 @@
                     <div class="icon">
                         <i class="fa fa-pie-chart"></i>
                     </div>
-                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
-                        Info Lebih Lanjut
-                        <i class="fa fa-arrow-circle-right"></i>
-                    </a>
                 </div>
             </div>
             <!--  -->
@@ -65,10 +53,6 @@
                     <div class="icon">
                         <i class="fa fa-bar-chart"></i>
                     </div>
-                    <a class="small-box-footer" href="#" title="Info Lebih Lanjut">
-                        Info Lebih Lanjut
-                        <i class="fa fa-arrow-circle-right"></i>
-                    </a>
                 </div>
             </div>
         </div>

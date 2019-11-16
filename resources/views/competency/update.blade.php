@@ -141,7 +141,7 @@
                                 <span class="help-block">{!! implode('', $errors->get('license')) !!}</span>
                             </div>
 
-                            <div class="box-footer">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>
