@@ -2,22 +2,14 @@
 
 namespace App\Http\Controllers\Demand;
 
-use App\Entities\Student;
 use App\Entities\Recruitment;
-use App\Entities\Organization;
-use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
-use App\Mail\RecruitmentMail;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
 use App\Services\Domain\JobTitleService;
-use App\Services\Domain\ProgramService;
-use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Image;
-use Mail;
 
 class OfferingController extends Controller
 {
@@ -96,7 +88,7 @@ class OfferingController extends Controller
     {
         $org = currentUser()->getOrg();
         try {
-            $url = env('APP_URL') .'/offering';
+            // $url = env('APP_URL') .'/offering';
             // Mail::to($data->getStudent()->getEmail())->send(new RecruitmentMail($url));                // send recruitment email
 
             $alert = 'alert_success';

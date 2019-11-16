@@ -57,13 +57,13 @@ class LinkMatchController extends Controller
 
                     $result[$jobTitle->getOrg()->getId()] = [
                         'company' => $jobTitle->getOrg()->getName(),
-                        'logo' => $jobTitle->getOrg()->getPhoto() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
+                        'logo' => $jobTitle->getOrg()->getLogo() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
                         'jobTitle' => $append['jobTitle']
                     ];
                 } else {
                     $result[$jobTitle->getOrg()->getId()] = [
                         'company' => $jobTitle->getOrg()->getName(),
-                        'logo' =>  $jobTitle->getOrg()->getPhoto() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
+                        'logo' =>  $jobTitle->getOrg()->getLogo() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
                         'jobTitle' => [
                             [
                                 'name' => $jobTitle->getName(),
