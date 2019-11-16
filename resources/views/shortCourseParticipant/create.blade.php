@@ -36,12 +36,6 @@
                                 <span class="help-block ">{!! implode('', $errors->get('competence_certificat')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('training_certificat') ? 'has-error' : '' }}">
-                                <label for="training_certificat">{{ ucwords(trans('common.training_certificat')) }} :</label>
-                                <input type="text" class="form-control" id="training_certificat" name="training_certificat" value="{{ old('training_certificat') }}">
-                                <span class="help-block ">{!! implode('', $errors->get('training_certificat')) !!}</span>
-                            </div>
-
                             <div class="form-group {{ $errors->has('graduate') ? 'has-error' : '' }}">
                                 <label for="graduate">{{ ucwords(trans('common.graduate')) }} :</label><br />
                                 <input class="form-control" type="radio" name="graduate" value="1" checked>{{ trans('common.done') }}

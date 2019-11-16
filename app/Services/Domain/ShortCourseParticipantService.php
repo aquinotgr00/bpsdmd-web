@@ -76,7 +76,6 @@ class ShortCourseParticipantService
         $shortCourseParticipant->setBackground($data->get('background'));
         $shortCourseParticipant->setGraduate($data->get('graduate'));
         $shortCourseParticipant->setCompetenceCertificate($data->get('competence_certificat'));
-        $shortCourseParticipant->setTrainingCertificate($data->get('training_certificat'));
 
         if ($shortCourse instanceof ShortCourse) {
             $shortCourseParticipant->setShortCourse($shortCourse);
@@ -84,10 +83,6 @@ class ShortCourseParticipantService
 
         if ($employee instanceof Employee) {
             $shortCourseParticipant->setEmployee($employee);
-        }
-
-        if ($district instanceof District) {
-            $shortCourseParticipant->setDistrict($district);
         }
 
         EntityManager::persist($shortCourseParticipant);
