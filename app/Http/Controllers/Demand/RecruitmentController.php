@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\Demand;
 
 use App\Entities\Student;
-use App\Entities\Recruitment;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
-use App\Mail\RecruitmentMail;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
-use App\Services\Domain\JobTitleService;
 use App\Services\Domain\ProgramService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
-use Image;
-use Mail;
 
 class RecruitmentController extends Controller
 {
@@ -48,7 +42,7 @@ class RecruitmentController extends Controller
         $org = currentUser()->getOrg();
         try {
             $requestData = $request->all();
-            $recruitment = $recruitmentService->create(collect($requestData), $org, $student);
+            $recruitmentService->create(collect($requestData), $org, $student);
 
             $alert = 'alert_success';
             $message = trans('common.create_success', ['object' => ucfirst(trans('common.recruitment'))]);

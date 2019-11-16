@@ -256,7 +256,7 @@ class CompetencyController extends Controller
                 'ckf' => $competency->getCompetencyKeyFunction()->getKeyFunction(),
                 'cmp' => $competency->getCompetencyMainPurpose()->getMainPurpose(),
                 'cmf' => $competency->getCompetencyMainFunction()->getMainFunction(),
-                'cu' => $competency->getCompetencyUnit()->getUnit(),
+                'cu' => $competency->getCompetencyUnit()->getCompetency(),
                 'license' => $license,
             ];
 

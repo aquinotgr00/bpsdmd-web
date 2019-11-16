@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Administrator;
 
 use App\Http\Controllers\Controller;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
 
 class AnalyticsController extends Controller
 {
