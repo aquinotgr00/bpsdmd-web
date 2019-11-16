@@ -141,10 +141,14 @@ class LicenseService
 
         if (count($excludeIds)) {
             $query = $qb->where($qb->expr()->notIn('l.id', $excludeIds))
-                ->orderBy('l.code ASC, l.chapter DESC')
+                ->addOrderBy('l.code','ASC')
+                ->addOrderBy('l.chapter', 'ASC')
                 ->getQuery();
         } else {
-            $query = $qb->getQuery();
+            $query = $qb
+                ->addOrderBy('l.code','ASC')
+                ->addOrderBy('l.chapter', 'ASC')
+                ->getQuery();
         }
 
         return $query->getResult();
