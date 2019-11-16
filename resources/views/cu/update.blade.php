@@ -23,7 +23,7 @@
 
                             <div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
                                 <label for="chapter">{{ ucfirst(trans('common.unit')) }} :</label>
-                                <textarea class="form-control" id="text" name="text" >{{ $cu->getUnit() }}</textarea>
+                                <textarea class="form-control" id="text" name="text" >{{ $cu->getCompetency() }}</textarea>
                                 <span class="help-block ">{!! implode('', $errors->get('text')) !!}</span>
                             </div>
 

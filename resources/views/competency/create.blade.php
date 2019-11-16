@@ -98,9 +98,9 @@
                                     @if(!empty($cu))
                                         @foreach($cu as $item)
                                             @if (old('cu') == $item->getId())
-                                                <option value="{{ $item->getId() }}" selected>{{ $item->getUnit() }}</option>
+                                                <option value="{{ $item->getId() }}" selected>{{ $item->getCompetency() }}</option>
                                             @else
-                                                <option value="{{ $item->getId() }}">{{ $item->getUnit() }}</option>
+                                                <option value="{{ $item->getId() }}">{{ $item->getCompetency() }}</option>
                                             @endif
                                         @endforeach
                                     @endif
