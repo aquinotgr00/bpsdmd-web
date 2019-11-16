@@ -60,8 +60,6 @@ class EmployeeController extends Controller
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
-            $messageBag = new MessageBag;
-
             try {
                 $requestData = $request->all();
 
@@ -122,8 +120,6 @@ class EmployeeController extends Controller
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
-
-            $messageBag = new MessageBag;
 
             try {
                 $requestData = $request->all();

@@ -61,7 +61,6 @@ class EmployeeController extends Controller
             ]);
 
             $org = currentUser()->getOrg();
-            $messageBag = new MessageBag;
 
             try {
                 $requestData = $request->all();
@@ -122,7 +121,6 @@ class EmployeeController extends Controller
             ]);
 
             $org = currentUser()->getOrg();
-            $messageBag = new MessageBag;
 
             try {
                 $requestData = $request->all();

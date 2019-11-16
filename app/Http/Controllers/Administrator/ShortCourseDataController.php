@@ -6,7 +6,6 @@ use App\Entities\ShortCourseData;
 use App\Entities\ShortCourse;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\ShortCourseDataService;
-use App\Services\Domain\ShortCourseService;
 use App\Services\Domain\ShortCourseParticipantService;
 use Exception;
 use Illuminate\Http\Request;
