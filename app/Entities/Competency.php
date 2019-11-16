@@ -90,12 +90,6 @@ class Competency
     private $name;
 
     /**
-     * @var ArrayCollection|ShortCourseCompetency[]
-     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="competency")
-     */
-    private $shortCourseCompetency;
-
-    /**
      * @var ArrayCollection|StudyProgramCompetency[]
      * @ORM\OneToMany(targetEntity="StudyProgramCompetency", mappedBy="competency")
      */
@@ -249,22 +243,6 @@ class Competency
     public function setType($type): void
     {
         $this->type = $type;
-    }
-
-    /**
-     * @return ShortCourseCompetency[]|ArrayCollection
-     */
-    public function getShortCourseCompetency()
-    {
-        return $this->shortCourseCompetency;
-    }
-
-    /**
-     * @param ShortCourseCompetency[]|ArrayCollection $shortCourseCompetency
-     */
-    public function setShortCourseCompetency($shortCourseCompetency): void
-    {
-        $this->shortCourseCompetency = $shortCourseCompetency;
     }
 
     /**

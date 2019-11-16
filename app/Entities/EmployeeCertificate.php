@@ -49,16 +49,6 @@ class EmployeeCertificate
     private $validityPeriod = NULL;
 
     /**
-     * @var ShortCourse
-     *
-     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="employeeCertificate")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="diklat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     * })
-     */
-    private $shortCourse;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="tanggal_sertifikat", type="date", nullable=true)
@@ -127,22 +117,6 @@ class EmployeeCertificate
     public function setValidityPeriod($validityPeriod): void
     {
         $this->validityPeriod = $validityPeriod;
-    }
-
-    /**
-     * @return ShortCourse
-     */
-    public function getShortCourse(): ShortCourse
-    {
-        return $this->shortCourse;
-    }
-
-    /**
-     * @param ShortCourse $shortCourse
-     */
-    public function setShortCourse(ShortCourse $shortCourse): void
-    {
-        $this->shortCourse = $shortCourse;
     }
 
     /**
