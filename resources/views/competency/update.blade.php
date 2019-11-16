@@ -126,10 +126,10 @@
                                     </div>
                                     <div class="col-md-6" style="margin-top: 20px">
                                         <ul class="list-group">
-                                            @foreach($data->getLicenseStudyProgram() as $lp)
+                                            @foreach($competency->getLicenseCompetency() as $lc)
                                                 <li class="list-group-item">
-                                                    <input type="hidden" name="license[]" value="{{ $lp->getLicense()->getId() }}">
-                                                    <span class="name">{{ $lp->getLicense()->getCode().' '.$lp->getLicense()->getChapter().' - '.$lp->getLicense()->getName() }}</span>
+                                                    <input type="hidden" name="license[]" value="{{ $lc->getLicense()->getId() }}">
+                                                    <span class="name">{{ $lc->getLicense()->getCode().' '.$lc->getLicense()->getChapter().' - '.$lc->getLicense()->getName() }}</span>
                                                     <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemove">
                                                         <span class="glyphicon glyphicon-remove"></span>
                                                     </a>
