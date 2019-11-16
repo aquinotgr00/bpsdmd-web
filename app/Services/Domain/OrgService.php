@@ -103,7 +103,7 @@ class OrgService
         }
 
         if ($data->get('uploaded_img')) {
-            $org->setPhoto($data->get('uploaded_img'));
+            $org->setLogo($data->get('uploaded_img'));
         }
 
         EntityManager::persist($org);
