@@ -49,7 +49,7 @@
 
                 <!-- List group -->
                     <ul class="list-group">
-                        <li class="list-group-item">{{ $data->getStartDate()->format('d F Y') }} - {{ $data->getEndDate()->format('d F Y') }} ({{ $data->getShortCourseTime() ? $data->getShortCourseTime() : '-' }} Hari)</li>
+                        <li class="list-group-item">{{ $data->getStartDate() ? $data->getStartDate()->format('d F Y'):'' }} - {{ $data->getStartDate() ? $data->getEndDate()->format('d F Y'):'' }} ({{ $data->getShortCourseTime() ? $data->getShortCourseTime() : '-' }} Hari)</li>
                         <li class="list-group-item">
                             <span class="label label-info" style="margin-right:10px;">
                             {{ ucfirst(trans('common.total_target_student')) }}
