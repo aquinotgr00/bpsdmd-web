@@ -98,9 +98,9 @@
                                     @if(!empty($cu))
                                         @foreach($cu as $item)
                                             @if ($competency->getCompetencyUnit()->getId() == $item->getId())
-                                                <option value="{{ $item->getId() }}" selected>{{ $item->getUnit() }}</option>
+                                                <option value="{{ $item->getId() }}" selected>{{ $item->getCompetency() }}</option>
                                             @else
-                                                <option value="{{ $item->getId() }}">{{ $item->getUnit() }}</option>
+                                                <option value="{{ $item->getId() }}">{{ $item->getCompetency() }}</option>
                                             @endif
                                         @endforeach
                                     @endif
@@ -141,7 +141,7 @@
                                 <span class="help-block">{!! implode('', $errors->get('license')) !!}</span>
                             </div>
 
-                            <div class="box-footer">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>

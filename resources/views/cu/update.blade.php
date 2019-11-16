@@ -23,11 +23,11 @@
 
                             <div class="form-group {{ $errors->has('text') ? 'has-error' : '' }}">
                                 <label for="chapter">{{ ucfirst(trans('common.unit')) }} :</label>
-                                <textarea class="form-control" id="text" name="text" >{{ $cu->getUnit() }}</textarea>
+                                <textarea class="form-control" id="text" name="text" >{{ $cu->getCompetency() }}</textarea>
                                 <span class="help-block ">{!! implode('', $errors->get('text')) !!}</span>
                             </div>
 
-                            <div class="box-footer">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>

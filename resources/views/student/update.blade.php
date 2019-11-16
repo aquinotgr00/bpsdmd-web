@@ -102,15 +102,15 @@
 
                             <div class="form-group {{ $errors->has('foreign_citizen') ? 'has-error' : '' }}">
                                 <label for="foreign_citizen">{{ strtoupper(trans('common.foreign_citizen')) }} :</label></br>
-                                <input class="form-control" type="radio" name="foreign_citizen" value="t" {{ $data->getForeignCitizen() == '1' ? 'checked' : '' }}> {{ trans('common.yes') }}
-                                <input class="form-control" type="radio" name="foreign_citizen" value="f" {{ $data->getForeignCitizen() == '0' ? 'checked' : '' }}> {{ trans('common.no') }}
+                                <input class="form-control" type="radio" name="foreign_citizen" value="t" {{ $data->getForeignCitizen() == '1' ? 'checked' : '' }}> {{ ucfirst(trans('common.yes')) }}
+                                <input class="form-control" type="radio" name="foreign_citizen" value="f" {{ $data->getForeignCitizen() == '0' ? 'checked' : '' }}> {{ ucfirst(trans('common.no')) }}
                                 <span class="help-block ">{!! implode('', $errors->get('foreign_citizen')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('social_protection_card') ? 'has-error' : '' }}">
                                 <label for="social_protection_card">{{ ucwords(trans('common.social_protection_card')) }} :</label></br>
-                                <input class="form-control" type="radio" name="social_protection_card" value="t" {{ $data->getSocialProtectionCard() == '1' ? 'checked' : '' }}> {{ trans('common.yes') }}
-                                <input class="form-control" type="radio" name="social_protection_card" value="f" {{ $data->getSocialProtectionCard() == '0' ? 'checked' : '' }}> {{ trans('common.no') }}
+                                <input class="form-control" type="radio" name="social_protection_card" value="t" {{ $data->getSocialProtectionCard() == '1' ? 'checked' : '' }}> {{ ucfirst(trans('common.yes')) }}
+                                <input class="form-control" type="radio" name="social_protection_card" value="f" {{ $data->getSocialProtectionCard() == '0' ? 'checked' : '' }}> {{ ucfirst(trans('common.no')) }}
                                 <span class="help-block ">{!! implode('', $errors->get('social_protection_card')) !!}</span>
                             </div>
 
@@ -171,8 +171,8 @@
                             <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                                 <label for="gender">{{ ucwords(trans('common.gender')) }} :</label>
                                 <select id="gender" name="gender" class="form-control">
-                                    <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ $data->getGender() == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_MALE) }}</option>
-                                    <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ $data->getGender() == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_FEMALE) }}</option>
+                                    <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ $data->getGender() == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(trans('common.male')) }}</option>
+                                    <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ $data->getGender() == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(trans('common.female')) }}</option>
                                 </select>
                                 <span class="help-block ">{!! implode('', $errors->get('gender')) !!}</span>
                             </div>
@@ -242,7 +242,7 @@
                                 <img src="{{ $data->getPhoto() ? url(\App\Entities\Student::UPLOAD_PATH.'/'.$data->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
                             </div>
 
-                            <div class="box-footer">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>

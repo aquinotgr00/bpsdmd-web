@@ -37,6 +37,8 @@ return [
     'confirm_delete' => 'Are you sure?',
     'please_choose' => 'Please choose :object',
     'invalid_option' => ':object is invalid.',
+    'male' => 'male',
+    'female' => 'female',
 
     // table
     'view' => 'view',

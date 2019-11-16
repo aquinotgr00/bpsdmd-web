@@ -39,7 +39,7 @@
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
-                                    <td>{{ $item->getUnit() }}</td>
+                                    <td>{{ $item->getCompetency() }}</td>
                                     <td>
                                         <a href="{{ url(route('administrator.competencyUnit.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.competencyUnit.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>

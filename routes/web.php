@@ -260,6 +260,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{student}/create', 'Demand\RecruitmentController@create')->name('demand.recruitment.create');
         Route::get('/{student}', 'Demand\RecruitmentController@ajaxDetailStudent')->name('demand.recruitment.view');
     });
+
     Route::group(['prefix' => '/offering', 'middleware' => ['only_demand']], function() {
         Route::get('/', 'Demand\OfferingController@index')->name('demand.offering.index');
         Route::get('/{student}', 'Demand\OfferingController@ajaxDetailStudent')->name('demand.offering.view');

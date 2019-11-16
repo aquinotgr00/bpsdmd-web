@@ -259,6 +259,10 @@ class StudentService
      */
     public function delete(Student $student)
     {
+        if ($student->getPhoto()) {
+            @unlink(public_path(Student::UPLOAD_PATH).'/'.$student->getPhoto());
+        }
+
         EntityManager::remove($student);
         EntityManager::flush();
     }

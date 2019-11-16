@@ -155,6 +155,10 @@ class TeacherService
      */
     public function delete(Teacher $teacher)
     {
+        if ($teacher->getPhoto()) {
+            @unlink(public_path(Teacher::UPLOAD_PATH).'/'.$teacher->getPhoto());
+        }
+
         EntityManager::remove($teacher);
         EntityManager::flush();
     }

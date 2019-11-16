@@ -171,7 +171,7 @@
                                 <img src="{{ $data->getLogo() ? url(\App\Entities\Organization::UPLOAD_PATH.'/'.$data->getLogo()) : url('img/avatar.png') }}" width="100px" height="100px">
                             </div>
 
-                            <div class="box-footer">
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>
