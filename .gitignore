@@ -19,3 +19,5 @@ public/teachers/img/*
 !public/teachers/img/.gitkeep
 public/students/img/*
 !public/students/img/.gitkeep
+public/employees/img/*
+!public/employees/img/.gitkeep

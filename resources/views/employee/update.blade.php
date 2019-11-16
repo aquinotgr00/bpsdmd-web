@@ -42,8 +42,8 @@
                             <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                                 <label for="gender">{{ ucwords(trans('common.gender')) }} :</label>
                                 <select id="gender" name="gender" class="form-control">
-                                    <option value="{{ \App\Entities\Employee::GENDER_MALE }}" {{ $data->getGender() == \App\Entities\Employee::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Employee::GENDER_MALE) }}</option>
-                                    <option value="{{ \App\Entities\Employee::GENDER_FEMALE }}" {{ $data->getGender() == \App\Entities\Employee::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Employee::GENDER_FEMALE) }}</option>
+                                    <option value="{{ \App\Entities\Employee::GENDER_MALE }}" {{ $data->getGender() == \App\Entities\Employee::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(trans('common.male')) }}</option>
+                                    <option value="{{ \App\Entities\Employee::GENDER_FEMALE }}" {{ $data->getGender() == \App\Entities\Employee::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(trans('common.female')) }}</option>
                                 </select>
                                 <span class="help-block ">{!! implode('', $errors->get('gender')) !!}</span>
                             </div>
