@@ -28,34 +28,17 @@
                     <section class="content" id="subcontent-element">
                         <section class="content">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="box">
-                                        <form action="" method="post">
-                                            <div class="box-body">
-                                                <div class="form-group">
-                                                    <label>{{ ucwords(trans('common.school_name')) }}</label>
-                                                    <select name="demand" id="demand-selector" class="form-control">
-                                                        <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.company'))])) }}</option>
-                                                        @if(!empty($demands))
-                                                            @foreach($demands as $id => $name)
-                                                                <option value="{{ $id }}">{{ $name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4 col-xs-4" style="padding: 0px;">
                                     <div style="padding: 10px;padding-top: 0px;">
                                         <div class="box">
                                             <div class="box-header" style="cursor: move;">
                                                 <h3 class="box-title" style="padding-bottom: 6px;background-color: #666666;width:100%;color: #FFFFFF;" id="box-title-one">Jabatan</h3>
                                             </div>
-                                            <div class="box-body" id="list-jabatan"></div>
+                                            <div class="box-body" id="list-jabatan">
+                                                @foreach($jobTitles as $jobTitle)
+                                                    <div class="list-prodi-item" data-id="{{ $jobTitle->getId() }}">{{ $jobTitle->getName() }}</div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -92,43 +75,18 @@
 
 @section('script')
     <script>
-        let listingJabatan = 'div#list-jabatan',
-            defJabatan = '<div class="list-jabatan-item">{{ trans('common.no_data') }}</div>',
-            listingKompetensi = 'ul.kompetensi-jabatan',
+        let listingKompetensi = 'ul.kompetensi-jabatan',
             defKompetensi = '<li>{{ trans('common.no_data') }}</li>',
             listingSupply = 'div#supply-list',
             defSupply = '<div class="row"><div class="col-xs-12 col-md-12"><div class="lowongan-item"><span>{{ trans('common.no_data') }}</span></div></div></div>';
 
         function clearListing() {
-            $(listingJabatan).html(defJabatan);
             $(listingKompetensi).html(defKompetensi);
             $(listingSupply).html(defSupply);
         }
 
         // init page
         clearListing();
-
-        $('select#demand-selector').live('change', function () {
-            let id = $(this).val();
-
-            clearListing();
-
-            if (id > 0) {
-                $.get('/link-match/job-title/'+id, function(programs, status){
-                    if (status === 'success') {
-                        let html = '';
-
-                        $.each(programs, function( index, data ) {
-                            html = html + '<div class="list-prodi-item" data-id="'+data.id+'">'+data.name+'</div>';
-                        });
-
-                        if (html.length > 0) {
-                            $(listingJabatan).html(html);
-                        }
-                    }
-                });
-            }
-        });
 
         $('div.list-prodi-item').live('click', function () {
             let id = $(this).data('id');
@@ -140,7 +98,7 @@
             if (id > 0) {
                 $(this).addClass('active');
 
-                $.get('/link-match/job-title-license/'+id, function(licenses, status){
+                $.get('/link-match-demand/job-title-license/'+id, function(licenses, status){
                     if (status === 'success') {
                         let html = '';
 
@@ -154,7 +112,7 @@
                     }
                 });
 
-                $.get('/link-match/supply-by-job-title/'+id, function(programs, status){
+                $.get('/link-match-demand/supply-by-job-title/'+id, function(programs, status){
                     if (status === 'success') {
                         let html = '';
 

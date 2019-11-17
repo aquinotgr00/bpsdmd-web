@@ -101,6 +101,7 @@ return [
     'education_type' => 'bentuk pendidikan',
     'accreditation' => 'akreditasi',
     'logo' => 'logo',
+    'company' => 'instansi',
 
     //manage program
     'program_information' => 'informasi program studi',

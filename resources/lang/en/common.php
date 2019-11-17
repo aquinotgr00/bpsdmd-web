@@ -101,6 +101,7 @@ return [
     'education_type' => 'education type',
     'accreditation' => 'accreditation',
     'logo' => 'logo',
+    'company' => 'company',
 
     //manage program
     'program_information' => 'study program information',

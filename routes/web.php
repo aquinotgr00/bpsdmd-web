@@ -86,6 +86,9 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/program/{org_supply}', 'Administrator\LinkMatchController@program')->name('administrator.link-match.program');
         Route::get('/program-license/{program}', 'Administrator\LinkMatchController@programLicense')->name('administrator.link-match.program-license');
         Route::get('/demand-by-program/{program}', 'Administrator\LinkMatchController@demandByProgram')->name('administrator.link-match.demand-by-program');
+        Route::get('/job-title/{org_demand}', 'Administrator\LinkMatchController@jobTitle')->name('administrator.link-match.job-title');
+        Route::get('/job-title-license/{jobTitle}', 'Administrator\LinkMatchController@jobTitleLicense')->name('administrator.link-match.job-title-license');
+        Route::get('/supply-by-job-title/{jobTitle}', 'Administrator\LinkMatchController@supplyByJobTitle')->name('administrator.link-match.supply-by-job-title');
     });
 
     Route::group(['prefix' => '/user', 'middleware' => ['only_admin']], function() {
@@ -267,6 +270,12 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{recruitment}/update', 'Demand\OfferingController@update')->name('demand.offering.update');
         Route::get('/{recruitment}/delete', 'Demand\OfferingController@delete')->name('demand.offering.delete');
         Route::get('/{recruitment}/email', 'Demand\OfferingController@email')->name('demand.offering.email');
+    });
+
+    Route::group(['prefix' => '/link-match-demand', 'middleware' => ['only_demand']], function() {
+        Route::get('/job-title-license/{jobTitle}', 'Demand\LinkMatchController@jobTitleLicense')->name('demand.link-match.job-title-license');
+        Route::get('/supply-by-job-title/{jobTitle}', 'Demand\LinkMatchController@supplyByJobTitle')->name('demand.link-match.supply-by-job-title');
+        Route::get('/', 'Demand\LinkMatchController@demand')->name('demand.link-match');
     });
 
     // utils routes

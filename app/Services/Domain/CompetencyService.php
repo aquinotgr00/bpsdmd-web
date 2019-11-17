@@ -167,21 +167,29 @@ class CompetencyService
         EntityManager::flush();
     }
 
+    /**
+     * Get competency by licenses
+     *
+     * @param array $licenses
+     * @return array
+     */
     public function getCompetencyByLicenses(array $licenses)
     {
         $competencies = [];
 
-        $qb = EntityManager::createQueryBuilder()
-            ->select('lc')
-            ->from(LicenseCompetency::class, 'lc');
+        if (count($licenses)) {
+            $qb = EntityManager::createQueryBuilder()
+                ->select('lc')
+                ->from(LicenseCompetency::class, 'lc');
 
-        $result = $qb->where($qb->expr()->in('lc.license', array_unique($licenses)))
-            ->getQuery()
-            ->getResult();
+            $result = $qb->where($qb->expr()->in('lc.license', array_unique($licenses)))
+                ->getQuery()
+                ->getResult();
 
-        /** @var LicenseCompetency $item */
-        foreach ($result as $item) {
-            $competencies[$item->getCompetency()->getCompetencyMainFunction()->getId()] = $item->getCompetency()->getCompetencyMainFunction()->getMainFunction();
+            /** @var LicenseCompetency $item */
+            foreach ($result as $item) {
+                $competencies[$item->getCompetency()->getCompetencyMainFunction()->getId()] = $item->getCompetency()->getCompetencyMainFunction()->getMainFunction();
+            }
         }
 
         return $competencies;
