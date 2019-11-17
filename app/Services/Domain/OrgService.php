@@ -284,4 +284,27 @@ class OrgService
 
         return json_encode($query);
     }
+
+    /**
+     * Get list demand
+     *
+     * @return array
+     */
+    public function getDemandAsList()
+    {
+        $result = [];
+        $qb = $this->createQueryBuilder('org')
+            ->where('org.type = :type')
+            ->orderBy('org.name')
+            ->setParameter('type', Organization::TYPE_DEMAND);
+
+        $demands = $qb->getQuery()->getResult();
+
+        /** @var Organization $demand */
+        foreach ($demands as $demand) {
+            $result[$demand->getId()] = $demand->getName();
+        }
+
+        return $result;
+    }
 }

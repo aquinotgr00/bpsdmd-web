@@ -118,6 +118,13 @@
                 <span>Link and Match - Supply</span>
             </a>
         </li>
+
+        <li>
+            <a href="{{ url(route('administrator.link-match.demand')) }}">
+                <i class="fa fa-file"></i>
+                <span>Link and Match - Demand</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_SUPPLY))
@@ -177,6 +184,12 @@
             <a href="{{ route('demand.recruitment.index') }}">
                 <i class="fa fa-cart-plus"></i>
                 <span>{{ ucwords(trans('common.recruitment')) }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url(route('demand.link-match')) }}">
+                <i class="fa fa-file"></i>
+                <span>Link and Match</span>
             </a>
         </li>
     @endif

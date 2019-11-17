@@ -25,7 +25,7 @@ class JobTitle
     /**
      * @var Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="students")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="jobTitles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="instansi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })

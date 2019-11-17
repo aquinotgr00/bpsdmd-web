@@ -160,6 +160,8 @@ class JobTitleService
     }
 
     /**
+     * Find job title from licenses
+     *
      * @param array $licenses
      * @return array|JobTitle[]
      */
@@ -195,6 +197,8 @@ class JobTitleService
     }
 
     /**
+     * Get competency job title
+     *
      * @param JobTitle $jobTitle
      * @return array
      */
@@ -221,5 +225,34 @@ class JobTitleService
         }
 
         return $competencyService->getCompetencyByLicenses($licenses);
+    }
+
+    /**
+     * Get license by job title
+     *
+     * @param JobTitle $jobTitle
+     * @return array
+     */
+    public function getLicenseByJobTitle(JobTitle $jobTitle)
+    {
+        $licenses = [];
+
+        $qb = EntityManager::createQueryBuilder()
+            ->select('jfl')
+            ->from(JobTitleFunctionLicense::class, 'jfl')
+            ->join('jfl.jobTitleFunction', 'jtf');
+
+        $query = $qb->where('jtf.jobTitle = :jobTitle')
+            ->setParameter('jobTitle', $jobTitle)
+            ->getQuery();
+
+        $jfls = $query->getResult();
+
+        /** @var JobTitleFunctionLicense $jfl */
+        foreach ($jfls as $jfl) {
+            $licenses[$jfl->getLicense()->getId()] = $jfl->getLicense();
+        }
+
+        return $licenses;
     }
 }
