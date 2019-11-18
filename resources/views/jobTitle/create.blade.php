@@ -52,13 +52,13 @@
                             </div>
 
                             <div class="form-group has-job-function">
-                                <label for="name">Ada fungsi pekerjaan?</label>
+                                <label for="name">{{ ucfirst(trans('common.is_there_job_function')) }}</label>
                                 <div id="radioJobFunction" style="margin-left: 5px">
                                     <label for="withJobFunction">
-                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes"> Ada &nbsp;
+                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes"> {{ ucfirst(trans('common.yes')) }} &nbsp;
                                     </label>
                                     <label for="noJobFunction" style="margin-left: 15px">
-                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no"> Tidak
+                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no"> {{ ucfirst(trans('common.no')) }}
                                     </label>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <a href="javascript:void(0)" class="btn btn-default btnChooser">Pilih</a>
+                                        <a href="javascript:void(0)" class="btn btn-default btnChooser">{{ ucfirst(trans('common.choose')) }}</a>
                                     </div>
                                     <div class="col-md-6" style="margin-top: 20px">
                                         <ul class="list-group"></ul>
@@ -202,7 +202,7 @@
                 '<div class="col-md-6 sub-form">'+
                 '<div class="sub-form-group">'+
                 '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveFunction"><span class="glyphicon glyphicon-remove"></span></a>'+
-                '<p class="name"><b>Suatu Fungsi Pekerjaan</b></p>'+
+                '<p class="name"><b>{{ ucwords(trans('common.job_function')) }}</b></p>'+
                 '<input type="hidden" name="job_function[]" value="">' +
                 '<hr>'+
                 '<select class="job-function form-control">'+
@@ -212,7 +212,7 @@
                 '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>'+ licenseOptions +
                 '</select>'+
                 '<div style="margin-top:10px;text-align: right">'+
-                '<a href="javascript:void(0)" class="btn btn-default btnChooserLicenseJF">Pilih</a>'+
+                '<a href="javascript:void(0)" class="btn btn-default btnChooserLicenseJF">{{ ucfirst(trans('common.choose')) }}</a>'+
                 '</div>'+
                 '<div style="margin-top: 20px">'+
                 '<ul class="list-group-licenseJF" style="padding-inline-start: 0px;"></ul>'+

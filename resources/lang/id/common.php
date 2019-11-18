@@ -52,6 +52,7 @@ return [
     'not_yet' => 'belum',
     'yes' => 'iya',
     'no' => 'tidak',
+    'choose' => 'pilih',
 
     // manage user
     'user_information' => 'informasi pengguna',
@@ -277,6 +278,8 @@ return [
 
     // job function
     'job_function' => 'fungsi pekerjaan',
+    'head' => 'kepala',
+    'is_there_job_function' => 'ada fungsi pekerjaan?',
 
     // Analytics
     'graph_data' => 'Grafik Data',

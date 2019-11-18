@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Demand;
 use App\Entities\JobTitle;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\JobTitleService;
+use App\Services\Domain\JobFunctionService;
+use App\Services\Domain\LicenseService;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -27,8 +29,13 @@ class JobTitleController extends Controller
         return view('jobTitle.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete'));
     }
 
-    public function create(Request $request, JobTitleService $jobTitleService)
+    public function create(Request $request, JobTitleService $jobTitleService, LicenseService $licenseService, JobFunctionService $jobFunctionService)
     {
+        $licenses       = $licenseService->getAsList($request->input('license', []));
+        $arrayLicenses  = $licenseService->getAsArray();
+        $functions      = $jobFunctionService->getAsList($request->input('function', []));
+        $arrayHeads     = $jobFunctionService->getHeadAsArray();
+
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
@@ -54,11 +61,16 @@ class JobTitleController extends Controller
             return redirect()->route('demand.jobTitle.index')->with($alert, $message);
         }
 
-        return view('jobTitle.create');
+        return view('jobTitle.create', compact('licenses', 'functions', 'arrayLicenses', 'arrayHeads'));
     }
 
-    public function update(Request $request, JobTitleService $jobTitleService, JobTitle $data)
+    public function update(Request $request, JobTitleService $jobTitleService, LicenseService $licenseService, JobFunctionService $jobFunctionService, JobTitle $data)
     {
+        $licenses       = $licenseService->getAsList($request->input('license', []));
+        $arrayLicenses  = $licenseService->getAsArray();
+        $functions      = $jobFunctionService->getAsList($data->getJobTitleFunction());
+        $arrayHeads     = $jobFunctionService->getHeadAsArray();
+
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
@@ -84,7 +96,7 @@ class JobTitleController extends Controller
             return redirect()->route('demand.jobTitle.index')->with($alert, $message);
         }
 
-        return view('jobTitle.update', compact('data'));
+        return view('jobTitle.update', compact('data', 'licenses', 'functions', 'arrayLicenses', 'arrayHeads'));
     }
 
     public function delete(JobTitleService $jobTitleService, JobTitle $data)

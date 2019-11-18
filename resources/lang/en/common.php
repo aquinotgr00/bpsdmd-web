@@ -52,6 +52,7 @@ return [
     'not_yet' => 'not yet',
     'yes' => 'yes',
     'no' => 'no',
+    'choose' => 'choose',
 
     // manage user
     'user_information' => 'user information',
@@ -240,4 +241,6 @@ return [
 
     // job function
     'job_function' => 'job function',
+    'head' => 'head',
+    'is_there_job_function' => 'is there job function?',
 ];
