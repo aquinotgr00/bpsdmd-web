@@ -48,6 +48,8 @@ class LicenseService
     {
         $limit = 10;
         $query = $this->createQueryBuilder('l')
+            ->addOrderBy('l.code','ASC')
+            ->addOrderBy('l.chapter', 'ASC')
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -67,6 +69,7 @@ class LicenseService
         $license->setName($data->get('name'));
         $license->setChapter($data->get('chapter'));
         $license->setModa($data->get('moda'));
+        $license->setHead($data->get('head'));
 
         EntityManager::persist($license);
 
@@ -91,6 +94,7 @@ class LicenseService
         $license->setName($data->get('name'));
         $license->setChapter($data->get('chapter'));
         $license->setModa($data->get('moda'));
+        $license->setHead($data->get('head'));
 
         EntityManager::persist($license);
 
@@ -154,6 +158,11 @@ class LicenseService
         return $query->getResult();
     }
 
+    /**
+     * Get license as array
+     *
+     * @return false|string
+     */
     public function getAsArray()
     {
         $result = [];
@@ -168,5 +177,20 @@ class LicenseService
         }
 
         return json_encode($result);
+    }
+
+    /**
+     * Get head as array
+     *
+     * @return array
+     */
+    public function getHeadAsArray()
+    {
+        return [
+            License::HEAD_DKUPPU => License::HEAD_DKUPPU,
+            License::HEAD_DNP => License::HEAD_DNP,
+            License::HEAD_DBU => License::HEAD_DBU,
+            License::HEAD_DKP => License::HEAD_DKP,
+        ];
     }
 }

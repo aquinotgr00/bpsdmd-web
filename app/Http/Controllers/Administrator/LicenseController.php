@@ -35,6 +35,7 @@ class LicenseController extends Controller
             License::MODA_LAUT => ucfirst(License::MODA_LAUT),
             License::MODA_UDARA => ucfirst(License::MODA_UDARA)
         ];
+        $heads = $licenseService->getHeadAsArray();
 
         if ($request->method() == 'POST') {
             $request->validate([
@@ -62,7 +63,7 @@ class LicenseController extends Controller
             return redirect()->route('administrator.license.index')->with($alert, $message);
         }
 
-        return view('license.create', compact('moda'));
+        return view('license.create', compact('moda', 'heads'));
     }
 
     public function update(Request $request, LicenseService $licenseService, License $license)
@@ -73,6 +74,7 @@ class LicenseController extends Controller
             License::MODA_LAUT => ucfirst(License::MODA_LAUT),
             License::MODA_UDARA => ucfirst(License::MODA_UDARA)
         ];
+        $heads = $licenseService->getHeadAsArray();
 
         if ($request->method() == 'POST') {
             $request->validate([
@@ -99,7 +101,7 @@ class LicenseController extends Controller
             return redirect()->route('administrator.license.index')->with($alert, $message);
         }
 
-        return view('license.update', compact('license', 'moda'));
+        return view('license.update', compact('license', 'moda', 'heads'));
     }
 
     public function delete(LicenseService $licenseService, License $license)
