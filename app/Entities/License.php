@@ -18,6 +18,11 @@ class License
     const MODA_DARAT = 'darat';
     const MODA_KERETA = 'kereta api';
 
+    const HEAD_DKUPPU = 'DKUPPU';
+    const HEAD_DNP = 'DNP';
+    const HEAD_DBU = 'DBU';
+    const HEAD_DKP = 'DKP';
+
     /**
      * @var string
      *
