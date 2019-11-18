@@ -181,7 +181,7 @@ class EmployeeController extends Controller
                 'email' => $data->getEmail() ? $data->getEmail() : '-',
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
-                'gender' => $data->getGender() ? ucfirst($data->getGender()) : '-',
+                'gender' => $data->getGender() ? ($data->getGender() == 'male' ? ucfirst(trans('common.male')) : ucfirst(trans('common.female'))) : '-',
                 'place_of_birth' => $data->getPlaceOfBirth() ? $data->getPlaceOfBirth() : '-',
                 'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
                 'language' => $data->getLanguage() ? $data->getLanguage() : '-',

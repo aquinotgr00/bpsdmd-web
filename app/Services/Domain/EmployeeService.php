@@ -189,6 +189,10 @@ class EmployeeService
      */
     public function delete(Employee $employee)
     {
+        if ($employee->getPhoto()) {
+            @unlink(public_path(Employee::UPLOAD_PATH).'/'.$employee->getPhoto());
+        }
+
         EntityManager::remove($employee);
         EntityManager::flush();
     }
