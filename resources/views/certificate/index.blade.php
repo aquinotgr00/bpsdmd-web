@@ -26,6 +26,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
+                                    <th>{{ ucfirst(trans('common.type')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
                                     <td>{{ $item->getName() }}</td>
+                                    <td>{{ $item->getType() ? $item->getType() : '-' }}</td>
                                     <td>
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>

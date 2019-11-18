@@ -42,31 +42,25 @@ class EmployeeCertificateImport implements ToCollection
             if(!is_null($col[0]) && !is_null($col[1])){
                 $employeeService = new EmployeeService;
                 $employee        = $employeeService->getRepository()->findOneBy(['identityNumber' => $col[1]]);
+
                 if ($employee == null) {
-
-                    //create school
-                    $school = null;
-                    if(!is_null($col[10])){
-                        $orgService = new OrgService;
-                        $school     = $orgService->getRepository()->findOneBy(['name' => $col[10]]);
-                        if ($school == null) {
-                            $orgService->create(collect(['name' => $col[10]]));
-                            $school = $orgService->getRepository()->findOneBy(['name' => $col[10]]);
-                        }
-                    }
-
                     $data = collect([
                         'code' => intval($col[0]), 
                         'identity_number' => intval($col[1]), 
+                        'degree' => $col[2],
                         'name' => $col[3],
                         'dateOfBirth' => date_format(Date::excelToDateTimeObject($col[4]), 'd-m-Y'),
                         'language' => $col[5],
                         'nationality' => $col[6],
                         'gender' => $col[7],
-                        'placeOfBirth' => $col[8],
+                        'place_of_birth' => $col[8],
+                        'education_level' => $col[9],
+                        'major' => $col[11],
+                        'location' => $col[12],
+                        'duration' => $col[15],
                     ]);
-                    $employeeService->create($data, $this->org, $school);
-                    $employee = $employeeService->getRepository()->findOneBy(['name' => $col[3]]);
+                    $employeeService->create($data, $this->org);
+                    $employee = $employeeService->getRepository()->findOneBy(['identityNumber' => $col[1]]);
                 }
             }
 
