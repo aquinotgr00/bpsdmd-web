@@ -33,10 +33,10 @@ class UtilityService
      */
     public function getDataForDashboard()
     {
-        $countSchools = $this->orgService->getCountSchool();
-        $countTeachers = $this->teacherService->getCountTeacher();
-        $countStudents = $this->studentService->getCountStudent();
-        $countShortCourses = $this->shortCourseService->getCountShortCourse();
+        $countSchools = number_format($this->orgService->getCountSchool(), 0, ',', '.');
+        $countTeachers = number_format($this->teacherService->getCountTeacher(), 0, ',', '.');
+        $countStudents = number_format($this->studentService->getCountStudent(), 0, ',', '.');
+        $countShortCourses = number_format($this->shortCourseService->getCountShortCourse(), 0, ',', '.');
         $dataGraphTrend = $this->generateDataGraphTrend();
 
         return [$countSchools, $countTeachers, $countStudents, $countShortCourses, $dataGraphTrend];
