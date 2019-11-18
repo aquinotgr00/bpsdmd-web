@@ -34,7 +34,7 @@ class EmployeeCertificateImport implements ToCollection
     {
         foreach ($cols as $key => $col) 
         {
-            if($key == 0 || is_null($col[0]) || is_null($col[1]) || is_null($col[10]) || is_null($col[14])){
+            if($key == 0 || is_null($col[0]) || is_null($col[1]) || is_null($col[14])){
                 continue;
             }
 

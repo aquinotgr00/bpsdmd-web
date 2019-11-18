@@ -161,7 +161,7 @@ class EmployeeCertificateController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fc_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fec_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
 
         try {
