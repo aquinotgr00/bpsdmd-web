@@ -51,6 +51,110 @@
                                 <span class="help-block ">{!! implode('', $errors->get('experience_minimal')) !!}</span>
                             </div>
 
+                            <div class="form-group has-job-function">
+                                <label for="name">Ada fungsi pekerjaan?</label>
+                                <div id="radioJobFunction" style="margin-left: 5px">
+                                    <label for="withJobFunction">
+                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes" {{ $data->getJobTitleFunction() ? 'checked' : '' }}> Ada &nbsp;
+                                    </label>
+                                    <label for="noJobFunction" style="margin-left: 15px">
+                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no"> Tidak
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="noJobFunctionInput" class="form-group {{ $errors->has('license') ? 'has-error' : '' }}">
+                                <label for="license">{{ ucfirst(trans('common.license')) }} :</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select id="license" class="form-control">
+                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.license'))])) }}</option>
+                                            @if(!empty($licenses))
+                                                @foreach($licenses as $license)
+                                                    <option value="{{ $license->getId() }}" data-id="{{ $license->getId() }}" data-label="{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}">{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="javascript:void(0)" class="btn btn-default btnChooser">Pilih</a>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 20px">
+                                        <ul class="list-group"></ul>
+                                    </div>
+                                </div>
+                                <span class="help-block">{!! implode('', $errors->get('license')) !!}</span>
+                            </div>
+
+                            <div id="withJobFunctionInput" class="form-group {{ $errors->has('job_function') ? 'has-error' : '' }}">
+                                <label for="job_function">{{ ucfirst(trans('common.job_function')) }} :</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select id="function" class="form-control">
+                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.job_function'))])) }}</option>
+                                            @if(!empty($functions))
+                                                @foreach($functions as $function)
+                                                    <option value="{{ $function->getId() }}" data-id="{{ $function->getId() }}" data-label="{{ $function->getCode().' - '.$function->getName() }}">{{ $function->getCode().' - '.$function->getName() }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <a href="javascript:void(0)" class="btn btn-default btnChooserFunction">Pilih</a>
+                                    </div>
+
+                                    <div class="item-job-function">
+                                        @foreach($data->getJobTitleFunction() as $jtf)
+                                            <div class="job-functions form-group">
+                                                <div class="col-md-6 sub-form">
+                                                    <div class="sub-form-group">
+                                                        <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveFunction"><span class="glyphicon glyphicon-remove"></span></a>
+                                                        <p class="name">{{ $jtf->getJobFunction()->getCode().' - '.$jtf->getJobFunction()->getName() }}</p>
+                                                        <input type="hidden" name="job_function[]" value="{{ $jtf->getJobFunction()->getId() }}">
+                                                        <hr>
+                                                        <select class="job-function form-control">
+                                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.head'))])) }}</option>
+                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DKUPPU }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DKUPPU) }}</option>
+                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DNP }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DNP) }}</option>
+                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DBU }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DBU) }}</option>
+                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DKP }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DKP) }}</option>
+                                                        </select>
+                                                        <select id="licenseJF" class="form-control">
+                                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>
+                                                            @if(!empty($jtf->getJobTitleFunctionLicense()))
+                                                                @foreach($jtf->getJobTitleFunctionLicense() as $license)
+                                                                    <option value="{{ $license->getLicense()->getId() }}" data-id="{{ $license->getLicense()->getId() }}" data-label="{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                        <div style="margin-top:10px;text-align: right">
+                                                            <a href="javascript:void(0)" class="btn btn-default btnChooserLicenseJF">Pilih</a>
+                                                        </div>
+                                                        <div style="margin-top: 20px">
+                                                            <ul class="list-group-licenseJF" style="padding-inline-start: 0px;">
+                                                                @foreach($jtf->getJobTitleFunctionLicense() as $license)
+                                                                    <li class="list-group-item">
+                                                                        <input type="hidden" name="license[]" value="{{ $license->getLicense()->getId() }}">
+                                                                        <span class="name">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</span>
+                                                                        <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">
+                                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                                        </a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        @endforeach
+                                    </div>
+
+                                </div>
+                                <span class="help-block">{!! implode('', $errors->get('job_function')) !!}</span>
+                            </div>
+
                             <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
@@ -60,5 +164,179 @@
             </div>
         </div>
     </section><!-- /.content -->
+@endsection
+
+@section('script')
+    <script>
+        let withJobFunctionInput = $(document).find('div#withJobFunctionInput'),
+            noJobFunctionInput = $(document).find('div#noJobFunctionInput');
+
+        withJobFunctionInput.hide();
+        noJobFunctionInput.hide();
+
+        $('#radioJobFunction input').on('change', function () {
+            let value = $("input:radio[name=job_function_exist]:checked").val();
+
+            if (value === 'yes') {
+                noJobFunctionInput.hide();
+                withJobFunctionInput.show();
+            } else {
+                withJobFunctionInput.hide();
+                noJobFunctionInput.show();
+            }
+        });
+        $('#radioJobFunction input').change();
+
+        // no job function
+        $('a.btnChooser').live('click', function () {
+            let listing = $('.list-group'),
+                input = $(this).parent().find('select#license option:selected'),
+                template = '<li class="list-group-item">\n' +
+                    '<input type="hidden" name="license[]" value="">\n' +
+                    '<span class="name"></span>\n' +
+                    '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemove">\n' +
+                    '<span class="glyphicon glyphicon-remove"></span>\n' +
+                    '</a>\n' +
+                    '</li>';
+
+            if (input.val()) {
+                let rendered = $(template);
+
+                rendered.find('input').val(input.data('id'));
+                rendered.find('span.name').html(input.data('label'));
+
+                listing.append(rendered);
+                input.remove();
+            }
+        });
+
+        $('a.btnRemove').live('click', function () {
+            let selector = $(this).parent(),
+                id = selector.find('input').val(),
+                label = selector.find('span.name').html(),
+                template = '<option value="" data-id="" data-label=""></option>',
+                input = $('select#license');
+
+            let rendered = $(template);
+
+            rendered.attr('value', id);
+            rendered.attr('data-id', id);
+            rendered.attr('data-label', label);
+            rendered.text(label);
+
+            input.append(rendered);
+            $(this).parent().remove();
+        });
+
+        // with job function selector
+        let licenses = {!! $arrayLicenses !!},
+            licenseOptions = '',
+            heads = {!! $arrayHeads !!},
+            headOptions = '';
+
+        $.each(licenses, function( index, data ) {
+            licenseOptions = licenseOptions + '<option value="'+data.id+'" data-id="'+data.id+'" data-label="'+data.label+'">'+data.label+'</option>';
+        });
+
+        $.each(heads, function( index, value ) {
+            headOptions = headOptions + '<option value="'+value+'">'+value+'</option>';
+        });
+
+        $('a.btnChooserFunction').live('click', function () {
+            let listing = $('.item-job-function'),
+                input = $(this).parent().parent().find('select#function option:selected'),
+                template = '<div class="job-functions form-group">'+
+                '<div class="col-md-6 sub-form">'+
+                '<div class="sub-form-group">'+
+                '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveFunction"><span class="glyphicon glyphicon-remove"></span></a>'+
+                '<p class="name"><b>Suatu Fungsi Pekerjaan</b></p>'+
+                '<input type="hidden" name="job_function[]" value="">' +
+                '<hr>'+
+                '<select class="job-function form-control">'+
+                '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.head'))])) }}</option>'+ headOptions +
+                '</select>'+
+                '<select id="licenseJF" class="form-control">'+
+                '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>'+ licenseOptions +
+                '</select>'+
+                '<div style="margin-top:10px;text-align: right">'+
+                '<a href="javascript:void(0)" class="btn btn-default btnChooserLicenseJF">Pilih</a>'+
+                '</div>'+
+                '<div style="margin-top: 20px">'+
+                '<ul class="list-group-licenseJF" style="padding-inline-start: 0px;"></ul>'+
+                '</div>'+
+                '</div>'+
+                '</div>'+
+                '</div><div class="clearfix"></div>';
+
+            if (input.val()) {
+                let rendered = $(template);
+
+                rendered.find('input').val(input.data('id'));
+                rendered.find('p.name').html(input.data('label'));
+
+                listing.append(rendered);
+                input.remove();
+            }
+        });
+
+        $('a.btnRemoveFunction').live('click', function () {
+            let selector = $(this).parent(),
+                id = selector.find('input').val(),
+                label = selector.find('p.name').html(),
+                template = '<option value="" data-id="" data-label=""></option>',
+                input = $('select#function');
+
+            let rendered = $(template);
+
+            rendered.attr('value', id);
+            rendered.attr('data-id', id);
+            rendered.attr('data-label', label);
+            rendered.text(label);
+
+            input.append(rendered);
+            $(this).parent().parent().remove();
+        });
+
+        // with job function license
+        $('a.btnChooserLicenseJF').live('click', function () {
+            let listing = $(this).parent().parent().find('.list-group-licenseJF'),
+                input = $(this).parent().parent().find('select#licenseJF option:selected'),
+                template = '<li class="list-group-item">\n' +
+                    '<input type="hidden" name="license[]" value="">\n' +
+                    '<span class="name"></span>\n' +
+                    '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">\n' +
+                    '<span class="glyphicon glyphicon-remove"></span>\n' +
+                    '</a>\n' +
+                    '</li>';
+
+            if (input.val()) {
+                let rendered = $(template);
+
+                rendered.find('input').val(input.data('id'));
+                rendered.find('span.name').html(input.data('label'));
+
+                listing.append(rendered);
+                input.remove();
+            }
+        });
+
+        $('a.btnRemoveLicenseJF').live('click', function () {
+            let selector = $(this).parent(),
+                id = selector.find('input').val(),
+                label = selector.find('span.name').html(),
+                template = '<option value="" data-id="" data-label=""></option>',
+                input = $(this).parent().parent().parent().parent().find('select#licenseJF');
+
+            let rendered = $(template);
+
+            rendered.attr('value', id);
+            rendered.attr('data-id', id);
+            rendered.attr('data-label', label);
+            rendered.text(label);
+
+            input.append(rendered);
+            $(this).parent().remove();
+        });
+    </script>
 @endsection
 

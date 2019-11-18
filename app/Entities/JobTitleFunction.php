@@ -25,7 +25,7 @@ class JobTitleFunction
     /**
      * @var JobTitle
      *
-     * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="jobTitleFunction")
+     * @ORM\ManyToOne(targetEntity="JobTitle", inversedBy="jobTitleFunction", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="jabatan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -35,7 +35,7 @@ class JobTitleFunction
     /**
      * @var JobFunction
      *
-     * @ORM\ManyToOne(targetEntity="JobFunction", inversedBy="jobTitleFunction")
+     * @ORM\ManyToOne(targetEntity="JobFunction", inversedBy="jobTitleFunction", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fungsi_pekerjaan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -67,7 +67,7 @@ class JobTitleFunction
     /**
      * @return JobTitle
      */
-    public function getJobTitle()
+    public function getJobTitle(): JobTitle
     {
         return $this->jobTitle;
     }
@@ -75,7 +75,7 @@ class JobTitleFunction
     /**
      * @param JobTitle $jobTitle
      */
-    public function setJobTitle(Organization $jobTitle): void
+    public function setJobTitle(JobTitle $jobTitle): void
     {
         $this->jobTitle = $jobTitle;
     }
@@ -83,7 +83,7 @@ class JobTitleFunction
     /**
      * @return JobFunction
      */
-    public function getJobFunction()
+    public function getJobFunction(): JobFunction
     {
         return $this->jobFunction;
     }

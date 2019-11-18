@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App\Entities\JobTitle;
+use App\Entities\JobFunction;
 use App\Entities\JobTitleFunction;
 use App\Entities\JobTitleFunctionLicense;
 use App\Entities\License;
@@ -97,6 +98,10 @@ class JobTitleService
             $jobTitle->setOrg($org);
         }
 
+        if($data->get('job_function_exist')){
+            $this->setJobFunctions($jobTitle, $data->get('job_function'), $data->get('license'));
+        }
+
         EntityManager::persist($jobTitle);
 
         if ($flush) {
@@ -128,6 +133,10 @@ class JobTitleService
             $jobTitle->setOrg($org);
         }
 
+        if($data->get('job_function_exist')){
+            $this->setJobFunctions($jobTitle, $data->get('job_function'), $data->get('license'), 'update');
+        }
+
         EntityManager::persist($jobTitle);
 
         if ($flush) {
@@ -157,6 +166,35 @@ class JobTitleService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Set jobFunction jobTitle
+     *
+     * @param JobTitle $jobTitle
+     * @param array $jobFunctions
+     * @param string $type
+     */
+    private function setJobFunctions(JobTitle $jobTitle, array $jobFunctions = [], array $licenses = [], $type = 'create')
+    {
+        /** @var JobFunctionService $jobFunctionService */
+        $jobFunctionService = app(JobFunctionService::class);
+        /** @var JobTitleFunctionService $jobTitleFunctionService */
+        $jobTitleFunctionService = app(JobTitleFunctionService::class);
+
+        if ($type == 'update') {
+            $jobTitleFunctionService->delete($jobTitle);
+        }
+
+        if (count($jobFunctions)) {
+            foreach ($jobFunctions as $jobFunctionId) {
+                $jobFunction = $jobFunctionService->findById($jobFunctionId);
+
+                if ($jobFunction instanceof JobFunction) {
+                    $jobTitleFunctionService->create($jobTitle, $jobFunction, $licenses);
+                }
+            }
+        }
     }
 
     /**

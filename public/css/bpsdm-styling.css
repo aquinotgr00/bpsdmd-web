@@ -146,6 +146,24 @@ element.style {
     padding: 5px 20px;
 }
 
+/* Jabatan fungsi pekerjaan lisensi */
+.sub-form {
+    padding: 20px 10px;
+    margin: 20px 0;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+}
+.job-function.form-control {
+    margin-bottom: 20px;
+}
+.job-license.form-control {
+    margin-bottom: 10px;
+}
+.job-functions.form-group {
+    margin-left: 15px;
+}
+
+
 /* Graph view */
 .graph-view {
     display: none;

@@ -153,4 +153,20 @@ class LicenseService
 
         return $query->getResult();
     }
+
+    public function getAsArray()
+    {
+        $result = [];
+        $query = $this->getRepository()->findAll();
+
+        /** @var License $item */
+        foreach ($query as $item) {
+            $result[] = [
+                'id' => $item->getId(),
+                'label' => $item->getCode().' - '.$item->getName()
+            ];
+        }
+
+        return json_encode($result);
+    }
 }

@@ -25,7 +25,7 @@ class JobTitleFunctionLicense
     /**
      * @var JobTitleFunction
      *
-     * @ORM\ManyToOne(targetEntity="JobTitleFunction", inversedBy="jobTitleFunctionLicense")
+     * @ORM\ManyToOne(targetEntity="JobTitleFunction", inversedBy="jobTitleFunctionLicense", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="jabatan_fungsi_pekerjaan_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -35,7 +35,7 @@ class JobTitleFunctionLicense
     /**
      * @var License
      *
-     * @ORM\ManyToOne(targetEntity="License", inversedBy="jobTitleFunctionLicense")
+     * @ORM\ManyToOne(targetEntity="License", inversedBy="jobTitleFunctionLicense", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lisensi_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -61,7 +61,7 @@ class JobTitleFunctionLicense
     /**
      * @return JobTitleFunction
      */
-    public function getJobTitleFunction()
+    public function getJobTitleFunction(): JobTitleFunction
     {
         return $this->jobTitleFunction;
     }
