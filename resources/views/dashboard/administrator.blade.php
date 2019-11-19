@@ -62,15 +62,6 @@
             <section class="col-lg-12">
                 <div class="box box-danger" id="loading-example">
                     <div class="box-header">
-                        <!-- tools box -->
-                        <div class="pull-right box-tools">
-                            <button class="btn btn-danger btn-sm" title="" data-toggle="tooltip" data-widget="collapse" data-original-title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" title="Remove" data-toggle="tooltip" data-widget="remove">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div><!-- /. tools -->
                         <i class="fa fa-bar-chart-o"></i>
                         <h3 class="box-title">Grafik Jumlah Taruna</h3>
                     </div><!-- /.box-header -->
