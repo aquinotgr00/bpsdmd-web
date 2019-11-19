@@ -11,6 +11,8 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+storage/excel/*
+!storage/excel/.gitkeep
 public/users/img/*
 !public/users/img/.gitkeep
 public/orgs/img/*

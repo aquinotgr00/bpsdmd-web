@@ -48,7 +48,7 @@ class Feeder
     /**
      * @var string
      *
-     * @ORM\Column(name="error", type="text", nullable=false)
+     * @ORM\Column(name="error", type="text", nullable=true)
      */
     private $error = NULL;
 

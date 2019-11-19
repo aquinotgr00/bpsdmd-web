@@ -117,10 +117,15 @@ class FeederService
      * Active Feeder
      *
      * @param Feeder $feeder
+     * @param array $error
      */
-    public function activeFeeder(Feeder $feeder)
+    public function activeFeeder(Feeder $feeder, array $error = [])
     {
         $feeder->setStatus(1);
+
+        if (count($error)) {
+            $feeder->setError(implode(',', $error));
+        }
 
         EntityManager::persist($feeder);
         EntityManager::flush();

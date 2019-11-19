@@ -199,24 +199,29 @@ class StudentController extends Controller
 
         $file = $request->file('file');
         $nama_file = 'fs_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
-        $file->move('excel', $nama_file);
-        
+        $file->move(storage_path('excel'), $nama_file);
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
-            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+            $feeder = $feederService->create(collect($dataFeeder));
 
             $importer = new StudentImport;
             $importer->setOrg($org);
 
-            Excel::import($importer, public_path('/excel/'.$nama_file));
+            Excel::import($importer, storage_path('/excel/'.$nama_file));
 
             //update status feeder
-            $feeder = $feederService->findById($idFeeder);
-            $feederService->activeFeeder($feeder);
 
-            $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+            $errors = $importer->getErrors();
+            $feederService->activeFeeder($feeder, $errors);
+
+            if (count($errors)) {
+                $alert = 'alert_warning';
+                $message = trans('common.feeder_warning', ['lines' => implode(', ', $errors)]);
+            } else {
+                $alert = 'alert_success';
+                $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+            }
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';

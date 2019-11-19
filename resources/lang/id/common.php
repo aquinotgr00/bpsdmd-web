@@ -200,12 +200,13 @@ return [
     'email_verification_warning' => 'PENTING!! Jangan beritahukan informasi dibawah kepada siapapun.',
     'email_verification_info' => 'Berikut adalah data yang kamu gunakan untuk verifikasi akun mu',
     'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
-    'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
+    'email_verification_link' => 'Silahkan verifikasi akunmu, <a href=":url">di sini</a>',
 
     // manage feeder
     'feeder' => 'feeder',
     'upload' => 'unggah file',
     'choose_file' => 'pilih file',
+    'feeder_warning' => 'File berhasil diupload dengan peringatan. Berikut baris yang tidak berhasil diupload: <b>:lines</b>.<br>Silakan cek data Anda kembali.',
 
     // manage lisensi
     'license' => 'lisensi',
