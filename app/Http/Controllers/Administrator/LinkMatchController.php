@@ -53,7 +53,7 @@ class LinkMatchController extends Controller
     public function programLicense(Request $request, ProgramService $programService, StudyProgram $studyProgram)
     {
         if ($request->ajax()) {
-            $licenses = $programService->getLicenseByProgram($studyProgram);
+            $licenses = $programService->getLicenseByProgram($studyProgram, true);
 
             return response()->json($licenses);
         }
