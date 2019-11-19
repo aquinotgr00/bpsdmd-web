@@ -16,11 +16,12 @@ use App\Entities\User;
 Route::group(['middleware' => ['authenticated']], function() {
     // administrator routes
     Route::group(['prefix' => '/org', 'middleware' => ['only_admin']], function() {
+        Route::get('/supply', 'Administrator\OrgController@supply')->name('administrator.org.supply');
+        Route::get('/demand', 'Administrator\OrgController@demand')->name('administrator.org.demand');
         Route::any('/create', 'Administrator\OrgController@create')->name('administrator.org.create');
         Route::any('/{org}/update', 'Administrator\OrgController@update')->name('administrator.org.update');
         Route::get('/{org}/delete', 'Administrator\OrgController@delete')->name('administrator.org.delete');
         Route::get('/{org}', 'Administrator\OrgController@ajaxDetailOrg')->name('administrator.org.view');
-        Route::get('/', 'Administrator\OrgController@index')->name('administrator.org.index');
 
         Route::group(['prefix' => '/{org_supply}/program', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\ProgramController@create')->name('administrator.program.create');

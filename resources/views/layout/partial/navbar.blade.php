@@ -46,11 +46,25 @@
     </li>
 
     @if(checkAuthorization(\App\Entities\User::ROLE_ADMIN))
-        <li>
-            <a href="{{ url(route('administrator.org.index')) }}">
-                <i class="fa fa-sitemap"></i>
-                <span>{{ ucfirst(trans('common.institute')) }}</span>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-sitemap"></i> <span>{{ ucfirst(trans('common.institute')) }}</span>
             </a>
+            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('administrator.org.supply')) }}">
+                        <i class="fa fa-sitemap"></i>
+                        <span>{{ ucfirst(trans('common.supply')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('administrator.org.demand')) }}">
+                        <i class="fa fa-sitemap"></i>
+                        <span>{{ ucfirst(trans('common.demand')) }}</span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li>
@@ -62,7 +76,7 @@
 
         <li class="treeview">
             <a href="#">
-                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>Kompetensi</span>
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>{{ ucfirst(trans('common.competency')) }}</span>
             </a>
             <ul class="treeview-menu" style="display: none; overflow: hidden;">
                 <li>

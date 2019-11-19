@@ -103,6 +103,8 @@ return [
     'accreditation' => 'akreditasi',
     'logo' => 'logo',
     'company' => 'instansi',
+    'supply' => 'sekolah',
+    'demand' => 'perusahaan',
 
     //manage program
     'program_information' => 'informasi program studi',

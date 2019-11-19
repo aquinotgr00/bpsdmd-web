@@ -103,6 +103,8 @@ return [
     'accreditation' => 'accreditation',
     'logo' => 'logo',
     'company' => 'company',
+    'supply' => 'school',
+    'demand' => 'company',
 
     //manage program
     'program_information' => 'study program information',

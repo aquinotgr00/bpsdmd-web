@@ -12,12 +12,20 @@ use Image;
 
 class OrgController extends Controller
 {
-    public function index(OrgService $orgService)
+    public function supply(OrgService $orgService)
     {
         $page = request()->get('page');
-        $data = $orgService->paginateOrg(request()->get('page'));
+        $data = $orgService->paginateOrgSupply(request()->get('page'));
 
-        return view('org.index', compact('data', 'page'));
+        return view('org.supply', compact('data', 'page'));
+    }
+
+    public function demand(OrgService $orgService)
+    {
+        $page = request()->get('page');
+        $data = $orgService->paginateOrgDemand(request()->get('page'));
+
+        return view('org.demand', compact('data', 'page'));
     }
 
     public function create(Request $request, OrgService $orgService)

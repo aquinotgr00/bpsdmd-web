@@ -49,15 +49,34 @@ class OrgService
     }
 
     /**
-     * Paginate organization
+     * Paginate organization supply
      *
      * @param int $page
      * @return LengthAwarePaginator
      */
-    public function paginateOrg($page): LengthAwarePaginator
+    public function paginateOrgSupply($page): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('o')
+            ->where('o.type = :type')
+            ->setParameter('type', Organization::TYPE_SUPPLY)
+            ->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
+    /**
+     * Paginate organization demand
+     *
+     * @param int $page
+     * @return LengthAwarePaginator
+     */
+    public function paginateOrgDemand($page): LengthAwarePaginator
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('o')
+            ->where('o.type = :type')
+            ->setParameter('type', Organization::TYPE_DEMAND)
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
