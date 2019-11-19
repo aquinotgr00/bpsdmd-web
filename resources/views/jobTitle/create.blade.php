@@ -143,7 +143,7 @@
         // no job function
         $('a.btnChooser').live('click', function () {
             let listing = $('.list-group'),
-                input = $(this).parent().find('select#license option:selected'),
+                input = $(this).parent().parent().find('select#license option:selected'),
                 template = '<li class="list-group-item">\n' +
                     '<input type="hidden" name="license[]" value="">\n' +
                     '<span class="name"></span>\n' +
@@ -183,16 +183,10 @@
 
         // with job function selector
         let licenses = {!! $arrayLicenses !!},
-            licenseOptions = '',
-            heads = {!! $arrayHeads !!},
-            headOptions = '';
+            licenseOptions = '';
 
         $.each(licenses, function( index, data ) {
             licenseOptions = licenseOptions + '<option value="'+data.id+'" data-id="'+data.id+'" data-label="'+data.label+'">'+data.label+'</option>';
-        });
-
-        $.each(heads, function( index, value ) {
-            headOptions = headOptions + '<option value="'+value+'">'+value+'</option>';
         });
 
         $('a.btnChooserFunction').live('click', function () {
@@ -205,9 +199,6 @@
                 '<p class="name"><b>{{ ucwords(trans('common.job_function')) }}</b></p>'+
                 '<input type="hidden" name="job_function[]" value="">' +
                 '<hr>'+
-                '<select class="job-function form-control">'+
-                '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.head'))])) }}</option>'+ headOptions +
-                '</select>'+
                 '<select id="licenseJF" class="form-control">'+
                 '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>'+ licenseOptions +
                 '</select>'+

@@ -55,10 +55,10 @@
                                 <label for="name">{{ ucfirst(trans('common.is_there_job_function')) }}</label>
                                 <div id="radioJobFunction" style="margin-left: 5px">
                                     <label for="withJobFunction">
-                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes" {{ $data->getJobTitleFunction() ? 'checked' : '' }}> {{ ucfirst(trans('common.yes')) }} &nbsp;
+                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes" {{ $data->getJobTitleFunction()[0]->getJobFunction()->getName() != 'undefined' ? 'checked' : '' }}> {{ ucfirst(trans('common.yes')) }} &nbsp;
                                     </label>
                                     <label for="noJobFunction" style="margin-left: 15px">
-                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no"> {{ ucfirst(trans('common.no')) }}
+                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no" {{ $data->getJobTitleFunction()[0]->getJobFunction()->getName() == 'undefined' ? 'checked' : '' }}> {{ ucfirst(trans('common.no')) }}
                                     </label>
                                 </div>
                             </div>
@@ -78,6 +78,19 @@
                                     </div>
                                     <div class="col-md-6">
                                         <a href="javascript:void(0)" class="btn btn-default btnChooser">{{ ucfirst(trans('common.choose')) }}</a>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 20px">
+                                        <ul class="list-group">
+                                            @foreach($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense() as $license)
+                                                <li class="list-group-item">
+                                                    <input type="hidden" name="license[]" value="{{ $license->getLicense()->getId() }}">
+                                                    <span class="name">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</span>
+                                                    <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
                                     <div class="col-md-6" style="margin-top: 20px">
                                         <ul class="list-group"></ul>
@@ -113,13 +126,6 @@
                                                         <p class="name">{{ $jtf->getJobFunction()->getCode().' - '.$jtf->getJobFunction()->getName() }}</p>
                                                         <input type="hidden" name="job_function[]" value="{{ $jtf->getJobFunction()->getId() }}">
                                                         <hr>
-                                                        <select class="job-function form-control">
-                                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.head'))])) }}</option>
-                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DKUPPU }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DKUPPU) }}</option>
-                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DNP }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DNP) }}</option>
-                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DBU }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DBU) }}</option>
-                                                            <option value="{{ \App\Entities\JobFunction::HEAD_DKP }}">{{ ucfirst(\App\Entities\JobFunction::HEAD_DKP) }}</option>
-                                                        </select>
                                                         <select id="licenseJF" class="form-control">
                                                             <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>
                                                             @if(!empty($jtf->getJobTitleFunctionLicense()))
@@ -190,7 +196,7 @@
         // no job function
         $('a.btnChooser').live('click', function () {
             let listing = $('.list-group'),
-                input = $(this).parent().find('select#license option:selected'),
+                input = $(this).parent().parent().find('select#license option:selected'),
                 template = '<li class="list-group-item">\n' +
                     '<input type="hidden" name="license[]" value="">\n' +
                     '<span class="name"></span>\n' +
@@ -230,16 +236,10 @@
 
         // with job function selector
         let licenses = {!! $arrayLicenses !!},
-            licenseOptions = '',
-            heads = {!! $arrayHeads !!},
-            headOptions = '';
+            licenseOptions = '';
 
         $.each(licenses, function( index, data ) {
             licenseOptions = licenseOptions + '<option value="'+data.id+'" data-id="'+data.id+'" data-label="'+data.label+'">'+data.label+'</option>';
-        });
-
-        $.each(heads, function( index, value ) {
-            headOptions = headOptions + '<option value="'+value+'">'+value+'</option>';
         });
 
         $('a.btnChooserFunction').live('click', function () {
@@ -252,9 +252,6 @@
                 '<p class="name"><b>{{ ucwords(trans('common.job_function')) }}</b></p>'+
                 '<input type="hidden" name="job_function[]" value="">' +
                 '<hr>'+
-                '<select class="job-function form-control">'+
-                '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.head'))])) }}</option>'+ headOptions +
-                '</select>'+
                 '<select id="licenseJF" class="form-control">'+
                 '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>'+ licenseOptions +
                 '</select>'+

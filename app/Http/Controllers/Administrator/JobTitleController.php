@@ -35,7 +35,6 @@ class JobTitleController extends Controller
         $licenses       = $licenseService->getAsList($request->input('license', []));
         $arrayLicenses  = $licenseService->getAsArray();
         $functions      = $jobFunctionService->getAsList($request->input('function', []));
-        $arrayHeads     = $jobFunctionService->getHeadAsArray();
 
         if ($request->method() == 'POST') {
             $validation = [
@@ -49,6 +48,18 @@ class JobTitleController extends Controller
 
             try {
                 $requestData = $request->all();
+
+                if(!$request->get('job_function') && $request->get('license')){
+                    $jobFunction = $jobFunctionService->getRepository()->findOneBy(['name' => 'undefined']);
+                    if(!$jobFunction){
+                        $data = collect(['code' => '1', 'name' => 'undefined']);
+                        $jobFunctionService->create($data, $org);
+                        $jobFunction = $jobFunctionService->getRepository()->findOneBy(['name' => 'undefined']);
+                    }
+                    $requestData['job_function'] = [0=>$jobFunction->getId()];
+                }else{
+                    $requestData['job_function'] = $request->get('job_function');
+                }
 
                 $jobTitleService->create(collect($requestData), $org);
                 $alert = 'alert_success';
@@ -62,7 +73,7 @@ class JobTitleController extends Controller
             return redirect()->route('administrator.jobTitle.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
-        return view('jobTitle.create', compact('licenses', 'functions', 'arrayLicenses', 'arrayHeads'));
+        return view('jobTitle.create', compact('licenses', 'functions', 'arrayLicenses'));
     }
 
     public function update(Request $request, JobTitleService $jobTitleService, LicenseService $licenseService, JobFunctionService $jobFunctionService, Organization $org, JobTitle $data)
@@ -70,7 +81,6 @@ class JobTitleController extends Controller
         $licenses       = $licenseService->getAsList($request->input('license', []));
         $arrayLicenses  = $licenseService->getAsArray();
         $functions      = $jobFunctionService->getAsList($data->getJobTitleFunction());
-        $arrayHeads     = $jobFunctionService->getHeadAsArray();
 
         if ($request->method() == 'POST') {
             $validation = [
@@ -85,6 +95,18 @@ class JobTitleController extends Controller
             try {
                 $requestData = $request->all();
 
+                if(!$request->get('job_function') && $request->get('license')){
+                    $jobFunction = $jobFunctionService->getRepository()->findOneBy(['name' => 'undefined']);
+                    if(!$jobFunction){
+                        $data = collect(['code' => '1', 'name' => 'undefined']);
+                        $jobFunctionService->create($data, $org);
+                        $jobFunction = $jobFunctionService->getRepository()->findOneBy(['name' => 'undefined']);
+                    }
+                    $requestData['job_function'] = [0=>$jobFunction->getId()];
+                }else{
+                    $requestData['job_function'] = $request->get('job_function');
+                }
+
                 $jobTitleService->update($data, collect($requestData), $org, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.job_title'))]);
@@ -95,8 +117,8 @@ class JobTitleController extends Controller
 
             return redirect()->route('administrator.jobTitle.index', ['org' => $org->getId()])->with($alert, $message);
         }
-
-        return view('jobTitle.update', compact('data', 'licenses', 'functions', 'arrayLicenses', 'arrayHeads'));
+        
+        return view('jobTitle.update', compact('data', 'licenses', 'functions', 'arrayLicenses'));
     }
 
     public function delete(JobTitleService $jobTitleService, Organization $org, JobTitle $data)
