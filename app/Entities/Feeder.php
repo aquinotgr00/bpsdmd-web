@@ -46,6 +46,13 @@ class Feeder
     private $status = NULL;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="error", type="text", nullable=false)
+     */
+    private $error = NULL;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="date", nullable=false)
@@ -115,6 +122,22 @@ class Feeder
     public function setStatus($status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getError(): string
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param string $error
+     */
+    public function setError(string $error): void
+    {
+        $this->error = $error;
     }
 
     /**
