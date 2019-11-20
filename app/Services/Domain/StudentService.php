@@ -83,7 +83,6 @@ class StudentService
      */
     public function paginateRecruitment($page, Collection $search, $studyProgram = false): LengthAwarePaginator
     {
-        $limit = 10;
         $query = $this->createQueryBuilder('s')->leftJoin('s.org', 'o');
         if($studyProgram instanceof StudyProgram){
             $query->andWhere('s.studyProgram = :studyProgramId')->setParameter('studyProgramId', $studyProgram->getId());
@@ -100,10 +99,11 @@ class StudentService
             $query->andWhere("s.dateOfBirth BETWEEN :minDate AND :maxDate")->setParameter('minDate', $minDate)->setParameter('maxDate', $maxDate);
         }
         if(!empty($search->get('accreditation'))){
-            $query->andWhere('o.accreditation = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
+            $query->andWhere('o.status = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
         }
 
         $query = $query->getQuery();
+        $limit = count($query->getResult());
 
         return $this->paginate($query, $limit, $page, false);
     }

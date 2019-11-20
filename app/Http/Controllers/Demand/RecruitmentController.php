@@ -27,14 +27,14 @@ class RecruitmentController extends Controller
         }
         $org  = currentUser()->getOrg();
         $page = request()->get('page');
-        $data = $recruitmentService->paginateRecruitment(request()->get('page'), $org);
+        $data = $studentService->paginateRecruitment(request()->get('page'), collect($requestData), $studyProgram);
 
         $allStudent     = $studentService->getRepository()->findAll();
-        $student 		= $studentService->paginateRecruitment(request()->get('page'), collect($requestData), $studyProgram);
         $dataProgram 	= $programService->getRepository()->findAll();
+        $recruitment    = $recruitmentService->paginateRecruitment(request()->get('page'), $org);
         $urlDetail 		= '/recruitment';
 
-        return view('recruitment.index', compact('data', 'allStudent', 'student', 'dataProgram', 'page', 'urlDetail'));
+        return view('recruitment.index', compact('data', 'allStudent', 'recruitment', 'dataProgram', 'page', 'urlDetail'));
     }
 
     public function create(Request $request, RecruitmentService $recruitmentService, StudentService $studentService, Student $student)
@@ -59,7 +59,7 @@ class RecruitmentController extends Controller
     {
         if ($request->ajax()) {
             $data = [
-                'code' => $data->getCode() ? $data->getCode() : '-',
+                'nim' => $data->getNim() ? $data->getNim() : '-',
                 'name' => $data->getName(),
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : '-',
