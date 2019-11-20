@@ -14,7 +14,7 @@ class Version20191119114239 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('ALTER TABLE feeder ADD error TEXT NOT NULL');
+        $this->addSql('ALTER TABLE feeder ADD error TEXT');
     }
 
     /**
