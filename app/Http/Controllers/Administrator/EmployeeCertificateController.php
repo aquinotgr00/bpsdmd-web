@@ -179,8 +179,13 @@ class EmployeeCertificateController extends Controller
             $errors = $importer->getErrors();
             $feederService->activeFeeder($feeder, $errors);
 
-            $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);
+            if (count($errors)) {
+                $alert = 'alert_warning';
+                $message = trans('common.feeder_warning', ['lines' => implode(', ', $errors)]);
+            } else {
+                $alert = 'alert_success';
+                $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);
+            }
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';

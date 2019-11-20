@@ -173,8 +173,13 @@ class TeacherController extends Controller
             $errors = $importer->getErrors();
             $feederService->activeFeeder($feeder, $errors);
 
-            $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.teacher')]);
+            if (count($errors)) {
+                $alert = 'alert_warning';
+                $message = trans('common.feeder_warning', ['lines' => implode(', ', $errors)]);
+            } else {
+                $alert = 'alert_success';
+                $message = trans('common.feeder_success', ['object' => trans('common.teacher')]);
+            }
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
