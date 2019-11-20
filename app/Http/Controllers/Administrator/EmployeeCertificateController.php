@@ -26,17 +26,18 @@ class EmployeeCertificateController extends Controller
         $data = $employeeCertificateService->paginateEmployeeCertificate(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.employeeCertificate.create', [$org->getId()]));
-        $urlUpdate = function($id) use ($org) {
+        $urlCreate   = url(route('administrator.employeeCertificate.create', [$org->getId()]));
+        $urlUpdate   = function($id) use ($org) {
             return url(route('administrator.employeeCertificate.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($org) {
+        $urlDelete   = function($id) use ($org) {
             return url(route('administrator.employeeCertificate.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/employee-certificate';
-        $urlUpload = url(route('administrator.employeeCertificate.upload', [$org->getId()]));
+        $urlDetail   = '/org/'.$org->getId().'/employee-certificate';
+        $urlTemplate = '/org/'.$org->getId().'/employee-certificate/download/template';
+        $urlUpload   = url(route('administrator.employeeCertificate.upload', [$org->getId()]));
 
-        return view('employeeCertificate.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('employeeCertificate.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, EmployeeCertificateService $employeeCertificateService, EmployeeService $employeeService, CertificateService $certificateService, Organization $org)
@@ -202,5 +203,11 @@ class EmployeeCertificateController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-sertifikat.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

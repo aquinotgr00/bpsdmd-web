@@ -39,6 +39,8 @@ return [
     'invalid_option' => 'Pilihan :object tidak valid.',
     'male' => 'pria',
     'female' => 'wanita',
+    'template' => 'template',
+    'download_sample_file' => 'unduh contoh file',
 
     // table
     'view' => 'lihat',

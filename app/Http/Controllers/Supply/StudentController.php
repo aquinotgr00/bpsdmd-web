@@ -25,17 +25,18 @@ class StudentController extends Controller
         $data = $studentService->paginateStudent(request()->get('page'), currentUser()->getOrg());
 
         //build urls
-        $urlCreate = url(route('supply.student.create'));
-        $urlUpdate = function($id) {
+        $urlCreate   = url(route('supply.student.create'));
+        $urlUpdate   = function($id) {
             return url(route('supply.student.update', [$id]));
         };
-        $urlDelete = function($id) {
+        $urlDelete   = function($id) {
             return url(route('supply.student.delete', [$id]));
         };
-        $urlDetail = '/student';
-        $urlUpload = url(route('supply.student.upload'));
+        $urlDetail   = '/student';
+        $urlTemplate = url(route('supply.student.template.download'));
+        $urlUpload   = url(route('supply.student.upload'));
 
-        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService)
@@ -266,5 +267,11 @@ class StudentController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-siswa.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

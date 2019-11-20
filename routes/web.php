@@ -36,6 +36,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{student}/update', 'Administrator\StudentController@update')->name('administrator.student.update');
             Route::get('/{student}/delete', 'Administrator\StudentController@delete')->name('administrator.student.delete');
             Route::get('/{student}', 'Administrator\StudentController@ajaxDetailStudent')->name('administrator.student.view');
+            Route::get('/download/template', 'Administrator\StudentController@templateDownload')->name('administrator.student.template.download');
             Route::any('/upload', 'Administrator\StudentController@upload')->name('administrator.student.upload');
             Route::get('/', 'Administrator\StudentController@index')->name('administrator.student.index');
         });
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{teacher}/update', 'Administrator\TeacherController@update')->name('administrator.teacher.update');
             Route::get('/{teacher}/delete', 'Administrator\TeacherController@delete')->name('administrator.teacher.delete');
             Route::get('/{teacher}', 'Administrator\TeacherController@ajaxDetailTeacher')->name('administrator.teacher.view');
+            Route::get('/download/template', 'Administrator\TeacherController@templateDownload')->name('administrator.teacher.template.download');
             Route::any('/upload', 'Administrator\TeacherController@upload')->name('administrator.teacher.upload');
             Route::get('/', 'Administrator\TeacherController@index')->name('administrator.teacher.index');
         });
@@ -62,6 +64,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{employeeCertificate}/update', 'Administrator\EmployeeCertificateController@update')->name('administrator.employeeCertificate.update');
             Route::get('/{employeeCertificate}/delete', 'Administrator\EmployeeCertificateController@delete')->name('administrator.employeeCertificate.delete');
             Route::get('/{employeeCertificate}', 'Administrator\EmployeeCertificateController@ajaxDetailEmployeeCertificate')->name('administrator.employeeCertificate.view');
+            Route::get('/download/template', 'Administrator\EmployeeCertificateController@templateDownload')->name('administrator.employeeCertificate.template.download');
             Route::any('/upload', 'Administrator\EmployeeCertificateController@upload')->name('administrator.employeeCertificate.upload');
             Route::get('/', 'Administrator\EmployeeCertificateController@index')->name('administrator.employeeCertificate.index');
         });
@@ -201,6 +204,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{student}/update', 'Supply\StudentController@update')->name('supply.student.update');
         Route::get('/{student}/delete', 'Supply\StudentController@delete')->name('supply.student.delete');
         Route::get('/{student}', 'Supply\StudentController@ajaxDetailStudent')->name('supply.student.view');
+        Route::get('/download/template', 'Supply\StudentController@templateDownload')->name('supply.student.template.download');
         Route::any('/upload', 'Supply\StudentController@upload')->name('supply.student.upload');
         Route::get('/', 'Supply\StudentController@index')->name('supply.student.index');
     });
@@ -210,6 +214,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{teacher}/update', 'Supply\TeacherController@update')->name('supply.teacher.update');
         Route::get('/{teacher}/delete', 'Supply\TeacherController@delete')->name('supply.teacher.delete');
         Route::get('/{teacher}', 'Supply\TeacherController@ajaxDetailTeacher')->name('supply.teacher.view');
+        Route::get('/download/template', 'Supply\TeacherController@templateDownload')->name('supply.teacher.template.download');
         Route::any('/upload', 'Supply\TeacherController@upload')->name('supply.teacher.upload');
         Route::get('/', 'Supply\TeacherController@index')->name('supply.teacher.index');
     });

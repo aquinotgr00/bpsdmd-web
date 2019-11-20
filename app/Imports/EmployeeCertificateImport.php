@@ -41,7 +41,7 @@ class EmployeeCertificateImport implements ToCollection
             $employee = null;
             if(!is_null($col[0]) && !is_null($col[1])){
                 $employeeService = new EmployeeService;
-                $employee        = $employeeService->getRepository()->findOneBy(['identityNumber' => $col[1]]);
+                $employee        = $employeeService->getRepository()->findOneBy(['org' => $this->org,'identityNumber' => $col[1]]);
 
                 if ($employee == null) {
                     $data = collect([
@@ -52,7 +52,7 @@ class EmployeeCertificateImport implements ToCollection
                         'dateOfBirth' => date_format(Date::excelToDateTimeObject($col[4]), 'd-m-Y'),
                         'language' => $col[5],
                         'nationality' => $col[6],
-                        'gender' => $col[7],
+                        'gender' => $col[7] == 'P' ? \App\Entities\Employee::GENDER_FEMALE : \App\Entities\Employee::GENDER_MALE,
                         'place_of_birth' => $col[8],
                         'education_level' => $col[9],
                         'major' => $col[11],

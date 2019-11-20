@@ -25,17 +25,18 @@ class StudentController extends Controller
         $data = $studentService->paginateStudent(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.student.create', [$org->getId()]));
-        $urlUpdate = function($id) use ($org) {
+        $urlCreate   = url(route('administrator.student.create', [$org->getId()]));
+        $urlUpdate   = function($id) use ($org) {
             return url(route('administrator.student.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($org) {
+        $urlDelete   = function($id) use ($org) {
             return url(route('administrator.student.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/student';
-        $urlUpload = url(route('administrator.student.upload', [$org->getId()]));
+        $urlDetail   = '/org/'.$org->getId().'/student';
+        $urlTemplate = '/org/'.$org->getId().'/student/download/template';
+        $urlUpload   = url(route('administrator.student.upload', [$org->getId()]));
 
-        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService, Organization $org)
@@ -199,7 +200,7 @@ class StudentController extends Controller
         $file = $request->file('file');
         $nama_file = 'fs_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
         $file->move('excel', $nama_file);
-
+        
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
@@ -273,5 +274,11 @@ class StudentController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-siswa.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

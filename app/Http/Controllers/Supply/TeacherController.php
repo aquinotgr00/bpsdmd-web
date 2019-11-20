@@ -23,17 +23,18 @@ class TeacherController extends Controller
         $data = $teacherService->paginateTeacher(request()->get('page'), currentUser()->getOrg());
 
         //build urls
-        $urlCreate = url(route('supply.teacher.create'));
-        $urlUpdate = function($id) {
+        $urlCreate   = url(route('supply.teacher.create'));
+        $urlUpdate   = function($id) {
             return url(route('supply.teacher.update', [$id]));
         };
-        $urlDelete = function($id) {
+        $urlDelete   = function($id) {
             return url(route('supply.teacher.delete', [$id]));
         };
-        $urlDetail = '/teacher';
-        $urlUpload = url(route('supply.teacher.upload'));
+        $urlDetail   = '/teacher';
+        $urlTemplate = url(route('supply.teacher.template.download'));
+        $urlUpload   = url(route('supply.teacher.upload'));
 
-        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, TeacherService $teacherService, OrgService $orgService)
@@ -198,5 +199,11 @@ class TeacherController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-dosen.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

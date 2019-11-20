@@ -39,6 +39,8 @@ return [
     'invalid_option' => ':object is invalid.',
     'male' => 'male',
     'female' => 'female',
+    'template' => 'template',
+    'download_sample_file' => 'download sample file',
 
     // table
     'view' => 'view',

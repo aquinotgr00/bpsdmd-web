@@ -23,17 +23,18 @@ class TeacherController extends Controller
         $data = $teacherService->paginateTeacher(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.teacher.create', [$org->getId()]));
-        $urlUpdate = function($id) use ($org) {
+        $urlCreate   = url(route('administrator.teacher.create', [$org->getId()]));
+        $urlUpdate   = function($id) use ($org) {
             return url(route('administrator.teacher.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($org) {
+        $urlDelete   = function($id) use ($org) {
             return url(route('administrator.teacher.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/teacher';
-        $urlUpload = url(route('administrator.teacher.upload', [$org->getId()]));
+        $urlDetail   = '/org/'.$org->getId().'/teacher';
+        $urlTemplate = '/org/'.$org->getId().'/teacher/download/template';
+        $urlUpload   = url(route('administrator.teacher.upload', [$org->getId()]));
 
-        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org)
@@ -205,5 +206,11 @@ class TeacherController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-dosen.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }
