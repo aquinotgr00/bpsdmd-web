@@ -174,6 +174,7 @@ return [
     'feeder' => 'feeder',
     'upload' => 'upload file',
     'choose_file' => 'choose file',
+    'feeder_warning' => 'File uploaded with warning. Failed to upload with lines: <b>:lines</b>.<br>Please check you data.',
 
     // manage lisensi
     'license' => 'license',

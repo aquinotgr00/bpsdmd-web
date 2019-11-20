@@ -163,21 +163,21 @@ class EmployeeCertificateController extends Controller
 
         $file = $request->file('file');
         $nama_file = 'fec_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
-        $file->move('excel', $nama_file);
+        $file->move(storage_path('excel'), $nama_file);
 
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
-            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+            $feeder = $feederService->create(collect($dataFeeder));
 
             $importer = new EmployeeCertificateImport;
             $importer->setOrg($org);
 
-            Excel::import($importer, public_path('/excel/'.$nama_file));
+            Excel::import($importer, storage_path('/excel/'.$nama_file));
 
             //update status feeder
-            $feeder = $feederService->findById($idFeeder);
-            $feederService->activeFeeder($feeder);
+            $errors = $importer->getErrors();
+            $feederService->activeFeeder($feeder, $errors);
 
             $alert = 'alert_success';
             $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);

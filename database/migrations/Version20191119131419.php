@@ -5,7 +5,7 @@ namespace Database\Migrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
-class Version20191118020916 extends AbstractMigration
+class Version20191119131419 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -14,7 +14,7 @@ class Version20191118020916 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('ALTER TABLE sertifikat ALTER jenis DROP NOT NULL');
+        $this->addSql('ALTER TABLE feeder ALTER error DROP NOT NULL');
     }
 
     /**
@@ -24,6 +24,6 @@ class Version20191118020916 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('ALTER TABLE sertifikat ALTER jenis SET NOT NULL');
+        $this->addSql('ALTER TABLE feeder ALTER error SET NOT NULL');
     }
 }
