@@ -116,6 +116,14 @@
                 <h4 class="modal-title">{{ ucfirst(trans('common.upload')) }} {{ ucfirst(trans('common.diklat')) }}</h4>
               </div>
               <div class="modal-body">
+                <div class="form-group">
+                  <label for="file">{{ ucfirst(trans('common.choose_institute')) }}</label>
+                  <select class="form-control" name="org_id" required>
+                      @foreach ($orgs as $org)
+                          <option value="{{$org->getId()}}">{{$org->getName()}}</option>
+                      @endforeach
+                  </select>
+                </div>
                 <label for="file">{{ ucfirst(trans('common.choose_file')) }}</label>
                 <input type="file" name="file" class="form-control">
                 <p>Unduh contoh file: <a href="{{route('administrator.shortCourse.template.download')}}">template</a></p>

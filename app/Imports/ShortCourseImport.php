@@ -13,6 +13,14 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ShortCourseImport implements ToCollection
 {
+    /** @var Organization $org */
+    private $org;
+
+    public function setOrg(Organization $org)
+    {
+        $this->org = $org;
+    }
+
     /**
      * @param array $cols
      *
@@ -26,18 +34,10 @@ class ShortCourseImport implements ToCollection
                 continue;
             }
 
-            $orgService = new OrgService;
-            $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
-            if ($org == null) {
-              $data = collect(['name' => $col[4], 'type' => 'demand', 'moda' => 'darat']);
-              $orgService->create($data);
-              $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
-            }
-
             $shortCourse = new ShortCourse;
             $shortCourse->setName($col[1]);
             $shortCourse->setType('teknis');
-            $shortCourse->setOrg($org);
+            $shortCourse->setOrg($this->org);
 
             EntityManager::persist($shortCourse);
             EntityManager::flush();

@@ -10,9 +10,9 @@ NOCAPTCHA_SECRET=6LdedLoUAAAAAH5GqQnBHxYfyWi6Zkrizr17jghF
 NOCAPTCHA_SITEKEY=6LdedLoUAAAAAE8HF0BJcYUdTTuSBiRldxsK7d3x
 ```
 3. Run `composer install`
-4. Run `php  artisan doctrine:generate:proxies`
-5. Run `php  artisan doctrine:migrations:migrate`
-6. Run `php  artisan db:seed`
+4. Run `php artisan doctrine:generate:proxies`
+5. Run `php artisan doctrine:migrations:migrate`
+6. Run `php artisan db:seed`
 7. Run `php artisan serve` dan buka website di URL: [http://localhost:8000](http://localhost:8000/)
 
 **Cara develop:**
