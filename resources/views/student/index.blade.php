@@ -28,7 +28,7 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>{{ ucfirst(trans('common.code')) }}</th>
+                                    <th>{{ ucfirst(trans('common.nim')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th>{{ ucfirst(trans('common.institute')) }}</th>
                                     <th>{{ ucwords(trans('common.study_program')) }}</th>
@@ -43,7 +43,7 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
-                                    <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
+                                    <td>{{ $item->getNim() ? $item->getNim() : '-' }}</td>
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
                                     <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getName() : '-' }}</td>
@@ -86,9 +86,14 @@
                         </div>
                         <table class="table">
                             <tr>
-                                <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
+                                <th width="30%">{{ ucfirst(trans('common.nim')) }}</th>
                                 <td width="5%">:</td>
-                                <td class="studentCode"></td>
+                                <td class="studentNim"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ strtoupper(trans('common.id_dikti')) }}</th>
+                                <td>:</td>
+                                <td class="studentIdDikti"></td>
                             </tr>
                             <tr>
                                 <th>{{ ucwords(trans('common.name')) }}</th>
@@ -126,9 +131,109 @@
                                 <td class="studentGender"></td>
                             </tr>
                             <tr>
+                                <th>{{ ucwords(trans('common.place_of_birth')) }}</th>
+                                <td>:</td>
+                                <td class="studentPlaceOfBirth"></td>
+                            </tr>
+                            <tr>
                                 <th>{{ ucwords(trans('common.date_of_birth')) }}</th>
                                 <td>:</td>
                                 <td class="studentDateOfBirth"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.address')) }}</th>
+                                <td>:</td>
+                                <td class="studentAddress"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.phone_number')) }}</th>
+                                <td>:</td>
+                                <td class="studentPhoneNumber"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.mobile_phone_number')) }}</th>
+                                <td>:</td>
+                                <td class="studentMobilePhoneNumber"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.email')) }}</th>
+                                <td>:</td>
+                                <td class="studentEmail"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucfirst(trans('common.religion')) }}</th>
+                                <td>:</td>
+                                <td class="studentReligion"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.mother_name')) }}</th>
+                                <td>:</td>
+                                <td class="studentMotherName"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.nationality')) }}</th>
+                                <td>:</td>
+                                <td class="studentNationality"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.foreign_citizen')) }}</th>
+                                <td>:</td>
+                                <td class="studentForeignCitizen"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.social_protection_card')) }}</th>
+                                <td>:</td>
+                                <td class="studentSocialProtectionCard"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.occupation_type')) }}</th>
+                                <td>:</td>
+                                <td class="studentOccupationType"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.enrollment_date_start')) }}</th>
+                                <td>:</td>
+                                <td class="studentEnrollmentDateStart"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.enrollment_date_end')) }}</th>
+                                <td>:</td>
+                                <td class="studentEnrollmentDateEnd"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.start_semester')) }}</th>
+                                <td>:</td>
+                                <td class="studentStartSemester"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.current_semester')) }}</th>
+                                <td>:</td>
+                                <td class="studentCurrentSemester"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.student_credits')) }}</th>
+                                <td>:</td>
+                                <td class="studentStudentCredits"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.certificate_number')) }}</th>
+                                <td>:</td>
+                                <td class="studentCertificateNumber"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.graduation_judgement_date')) }}</th>
+                                <td>:</td>
+                                <td class="studentGraduationJudgementDate"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.enrollment_type')) }}</th>
+                                <td>:</td>
+                                <td class="studentEnrollmentType"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ ucwords(trans('common.graduation_type')) }}</th>
+                                <td>:</td>
+                                <td class="studentGraduationType"></td>
                             </tr>
                             <tr>
                                 <th>{{ ucfirst(trans('common.status')) }}</th>
@@ -167,14 +272,12 @@
                             <h5 class="modal-title" id="upload">{{ ucwords(trans('common.student_feeder')) }}</h5>
                         </div>
                         <div class="modal-body">
-
                             {{ csrf_field() }}
-
                             <label>{{ ucfirst(trans('common.choose_file')) }}</label>
                             <div class="form-group">
                                 <input type="file" name="file" required="required">
+                                <p>{{ ucfirst(trans('common.download_sample_file')) }}: <a href="{{ $urlTemplate }}">{{ ucfirst(trans('common.template')) }}</a></p>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -200,7 +303,8 @@
             if (status === 'success') {
                 let modalHtml = $('#modalDetailStudent');
 
-                modalHtml.find('.studentCode').html(student.code);
+                modalHtml.find('.studentNim').html(student.nim);
+                modalHtml.find('.studentIdDikti').html(student.id_dikti);
                 modalHtml.find('.studentName').html(student.name);
                 modalHtml.find('.studentInstitute').html(student.org);
                 modalHtml.find('.studentStudyProgram').html(student.study_program);
@@ -208,7 +312,27 @@
                 modalHtml.find('.studentCurriculum').html(student.curriculum);
                 modalHtml.find('.studentIdentityNumber').html(student.identity_number);
                 modalHtml.find('.studentGender').html(student.gender);
+                modalHtml.find('.studentPlaceOfBirth').html(student.place_of_birth);
                 modalHtml.find('.studentDateOfBirth').html(student.date_of_birth);
+                modalHtml.find('.studentAddress').html(student.address);
+                modalHtml.find('.studentPhoneNumber').html(student.phone_number);
+                modalHtml.find('.studentMobilePhoneNumber').html(student.mobile_phone_number);
+                modalHtml.find('.studentEmail').html(student.email);
+                modalHtml.find('.studentReligion').html(student.religion);
+                modalHtml.find('.studentMotherName').html(student.mother_name);
+                modalHtml.find('.studentNationality').html(student.nationality);
+                modalHtml.find('.studentForeignCitizen').html(student.foreign_citizen);
+                modalHtml.find('.studentSocialProtectionCard').html(student.social_protection_card);
+                modalHtml.find('.studentOccupationType').html(student.occupation_type);
+                modalHtml.find('.studentEnrollmentDateStart').html(student.enrollment_date_start);
+                modalHtml.find('.studentEnrollmentDateEnd').html(student.enrollment_date_end);
+                modalHtml.find('.studentStartSemester').html(student.start_semester);
+                modalHtml.find('.studentCurrentSemester').html(student.current_semester);
+                modalHtml.find('.studentStudentCredits').html(student.student_credits);
+                modalHtml.find('.studentCertificateNumber').html(student.certificate_number);
+                modalHtml.find('.studentGraduationJudgementDate').html(student.graduation_judgement_date);
+                modalHtml.find('.studentEnrollmentType').html(student.enrollment_type);
+                modalHtml.find('.studentGraduationType').html(student.graduation_type);
                 modalHtml.find('.studentStatus').html(student.status);
                 modalHtml.find('.studentClass').html(student.class);
                 modalHtml.find('.studentIpk').html(student.ipk);
@@ -220,7 +344,8 @@
     });
 
     $('#modalDetailStudent').on('hidden.bs.modal', function (e) {
-        modalHtml.find('.studentCode').html('');
+        modalHtml.find('.studentNim').html('');
+        modalHtml.find('.studentIdDikti').html('');
         modalHtml.find('.studentName').html('');
         modalHtml.find('.studentInstitute').html('');
         modalHtml.find('.studentStudyProgram').html('');
@@ -228,7 +353,27 @@
         modalHtml.find('.studentCurriculum').html('');
         modalHtml.find('.studentIdentityNumber').html('');
         modalHtml.find('.studentGender').html('');
+        modalHtml.find('.studentPlaceOfBirth').html('');
         modalHtml.find('.studentDateOfBirth').html('');
+        modalHtml.find('.studentAddress').html('');
+        modalHtml.find('.studentPhoneNumber').html('');
+        modalHtml.find('.studentMobilePhoneNumber').html('');
+        modalHtml.find('.studentEmail').html('');
+        modalHtml.find('.studentReligion').html('');
+        modalHtml.find('.studentMotherName').html('');
+        modalHtml.find('.studentNationality').html('');
+        modalHtml.find('.studentForeignCitizen').html('');
+        modalHtml.find('.studentSocialProtectionCard').html('');
+        modalHtml.find('.studentOccupationType').html('');
+        modalHtml.find('.studentEnrollmentDateStart').html('');
+        modalHtml.find('.studentEnrollmentDateEnd').html('');
+        modalHtml.find('.studentStartSemester').html('');
+        modalHtml.find('.studentCurrentSemester').html('');
+        modalHtml.find('.studentStudentCredits').html('');
+        modalHtml.find('.studentCertificateNumber').html('');
+        modalHtml.find('.studentGraduationJudgementDate').html('');
+        modalHtml.find('.studentEnrollmentType').html('');
+        modalHtml.find('.studentGraduationType').html('');
         modalHtml.find('.studentStatus').html('');
         modalHtml.find('.studentClass').html('');
         modalHtml.find('.studentIpk').html('');

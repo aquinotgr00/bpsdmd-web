@@ -37,6 +37,10 @@ return [
     'confirm_delete' => 'Are you sure?',
     'please_choose' => 'Please choose :object',
     'invalid_option' => ':object is invalid.',
+    'male' => 'male',
+    'female' => 'female',
+    'template' => 'template',
+    'download_sample_file' => 'download sample file',
 
     // table
     'view' => 'view',
@@ -50,6 +54,7 @@ return [
     'not_yet' => 'not yet',
     'yes' => 'yes',
     'no' => 'no',
+    'choose' => 'choose',
 
     // manage user
     'user_information' => 'user information',
@@ -99,6 +104,9 @@ return [
     'education_type' => 'education type',
     'accreditation' => 'accreditation',
     'logo' => 'logo',
+    'company' => 'company',
+    'supply' => 'school',
+    'demand' => 'company',
 
     //manage program
     'program_information' => 'study program information',
@@ -127,10 +135,13 @@ return [
     'foreign_citizen' => 'foreign citizen',
     'social_protection_card' => 'social protection card',
     'occupation_type' => 'occupation type',
+    'enrollment_date_start' => 'enrollment date start',
+    'enrollment_date_end' => 'enrollment date end',
     'start_semester' => 'start semester',
     'current_semester' => 'current semester',
     'student_credits' => 'student credits',
     'certificate_number' => 'certificate number',
+    'graduation_judgement_date' => 'graduation judgement date',
     'enrollment_type' => 'enrollment type',
     'graduation_type' => 'graduation type',
     'student_feeder' => 'upload feeder data student',
@@ -154,11 +165,16 @@ return [
     'gender' => 'gender',
     'place_of_birth' => 'place of birth',
     'nationality' => 'nationality',
+    'education_level' => 'education level',
+    'location' => 'location',
+    'duration' => 'duration',
+    'major' => 'major',
 
     //manage feeder
     'feeder' => 'feeder',
     'upload' => 'upload file',
     'choose_file' => 'choose file',
+    'feeder_warning' => 'File uploaded with warning. Failed to upload with lines: <b>:lines</b>.<br>Please check you data.',
 
     // manage lisensi
     'license' => 'license',
@@ -193,6 +209,10 @@ return [
 
     //manage job title
     'job_title' => 'job title',
+    'education_minimal' => 'education minimal',
+    'gpa_minimal' => 'gpa minimal',
+    'age_minimal' => 'age minimal',
+    'experience_minimal' => 'experience minimal',
 
     //manage recruitment
     'recruitment' => 'recruitment',
@@ -226,4 +246,6 @@ return [
 
     // job function
     'job_function' => 'job function',
+    'head' => 'head',
+    'is_there_job_function' => 'is there job function?',
 ];

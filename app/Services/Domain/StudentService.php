@@ -83,7 +83,6 @@ class StudentService
      */
     public function paginateRecruitment($page, Collection $search, $studyProgram = false): LengthAwarePaginator
     {
-        $limit = 10;
         $query = $this->createQueryBuilder('s')->leftJoin('s.org', 'o');
         if($studyProgram instanceof StudyProgram){
             $query->andWhere('s.studyProgram = :studyProgramId')->setParameter('studyProgramId', $studyProgram->getId());
@@ -100,10 +99,11 @@ class StudentService
             $query->andWhere("s.dateOfBirth BETWEEN :minDate AND :maxDate")->setParameter('minDate', $minDate)->setParameter('maxDate', $maxDate);
         }
         if(!empty($search->get('accreditation'))){
-            $query->andWhere('o.accreditation = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
+            $query->andWhere('o.status = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
         }
 
         $query = $query->getQuery();
+        $limit = count($query->getResult());
 
         return $this->paginate($query, $limit, $page, false);
     }
@@ -119,11 +119,10 @@ class StudentService
     {
         $student = new Student;
         $student->setIdDikti($data->get('id_dikti'));
-        $student->setCode($data->get('code'));
         $student->setNim($data->get('nim'));
         $student->setName($data->get('name'));
         $student->setGender($data->get('gender'));
-        $student->setPlaceOfBirth($data->get('placeOfBirth'));
+        $student->setPlaceOfBirth($data->get('place_of_birth'));
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setAddress($data->get('address'));
         $student->setPhoneNumber($data->get('phone_number'));
@@ -190,11 +189,10 @@ class StudentService
     public function update(Student $student, Collection $data, $org = false, $studyProgram = false, $flush = true)
     {
         $student->setIdDikti($data->get('id_dikti'));
-        $student->setCode($data->get('code'));
         $student->setNim($data->get('nim'));
         $student->setName($data->get('name'));
         $student->setGender($data->get('gender'));
-        $student->setPlaceOfBirth($data->get('placeOfBirth'));
+        $student->setPlaceOfBirth($data->get('place_of_birth'));
         $student->setDateOfBirth(date_create_from_format('d-m-Y', $data->get('dateOfBirth')));
         $student->setAddress($data->get('address'));
         $student->setPhoneNumber($data->get('phone_number'));
@@ -261,6 +259,10 @@ class StudentService
      */
     public function delete(Student $student)
     {
+        if ($student->getPhoto()) {
+            @unlink(public_path(Student::UPLOAD_PATH).'/'.$student->getPhoto());
+        }
+
         EntityManager::remove($student);
         EntityManager::flush();
     }

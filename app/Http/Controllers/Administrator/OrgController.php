@@ -12,12 +12,20 @@ use Image;
 
 class OrgController extends Controller
 {
-    public function index(OrgService $orgService)
+    public function supply(OrgService $orgService)
     {
         $page = request()->get('page');
-        $data = $orgService->paginateOrg(request()->get('page'));
+        $data = $orgService->paginateOrgSupply(request()->get('page'));
 
-        return view('org.index', compact('data', 'page'));
+        return view('org.supply', compact('data', 'page'));
+    }
+
+    public function demand(OrgService $orgService)
+    {
+        $page = request()->get('page');
+        $data = $orgService->paginateOrgDemand(request()->get('page'));
+
+        return view('org.demand', compact('data', 'page'));
     }
 
     public function create(Request $request, OrgService $orgService)
@@ -184,8 +192,8 @@ class OrgController extends Controller
                 'ownership_status' => $org->getOwnershipStatus() ? $org->getOwnershipStatus() : '-',
                 'under_supervision' => $org->getUnderSupervision() ? $org->getUnderSupervision() : '-',
                 'education_type' => $org->getEducationType() ? $org->getEducationType() : '-',
-                'accreditation' => $org->getAccreditation() ? $org->getAccreditation() : '-',
-                'photo' => $org->getPhoto() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getPhoto())) : url('img/avatar.png'),
+                'accreditation' => $org->getStatus() ? $org->getStatus() : '-',
+                'photo' => $org->getLogo() ? url(url(Organization::UPLOAD_PATH.'/'.$org->getLogo())) : url('img/avatar.png'),
             ];
 
             return response()->json($data);

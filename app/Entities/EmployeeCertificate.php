@@ -42,21 +42,11 @@ class EmployeeCertificate
     private $certificate;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="masa_berlaku", type="date", nullable=false)
+     * @ORM\Column(name="masa_berlaku", type="string", nullable=false)
      */
     private $validityPeriod = NULL;
-
-    /**
-     * @var ShortCourse
-     *
-     * @ORM\ManyToOne(targetEntity="ShortCourse", inversedBy="employeeCertificate")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="diklat_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
-     * })
-     */
-    private $shortCourse;
 
     /**
      * @var \DateTime
@@ -114,7 +104,7 @@ class EmployeeCertificate
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getValidityPeriod(): ?string
     {
@@ -122,27 +112,11 @@ class EmployeeCertificate
     }
 
     /**
-     * @param \DateTime $validityPeriod
+     * @param string $validityPeriod
      */
     public function setValidityPeriod($validityPeriod): void
     {
         $this->validityPeriod = $validityPeriod;
-    }
-
-    /**
-     * @return ShortCourse
-     */
-    public function getShortCourse(): ShortCourse
-    {
-        return $this->shortCourse;
-    }
-
-    /**
-     * @param ShortCourse $shortCourse
-     */
-    public function setShortCourse(ShortCourse $shortCourse): void
-    {
-        $this->shortCourse = $shortCourse;
     }
 
     /**

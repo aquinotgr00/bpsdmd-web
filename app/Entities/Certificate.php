@@ -32,9 +32,9 @@ class Certificate
     /**
      * @var string
      *
-     * @ORM\Column(name="jenis", type="string", nullable=false)
+     * @ORM\Column(name="jenis", type="string", nullable=true)
      */
-    private $type;
+    private $type = NULL;
 
     /**
      * @var ArrayCollection|EmployeeCertificate[]

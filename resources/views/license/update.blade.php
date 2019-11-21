@@ -43,7 +43,17 @@
                                 <span class="help-block">{!! implode('', $errors->get('degree')) !!}</span>
                             </div>
 
-                            <div class="box-footer">
+                            <div class="form-group {{ $errors->has('head') ? 'has-error' : '' }}">
+                                <label for="head">{{ ucfirst(trans('common.head')) }} :</label>
+                                <select id="head" name="head" class="form-control">
+                                    @foreach($heads as $value => $label)
+                                        <option value="{{ $value }}" {!! $license->getHead() == $value ? 'selected':'' !!}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{!! implode('', $errors->get('head')) !!}</span>
+                            </div>
+
+                            <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
                         </form>

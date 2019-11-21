@@ -122,7 +122,9 @@
                             html = html + '<div class="list-prodi-item" data-id="'+data.id+'">'+data.name+'</div>';
                         });
 
-                        $(listingProdi).html(html);
+                        if (html.length > 0) {
+                            $(listingProdi).html(html);
+                        }
                     }
                 });
             }

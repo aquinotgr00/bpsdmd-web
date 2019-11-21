@@ -73,8 +73,8 @@
                                             <label class="control-label">{{ ucwords(trans('common.gender')) }}</label>
                                             <select id="gender" name="gender" class="form-control">
                                                 <option value="" selected="">{{ ucwords(trans('common.all_gender')) }}</option>
-                                                <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ old('gender') == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_MALE) }}</option>
-                                                <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Student::GENDER_FEMALE) }}</option>
+                                                <option value="{{ \App\Entities\Student::GENDER_MALE }}" {{ old('gender') == \App\Entities\Student::GENDER_MALE ? 'selected' : '' }}>{{ ucfirst(trans('common.male')) }}</option>
+                                                <option value="{{ \App\Entities\Student::GENDER_FEMALE }}" {{ old('gender') == \App\Entities\Student::GENDER_FEMALE ? 'selected' : '' }}>{{ ucfirst(trans('common.female')) }}</option>
                                             </select>
                                             <span class="help-block">{{ ucwords(trans('common.gender')) }}</span>
                                         </div>
@@ -116,12 +116,12 @@
                                     <div class="col-lg-3 col-sm-6 row-in-br hasil-pencarian b-r-none">
                                         <ul class="col-in">
                                             <li class="col-last">
-                                                <h3 class="counter text-right m-t-15"><?=count($student)?></h3>
+                                                <h3 class="counter text-right m-t-15"><?=count($data)?></h3>
                                             </li>
                                             <li class="col-middle">
                                                 <h4>{{ ucwords(trans('common.search_result')) }}</h4>
                                                 <div class="progress">
-                                                    <?php $searchPersen = (count($student) / (count($allStudent) ? count($allStudent) : 1))*100;?>
+                                                    <?php $searchPersen = (count($data) / (count($allStudent) ? count($allStudent) : 1))*100;?>
                                                     <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?=$searchPersen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$searchPersen?>%">
                                                         <span class="sr-only"><?=$searchPersen?>% Complete (success)</span>
                                                     </div>
@@ -135,12 +135,12 @@
                                                 <a href="{{ url(route('demand.offering.index')) }}"><span class="circle circle-md bg-success"><i class="fa fa-shopping-cart"></i></span></a>
                                             </li>
                                             <li class="col-last">
-                                                <h3 class="counter text-right m-t-15"><?=count($data)?></h3>
+                                                <h3 class="counter text-right m-t-15"><?=count($recruitment)?></h3>
                                             </li>
                                             <li class="col-middle">
                                                 <h4 style="font-size:14px;">{{ ucwords(trans('common.list_candidate')) }}</h4>
                                                 <div class="progress">
-                                                    <?php $persen = (count($data) / (count($allStudent) ? count($allStudent) : 1))*100;?>
+                                                    <?php $persen = (count($recruitment) / (count($allStudent) ? count($allStudent) : 1))*100;?>
                                                     <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?=$persen?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$persen?>%">
                                                         <span class="sr-only"><?=$persen?>% Complete (success)</span>
                                                     </div>
@@ -169,7 +169,8 @@
                                         <tbody>
                                             <?php
                                             $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
-                                            foreach ($student as $item) {
+                                            /** @var \App\Entities\Student $item */
+                                            foreach ($data as $item) {
                                             ?>
                                                 <tr>
                                                     <td>{{ $item->getName() }}</td>
@@ -184,7 +185,7 @@
                                                 </tr>
                                             <?php } ?>
 
-                                            @if(!count($student))
+                                            @if(!count($data))
                                                 <tr class="even pointer">
                                                     <td colspan="7">{{ ucfirst(trans('common.no_data')) }}</td>
                                                 </tr>
@@ -211,9 +212,9 @@
                             </div>
                             <table class="table">
                                 <tr>
-                                    <th width="30%">{{ ucfirst(trans('common.code')) }}</th>
+                                    <th width="30%">{{ ucfirst(trans('common.nim')) }}</th>
                                     <td width="5%">:</td>
-                                    <td class="studentCode"></td>
+                                    <td class="studentNim"></td>
                                 </tr>
                                 <tr>
                                     <th>{{ ucwords(trans('common.name')) }}</th>
@@ -294,7 +295,7 @@
 
         $.get(url+'/'+student, function(student, status){
             if (status === 'success') {
-                modalHtml.find('.studentCode').html(student.code);
+                modalHtml.find('.studentNim').html(student.nim);
                 modalHtml.find('.studentName').html(student.name);
                 modalHtml.find('.studentInstitute').html(student.org);
                 modalHtml.find('.studentStudyProgram').html(student.study_program);
@@ -316,7 +317,7 @@
     $('#modalDetailStudent').on('hidden.bs.modal', function (e) {
         let modalHtml = $('#modalDetailStudent');
 
-        modalHtml.find('.studentCode').html('');
+        modalHtml.find('.studentNim').html('');
         modalHtml.find('.studentName').html('');
         modalHtml.find('.studentInstitute').html('');
         modalHtml.find('.studentStudyProgram').html('');

@@ -25,17 +25,18 @@ class StudentController extends Controller
         $data = $studentService->paginateStudent(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.student.create', [$org->getId()]));
-        $urlUpdate = function($id) use ($org) {
+        $urlCreate   = url(route('administrator.student.create', [$org->getId()]));
+        $urlUpdate   = function($id) use ($org) {
             return url(route('administrator.student.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($org) {
+        $urlDelete   = function($id) use ($org) {
             return url(route('administrator.student.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/student';
-        $urlUpload = url(route('administrator.student.upload', [$org->getId()]));
+        $urlDetail   = '/org/'.$org->getId().'/student';
+        $urlTemplate = '/org/'.$org->getId().'/student/download/template';
+        $urlUpload   = url(route('administrator.student.upload', [$org->getId()]));
 
-        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService, Organization $org)
@@ -198,24 +199,28 @@ class StudentController extends Controller
 
         $file = $request->file('file');
         $nama_file = 'fs_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
-        $file->move('excel', $nama_file);
-
+        $file->move(storage_path('excel'), $nama_file);
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
-            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+            $feeder = $feederService->create(collect($dataFeeder));
 
             $importer = new StudentImport;
             $importer->setOrg($org);
 
-            Excel::import($importer, public_path('/excel/'.$nama_file));
+            Excel::import($importer, storage_path('/excel/'.$nama_file));
 
             //update status feeder
-            $feeder = $feederService->findById($idFeeder);
-            $feederService->activeFeeder($feeder);
+            $errors = $importer->getErrors();
+            $feederService->activeFeeder($feeder, $errors);
 
-            $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+            if (count($errors)) {
+                $alert = 'alert_warning';
+                $message = trans('common.feeder_warning', ['lines' => implode(', ', $errors)]);
+            } else {
+                $alert = 'alert_success';
+                $message = trans('common.feeder_success', ['object' => trans('common.student')]);
+            }
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
@@ -232,7 +237,8 @@ class StudentController extends Controller
         }
         if ($request->ajax()) {
             $data = [
-                'code' => $data->getCode() ? $data->getCode() : '-',
+                'id_dikti' => $data->getIdDikti() ? $data->getIdDikti() : '-',
+                'nim' => $data->getNim() ? $data->getNim() : '-',
                 'name' => $data->getName(),
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : '-',
@@ -240,7 +246,27 @@ class StudentController extends Controller
                 'curriculum' => $data->getCurriculum() ? $data->getCurriculum() : '-',
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
                 'gender' => $data->getGender() ? ucfirst($data->getGender()) : '-',
+                'place_of_birth' => $data->getPlaceOfBirth() ? $data->getPlaceOfBirth() : '-',
                 'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
+                'address' => $data->getAddress() ? $data->getAddress() : '-',
+                'phone_number' => $data->getPhoneNumber() ? $data->getPhoneNumber() : '-',
+                'mobile_phone_number' => $data->getMobilePhoneNumber() ? $data->getMobilePhoneNumber() : '-',
+                'email' => $data->getEmail() ? $data->getEmail() : '-',
+                'religion' => $data->getReligion() ? $data->getReligion() : '-',
+                'mother_name' => $data->getMotherName() ? $data->getMotherName() : '-',
+                'nationality' => $data->getNationality() ? $data->getNationality() : '-',
+                'foreign_citizen' => $data->getForeignCitizen() == 't' ? trans('common.yes') : trans('common.no'),
+                'social_protection_card' => $data->getSocialProtectionCard() == 't' ? trans('common.yes') : trans('common.no'),
+                'occupation_type' => $data->getOccupationType() ? $data->getOccupationType() : '-',
+                'enrollment_date_start' => $data->getEnrollmentDateStart() instanceof \DateTime ? $data->getEnrollmentDateStart()->format('d F Y') : '-',
+                'enrollment_date_end' => $data->getEnrollmentDateEnd() instanceof \DateTime ? $data->getEnrollmentDateEnd()->format('d F Y') : '-',
+                'start_semester' => $data->getStartSemester() ? $data->getStartSemester() : '-',
+                'current_semester' => $data->getCurrentSemester() ? $data->getCurrentSemester() : '-',
+                'student_credits' => $data->getStudentCredits() ? $data->getStudentCredits() : '-',
+                'certificate_number' => $data->getCertificateNumber() ? $data->getCertificateNumber() : '-',
+                'graduation_judgement_date' => $data->getGraduationJudgementDate() instanceof \DateTime ? $data->getGraduationJudgementDate()->format('d F Y') : '-',
+                'enrollment_type' => $data->getEnrollmentType() ? $data->getEnrollmentType() : '-',
+                'graduation_type' => $data->getGraduationType() ? $data->getGraduationType() : '-',
                 'status' => $data->getStatus() ? $data->getStatus() : '-',
                 'class' => $data->getClass() ? $data->getClass() : '-',
                 'ipk' => $data->getIpk() ? $data->getIpk() : '-',
@@ -252,5 +278,11 @@ class StudentController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-siswa.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

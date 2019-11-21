@@ -26,17 +26,18 @@ class EmployeeCertificateController extends Controller
         $data = $employeeCertificateService->paginateEmployeeCertificate(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.employeeCertificate.create', [$org->getId()]));
-        $urlUpdate = function($id) use ($org) {
+        $urlCreate   = url(route('administrator.employeeCertificate.create', [$org->getId()]));
+        $urlUpdate   = function($id) use ($org) {
             return url(route('administrator.employeeCertificate.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($org) {
+        $urlDelete   = function($id) use ($org) {
             return url(route('administrator.employeeCertificate.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/employee-certificate';
-        $urlUpload = url(route('administrator.employeeCertificate.upload', [$org->getId()]));
+        $urlDetail   = '/org/'.$org->getId().'/employee-certificate';
+        $urlTemplate = '/org/'.$org->getId().'/employee-certificate/download/template';
+        $urlUpload   = url(route('administrator.employeeCertificate.upload', [$org->getId()]));
 
-        return view('employeeCertificate.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('employeeCertificate.index', compact('data', 'page', 'org', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, EmployeeCertificateService $employeeCertificateService, EmployeeService $employeeService, CertificateService $certificateService, Organization $org)
@@ -161,25 +162,30 @@ class EmployeeCertificateController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fc_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
-        $file->move('excel', $nama_file);
+        $nama_file = 'fec_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $file->move(storage_path('excel'), $nama_file);
 
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
-            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+            $feeder = $feederService->create(collect($dataFeeder));
 
             $importer = new EmployeeCertificateImport;
             $importer->setOrg($org);
 
-            Excel::import($importer, public_path('/excel/'.$nama_file));
+            Excel::import($importer, storage_path('/excel/'.$nama_file));
 
             //update status feeder
-            $feeder = $feederService->findById($idFeeder);
-            $feederService->activeFeeder($feeder);
+            $errors = $importer->getErrors();
+            $feederService->activeFeeder($feeder, $errors);
 
-            $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);
+            if (count($errors)) {
+                $alert = 'alert_warning';
+                $message = trans('common.feeder_warning', ['lines' => implode(', ', $errors)]);
+            } else {
+                $alert = 'alert_success';
+                $message = trans('common.feeder_success', ['object' => trans('common.certificate')]);
+            }
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
@@ -202,5 +208,11 @@ class EmployeeCertificateController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-sertifikat.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

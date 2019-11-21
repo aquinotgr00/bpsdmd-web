@@ -29,7 +29,7 @@ class ShortCourseImport implements ToCollection
             $orgService = new OrgService;
             $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
             if ($org == null) {
-              $data = collect(['name' => $col[4], 'type' => 'demand']);
+              $data = collect(['name' => $col[4], 'type' => 'demand', 'moda' => 'darat']);
               $orgService->create($data);
               $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
             }

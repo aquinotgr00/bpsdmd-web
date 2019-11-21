@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App\Entities\JobTitle;
+use App\Entities\JobFunction;
 use App\Entities\JobTitleFunction;
 use App\Entities\JobTitleFunctionLicense;
 use App\Entities\License;
@@ -86,10 +87,19 @@ class JobTitleService
     public function create(Collection $data, $org = false, $flush = true)
     {
         $jobTitle = new JobTitle;
+        $jobTitle->setCode($data->get('code'));
         $jobTitle->setName($data->get('name'));
+        $jobTitle->setEducationMinimal($data->get('education_minimal'));
+        $jobTitle->setGpaMinimal($data->get('gpa_minimal'));
+        $jobTitle->setAgeMinimal($data->get('age_minimal'));
+        $jobTitle->setExperienceMinimal($data->get('experience_minimal'));
 
         if ($org instanceof Organization) {
             $jobTitle->setOrg($org);
+        }
+
+        if($data->get('job_function_exist')){
+            $this->setJobFunctions($jobTitle, $data->get('job_function'), $data->get('license'));
         }
 
         EntityManager::persist($jobTitle);
@@ -112,10 +122,19 @@ class JobTitleService
      */
     public function update(JobTitle $jobTitle, Collection $data, $org = false, $flush = true)
     {
+        $jobTitle->setCode($data->get('code'));
         $jobTitle->setName($data->get('name'));
+        $jobTitle->setEducationMinimal($data->get('education_minimal'));
+        $jobTitle->setGpaMinimal($data->get('gpa_minimal'));
+        $jobTitle->setAgeMinimal($data->get('age_minimal'));
+        $jobTitle->setExperienceMinimal($data->get('experience_minimal'));
 
         if ($org instanceof Organization) {
             $jobTitle->setOrg($org);
+        }
+
+        if($data->get('job_function_exist')){
+            $this->setJobFunctions($jobTitle, $data->get('job_function'), $data->get('license'), 'update');
         }
 
         EntityManager::persist($jobTitle);
@@ -150,6 +169,37 @@ class JobTitleService
     }
 
     /**
+     * Set jobFunction jobTitle
+     *
+     * @param JobTitle $jobTitle
+     * @param array $jobFunctions
+     * @param string $type
+     */
+    private function setJobFunctions(JobTitle $jobTitle, array $jobFunctions = [], array $licenses = [], $type = 'create')
+    {
+        /** @var JobFunctionService $jobFunctionService */
+        $jobFunctionService = app(JobFunctionService::class);
+        /** @var JobTitleFunctionService $jobTitleFunctionService */
+        $jobTitleFunctionService = app(JobTitleFunctionService::class);
+
+        if ($type == 'update') {
+            $jobTitleFunctionService->delete($jobTitle);
+        }
+
+        if (count($jobFunctions)) {
+            foreach ($jobFunctions as $jobFunctionId) {
+                $jobFunction = $jobFunctionService->findById($jobFunctionId);
+
+                if ($jobFunction instanceof JobFunction) {
+                    $jobTitleFunctionService->create($jobTitle, $jobFunction, $licenses);
+                }
+            }
+        }
+    }
+
+    /**
+     * Find job title from licenses
+     *
      * @param array $licenses
      * @return array|JobTitle[]
      */
@@ -185,6 +235,8 @@ class JobTitleService
     }
 
     /**
+     * Get competency job title
+     *
      * @param JobTitle $jobTitle
      * @return array
      */
@@ -211,5 +263,34 @@ class JobTitleService
         }
 
         return $competencyService->getCompetencyByLicenses($licenses);
+    }
+
+    /**
+     * Get license by job title
+     *
+     * @param JobTitle $jobTitle
+     * @return array
+     */
+    public function getLicenseByJobTitle(JobTitle $jobTitle)
+    {
+        $licenses = [];
+
+        $qb = EntityManager::createQueryBuilder()
+            ->select('jfl')
+            ->from(JobTitleFunctionLicense::class, 'jfl')
+            ->join('jfl.jobTitleFunction', 'jtf');
+
+        $query = $qb->where('jtf.jobTitle = :jobTitle')
+            ->setParameter('jobTitle', $jobTitle)
+            ->getQuery();
+
+        $jfls = $query->getResult();
+
+        /** @var JobTitleFunctionLicense $jfl */
+        foreach ($jfls as $jfl) {
+            $licenses[$jfl->getLicense()->getId()] = $jfl->getLicense();
+        }
+
+        return $licenses;
     }
 }

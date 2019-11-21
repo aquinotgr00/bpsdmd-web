@@ -237,6 +237,12 @@ class Organization
     private $jobFunctions;
 
     /**
+     * @var ArrayCollection|JobTitle[]
+     * @ORM\OneToMany(targetEntity="JobTitle", mappedBy="org")
+     */
+    private $jobTitles;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -731,5 +737,21 @@ class Organization
     public function setJobFunctions($jobFunctions): void
     {
         $this->jobFunctions = $jobFunctions;
+    }
+
+    /**
+     * @return JobTitle[]|ArrayCollection
+     */
+    public function getJobTitles()
+    {
+        return $this->jobTitles;
+    }
+
+    /**
+     * @param JobTitle[]|ArrayCollection $jobTitles
+     */
+    public function setJobTitles($jobTitles): void
+    {
+        $this->jobTitles = $jobTitles;
     }
 }

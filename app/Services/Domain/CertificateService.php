@@ -78,6 +78,7 @@ class CertificateService
     {
         $certificate = new Certificate;
         $certificate->setName($data->get('name'));
+        $certificate->setType($data->get('type'));
 
         EntityManager::persist($certificate);
 
@@ -99,6 +100,7 @@ class CertificateService
     public function update(Certificate $certificate, Collection $data, $flush = true)
     {
         $certificate->setName($data->get('name'));
+        $certificate->setType($data->get('type'));
 
         EntityManager::persist($certificate);
 

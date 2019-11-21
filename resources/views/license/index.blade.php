@@ -25,10 +25,11 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>{{ ucfirst(trans('common.moda')) }}</th>
                                     <th>{{ ucfirst(trans('common.code')) }}</th>
                                     <th>{{ ucfirst(trans('common.chapter')) }}</th>
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
+                                    <th>{{ ucfirst(trans('common.moda')) }}</th>
+                                    <th>{{ ucfirst(trans('common.head')) }}</th>
                                     <th>{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
@@ -40,10 +41,11 @@
                                 ?>
                                 <tr class="even pointer">
                                     <td>{{ $no++ }}.</td>
-                                    <td>{{ ucfirst($item->getModa()) }}</td>
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ ucfirst($item->getChapter()) }}</td>
                                     <td>{{ $item->getName() }}</td>
+                                    <td>{{ ucfirst($item->getModa()) }}</td>
+                                    <td>{{ $item->getHead() ? $item->getHead() : '-' }}</td>
                                     <td>
                                         <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>

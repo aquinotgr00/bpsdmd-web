@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\Demand;
 
 use App\Entities\Student;
-use App\Entities\Recruitment;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
-use App\Mail\RecruitmentMail;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
-use App\Services\Domain\JobTitleService;
 use App\Services\Domain\ProgramService;
 use App\Services\Domain\OrgService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
-use Image;
-use Mail;
 
 class RecruitmentController extends Controller
 {
@@ -33,14 +27,14 @@ class RecruitmentController extends Controller
         }
         $org  = currentUser()->getOrg();
         $page = request()->get('page');
-        $data = $recruitmentService->paginateRecruitment(request()->get('page'), $org);
+        $data = $studentService->paginateRecruitment(request()->get('page'), collect($requestData), $studyProgram);
 
         $allStudent     = $studentService->getRepository()->findAll();
-        $student 		= $studentService->paginateRecruitment(request()->get('page'), collect($requestData), $studyProgram);
         $dataProgram 	= $programService->getRepository()->findAll();
+        $recruitment    = $recruitmentService->paginateRecruitment(request()->get('page'), $org);
         $urlDetail 		= '/recruitment';
 
-        return view('recruitment.index', compact('data', 'allStudent', 'student', 'dataProgram', 'page', 'urlDetail'));
+        return view('recruitment.index', compact('data', 'allStudent', 'recruitment', 'dataProgram', 'page', 'urlDetail'));
     }
 
     public function create(Request $request, RecruitmentService $recruitmentService, StudentService $studentService, Student $student)
@@ -48,7 +42,7 @@ class RecruitmentController extends Controller
         $org = currentUser()->getOrg();
         try {
             $requestData = $request->all();
-            $recruitment = $recruitmentService->create(collect($requestData), $org, $student);
+            $recruitmentService->create(collect($requestData), $org, $student);
 
             $alert = 'alert_success';
             $message = trans('common.create_success', ['object' => ucfirst(trans('common.recruitment'))]);
@@ -65,7 +59,7 @@ class RecruitmentController extends Controller
     {
         if ($request->ajax()) {
             $data = [
-                'code' => $data->getCode() ? $data->getCode() : '-',
+                'nim' => $data->getNim() ? $data->getNim() : '-',
                 'name' => $data->getName(),
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'study_program' => ($data->getStudyProgram() instanceof StudyProgram) ? $data->getStudyProgram()->getName() : '-',

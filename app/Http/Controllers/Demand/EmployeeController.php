@@ -41,7 +41,8 @@ class EmployeeController extends Controller
                 'name' => 'required',
                 'email' => 'nullable|email',
                 'identity_number' => 'required',
-                'school' => 'required',
+                'location' => 'required',
+                'duration' => 'required',
                 'gender' => 'in:' . Employee::GENDER_MALE . ',' . Employee::GENDER_FEMALE,
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
@@ -52,23 +53,14 @@ class EmployeeController extends Controller
                 'name' => ucfirst(trans('common.name')),
                 'email' => ucfirst(trans('common.email')),
                 'identity_number' => ucfirst(trans('common.identity_number')),
-                'school' => ucfirst(trans('common.school')),
+                'location' => ucfirst(trans('common.location')),
+                'duration' => ucfirst(trans('common.duration')),
                 'gender' => ucfirst(trans('common.gender')),
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
             $org = currentUser()->getOrg();
-            $messageBag = new MessageBag;
-
-            $school = false;
-            if ($request->get('school')) {
-                $school = $orgService->findById($request->get('school'));
-            }
-            if (!$school) {
-                $messageBag->add('school', trans('common.invalid_school'));
-                return redirect()->route('demand.employee.create')->withErrors($messageBag);
-            }
 
             try {
                 $requestData = $request->all();
@@ -84,7 +76,7 @@ class EmployeeController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $employeeService->create(collect($requestData), $org, $school);
+                $employeeService->create(collect($requestData), $org);
                 $alert = 'alert_success';
                 $message = trans('common.create_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {
@@ -96,10 +88,9 @@ class EmployeeController extends Controller
             return redirect()->route('demand.employee.index')->with($alert, $message);
         }
 
-        $dataSchool     = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
         $dataOrg        = $orgService->getOrgByType(Organization::TYPE_DEMAND);
 
-        return view('employee.create', ['dataSchool' => $dataSchool, 'dataOrg' => $dataOrg]);
+        return view('employee.create', ['dataOrg' => $dataOrg]);
     }
 
     public function update(Request $request, EmployeeService $employeeService, Employee $data, OrgService $orgService)
@@ -110,7 +101,8 @@ class EmployeeController extends Controller
                 'name' => 'required',
                 'email' => 'nullable|email',
                 'identity_number' => 'required',
-                'school' => 'required',
+                'location' => 'required',
+                'duration' => 'required',
                 'gender' => 'in:' . Employee::GENDER_MALE . ',' . Employee::GENDER_FEMALE,
                 'dateOfBirth' => 'required|date_format:"d-m-Y',
                 'photo' => 'mimes:jpeg,jpg,png,bmp|max:540'
@@ -121,23 +113,14 @@ class EmployeeController extends Controller
                 'name' => ucfirst(trans('common.name')),
                 'email' => ucfirst(trans('common.email')),
                 'identity_number' => ucfirst(trans('common.identity_number')),
-                'school' => ucfirst(trans('common.school')),
+                'location' => ucfirst(trans('common.location')),
+                'duration' => ucfirst(trans('common.duration')),
                 'gender' => ucfirst(trans('common.gender')),
                 'dateOfBirth' => ucfirst(trans('common.date_of_birth')),
                 'photo' => ucfirst(trans('common.photo')),
             ]);
 
             $org = currentUser()->getOrg();
-            $messageBag = new MessageBag;
-
-            $school = false;
-            if ($request->get('school')) {
-                $school = $orgService->findById($request->get('school'));
-            }
-            if (!$school) {
-                $messageBag->add('school', trans('common.invalid_school'));
-                return redirect()->route('demand.employee.update', ['id' => $data->getId()])->withErrors($messageBag);
-            }
 
             try {
                 $requestData = $request->all();
@@ -153,7 +136,7 @@ class EmployeeController extends Controller
                     $requestData['uploaded_img'] = false;
                 }
 
-                $employeeService->update($data, collect($requestData), $org, $school, true);
+                $employeeService->update($data, collect($requestData), $org, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.employee'))]);
             } catch (Exception $e) {
@@ -164,10 +147,9 @@ class EmployeeController extends Controller
             return redirect()->route('demand.employee.index')->with($alert, $message);
         }
 
-        $dataSchool     = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
         $dataOrg        = $orgService->getOrgByType(Organization::TYPE_DEMAND);
 
-        return view('employee.update', compact('data', 'dataSchool', 'dataOrg'));
+        return view('employee.update', compact('data', 'dataOrg'));
     }
 
     public function delete(EmployeeService $employeeService, Employee $data)
@@ -192,14 +174,19 @@ class EmployeeController extends Controller
                 'code' => $data->getCode() ? $data->getCode() : '-',
                 'name' => $data->getName(),
                 'email' => $data->getEmail() ? $data->getEmail() : '-',
-                'school' => ($data->getSchool() instanceof Organization) ? $data->getSchool()->getName() : false,
                 'org' => ($data->getOrg() instanceof Organization) ? $data->getOrg()->getName() : false,
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
-                'gender' => $data->getGender() ? ucfirst($data->getGender()) : '-',
+                'gender' => $data->getGender() ? ($data->getGender() == 'male' ? ucfirst(trans('common.male')) : ucfirst(trans('common.female'))) : '-',
                 'place_of_birth' => $data->getPlaceOfBirth() ? $data->getPlaceOfBirth() : '-',
                 'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
                 'language' => $data->getLanguage() ? $data->getLanguage() : '-',
                 'nationality' => $data->getNationality() ? $data->getNationality() : '-',
+                'degree' => $data->getDegree() ? $data->getDegree() : '-',
+                'education_level' => $data->getEducationLevel() ? $data->getEducationLevel() : '-',
+                'location' => $data->getLocation() ? $data->getLocation() : '-',
+                'duration' => $data->getDuration() ? $data->getDuration() : '-',
+                'major' => $data->getMajor() ? $data->getMajor() : '-',
+                'phone_number' => $data->getPhoneNumber() ? $data->getPhoneNumber() : '-',
                 'photo' => $data->getPhoto() ? url(url(Employee::UPLOAD_PATH.'/'.$data->getPhoto())) : url('img/avatar.png'),
             ];
 

@@ -11,3 +11,10 @@
         {{ session('alert_error') }}
     </div>
 @endif
+
+@if(session('alert_warning') ?? false)
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ session('alert_warning') }}
+    </div>
+@endif

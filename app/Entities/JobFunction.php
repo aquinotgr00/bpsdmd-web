@@ -13,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class JobFunction
 {
+    const HEAD_DKUPPU = 'DKUPPU';
+    const HEAD_DNP = 'DNP';
+    const HEAD_DBU = 'DBU';
+    const HEAD_DKP = 'DKP';
     /**
      * @var integer
      *

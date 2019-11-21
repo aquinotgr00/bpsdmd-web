@@ -71,6 +71,7 @@ class UserService
         $user->setAuthority($data->get('authority'));
         $user->setName($data->get('name'));
         $user->setEmail($data->get('email'));
+        $user->setIsDeleted(0);
 
         if (!$data->get('isActive')) {
             if ($data->get('authority') != User::ROLE_ADMIN) {

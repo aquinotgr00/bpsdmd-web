@@ -6,7 +6,6 @@ use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Services\Domain\LicenseService;
-use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
 use Exception;
 use Illuminate\Http\Request;

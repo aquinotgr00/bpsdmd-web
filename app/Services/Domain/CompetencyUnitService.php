@@ -62,7 +62,7 @@ class CompetencyUnitService
     {
         $cu = new CompetencyUnit;
         $cu->setCode($data->get('code'));
-        $cu->setUnit($data->get('text'));
+        $cu->setCompetency($data->get('text'));
 
         EntityManager::persist($cu);
 
@@ -84,7 +84,7 @@ class CompetencyUnitService
     public function update(CompetencyUnit $cu, Collection $data, $flush = true)
     {
         $cu->setCode($data->get('code'));
-        $cu->setUnit($data->get('text'));
+        $cu->setCompetency($data->get('text'));
 
         EntityManager::persist($cu);
 

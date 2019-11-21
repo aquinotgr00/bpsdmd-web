@@ -49,15 +49,34 @@ class OrgService
     }
 
     /**
-     * Paginate organization
+     * Paginate organization supply
      *
      * @param int $page
      * @return LengthAwarePaginator
      */
-    public function paginateOrg($page): LengthAwarePaginator
+    public function paginateOrgSupply($page): LengthAwarePaginator
     {
         $limit = 10;
         $query = $this->createQueryBuilder('o')
+            ->where('o.type = :type')
+            ->setParameter('type', Organization::TYPE_SUPPLY)
+            ->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
+    /**
+     * Paginate organization demand
+     *
+     * @param int $page
+     * @return LengthAwarePaginator
+     */
+    public function paginateOrgDemand($page): LengthAwarePaginator
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('o')
+            ->where('o.type = :type')
+            ->setParameter('type', Organization::TYPE_DEMAND)
             ->getQuery();
 
         return $this->paginate($query, $limit, $page, false);
@@ -91,17 +110,19 @@ class OrgService
         $org->setOwnershipStatus($data->get('ownership_status'));
         $org->setUnderSupervision($data->get('under_supervision'));
         $org->setEducationType($data->get('education_type'));
-        $org->setAccreditation($data->get('accreditation'));
+        $org->setStatus($data->get('accreditation'));
         $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
         if ($data->get('date_of_est')) {
             $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
         }
+
         if ($data->get('date_of_opr')) {
             $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
         }
+
         if ($data->get('uploaded_img')) {
-            $org->setPhoto($data->get('uploaded_img'));
+            $org->setLogo($data->get('uploaded_img'));
         }
 
         EntityManager::persist($org);
@@ -141,18 +162,20 @@ class OrgService
         $org->setOwnershipStatus($data->get('ownership_status'));
         $org->setUnderSupervision($data->get('under_supervision'));
         $org->setEducationType($data->get('education_type'));
-        $org->setAccreditation($data->get('accreditation'));
+        $org->setStatus($data->get('accreditation'));
         $org->setLastUpdate(date_create_from_format('d-m-Y', date('d-m-Y')));
 
         if ($data->get('date_of_est')) {
             $org->setDateOfEst(date_create_from_format('d-m-Y', $data->get('date_of_est')));
         }
+
         if ($data->get('date_of_opr')) {
             $org->setDateOfOpr(date_create_from_format('d-m-Y', $data->get('date_of_opr')));
         }
+
         if ($data->get('uploaded_img')) {
-            @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getPhoto());
-            $org->setPhoto($data->get('uploaded_img'));
+            @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getLogo());
+            $org->setLogo($data->get('uploaded_img'));
         }
 
         EntityManager::persist($org);
@@ -177,13 +200,17 @@ class OrgService
         $count_program = count($org->getPrograms());
 
         if (!$count_user && !$count_program) {
+            if ($org->getLogo()) {
+                @unlink(public_path(Organization::UPLOAD_PATH).'/'.$org->getLogo());
+            }
+
             EntityManager::remove($org);
             EntityManager::flush();
 
             return true;
         }
 
-        throw new OrgDeleteException('Cannot delete organization due to existing ' . $count . ' users!');
+        throw new OrgDeleteException('Cannot delete organization due to existing ' . $count_user . ' users!');
     }
 
     /**
@@ -263,7 +290,7 @@ class OrgService
     public function getGraphSchoolAndStudents()
     {
         $query = \DB::select('
-        select i.nama, std.total as y
+        select i.nama as name, std.total as y
         from instansi i
         left join (
             select s.instansi_id, count(s.id) as total
@@ -271,9 +298,33 @@ class OrgService
             group by s.instansi_id
         ) std ON std.instansi_id = i.id
         where std.total > 0
+        and i.tipe = ?
         order by y DESC
-        ');
+        ', [Organization::TYPE_SUPPLY]);
 
         return json_encode($query);
+    }
+
+    /**
+     * Get list demand
+     *
+     * @return array
+     */
+    public function getDemandAsList()
+    {
+        $result = [];
+        $qb = $this->createQueryBuilder('org')
+            ->where('org.type = :type')
+            ->orderBy('org.name')
+            ->setParameter('type', Organization::TYPE_DEMAND);
+
+        $demands = $qb->getQuery()->getResult();
+
+        /** @var Organization $demand */
+        foreach ($demands as $demand) {
+            $result[$demand->getId()] = $demand->getName();
+        }
+
+        return $result;
     }
 }

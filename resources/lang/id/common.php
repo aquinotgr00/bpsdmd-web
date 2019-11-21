@@ -37,6 +37,10 @@ return [
     'confirm_delete' => 'Apakah Anda yakin?',
     'please_choose' => 'Silakan pilih :object',
     'invalid_option' => 'Pilihan :object tidak valid.',
+    'male' => 'pria',
+    'female' => 'wanita',
+    'template' => 'template',
+    'download_sample_file' => 'unduh contoh file',
 
     // table
     'view' => 'lihat',
@@ -50,6 +54,7 @@ return [
     'not_yet' => 'belum',
     'yes' => 'iya',
     'no' => 'tidak',
+    'choose' => 'pilih',
 
     // manage user
     'user_information' => 'informasi pengguna',
@@ -99,6 +104,9 @@ return [
     'education_type' => 'bentuk pendidikan',
     'accreditation' => 'akreditasi',
     'logo' => 'logo',
+    'company' => 'instansi',
+    'supply' => 'sekolah',
+    'demand' => 'perusahaan',
 
     //manage program
     'program_information' => 'informasi program studi',
@@ -124,13 +132,16 @@ return [
     'mobile_phone_number' => 'handphone',
     'religion' => 'agama',
     'mother_name' => 'ibu kandung',
-    'foreign_citizen' => 'wna',
+    'foreign_citizen' => 'WNA',
     'social_protection_card' => 'penerima kps',
     'occupation_type' => 'jenis tinggal',
+    'enrollment_date_start' => 'tanggal masuk',
+    'enrollment_date_end' => 'tanggal keluar',
     'start_semester' => 'semester mulai',
     'current_semester' => 'semester tempuh',
-    'student_credits' => 'sks',
+    'student_credits' => 'SKS',
     'certificate_number' => 'no ijazah',
+    'graduation_judgement_date' => 'tanggal SK yudisium',
     'enrollment_type' => 'jenis daftar',
     'graduation_type' => 'jenis keluar',
     'student_feeder' => 'unggah feeder data siswa',
@@ -156,6 +167,10 @@ return [
     'place_of_birth' => 'tempat lahir',
     'nationality' => 'kewarganegaraan',
     'graduate' => 'lulus',
+    'education_level' => 'level pendidikan',
+    'location' => 'lokasi',
+    'duration' => 'durasi',
+    'major' => 'major',
 
     // LOGIN
     'login_header' => 'Masuk ke akun anda.',
@@ -185,12 +200,13 @@ return [
     'email_verification_warning' => 'PENTING!! Jangan beritahukan informasi dibawah kepada siapapun.',
     'email_verification_info' => 'Berikut adalah data yang kamu gunakan untuk verifikasi akun mu',
     'email_verification_header' => 'Kamu harus mengubah password bawaan untuk memverifikasi akun mu.',
-    'email_verification_link' => 'Silahkan verifikasi akun mu, <a href=":url">disini</a>',
+    'email_verification_link' => 'Silahkan verifikasi akunmu, <a href=":url">di sini</a>',
 
     // manage feeder
     'feeder' => 'feeder',
     'upload' => 'unggah file',
     'choose_file' => 'pilih file',
+    'feeder_warning' => 'File berhasil diupload dengan peringatan. Berikut baris yang tidak berhasil diupload: <b>:lines</b>.<br>Silakan cek data Anda kembali.',
 
     // manage lisensi
     'license' => 'lisensi',
@@ -230,6 +246,10 @@ return [
 
     //manage job title
     'job_title' => 'jabatan',
+    'education_minimal' => 'minimal pendidikan',
+    'gpa_minimal' => 'minimal IPK',
+    'age_minimal' => 'minimal usia',
+    'experience_minimal' => 'minimal pengalaman',
 
     //manage recruitment
     'recruitment' => 'penawaran siswa',
@@ -263,6 +283,8 @@ return [
 
     // job function
     'job_function' => 'fungsi pekerjaan',
+    'head' => 'kepala',
+    'is_there_job_function' => 'ada fungsi pekerjaan?',
 
     // Analytics
     'graph_data' => 'Grafik Data',

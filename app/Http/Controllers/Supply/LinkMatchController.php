@@ -9,6 +9,7 @@ use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Services\Application\LinkMatchService;
 use App\Services\Domain\JobTitleService;
+use App\Services\Domain\ProgramService;
 use Illuminate\Http\Request;
 
 class LinkMatchController extends Controller
@@ -20,20 +21,12 @@ class LinkMatchController extends Controller
         return view('linkMatch.supply-user', compact('programs'));
     }
 
-    public function programLicense(Request $request, StudyProgram $studyProgram)
+    public function programLicense(Request $request, ProgramService $programService, StudyProgram $studyProgram)
     {
         if ($request->ajax()) {
-            $result = [];
-            $licenses = $studyProgram->getLicenseStudyProgram();
+            $licenses = $programService->getLicenseByProgram($studyProgram, true);
 
-            /** @var LicenseStudyProgram $lp */
-            foreach ($licenses as $lp) {
-                $result[] = [
-                    'name' => $lp->getLicense()->getCode().' '.$lp->getLicense()->getChapter().' - '.$lp->getLicense()->getName()
-                ];
-            }
-
-            return response()->json($result);
+            return response()->json($licenses);
         }
 
         return abort(404);
@@ -57,13 +50,13 @@ class LinkMatchController extends Controller
 
                     $result[$jobTitle->getOrg()->getId()] = [
                         'company' => $jobTitle->getOrg()->getName(),
-                        'logo' => $jobTitle->getOrg()->getPhoto() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
+                        'logo' => $jobTitle->getOrg()->getLogo() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
                         'jobTitle' => $append['jobTitle']
                     ];
                 } else {
                     $result[$jobTitle->getOrg()->getId()] = [
                         'company' => $jobTitle->getOrg()->getName(),
-                        'logo' =>  $jobTitle->getOrg()->getPhoto() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
+                        'logo' =>  $jobTitle->getOrg()->getLogo() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getPhoto() : '/img/avatar.png',
                         'jobTitle' => [
                             [
                                 'name' => $jobTitle->getName(),

@@ -65,7 +65,7 @@
 							</div>
 						</div>
                         <div class="form-group">
-                            <img src="{{ $user->getPhoto() ? url($user->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
+                            <img src="{{ $user->getPhoto() ? url(\App\Entities\User::UPLOAD_PATH.'/'.$user->getPhoto()) : url('img/avatar.png') }}" width="100px" height="100px">
                         </div>
 
 						<span class="help-block" style="color:red">{{ trans('common.password_leave_blank') }}</span>
@@ -87,7 +87,7 @@
 							<span class="help-block ">{!! implode('', $errors->get('password_confirmation')) !!}</span>
 						</div>
 
-						<div class="box-footer">
+						<div class="box-footer" style="text-align: right;min-height: 50px;">
 							<button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
 						</div>
 					</form>

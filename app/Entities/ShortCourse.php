@@ -61,22 +61,10 @@ class ShortCourse
     private $shortCourseParticipants;
 
     /**
-     * @var ArrayCollection|ShortCourseCompetency[]
-     * @ORM\OneToMany(targetEntity="ShortCourseCompetency", mappedBy="shortCourse")
-     */
-    private $shortCourseCompetency;
-
-    /**
      * @var ArrayCollection|ShortCourseLicense[]
      * @ORM\OneToMany(targetEntity="ShortCourseLicense", mappedBy="shortCourse")
      */
     private $shortCourseLicense;
-
-    /**
-     * @var ArrayCollection|EmployeeCertificate[]
-     * @ORM\OneToMany(targetEntity="EmployeeCertificate", mappedBy="shortCourse")
-     */
-    private $employeeCertificate;
 
     /**
      * @return int
@@ -175,22 +163,6 @@ class ShortCourse
     }
 
     /**
-     * @return ShortCourseCompetency[]|ArrayCollection
-     */
-    public function getShortCourseCompetency()
-    {
-        return $this->shortCourseCompetency;
-    }
-
-    /**
-     * @param ShortCourseCompetency[]|ArrayCollection $shortCourseCompetency
-     */
-    public function setShortCourseCompetency($shortCourseCompetency): void
-    {
-        $this->shortCourseCompetency = $shortCourseCompetency;
-    }
-
-    /**
      * @return ShortCourseLicense[]|ArrayCollection
      */
     public function getShortCourseLicense()
@@ -204,21 +176,5 @@ class ShortCourse
     public function setShortCourseLicense($shortCourseLicense): void
     {
         $this->shortCourseLicense = $shortCourseLicense;
-    }
-
-    /**
-     * @return EmployeeCertificate[]|ArrayCollection
-     */
-    public function getEmployeeCertificate()
-    {
-        return $this->employeeCertificate;
-    }
-
-    /**
-     * @param EmployeeCertificate[]|ArrayCollection $employeeCertificate
-     */
-    public function setEmployeeCertificate($employeeCertificate): void
-    {
-        $this->employeeCertificate = $employeeCertificate;
     }
 }

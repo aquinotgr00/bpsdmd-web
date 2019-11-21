@@ -23,17 +23,18 @@ class TeacherController extends Controller
         $data = $teacherService->paginateTeacher(request()->get('page'), $org);
 
         //build urls
-        $urlCreate = url(route('administrator.teacher.create', [$org->getId()]));
-        $urlUpdate = function($id) use ($org) {
+        $urlCreate   = url(route('administrator.teacher.create', [$org->getId()]));
+        $urlUpdate   = function($id) use ($org) {
             return url(route('administrator.teacher.update', [$org->getId(), $id]));
         };
-        $urlDelete = function($id) use ($org) {
+        $urlDelete   = function($id) use ($org) {
             return url(route('administrator.teacher.delete', [$org->getId(), $id]));
         };
-        $urlDetail = '/org/'.$org->getId().'/teacher';
-        $urlUpload = url(route('administrator.teacher.upload', [$org->getId()]));
+        $urlDetail   = '/org/'.$org->getId().'/teacher';
+        $urlTemplate = '/org/'.$org->getId().'/teacher/download/template';
+        $urlUpload   = url(route('administrator.teacher.upload', [$org->getId()]));
 
-        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlUpload'));
+        return view('teacher.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
     }
 
     public function create(Request $request, TeacherService $teacherService, OrgService $orgService, Organization $org)
@@ -156,24 +157,29 @@ class TeacherController extends Controller
 
         $file = $request->file('file');
         $nama_file = 'fd_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
-        $file->move('excel', $nama_file);
+        $file->move(storage_path('excel'), $nama_file);
 
         try {
             //insert feeder
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
-            $idFeeder = $feederService->create(collect($dataFeeder))->getId();
+            $feeder = $feederService->create(collect($dataFeeder));
 
             $importer = new TeacherImport;
             $importer->setOrg($org);
 
-            Excel::import($importer, public_path('/excel/'.$nama_file));
+            Excel::import($importer, storage_path('/excel/'.$nama_file));
 
             //update status feeder
-            $feeder = $feederService->findById($idFeeder);
-            $feederService->activeFeeder($feeder);
+            $errors = $importer->getErrors();
+            $feederService->activeFeeder($feeder, $errors);
 
-            $alert = 'alert_success';
-            $message = trans('common.feeder_success', ['object' => trans('common.teacher')]);
+            if (count($errors)) {
+                $alert = 'alert_warning';
+                $message = trans('common.feeder_warning', ['lines' => implode(', ', $errors)]);
+            } else {
+                $alert = 'alert_success';
+                $message = trans('common.feeder_success', ['object' => trans('common.teacher')]);
+            }
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
@@ -205,5 +211,11 @@ class TeacherController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function templateDownload()
+    {
+        $file = public_path(). "/download/template-dosen.xlsx";
+        return response()->download($file, 'template.xlsx');
     }
 }

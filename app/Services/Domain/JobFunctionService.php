@@ -3,6 +3,7 @@
 namespace App\Services\Domain;
 
 use App\Entities\JobFunction;
+use App\Entities\JobTitleFunction;
 use App\Entities\Organization;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -128,5 +129,43 @@ class JobFunctionService
     public function findById($id)
     {
         return $this->getRepository()->find($id);
+    }
+
+    /**
+     * Get list license
+     *
+     * @param $exclude
+     * @return mixed
+     */
+    public function getAsList($exclude = [])
+    {
+        $excludeIds = [];
+
+        foreach ($exclude as $item) {
+            $excludeIds[] = $item instanceof JobTitleFunction ? $item->getJobFunction()->getId() : $item;
+        }
+
+        $qb = $this->createQueryBuilder('jf');
+
+        if (count($excludeIds)) {
+            $query = $qb->where($qb->expr()->notIn('jf.id', $excludeIds))
+                ->getQuery();
+        } else {
+            $query = $qb->getQuery();
+        }
+        
+        return $query->getResult();
+    }
+
+    public function getHeadAsArray()
+    {
+        $options = [
+            JobFunction::HEAD_DKUPPU,
+            JobFunction::HEAD_DNP,
+            JobFunction::HEAD_DBU,
+            JobFunction::HEAD_DKP,
+        ];
+
+        return json_encode($options);
     }
 }

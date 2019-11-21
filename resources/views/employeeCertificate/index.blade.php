@@ -116,14 +116,12 @@
                             <h5 class="modal-title" id="upload">{{ ucwords(trans('common.certificate_feeder')) }}</h5>
                         </div>
                         <div class="modal-body">
-
                             {{ csrf_field() }}
-
                             <label>{{ ucfirst(trans('common.choose_file')) }}</label>
                             <div class="form-group">
                                 <input type="file" name="file" required="required">
+                                <p>{{ ucfirst(trans('common.download_sample_file')) }}: <a href="{{ $urlTemplate }}">{{ ucfirst(trans('common.template')) }}</a></p>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -16,11 +16,12 @@ use App\Entities\User;
 Route::group(['middleware' => ['authenticated']], function() {
     // administrator routes
     Route::group(['prefix' => '/org', 'middleware' => ['only_admin']], function() {
+        Route::get('/supply', 'Administrator\OrgController@supply')->name('administrator.org.supply');
+        Route::get('/demand', 'Administrator\OrgController@demand')->name('administrator.org.demand');
         Route::any('/create', 'Administrator\OrgController@create')->name('administrator.org.create');
         Route::any('/{org}/update', 'Administrator\OrgController@update')->name('administrator.org.update');
         Route::get('/{org}/delete', 'Administrator\OrgController@delete')->name('administrator.org.delete');
         Route::get('/{org}', 'Administrator\OrgController@ajaxDetailOrg')->name('administrator.org.view');
-        Route::get('/', 'Administrator\OrgController@index')->name('administrator.org.index');
 
         Route::group(['prefix' => '/{org_supply}/program', 'middleware' => ['only_admin']], function() {
             Route::any('/create', 'Administrator\ProgramController@create')->name('administrator.program.create');
@@ -35,6 +36,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{student}/update', 'Administrator\StudentController@update')->name('administrator.student.update');
             Route::get('/{student}/delete', 'Administrator\StudentController@delete')->name('administrator.student.delete');
             Route::get('/{student}', 'Administrator\StudentController@ajaxDetailStudent')->name('administrator.student.view');
+            Route::get('/download/template', 'Administrator\StudentController@templateDownload')->name('administrator.student.template.download');
             Route::any('/upload', 'Administrator\StudentController@upload')->name('administrator.student.upload');
             Route::get('/', 'Administrator\StudentController@index')->name('administrator.student.index');
         });
@@ -44,6 +46,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{teacher}/update', 'Administrator\TeacherController@update')->name('administrator.teacher.update');
             Route::get('/{teacher}/delete', 'Administrator\TeacherController@delete')->name('administrator.teacher.delete');
             Route::get('/{teacher}', 'Administrator\TeacherController@ajaxDetailTeacher')->name('administrator.teacher.view');
+            Route::get('/download/template', 'Administrator\TeacherController@templateDownload')->name('administrator.teacher.template.download');
             Route::any('/upload', 'Administrator\TeacherController@upload')->name('administrator.teacher.upload');
             Route::get('/', 'Administrator\TeacherController@index')->name('administrator.teacher.index');
         });
@@ -61,6 +64,7 @@ Route::group(['middleware' => ['authenticated']], function() {
             Route::any('/{employeeCertificate}/update', 'Administrator\EmployeeCertificateController@update')->name('administrator.employeeCertificate.update');
             Route::get('/{employeeCertificate}/delete', 'Administrator\EmployeeCertificateController@delete')->name('administrator.employeeCertificate.delete');
             Route::get('/{employeeCertificate}', 'Administrator\EmployeeCertificateController@ajaxDetailEmployeeCertificate')->name('administrator.employeeCertificate.view');
+            Route::get('/download/template', 'Administrator\EmployeeCertificateController@templateDownload')->name('administrator.employeeCertificate.template.download');
             Route::any('/upload', 'Administrator\EmployeeCertificateController@upload')->name('administrator.employeeCertificate.upload');
             Route::get('/', 'Administrator\EmployeeCertificateController@index')->name('administrator.employeeCertificate.index');
         });
@@ -86,6 +90,9 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/program/{org_supply}', 'Administrator\LinkMatchController@program')->name('administrator.link-match.program');
         Route::get('/program-license/{program}', 'Administrator\LinkMatchController@programLicense')->name('administrator.link-match.program-license');
         Route::get('/demand-by-program/{program}', 'Administrator\LinkMatchController@demandByProgram')->name('administrator.link-match.demand-by-program');
+        Route::get('/job-title/{org_demand}', 'Administrator\LinkMatchController@jobTitle')->name('administrator.link-match.job-title');
+        Route::get('/job-title-license/{jobTitle}', 'Administrator\LinkMatchController@jobTitleLicense')->name('administrator.link-match.job-title-license');
+        Route::get('/supply-by-job-title/{jobTitle}', 'Administrator\LinkMatchController@supplyByJobTitle')->name('administrator.link-match.supply-by-job-title');
     });
 
     Route::group(['prefix' => '/user', 'middleware' => ['only_admin']], function() {
@@ -197,6 +204,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{student}/update', 'Supply\StudentController@update')->name('supply.student.update');
         Route::get('/{student}/delete', 'Supply\StudentController@delete')->name('supply.student.delete');
         Route::get('/{student}', 'Supply\StudentController@ajaxDetailStudent')->name('supply.student.view');
+        Route::get('/download/template', 'Supply\StudentController@templateDownload')->name('supply.student.template.download');
         Route::any('/upload', 'Supply\StudentController@upload')->name('supply.student.upload');
         Route::get('/', 'Supply\StudentController@index')->name('supply.student.index');
     });
@@ -206,6 +214,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{teacher}/update', 'Supply\TeacherController@update')->name('supply.teacher.update');
         Route::get('/{teacher}/delete', 'Supply\TeacherController@delete')->name('supply.teacher.delete');
         Route::get('/{teacher}', 'Supply\TeacherController@ajaxDetailTeacher')->name('supply.teacher.view');
+        Route::get('/download/template', 'Supply\TeacherController@templateDownload')->name('supply.teacher.template.download');
         Route::any('/upload', 'Supply\TeacherController@upload')->name('supply.teacher.upload');
         Route::get('/', 'Supply\TeacherController@index')->name('supply.teacher.index');
     });
@@ -260,12 +269,19 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/{student}/create', 'Demand\RecruitmentController@create')->name('demand.recruitment.create');
         Route::get('/{student}', 'Demand\RecruitmentController@ajaxDetailStudent')->name('demand.recruitment.view');
     });
+
     Route::group(['prefix' => '/offering', 'middleware' => ['only_demand']], function() {
         Route::get('/', 'Demand\OfferingController@index')->name('demand.offering.index');
         Route::get('/{student}', 'Demand\OfferingController@ajaxDetailStudent')->name('demand.offering.view');
         Route::any('/{recruitment}/update', 'Demand\OfferingController@update')->name('demand.offering.update');
         Route::get('/{recruitment}/delete', 'Demand\OfferingController@delete')->name('demand.offering.delete');
         Route::get('/{recruitment}/email', 'Demand\OfferingController@email')->name('demand.offering.email');
+    });
+
+    Route::group(['prefix' => '/link-match-demand', 'middleware' => ['only_demand']], function() {
+        Route::get('/job-title-license/{jobTitle}', 'Demand\LinkMatchController@jobTitleLicense')->name('demand.link-match.job-title-license');
+        Route::get('/supply-by-job-title/{jobTitle}', 'Demand\LinkMatchController@supplyByJobTitle')->name('demand.link-match.supply-by-job-title');
+        Route::get('/', 'Demand\LinkMatchController@demand')->name('demand.link-match');
     });
 
     // utils routes

@@ -33,7 +33,7 @@ class ShortCourseParticipantController extends Controller
                 $shortCourseParticipantService->create(
                     collect($request->only(['background', 'graduate', 'competence_certificat', 'training_certificat'])),
                     $shortCourse,
-                    $employee,
+                    $employee
                 );
 
                 $alert = 'alert_success';

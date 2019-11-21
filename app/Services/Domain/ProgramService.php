@@ -4,6 +4,7 @@ namespace App\Services\Domain;
 
 use App;
 use App\Entities\License;
+use App\Entities\LicenseStudyProgram;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use Doctrine\ORM\EntityRepository;
@@ -212,5 +213,89 @@ class ProgramService
         }
 
         return $this->getRepository()->findAll();
+    }
+
+    /**
+     * Find study program by licenses
+     *
+     * @param array $licenses
+     * @return array
+     */
+    public function findProgramFromLicenses(array $licenses)
+    {
+        $licenseIds = [];
+        $program = [];
+
+        /** @var License $license */
+        foreach ($licenses as $license) {
+            $licenseIds[] = $license->getId();
+        }
+
+        if (count($licenseIds)) {
+            $qb = EntityManager::createQueryBuilder()
+                ->select('lsp')
+                ->from(LicenseStudyProgram::class, 'lsp');
+
+            $query = $qb->where($qb->expr()->in('lsp.license', array_unique($licenseIds)))
+                ->getQuery();
+
+            $lsps = $query->getResult();
+
+            /** @var LicenseStudyProgram $lsp */
+            foreach ($lsps as $lsp) {
+                $program[] = $lsp->getStudyProgram();
+            }
+
+            return $program;
+        }
+
+        return [];
+    }
+
+    /**
+     * Get license by program
+     *
+     * @param StudyProgram $program
+     * @param bool $asLabel
+     * @return array
+     */
+    public function getLicenseByProgram(StudyProgram $program, $asLabel = false)
+    {
+        $licenses = $program->getLicenseStudyProgram();
+        $result = [];
+
+        /** @var LicenseStudyProgram $lp */
+        foreach ($licenses as $lp) {
+            if ($asLabel) {
+                $result[] = [
+                    'name' => $lp->getLicense()->getCode().' '.$lp->getLicense()->getChapter().' - '.$lp->getLicense()->getName()
+                ];
+            } else {
+                $result[] = $lp->getLicense();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get competency program
+     *
+     * @param StudyProgram $program
+     * @return array
+     */
+    public function getCompetencyProgram(StudyProgram $program)
+    {
+        /** @var CompetencyService $competencyService */
+        $competencyService = app(CompetencyService::class);
+        $licenses = $this->getLicenseByProgram($program);
+        $licenseIds = [];
+
+        /** @var License $license */
+        foreach ($licenses as $license) {
+            $licenseIds[] = $license->getId();
+        }
+
+        return $competencyService->getCompetencyByLicenses($licenseIds);
     }
 }

@@ -43,6 +43,16 @@
                                 <span class="help-block">{!! implode('', $errors->get('moda')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('head') ? 'has-error' : '' }}">
+                                <label for="head">{{ ucfirst(trans('common.head')) }} :</label>
+                                <select id="head" name="head" class="form-control">
+                                    @foreach($heads as $value => $label)
+                                        <option value="{{ $value }}" {!! old('head') == $value ? 'selected':'' !!}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{!! implode('', $errors->get('head')) !!}</span>
+                            </div>
+
                             <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.add')) }}</button>
                             </div>
