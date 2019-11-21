@@ -27,7 +27,6 @@ NOCAPTCHA_SITEKEY=6LdedLoUAAAAAE8HF0BJcYUdTTuSBiRldxsK7d3x
 2. Migrate the migration dengan command: `php artisan doctrine:migrations:migrate`
 3. Jika muncul `Nothing to migrate.`, buat migration baru dengan command: `php artisan doctrine:migrations:diff`
 4. Jalankan migration dengan command: `php artisan doctrine:migrations:migrate`
-5. 
 
 **Database standard:**
 1. Prevent use table prefix, we don't want mix all database in one schema.
@@ -38,4 +37,4 @@ NOCAPTCHA_SITEKEY=6LdedLoUAAAAAE8HF0BJcYUdTTuSBiRldxsK7d3x
 6. Always consider to implement 3NF
 7. Update sql file from branch database/redesign
 
-Merge ke branch master akan auto-deploy ke server staging. Jika ada pertanyaan, hubungi: [https://t.me/roeswb](https://t.me/roeswb)
+Merge ke branch `dev` akan auto-deploy ke server `staging`. Merge ke branch `master` akan auto-deploy ke server `production`.
