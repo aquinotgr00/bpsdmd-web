@@ -290,7 +290,7 @@ class OrgService
     public function getGraphSchoolAndStudents()
     {
         $query = \DB::select('
-        select i.nama, std.total as y
+        select i.nama as name, std.total as y
         from instansi i
         left join (
             select s.instansi_id, count(s.id) as total
@@ -298,8 +298,9 @@ class OrgService
             group by s.instansi_id
         ) std ON std.instansi_id = i.id
         where std.total > 0
+        and i.tipe = ?
         order by y DESC
-        ');
+        ', [Organization::TYPE_SUPPLY]);
 
         return json_encode($query);
     }
