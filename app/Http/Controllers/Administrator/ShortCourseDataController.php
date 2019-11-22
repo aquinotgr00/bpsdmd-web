@@ -89,7 +89,7 @@ class ShortCourseDataController extends Controller
             return redirect()->route('administrator.shortCourseData.index', ['shortCourse' => $shortCourse->getId()])->with($alert, $message);
         }
 
-        return view('shortCourseData.update', compact('data'));
+        return view('shortCourseData.update', compact('data', 'shortCourse'));
     }
 
     public function delete(ShortCourseDataService $shortCourseDataService, ShortCourse $shortCourse, ShortCourseData $data)

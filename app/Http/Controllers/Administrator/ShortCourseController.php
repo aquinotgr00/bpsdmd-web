@@ -18,10 +18,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ShortCourseController extends Controller
 {
-    public function index(ShortCourseService $shortCourseService)
+    public function index(ShortCourseService $shortCourseService, OrgService $orgService)
     {
         $page = request()->get('page');
         $data = $shortCourseService->paginateShortCourse(request()->get('page'));
+
+        $orgs = $orgService->getRepository()->findAll();
 
         //build urls
         $urlCreate = url(route('administrator.shortCourse.create'));
@@ -33,20 +35,24 @@ class ShortCourseController extends Controller
         };
         $urlDetail = '/short-course';
 
-        return view('shortCourse.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
+        return view('shortCourse.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'orgs'));
     }
 
-    public function create(Request $request, ShortCourseService $shortCourseService, OrgService $orgService)
+    public function create(Request $request, ShortCourseService $shortCourseService, OrgService $orgService, ShortCourseDataService $shortCourseDataService)
     {
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
                 'type' => 'required|in:' . ShortCourse::TYPE_DPM . ',' . ShortCourse::TYPE_TEKNIS,
+                'startDate' => 'required|date_format:"d-m-Y"',
+                'endDate' => 'required|date_format:"d-m-Y"',
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
                 'type' => ucfirst(trans('common.type')),
+                'startDate' => ucfirst(trans('common.start_date')),
+                'endDate' => ucfirst(trans('common.end_date')),
             ]);
 
             $org = false;
@@ -57,7 +63,8 @@ class ShortCourseController extends Controller
             try {
                 $requestData = $request->all();
 
-                $shortCourseService->create(collect($requestData), $org);
+                $shortCourse = $shortCourseService->create(collect($requestData), $org);
+                $shortCourseDataService->create(collect($requestData), $shortCourse);
                 $alert = 'alert_success';
                 $message = trans('common.create_success', ['object' => ucfirst(trans('common.short_course'))]);
             } catch (Exception $e) {
@@ -156,7 +163,8 @@ class ShortCourseController extends Controller
     public function upload(Request $request, FeederService $feederService, AuthService $authService)
     {
         $this->validate($request, [
-            'file' => 'required|mimes:csv,xls,xlsx'
+            'file' => 'required|mimes:csv,xls,xlsx',
+            'org_id' => 'required'
         ]);
 
         $file = $request->file('file');
@@ -173,7 +181,11 @@ class ShortCourseController extends Controller
             $dataFeeder = ['filename' => $nama_file, 'user' => $authService->user()];
             $idFeeder = $feederService->create(collect($dataFeeder))->getId();
 
+            $orgService = new OrgService;
+            $org = $orgService->getRepository()->findOneBy(['id' => $request->get('org_id')]);
+
             $importer = new ShortCourseImport;
+            $importer->setOrg($org);
 
             Excel::import($importer, public_path('/excel/'.$nama_file));
 

@@ -36,10 +36,18 @@
                                 <span class="help-block ">{!! implode('', $errors->get('competence_certificat')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('graduate') ? 'has-error' : '' }}">
-                                <label for="graduate">{{ ucwords(trans('common.graduate')) }} :</label><br />
-                                <input class="form-control" type="radio" name="graduate" value="1" checked>{{ trans('common.done') }}
-                                <input class="form-control" type="radio" name="graduate" value="0">{{ trans('common.not_yet') }}
+							<div class="form-group {{ $errors->has('graduate') ? 'has-error' : '' }}">
+								<label for="graduate">{{ ucwords(trans('common.graduate')) }} :</label><br />
+								<div class="radio">
+                                    <label>
+                                        <input type="radio" name="graduate" value="1" checked>{{ trans('common.done') }}
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="graduate" value="0">{{ trans('common.not_yet') }}
+                                    </label>
+                                </div>
                                 <span class="help-block ">{!! implode('', $errors->get('graduate')) !!}</span>
                             </div>
                         </div><!-- /.box-body -->

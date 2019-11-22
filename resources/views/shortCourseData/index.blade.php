@@ -14,11 +14,6 @@
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.short_course_participant')) }}
                 </a>
             </li>
-            <li>
-                <a href="{{ $urlCreate }}">
-                    <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.short_course_data')) }}
-                </a>
-            </li>
         </ol>
     </section>
 
