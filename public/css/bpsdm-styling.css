@@ -168,3 +168,8 @@ element.style {
 .graph-view {
     display: none;
 }
+
+/* Form instansi */
+.input-field-supply {
+    /* display: none; */
+}
