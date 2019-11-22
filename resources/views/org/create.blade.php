@@ -15,7 +15,15 @@
                         <form method="post" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="form-group {{ $errors->has('id_dikti') ? 'has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                                <label for="type">{{ ucfirst(trans('common.type')) }} :</label>
+                                <select id="type" name="type" class="form-control">
+                                    <option value="{{ \App\Entities\Organization::TYPE_SUPPLY }}" {{ old('type') == \App\Entities\Organization::TYPE_SUPPLY ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_SUPPLY) }}</option>
+                                    <option value="{{ \App\Entities\Organization::TYPE_DEMAND }}" {{ old('type') == \App\Entities\Organization::TYPE_DEMAND ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_DEMAND) }}</option>
+                                </select>
+                                <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
+                            </div>
+                            <div class="form-group input-field-supply {{ $errors->has('id_dikti') ? 'has-error' : '' }}">
                                 <label for="id_dikti">{{ strtoupper(trans('common.id_dikti')) }} :</label>
                                 <input type="text" class="form-control" id="id_dikti" name="id_dikti" value="{{ old('id_dikti') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('id_dikti')) !!}</span>
@@ -67,15 +75,6 @@
                                 <label for="status">{{ ucfirst(trans('common.status')) }} :</label>
                                 <input type="text" class="form-control" id="status" name="status" value="{{ old('status') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('status')) !!}</span>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                                <label for="type">{{ ucfirst(trans('common.type')) }} :</label>
-                                <select id="type" name="type" class="form-control">
-                                    <option value="{{ \App\Entities\Organization::TYPE_SUPPLY }}" {{ old('type') == \App\Entities\Organization::TYPE_SUPPLY ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_SUPPLY) }}</option>
-                                    <option value="{{ \App\Entities\Organization::TYPE_DEMAND }}" {{ old('type') == \App\Entities\Organization::TYPE_DEMAND ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::TYPE_DEMAND) }}</option>
-                                </select>
-                                <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('moda') ? 'has-error' : '' }}">
@@ -137,13 +136,13 @@
                                 <span class="help-block ">{!! implode('', $errors->get('under_supervision')) !!}</span>
                             </div>
 
-                            <div class="form-group {{ $errors->has('education_type') ? 'has-error' : '' }}">
+                            <div class="form-group input-field-supply {{ $errors->has('education_type') ? 'has-error' : '' }}">
                                 <label for="education_type">{{ ucwords(trans('common.education_type')) }} :</label>
                                 <input type="text" class="form-control" id="education_type" name="education_type" value="{{ old('education_type') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('education_type')) !!}</span>
                             </div>
 
-                            <div class="form-group accreditation {{ $errors->has('accreditation') ? 'has-error' : '' }}">
+                            <div class="form-group input-field-supply accreditation {{ $errors->has('accreditation') ? 'has-error' : '' }}">
                                 <label for="accreditation">{{ ucfirst(trans('common.accreditation')) }} :</label>
                                 <select id="accreditation" name="accreditation" class="form-control">
                                     <option value="{{ \App\Entities\Organization::ACCREDITATION_A }}" {{ old('accreditation') == \App\Entities\Organization::ACCREDITATION_A ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::ACCREDITATION_A) }}</option>
@@ -182,10 +181,11 @@
     $(function(){
         $('#type').change(function(){
             var value = $(this).val();
-            if(value == "<?= \App\Entities\Organization::TYPE_SUPPLY ?>"){
-                $('.accreditation').show();
-            }else{
-                $('.accreditation').hide();
+
+            if(value == "<?= \App\Entities\Organization::TYPE_DEMAND ?>") {
+                $('.input-field-supply').hide();
+            } else {
+                $('.input-field-supply').show();
             }
         });
         $('#type').change();

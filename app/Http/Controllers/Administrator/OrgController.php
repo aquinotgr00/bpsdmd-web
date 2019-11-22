@@ -83,7 +83,11 @@ class OrgController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
-            return redirect()->route('administrator.org.index')->with($alert, $message);
+            if( $request->input('type') == 'supply' ) {
+                return redirect()->route('administrator.org.supply')->with($alert, $message);
+            } else {
+                return redirect()->route('administrator.org.demand')->with($alert, $message);
+            }
         }
 
         return view('org.create');
@@ -143,7 +147,11 @@ class OrgController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.institute'))]);
             }
 
-            return redirect()->route('administrator.org.index')->with($alert, $message);
+            if( $request->input('type') == 'supply' ) {
+                return redirect()->route('administrator.org.supply')->with($alert, $message);
+            } else {
+                return redirect()->route('administrator.org.demand')->with($alert, $message);
+            }
         }
 
         return view('org.update', compact('data'));
@@ -165,7 +173,11 @@ class OrgController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.institute'))]);
         }
 
-        return redirect()->route('administrator.org.index')->with($alert, $message);
+        if( $data->getType() == 'supply') {
+            return redirect()->route('administrator.org.supply')->with($alert, $message);
+        } else {
+            return redirect()->route('administrator.org.demand')->with($alert, $message);
+        }
     }
 
     public function ajaxDetailOrg(Request $request, Organization $org)
