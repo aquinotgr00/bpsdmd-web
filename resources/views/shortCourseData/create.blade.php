@@ -65,7 +65,7 @@
 
                             <div class="form-group {{ $errors->has('shortCourseTime') ? 'has-error' : '' }}">
                                 <label for="shortCourseTime">{{ ucwords(trans('common.short_course_time')) }} :</label>
-                                <input type="text" class="form-control" id="shortCourseTime" name="shortCourseTime" value="{{ old('shortCourseTime') }}">
+                                <input type="number" class="form-control" id="shortCourseTime" name="shortCourseTime" value="{{ old('shortCourseTime') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('shortCourseTime')) !!}</span>
                             </div>
 

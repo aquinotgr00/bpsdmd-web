@@ -49,7 +49,7 @@
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewShortCourse" data-shortcourse="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ url(route('administrator.shortCourse.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <!-- <a href="{{ url(route('administrator.shortCourse.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> | -->
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.shortCourse.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                         <a href="{{ url(route('administrator.shortCourseData.index', [$item->getId()])) }}"><i class="fa fa-book"></i> {{ ucwords(trans('common.short_course_data')) }}</a>
                                     </td>
@@ -116,6 +116,14 @@
                 <h4 class="modal-title">{{ ucfirst(trans('common.upload')) }} {{ ucfirst(trans('common.diklat')) }}</h4>
               </div>
               <div class="modal-body">
+                <div class="form-group">
+                  <label for="file">{{ ucfirst(trans('common.choose_institute')) }}</label>
+                  <select class="form-control" name="org_id" required>
+                      @foreach ($orgs as $org)
+                          <option value="{{$org->getId()}}">{{$org->getName()}}</option>
+                      @endforeach
+                  </select>
+                </div>
                 <label for="file">{{ ucfirst(trans('common.choose_file')) }}</label>
                 <input type="file" name="file" class="form-control">
                 <p>Unduh contoh file: <a href="{{route('administrator.shortCourse.template.download')}}">template</a></p>

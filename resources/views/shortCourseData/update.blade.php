@@ -15,6 +15,16 @@
                         <form method="post" enctype="multipart/form-data">
                         @csrf
 
+                            <!-- <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <label for="name">{{ ucfirst(trans('common.name')) }} :</label>
+                                <input id="name" type="text" name="name" class="form-control" value="{{ $shortCourse->getName() }}">
+                                <span class="help-block">{!! implode('', $errors->get('name')) !!}</span>
+                            </div> -->
+                            <div class="form-group {{ $errors->has('startDate') ? 'has-error' : '' }}">
+                                <label for="startDate">{{ ucwords(trans('common.start_date')) }} :</label>
+                                <input type="text" class="date form-control" id="startDate" name="startDate" value="{{ $data->getStartDate() instanceof \DateTime ? $data->getStartDate()->format('d-m-Y') : '' }}">
+                                <span class="help-block ">{!! implode('', $errors->get('startDate')) !!}</span>
+                            </div>
                             <div class="form-group {{ $errors->has('startDate') ? 'has-error' : '' }}">
                                 <label for="startDate">{{ ucwords(trans('common.start_date')) }} :</label>
                                 <input type="text" class="date form-control" id="startDate" name="startDate" value="{{ $data->getStartDate() instanceof \DateTime ? $data->getStartDate()->format('d-m-Y') : '' }}">

@@ -13,6 +13,14 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ShortCourseImport implements ToCollection
 {
+    /** @var Organization $org */
+    private $org;
+
+    public function setOrg(Organization $org)
+    {
+        $this->org = $org;
+    }
+
     /**
      * @param array $cols
      *
@@ -20,38 +28,30 @@ class ShortCourseImport implements ToCollection
      */
     public function collection (Collection $cols)
     {
-        foreach ($cols as $key => $col) 
+        foreach ($cols as $key => $col)
         {
             if($key == 0 || is_null($col[2])){
                 continue;
             }
 
-            $orgService = new OrgService;
-            $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
-            if ($org == null) {
-              $data = collect(['name' => $col[4], 'type' => 'demand', 'moda' => 'darat']);
-              $orgService->create($data);
-              $org = $orgService->getRepository()->findOneBy(['name' => $col[4]]);
-            }
-
             $shortCourse = new ShortCourse;
             $shortCourse->setName($col[1]);
             $shortCourse->setType('teknis');
-            $shortCourse->setOrg($org);
+            $shortCourse->setOrg($this->org);
 
             EntityManager::persist($shortCourse);
             EntityManager::flush();
 
             $subShortCourseData = collect([
-              'startDate' => date_format(Date::excelToDateTimeObject($col[8]), 'd-m-Y'),
-              'endDate' => date_format(Date::excelToDateTimeObject($col[9]), 'd-m-Y'),
-              'totalTarget' => intval($col[5]),
-              'totalRealization' => intval($col[6]),
-              'openSk' => $col[10],
-              'closeSk' => $col[11],
+              'startDate' => date_format(Date::excelToDateTimeObject($col[7]), 'd-m-Y'),
+              'endDate' => date_format(Date::excelToDateTimeObject($col[8]), 'd-m-Y'),
+              'totalTarget' => intval($col[4]),
+              'totalRealization' => intval($col[5]),
+              'openSk' => $col[9],
+              'closeSk' => $col[10],
               'generation' => intval($col[2]),
               'year' => intval($col[3]),
-              'shortCourseTime' => intval($col[7]),
+              'shortCourseTime' => intval($col[6]),
               'place' => $col[12]
             ]);
             $subShortCourse = new ShortCourseDataService;
