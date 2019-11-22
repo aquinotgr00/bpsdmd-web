@@ -42,7 +42,7 @@
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('type')) !!}</span>
                             </div>
-                            
+
                             <div class="form-group {{ $errors->has('startDate') ? 'has-error' : '' }}">
                                 <label for="startDate">{{ ucwords(trans('common.start_date')) }} :</label>
                                 <input type="text" class="date form-control" id="startDate" name="startDate" value="{{ old('startDate') }}">
@@ -93,7 +93,7 @@
 
                             <div class="form-group {{ $errors->has('shortCourseTime') ? 'has-error' : '' }}">
                                 <label for="shortCourseTime">{{ ucwords(trans('common.short_course_time')) }} :</label>
-                                <input type="text" class="form-control" id="shortCourseTime" name="shortCourseTime" value="{{ old('shortCourseTime') }}">
+                                <input type="number" class="form-control" id="shortCourseTime" name="shortCourseTime" value="{{ old('shortCourseTime') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('shortCourseTime')) !!}</span>
                             </div>
 

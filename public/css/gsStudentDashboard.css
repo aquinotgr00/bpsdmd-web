@@ -1079,8 +1079,7 @@ body > .header .logo img {
   border-radius: 0;
 }
 /* Checkbox and radio inputs */
-.checkbox,
-.radio {
+.checkbox {
   padding-left: 0;
 }
 /*
