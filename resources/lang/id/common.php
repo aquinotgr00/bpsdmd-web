@@ -178,19 +178,19 @@ return [
     'login_button' => 'Login',
 
     // REGISTER
-    'invalid_email_domain' => 'Hanya diperbolehkan menggunakan email resmi dengan domain @kai.com atau @pelni.com',
+    'invalid_email_domain' => 'Hanya diperbolehkan menggunakan email yang telah didaftarkan oleh administrator',
     'activate_account' => 'Silahkan cek email anda untuk aktivasi.',
     'activate_success' => 'Akun anda sudah teraktivasi, silahkan login.',
     'register_button' => 'Daftar',
     'form' => [
-      'org' => 'Jenis Organisasi',
-      'org_address' => 'Alamat Lengkap Organisasi',
+      'org' => 'Instansi',
+      'org_address' => 'Alamat Lengkap Instansi',
     ],
     'help_block' => [
       'org' => 'Jenis perusahaan Anda.',
       'org_address' => 'Alamat lengkap perusahaan Anda.',
       'name' => 'Nama lengkap Anda.',
-      'email' => 'Email Anda. Harap menggunakan email resmi penanggung jawab ber-akhir-an @pelni.com atau @kai.com',
+      'email' => 'Email Anda. Harap menggunakan email resmi yang telah terdaftar',
       'photo' => 'Foto Anda.',
       'toc' => 'Dengan ini saya menyatakan bahwa data yang saya isikan adalah benar.',
       'email_activation' => 'Setelah Anda mengirim formulir ini, kami akan mengirimkan email aktivasi akun Anda ke alamat email Anda.',

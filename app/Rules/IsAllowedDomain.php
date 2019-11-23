@@ -2,6 +2,8 @@
 
 namespace App\Rules;
 
+use App\Entities\Organization;
+use App\Services\Domain\OrgService;
 use Illuminate\Contracts\Validation\Rule;
 
 class IsAllowedDomain implements Rule
@@ -22,10 +24,7 @@ class IsAllowedDomain implements Rule
     *
     * @var array
     */
-    protected $allowedDomains = [
-        'kai.com',
-        'pelni.com',
-    ];
+    protected $allowedDomains = [];
 
     /**
      * Determine if the validation rule passes.
@@ -36,6 +35,13 @@ class IsAllowedDomain implements Rule
      */
     public function passes($attribute, $value)
     {
+        $orgs = new OrgService();
+        $orgs = $orgs->getOrgByType(Organization::TYPE_DEMAND);
+        foreach ($orgs as $org) {
+            if ($org->getEmail() !== null)
+                $domain = explode('@', $org->getEmail());
+                array_push($this->allowedDomains, $domain[1]);
+        }
         $domain = substr(strrchr($value, "@"), 1);
         if (in_array($domain, $this->allowedDomains)) {
             return true;
