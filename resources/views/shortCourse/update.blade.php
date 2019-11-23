@@ -45,61 +45,61 @@
                             
                             <div class="form-group {{ $errors->has('startDate') ? 'has-error' : '' }}">
                                 <label for="startDate">{{ ucwords(trans('common.start_date')) }} :</label>
-                                <input type="text" class="date form-control" id="startDate" name="startDate" value="{{ $data->getStartDate() }}">
+                                <input type="text" class="date form-control" id="startDate" name="startDate" value="{{ $shortCourseData->getStartDate()->format('d-m-Y') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('startDate')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('endDate') ? 'has-error' : '' }}">
                                 <label for="endDate">{{ ucwords(trans('common.end_date')) }} :</label>
-                                <input type="text" class="date form-control" id="endDate" name="endDate" value="{{ old('endDate') }}">
+                                <input type="text" class="date form-control" id="endDate" name="endDate" value="{{ $shortCourseData->getEndDate()->format('d-m-Y') }}">
                                 <span class="help-block ">{!! implode('', $errors->get('endDate')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('totalTarget') ? 'has-error' : '' }}">
                                 <label for="totalTarget">{{ ucwords(trans('common.total_target_student')) }} :</label>
-                                <input type="text" class="form-control" id="totalTarget" name="totalTarget" value="{{ old('totalTarget') }}">
+                                <input type="text" class="form-control" id="totalTarget" name="totalTarget" value="{{ $shortCourseData->getTotalTarget() }}">
                                 <span class="help-block">{!! implode('', $errors->get('totalTarget')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('totalRealization') ? 'has-error' : '' }}">
                                 <label for="totalRealization">{{ ucwords(trans('common.total_realization_student')) }} :</label>
-                                <input type="text" class="form-control" id="totalRealization" name="totalRealization" value="{{ old('totalRealization') }}">
+                                <input type="text" class="form-control" id="totalRealization" name="totalRealization" value="{{ $shortCourseData->getTotalRealization() }}">
                                 <span class="help-block">{!! implode('', $errors->get('totalRealization')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('openSk') ? 'has-error' : '' }}">
                                 <label for="openSk">{{ ucwords(trans('common.open_sk')) }} :</label>
-                                <input type="text" class="form-control" id="openSk" name="openSk" value="{{ old('openSk') }}">
+                                <input type="text" class="form-control" id="openSk" name="openSk" value="{{ $shortCourseData->getOpenSk() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('openSk')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('closeSk') ? 'has-error' : '' }}">
                                 <label for="closeSk">{{ ucwords(trans('common.close_sk')) }} :</label>
-                                <input type="text" class="form-control" id="closeSk" name="closeSk" value="{{ old('closeSk') }}">
+                                <input type="text" class="form-control" id="closeSk" name="closeSk" value="{{ $shortCourseData->getCloseSk() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('closeSk')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('generation') ? 'has-error' : '' }}">
                                 <label for="generation">{{ ucwords(trans('common.generation')) }} :</label>
-                                <input type="text" class="form-control" id="generation" name="generation" value="{{ old('generation') }}">
+                                <input type="text" class="form-control" id="generation" name="generation" value="{{ $shortCourseData->getGeneration() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('generation')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('year') ? 'has-error' : '' }}">
                                 <label for="year">{{ ucwords(trans('common.year')) }} :</label>
-                                <input type="text" class="form-control" id="year" name="year" value="{{ old('year') }}">
+                                <input type="text" class="form-control" id="year" name="year" value="{{ $shortCourseData->getYear() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('year')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('shortCourseTime') ? 'has-error' : '' }}">
                                 <label for="shortCourseTime">{{ ucwords(trans('common.short_course_time')) }} :</label>
-                                <input type="text" class="form-control" id="shortCourseTime" name="shortCourseTime" value="{{ old('shortCourseTime') }}">
+                                <input type="text" class="form-control" id="shortCourseTime" name="shortCourseTime" value="{{ $shortCourseData->getShortCourseTime() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('shortCourseTime')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('place') ? 'has-error' : '' }}">
                                 <label for="place">{{ ucwords(trans('common.place')) }} :</label>
-                                <input type="text" class="form-control" id="place" name="place" value="{{ old('place') }}">
+                                <input type="text" class="form-control" id="place" name="place" value="{{ $shortCourseData->getPlace() }}">
                                 <span class="help-block ">{!! implode('', $errors->get('place')) !!}</span>
                             </div>
 
