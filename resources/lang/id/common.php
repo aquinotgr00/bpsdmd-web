@@ -226,7 +226,7 @@ return [
     'close_sk' => 'sk tutup',
     'generation' => 'angkatan',
     'year' => 'tahun',
-    'short_course_time' => 'lama diklat',
+    'short_course_time' => 'lama diklat (hari)',
     'place' => 'tempat',
     'background' => 'latar belakang',
     'competence_certificat' => 'sertifikat kompetensi',

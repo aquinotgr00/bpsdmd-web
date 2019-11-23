@@ -49,7 +49,7 @@
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewShortCourse" data-shortcourse="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ url(route('administrator.shortCourse.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <!-- <a href="{{ url(route('administrator.shortCourse.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> | -->
                                         <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.shortCourse.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                         <a href="{{ url(route('administrator.shortCourseData.index', [$item->getId()])) }}"><i class="fa fa-book"></i> {{ ucwords(trans('common.short_course_data')) }}</a>
                                     </td>
