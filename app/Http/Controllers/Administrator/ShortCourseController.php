@@ -80,8 +80,15 @@ class ShortCourseController extends Controller
         return view('shortCourse.create', ['dataOrg' => $dataOrg]);
     }
 
-    public function update(Request $request, ShortCourseService $shortCourseService, OrgService $orgService, ShortCourse $data)
+    public function update(
+        Request $request,
+        ShortCourseService $shortCourseService,
+        OrgService $orgService,
+        ShortCourse $data,
+        ShortCourseDataService $shortCourseDataService
+    )
     {
+        $shortCourseData = $shortCourseDataService->getRepository()->findOneBy(['shortCourse' => $data]);
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
@@ -102,6 +109,7 @@ class ShortCourseController extends Controller
                 $requestData = $request->all();
 
                 $shortCourseService->update($data, collect($requestData), $org, true);
+                $shortCourseDataService->update($shortCourseData, collect($requestData), $data, true);
                 $alert = 'alert_success';
                 $message = trans('common.update_success', ['object' => ucfirst(trans('common.short_course'))]);
             } catch (Exception $e) {
@@ -113,7 +121,7 @@ class ShortCourseController extends Controller
         }
         $dataOrg    = $orgService->getOrgByType(Organization::TYPE_DEMAND);
 
-        return view('shortCourse.update', compact('data', 'dataOrg'));
+        return view('shortCourse.update', compact('data', 'dataOrg', 'shortCourseData'));
     }
 
     public function delete(

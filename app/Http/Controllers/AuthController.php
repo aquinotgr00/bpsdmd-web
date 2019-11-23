@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Organization as AppOrganization;
 use App\Entities\User;
 use App\Mail\VerificationMail;
 use App\Rules\IsAllowedDomain;
@@ -82,7 +83,7 @@ class AuthController extends Controller
             return redirect()->route('login')->with('alert', trans('common.activate_account'));
         }
 
-        $orgs = $orgService->getRepository()->findAll();
+        $orgs = $orgService->getOrgByType(AppOrganization::TYPE_DEMAND);
 
         return view('auth.register', compact('orgs'));
     }
