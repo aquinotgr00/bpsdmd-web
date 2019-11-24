@@ -38,9 +38,10 @@ class IsAllowedDomain implements Rule
         $orgs = new OrgService();
         $orgs = $orgs->getOrgByType(Organization::TYPE_DEMAND);
         foreach ($orgs as $org) {
-            if ($org->getEmail() !== null)
+            if ($org->getEmail() !== null) {
                 $domain = explode('@', $org->getEmail());
                 array_push($this->allowedDomains, $domain[1]);
+            }
         }
         $domain = substr(strrchr($value, "@"), 1);
         if (in_array($domain, $this->allowedDomains)) {
