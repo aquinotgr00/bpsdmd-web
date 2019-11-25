@@ -11,7 +11,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Link and Match - Supply</h1>
+        <h1>Link and Match - Demand</h1>
         <ol class="breadcrumb">
             <li>
             </li>
