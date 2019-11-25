@@ -13,7 +13,7 @@
                 <div class="box">
                     <div class="box-body">
                         <form method="post" enctype="multipart/form-data">
-                        @csrf
+                            @csrf
 
                             <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                                 <label for="code">{{ ucfirst(trans('common.code')) }} :</label>
@@ -69,11 +69,21 @@
                                     <div class="col-md-6">
                                         <select id="license" class="form-control">
                                             <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.license'))])) }}</option>
-                                            @if(!empty($licenses))
-                                                @foreach($licenses as $license)
+                                            <?php
+                                            $selected = [];
+                                            if(!empty($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense())) {
+                                                /** @var \App\Entities\JobTitleFunctionLicense $jtfl */
+                                                foreach($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense() as $jtfl){
+                                                    $selected[] = $jtfl->getLicense()->getId();
+                                                }
+                                            }
+                                            ?>
+
+                                            @foreach($licenses as $license)
+                                                @if(!in_array($license->getId(), $selected))
                                                     <option value="{{ $license->getId() }}" data-id="{{ $license->getId() }}" data-label="{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}">{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}</option>
-                                                @endforeach
-                                            @endif
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -91,9 +101,6 @@
                                                 </li>
                                             @endforeach
                                         </ul>
-                                    </div>
-                                    <div class="col-md-6" style="margin-top: 20px">
-                                        <ul class="list-group"></ul>
                                     </div>
                                 </div>
                                 <span class="help-block">{!! implode('', $errors->get('license')) !!}</span>
@@ -128,11 +135,21 @@
                                                         <hr>
                                                         <select id="licenseJF" class="form-control">
                                                             <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.license'))])) }}</option>
-                                                            @if(!empty($jtf->getJobTitleFunctionLicense()))
-                                                                @foreach($jtf->getJobTitleFunctionLicense() as $license)
-                                                                    <option value="{{ $license->getLicense()->getId() }}" data-id="{{ $license->getLicense()->getId() }}" data-label="{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</option>
-                                                                @endforeach
-                                                            @endif
+                                                            <?php
+                                                            $selected = [];
+                                                            if(!empty($jtf->getJobTitleFunctionLicense())) {
+                                                                /** @var \App\Entities\JobTitleFunctionLicense $jtfl */
+                                                                foreach($jtf->getJobTitleFunctionLicense() as $jtfl){
+                                                                    $selected[] = $jtfl->getLicense()->getId();
+                                                                }
+                                                            }
+                                                            ?>
+
+                                                            @foreach($licenses as $license)
+                                                                @if(!in_array($license->getId(), $selected))
+                                                                    <option value="{{ $license->getId() }}" data-id="{{ $license->getId() }}" data-label="{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}">{{ $license->getCode().' '.$license->getChapter().' - '.$license->getName() }}</option>
+                                                                @endif
+                                                            @endforeach
                                                         </select>
                                                         <div style="margin-top:10px;text-align: right">
                                                             <a href="javascript:void(0)" class="btn btn-default btnChooserLicenseJF">{{ ucfirst(trans('common.choose')) }}</a>
@@ -141,7 +158,7 @@
                                                             <ul class="list-group-licenseJF" style="padding-inline-start: 0px;">
                                                                 @foreach($jtf->getJobTitleFunctionLicense() as $license)
                                                                     <li class="list-group-item">
-                                                                        <input type="hidden" name="license[]" value="{{ $license->getLicense()->getId() }}">
+                                                                        <input type="hidden" name="license[{{ $jtf->getJobFunction()->getId() }}][]" value="{{ $license->getLicense()->getId() }}">
                                                                         <span class="name">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</span>
                                                                         <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">
                                                                             <span class="glyphicon glyphicon-remove"></span>
@@ -296,10 +313,11 @@
 
         // with job function license
         $('a.btnChooserLicenseJF').live('click', function () {
-            let listing = $(this).parent().parent().find('.list-group-licenseJF'),
+            let jobFunction = $(this).parent().parent().find('input').val(),
+                listing = $(this).parent().parent().find('.list-group-licenseJF'),
                 input = $(this).parent().parent().find('select#licenseJF option:selected'),
                 template = '<li class="list-group-item">\n' +
-                    '<input type="hidden" name="license[]" value="">\n' +
+                    '<input type="hidden" name="license['+jobFunction+'][]" value="">\n' +
                     '<span class="name"></span>\n' +
                     '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">\n' +
                     '<span class="glyphicon glyphicon-remove"></span>\n' +

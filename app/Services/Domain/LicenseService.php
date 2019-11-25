@@ -138,7 +138,13 @@ class LicenseService
         $excludeIds = [];
 
         foreach ($exclude as $item) {
-            $excludeIds[] = ($item instanceof LicenseStudyProgram || $item instanceof LicenseCompetency) ? $item->getLicense()->getId() : $item;
+            if (is_array($item)) {
+                foreach ($item as $value) {
+                    $excludeIds[] = $value;
+                }
+            } else {
+                $excludeIds[] = ($item instanceof LicenseStudyProgram || $item instanceof LicenseCompetency) ? $item->getLicense()->getId() : $item;
+            }
         }
 
         $qb = $this->createQueryBuilder('l');

@@ -243,10 +243,11 @@
 
         // with job function license
         $('a.btnChooserLicenseJF').live('click', function () {
-            let listing = $(this).parent().parent().find('.list-group-licenseJF'),
+            let jobFunction = $(this).parent().parent().find('input').val(),
+                listing = $(this).parent().parent().find('.list-group-licenseJF'),
                 input = $(this).parent().parent().find('select#licenseJF option:selected'),
                 template = '<li class="list-group-item">\n' +
-                    '<input type="hidden" name="license[]" value="">\n' +
+                    '<input type="hidden" name="license['+jobFunction+'][]" value="">\n' +
                     '<span class="name"></span>\n' +
                     '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">\n' +
                     '<span class="glyphicon glyphicon-remove"></span>\n' +

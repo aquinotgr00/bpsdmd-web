@@ -149,11 +149,17 @@ class JobFunctionService
 
         if (count($excludeIds)) {
             $query = $qb->where($qb->expr()->notIn('jf.id', $excludeIds))
+                ->andWhere('jf.name != :default')
+                ->setParameter('default', 'undefined')
+                ->addOrderBy('jf.code','ASC')
                 ->getQuery();
         } else {
-            $query = $qb->getQuery();
+            $query = $qb->where('jf.name != :default')
+                ->setParameter('default', 'undefined')
+                ->addOrderBy('jf.code','ASC')
+                ->getQuery();
         }
-        
+
         return $query->getResult();
     }
 
