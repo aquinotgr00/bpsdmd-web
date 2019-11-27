@@ -101,16 +101,36 @@
                             </div>
 
                             <div class="form-group {{ $errors->has('foreign_citizen') ? 'has-error' : '' }}">
-                                <label for="foreign_citizen">{{ ucwords(trans('common.foreign_citizen')) }} :</label></br>
-                                <input class="form-control" type="radio" name="foreign_citizen" value="t" checked> {{ ucfirst(trans('common.yes')) }}
-                                <input class="form-control" type="radio" name="foreign_citizen" value="f"> {{ ucfirst(trans('common.no')) }}
+                                <label for="foreign_citizen">
+                                    {{ ucwords(trans('common.foreign_citizen')) }} :
+                                </label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="foreign_citizen" value="t" checked> {{ ucfirst(trans('common.yes')) }}
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="foreign_citizen" value="f"> {{ ucfirst(trans('common.no')) }}
+                                    </label>
+                                </div>
                                 <span class="help-block ">{!! implode('', $errors->get('foreign_citizen')) !!}</span>
                             </div>
 
                             <div class="form-group {{ $errors->has('social_protection_card') ? 'has-error' : '' }}">
-                                <label for="social_protection_card">{{ ucwords(trans('common.social_protection_card')) }} :</label></br>
-                                <input class="form-control" type="radio" name="social_protection_card" value="t" checked> {{ ucfirst(trans('common.yes')) }}
-                                <input class="form-control" type="radio" name="social_protection_card" value="f"> {{ ucfirst(trans('common.no')) }}
+                                <label for="social_protection_card">
+                                    {{ ucwords(trans('common.social_protection_card')) }} :
+                                </label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="social_protection_card" value="t" checked> {{ ucfirst(trans('common.yes')) }}
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="social_protection_card" value="f"> {{ ucfirst(trans('common.no')) }}
+                                    </label>
+                                </div>
                                 <span class="help-block ">{!! implode('', $errors->get('social_protection_card')) !!}</span>
                             </div>
 
