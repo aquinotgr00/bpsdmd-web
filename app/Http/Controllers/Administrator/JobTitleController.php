@@ -49,15 +49,17 @@ class JobTitleController extends Controller
             try {
                 $requestData = $request->all();
 
-                if(!$request->get('job_function') && $request->get('license')){
+                if(is_null($request->get('job_function')) && $request->get('license')){
                     $jobFunction = $jobFunctionService->getRepository()->findOneBy(['name' => 'undefined']);
+
                     if(!$jobFunction){
                         $data = collect(['code' => '1', 'name' => 'undefined']);
                         $jobFunctionService->create($data, $org);
                         $jobFunction = $jobFunctionService->getRepository()->findOneBy(['name' => 'undefined']);
                     }
+
                     $requestData['job_function'] = [0=>$jobFunction->getId()];
-                }else{
+                } else {
                     $requestData['job_function'] = $request->get('job_function');
                 }
 
@@ -117,7 +119,7 @@ class JobTitleController extends Controller
 
             return redirect()->route('administrator.jobTitle.index', ['org' => $org->getId()])->with($alert, $message);
         }
-        
+
         return view('jobTitle.update', compact('data', 'licenses', 'functions', 'arrayLicenses'));
     }
 

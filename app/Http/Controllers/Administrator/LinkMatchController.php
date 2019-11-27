@@ -72,7 +72,7 @@ class LinkMatchController extends Controller
                 if (array_key_exists($jobTitle->getOrg()->getId(), $result)) {
                     $append = $result[$jobTitle->getOrg()->getId()];
 
-                    $append['jobTitle'][] = [
+                    $append['jobTitle'][$jobTitle->getId()] = [
                         'name' => $jobTitle->getName(),
                         'competencies' => $jobTitleService->getCompetencyJobTitle($jobTitle)
                     ];
@@ -87,7 +87,7 @@ class LinkMatchController extends Controller
                         'company' => $jobTitle->getOrg()->getName(),
                         'logo' =>  $jobTitle->getOrg()->getLogo() ? '/'.Organization::UPLOAD_PATH.'/'.$jobTitle->getOrg()->getLogo() : '/img/avatar.png',
                         'jobTitle' => [
-                            [
+                            $jobTitle->getId() => [
                                 'name' => $jobTitle->getName(),
                                 'competencies' => $jobTitleService->getCompetencyJobTitle($jobTitle)
                             ],

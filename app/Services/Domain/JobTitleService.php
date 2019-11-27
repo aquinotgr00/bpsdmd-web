@@ -191,7 +191,7 @@ class JobTitleService
                 $jobFunction = $jobFunctionService->findById($jobFunctionId);
 
                 if ($jobFunction instanceof JobFunction) {
-                    $jobTitleFunctionService->create($jobTitle, $jobFunction, $licenses);
+                    $jobTitleFunctionService->create($jobTitle, $jobFunction, isset($licenses[$jobFunctionId]) ? $licenses[$jobFunctionId] : []);
                 }
             }
         }
