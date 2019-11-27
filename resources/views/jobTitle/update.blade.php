@@ -55,12 +55,13 @@
                                 <label for="name">{{ ucfirst(trans('common.is_there_job_function')) }}</label>
                                 <div id="radioJobFunction" style="margin-left: 5px">
                                     <label for="withJobFunction">
-                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes" {{ $data->getJobTitleFunction()[0]->getJobFunction()->getName() != 'undefined' ? 'checked' : '' }}> {{ ucfirst(trans('common.yes')) }} &nbsp;
+                                        <input type="radio" id="withJobFunction" name="job_function_exist" value="yes" {{ !isset($data->getJobTitleFunction()[0]) ? '' : ($data->getJobTitleFunction()[0]->getJobFunction()->getName() != 'undefined' ? 'checked' : '') }}> {{ ucfirst(trans('common.yes')) }} &nbsp;
                                     </label>
                                     <label for="noJobFunction" style="margin-left: 15px">
-                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no" {{ $data->getJobTitleFunction()[0]->getJobFunction()->getName() == 'undefined' ? 'checked' : '' }}> {{ ucfirst(trans('common.no')) }}
+                                        <input type="radio" id="noJobFunction" name="job_function_exist" value="no" {{ !isset($data->getJobTitleFunction()[0]) ? '' : ($data->getJobTitleFunction()[0]->getJobFunction()->getName() == 'undefined' ? 'checked' : '') }}> {{ ucfirst(trans('common.no')) }}
                                     </label>
                                 </div>
+                                <span class="help-block ">{!! implode('', $errors->get('job_function_exist')) !!}</span>
                             </div>
 
                             <div id="noJobFunctionInput" class="form-group {{ $errors->has('license') ? 'has-error' : '' }}">
@@ -71,10 +72,13 @@
                                             <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.license'))])) }}</option>
                                             <?php
                                             $selected = [];
-                                            if(!empty($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense())) {
-                                                /** @var \App\Entities\JobTitleFunctionLicense $jtfl */
-                                                foreach($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense() as $jtfl){
-                                                    $selected[] = $jtfl->getLicense()->getId();
+
+                                            if (isset($data->getJobTitleFunction()[0])) {
+                                                if(!empty($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense())) {
+                                                    /** @var \App\Entities\JobTitleFunctionLicense $jtfl */
+                                                    foreach($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense() as $jtfl){
+                                                        $selected[] = $jtfl->getLicense()->getId();
+                                                    }
                                                 }
                                             }
                                             ?>
@@ -91,15 +95,17 @@
                                     </div>
                                     <div class="col-md-6" style="margin-top: 20px">
                                         <ul class="list-group">
-                                            @foreach($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense() as $license)
-                                                <li class="list-group-item">
-                                                    <input type="hidden" name="license[]" value="{{ $license->getLicense()->getId() }}">
-                                                    <span class="name">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</span>
-                                                    <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">
-                                                        <span class="glyphicon glyphicon-remove"></span>
-                                                    </a>
-                                                </li>
-                                            @endforeach
+                                            @if(isset($data->getJobTitleFunction()[0]))
+                                                @foreach($data->getJobTitleFunction()[0]->getJobTitleFunctionLicense() as $license)
+                                                    <li class="list-group-item">
+                                                        <input type="hidden" name="license[]" value="{{ $license->getLicense()->getId() }}">
+                                                        <span class="name">{{ $license->getLicense()->getCode().' '.$license->getLicense()->getChapter().' - '.$license->getLicense()->getName() }}</span>
+                                                        <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemoveLicenseJF">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>

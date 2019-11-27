@@ -248,4 +248,5 @@ return [
     'job_function' => 'job function',
     'head' => 'head',
     'is_there_job_function' => 'is there job function?',
+    'job_function_option' => 'option job function',
 ];

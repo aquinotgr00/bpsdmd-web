@@ -61,6 +61,7 @@
                                         <input type="radio" id="noJobFunction" name="job_function_exist" value="no"> {{ ucfirst(trans('common.no')) }}
                                     </label>
                                 </div>
+                                <span class="help-block ">{!! implode('', $errors->get('withJobFunction')) !!}</span>
                             </div>
 
                             <div id="noJobFunctionInput" class="form-group {{ $errors->has('license') ? 'has-error' : '' }}">
