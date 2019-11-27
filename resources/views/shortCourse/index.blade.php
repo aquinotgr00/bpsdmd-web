@@ -117,12 +117,18 @@
               </div>
               <div class="modal-body">
                 <div class="form-group">
-                  <label for="file">{{ ucfirst(trans('common.choose_institute')) }}</label>
-                  <select class="form-control" name="org_id" required>
-                      @foreach ($orgs as $org)
-                          <option value="{{$org->getId()}}">{{$org->getName()}}</option>
-                      @endforeach
-                  </select>
+                  @if(currentUser()->getOrg() === null)
+                      <label for="file">{{ ucfirst(trans('common.choose_institute')) }}</label>
+                      <select class="form-control" name="org_id" >
+                          @foreach ($orgs as $org)
+                              <option value="{{$org->getId()}}">{{$org->getName()}}</option>
+                          @endforeach
+                      </select>
+                  @else
+                      <label for="file">{{ ucfirst(trans('common.company')) }}</label>
+                      <input type="text" style="display:none;" name="org_id" value="{{currentUser()->getOrg()->getId()}}" readonly>
+                      <input type="text" class="form-control" value="{{currentUser()->getOrg()->getName()}}" readonly>
+                  @endif
                 </div>
                 <label for="file">{{ ucfirst(trans('common.choose_file')) }}</label>
                 <input type="file" name="file" class="form-control">
