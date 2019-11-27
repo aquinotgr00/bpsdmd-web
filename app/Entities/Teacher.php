@@ -94,7 +94,7 @@ class Teacher
      *
      * @ORM\Column(name="foto", type="string", nullable=true)
      */
-    private $photo = NULL;
+    private $photo;
 
     /**
      * @return int
@@ -259,7 +259,7 @@ class Teacher
     /**
      * @return string
      */
-    public function getPhoto(): string
+    public function getPhoto(): ?string
     {
         return $this->photo;
     }
