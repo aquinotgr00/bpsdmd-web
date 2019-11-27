@@ -39,11 +39,12 @@ class JobTitleController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
-                // 'withJobFunction' => 'required'
+                'job_function_exist' => 'required'
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
+                'job_function_exist' => ucfirst(trans('common.job_function_option')),
             ]);
 
             try {
@@ -87,11 +88,12 @@ class JobTitleController extends Controller
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
-                // 'withJobFunction' => 'required'
+                'job_function_exist' => 'required'
             ];
 
             $request->validate($validation, [], [
                 'name' => ucfirst(trans('common.name')),
+                'job_function_exist' => ucfirst(trans('common.job_function_option')),
             ]);
 
             try {
