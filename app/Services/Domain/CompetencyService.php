@@ -194,4 +194,52 @@ class CompetencyService
 
         return $competencies;
     }
+
+    /**
+     * Get list competency
+     *
+     * @param array $exclude
+     * @return mixed
+     */
+    public function getAsList($exclude = [])
+    {
+        $excludeIds = [];
+
+        foreach ($exclude as $item) {
+            if (is_array($item)) {
+                foreach ($item as $value) {
+                    $excludeIds[] = $value;
+                }
+            } else {
+                $excludeIds[] = $item instanceof LicenseCompetency ? $item->getCompetency()->getId() : $item;
+            }
+        }
+
+        $qb = $this->createQueryBuilder('c');
+
+        if (count($excludeIds)) {
+            $query = $qb->where($qb->expr()->notIn('c.id', $excludeIds))
+                ->addOrderBy('c.moda','ASC')
+                ->addOrderBy('c.type', 'ASC')
+                ->getQuery();
+        } else {
+            $query = $qb
+                ->addOrderBy('c.moda','ASC')
+                ->addOrderBy('c.type', 'ASC')
+                ->getQuery();
+        }
+
+        return $query->getResult();
+    }
+
+    /**
+     * Find Competency by id
+     *
+     * @param $id
+     * @return License
+     */
+    public function findById($id)
+    {
+        return $this->getRepository()->find($id);
+    }
 }

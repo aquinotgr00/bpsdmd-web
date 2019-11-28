@@ -71,4 +71,16 @@ class LicenseCompetencyService
             ->where('kompetensi_id', '=', $competency->getId())
             ->delete();
     }
+
+    /**
+     * Delete LicenseCompetency
+     *
+     * @param License $license
+     */
+    public function deleteByLicense(License $license)
+    {
+        DB::table('lisensi_kompetensi')
+            ->where('lisensi_id', '=', $license->getId())
+            ->delete();
+    }
 }

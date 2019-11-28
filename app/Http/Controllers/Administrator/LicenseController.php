@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrator;
 
 use App\Entities\License;
 use App\Http\Controllers\Controller;
+use App\Services\Domain\CompetencyService;
 use App\Services\Domain\LicenseService;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,8 +28,10 @@ class LicenseController extends Controller
         return view('license.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete'));
     }
 
-    public function create(Request $request, LicenseService $licenseService)
+    public function create(Request $request, LicenseService $licenseService, CompetencyService $competencyService)
     {
+        $competencies = $competencyService->getAsList($request->input('competency', []));
+
         $moda = [
             License::MODA_KERETA => ucfirst(License::MODA_KERETA),
             License::MODA_DARAT => ucfirst(License::MODA_DARAT),
@@ -63,11 +66,13 @@ class LicenseController extends Controller
             return redirect()->route('administrator.license.index')->with($alert, $message);
         }
 
-        return view('license.create', compact('moda', 'heads'));
+        return view('license.create', compact('moda', 'heads', 'competencies'));
     }
 
-    public function update(Request $request, LicenseService $licenseService, License $license)
+    public function update(Request $request, LicenseService $licenseService, CompetencyService $competencyService, License $license)
     {
+        $competencies = $competencyService->getAsList($license->getLicenseCompetency());
+
         $moda = [
             License::MODA_KERETA => ucfirst(License::MODA_KERETA),
             License::MODA_DARAT => ucfirst(License::MODA_DARAT),
@@ -101,7 +106,7 @@ class LicenseController extends Controller
             return redirect()->route('administrator.license.index')->with($alert, $message);
         }
 
-        return view('license.update', compact('license', 'moda', 'heads'));
+        return view('license.update', compact('license', 'moda', 'heads', 'competencies'));
     }
 
     public function delete(LicenseService $licenseService, License $license)
@@ -117,5 +122,27 @@ class LicenseController extends Controller
         }
 
         return redirect()->route('administrator.license.index')->with($alert, $message);
+    }
+
+    public function ajaxDetailLicense(Request $request, License $license)
+    {
+        if ($request->ajax()) {
+            $competency = '';
+
+            foreach ($license->getLicenseCompetency() as $item) {
+                $competency .= ucfirst($item->getCompetency()->getModa()).' '.$item->getCompetency()->getType().' - '.$item->getCompetency()->getName().'<br>';
+            }
+
+            $data = [
+                'name' => ucwords($license->getCode().' '.$license->getChapter().' - '.$license->getName()),
+                'moda' => ucwords($license->getModa()),
+                'head' => $license->getHead(),
+                'competency' => $competency,
+            ];
+
+            return response()->json($data);
+        }
+
+        return abort(404);
     }
 }
