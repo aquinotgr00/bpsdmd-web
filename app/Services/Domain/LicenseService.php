@@ -2,6 +2,7 @@
 
 namespace App\Services\Domain;
 
+use App\Entities\Competency;
 use App\Entities\License;
 use App\Entities\LicenseCompetency;
 use App\Entities\LicenseStudyProgram;
@@ -55,6 +56,28 @@ class LicenseService
         return $this->paginate($query, $limit, $page, false);
     }
 
+    private function setCompetency(License $license, array $competencies = [], $type = 'create')
+    {
+        /** @var CompetencyService $competencyService */
+        $competencyService = app(CompetencyService::class);
+        /** @var LicenseCompetencyService $licenseCompetencyService */
+        $licenseCompetencyService = app(LicenseCompetencyService::class);
+
+        if ($type == 'update') {
+            $licenseCompetencyService->deleteByLicense($license);
+        }
+
+        if (count($competencies)) {
+            foreach ($competencies as $licenseId) {
+                $competency = $competencyService->findById($licenseId);
+
+                if ($competency instanceof Competency) {
+                    $licenseCompetencyService->create($competency, $license);
+                }
+            }
+        }
+    }
+
     /**
      * Create new License
      *
@@ -70,6 +93,10 @@ class LicenseService
         $license->setChapter($data->get('chapter'));
         $license->setModa($data->get('moda'));
         $license->setHead($data->get('head'));
+
+        if($data->get('competency')){
+            $this->setCompetency($license, $data->get('competency'));
+        }
 
         EntityManager::persist($license);
 
@@ -95,6 +122,10 @@ class LicenseService
         $license->setChapter($data->get('chapter'));
         $license->setModa($data->get('moda'));
         $license->setHead($data->get('head'));
+
+        if($data->get('competency')){
+            $this->setCompetency($license, $data->get('competency'), 'update');
+        }
 
         EntityManager::persist($license);
 

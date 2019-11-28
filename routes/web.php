@@ -110,6 +110,7 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::any('/create', 'Administrator\LicenseController@create')->name('administrator.license.create');
         Route::any('/{license}/update', 'Administrator\LicenseController@update')->name('administrator.license.update');
         Route::get('/{license}/delete', 'Administrator\LicenseController@delete')->name('administrator.license.delete');
+        Route::get('/{license}', 'Administrator\LicenseController@ajaxDetailLicense')->name('administrator.license.view');
         Route::get('/', 'Administrator\LicenseController@index')->name('administrator.license.index');
     });
 
