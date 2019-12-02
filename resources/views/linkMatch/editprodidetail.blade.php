@@ -80,6 +80,14 @@
                                             </ul>
                                     </div>
                                     <div class="col-md-6">
+                                        <label for="instansi-demand">Pilih Instansi Demand :</label>
+                                        <select id="instansi-demand" class="form-control">
+                                            <option value="">Silakan pilih Instansi Demand</option>
+                                            <option>AirNav</option>
+                                            <option>KAI</option>
+                                            <option>Pelni</option>
+                                        </select>
+                                        <br /><br />
                                         <!-- sesuai matra, jika matra instansi udara, maka tampilkan semua jabatan yang terhubung dengan matra udara -->
                                         <label for="license">Pilih Jabatan :</label>
                                         <select id="license" class="form-control">
