@@ -285,6 +285,7 @@ return [
     'job_function' => 'fungsi pekerjaan',
     'head' => 'kepala',
     'is_there_job_function' => 'ada fungsi pekerjaan?',
+    'job_function_option' => 'opsi fungsi pekerjaan',
 
     // Analytics
     'graph_data' => 'Grafik Data',

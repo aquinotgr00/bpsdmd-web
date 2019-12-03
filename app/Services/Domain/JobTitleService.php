@@ -98,7 +98,7 @@ class JobTitleService
             $jobTitle->setOrg($org);
         }
 
-        if($data->get('job_function_exist')){
+        if($data->get('job_function_exist') && count($data->get('license', []))){
             $this->setJobFunctions($jobTitle, $data->get('job_function'), $data->get('license'));
         }
 
@@ -133,7 +133,7 @@ class JobTitleService
             $jobTitle->setOrg($org);
         }
 
-        if($data->get('job_function_exist')){
+        if($data->get('job_function_exist') && count($data->get('license', []))){
             $this->setJobFunctions($jobTitle, $data->get('job_function'), $data->get('license'), 'update');
         }
 
@@ -191,7 +191,7 @@ class JobTitleService
                 $jobFunction = $jobFunctionService->findById($jobFunctionId);
 
                 if ($jobFunction instanceof JobFunction) {
-                    $jobTitleFunctionService->create($jobTitle, $jobFunction, isset($licenses[$jobFunctionId]) ? $licenses[$jobFunctionId] : []);
+                    $jobTitleFunctionService->create($jobTitle, $jobFunction, isset($licenses[$jobFunctionId]) ? $licenses[$jobFunctionId] : $licenses);
                 }
             }
         }

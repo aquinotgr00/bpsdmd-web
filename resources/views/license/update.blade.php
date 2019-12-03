@@ -53,6 +53,39 @@
                                 <span class="help-block">{!! implode('', $errors->get('head')) !!}</span>
                             </div>
 
+                            <div class="form-group {{ $errors->has('competency') ? 'has-error' : '' }}">
+                                <label for="competency">{{ ucfirst(trans('common.competency')) }} :</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select id="competency" class="form-control">
+                                            <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.competency'))])) }}</option>
+                                            @if(!empty($competencies))
+                                                @foreach($competencies as $competency)
+                                                    <option value="{{ $competency->getId() }}" data-id="{{ $competency->getId() }}" data-label="{{ ucfirst($competency->getModa()).' - '.$competency->getName() }}">{{ ucfirst($competency->getModa()).' - '.$competency->getName() }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="javascript:void(0)" class="btn btn-default btnChooser">Pilih</a>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 20px">
+                                        <ul class="list-group">
+                                            @foreach($license->getLicenseCompetency() as $lc)
+                                                <li class="list-group-item">
+                                                    <input type="hidden" name="competency[]" value="{{ $lc->getCompetency()->getId() }}">
+                                                    <span class="name">{{ ucfirst($lc->getCompetency()->getModa()).' - '.$lc->getCompetency()->getName() }}</span>
+                                                    <a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemove">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="help-block">{!! implode('', $errors->get('competency')) !!}</span>
+                            </div>
+
                             <div class="box-footer" style="text-align: right;min-height: 50px;">
                                 <button class="btn btn-primary pull-right">{{ ucfirst(trans('common.edit')) }}</button>
                             </div>
@@ -62,4 +95,48 @@
             </div>
         </div>
     </section><!-- /.content -->
+@endsection
+
+@section('script')
+    <script>
+        $('a.btnChooser').live('click', function () {
+            var listing = $('.list-group'),
+                input = $(document).find('select#competency option:selected'),
+                template = '<li class="list-group-item">\n' +
+                    '<input type="hidden" name="competency[]" value="">\n' +
+                    '<span class="name"></span>\n' +
+                    '<a href="javascript:void(0)" class="btn btn-default btn-xs pull-right btnRemove">\n' +
+                    '<span class="glyphicon glyphicon-remove"></span>\n' +
+                    '</a>\n' +
+                    '</li>';
+
+            if (input.val()) {
+                var rendered = $(template);
+
+                rendered.find('input').val(input.data('id'));
+                rendered.find('span.name').html(input.data('label'));
+
+                listing.append(rendered);
+                input.remove();
+            }
+        });
+
+        $('a.btnRemove').live('click', function () {
+            var selector = $(this).parent(),
+                id = selector.find('input').val(),
+                label = selector.find('span.name').html(),
+                template = '<option value="" data-id="" data-label=""></option>',
+                input = $('select#competency');
+
+            var rendered = $(template);
+
+            rendered.attr('value', id);
+            rendered.attr('data-id', id);
+            rendered.attr('data-label', label);
+            rendered.text(label);
+
+            input.append(rendered);
+            $(this).parent().remove();
+        });
+    </script>
 @endsection
