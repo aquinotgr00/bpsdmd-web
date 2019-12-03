@@ -285,6 +285,20 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Demand\LinkMatchController@demand')->name('demand.link-match');
     });
 
+    Route::group(['prefix' => '/short-course-demand', 'middleware' => ['only_demand']], function() {
+        Route::any('/create', 'Demand\ShortCourseController@create')->name('demand.shortCourse.create');
+        Route::get('/{shortCourse}', 'Demand\ShortCourseController@ajaxDetailShortCourse')->name('administrator.shortCourse.view');
+        Route::get('/', 'Demand\ShortCourseController@index')->name('demand.shortCourse.index');
+
+        // Route::group(['prefix' => '/{shortCourse}/short-course-data', 'middleware' => ['only_admin']], function() {
+        //     Route::any('/create', 'Administrator\ShortCourseDataController@create')->name('administrator.shortCourseData.create');
+        //     Route::any('/{shortCourseData}/update', 'Administrator\ShortCourseDataController@update')->name('administrator.shortCourseData.update');
+        //     Route::get('/{shortCourseData}/delete', 'Administrator\ShortCourseDataController@delete')->name('administrator.shortCourseData.delete');
+        //     Route::get('/', 'Administrator\ShortCourseDataController@index')->name('administrator.shortCourseData.index');
+        //     Route::any('/participant/create', 'Administrator\ShortCourseParticipantController@create')->name('administrator.shortCourseParticipant.create');
+        // });
+    });
+
     // utils routes
     Route::any('/update-profile', 'UtilityController@updateProfile')->name('update.profile');
     Route::get('/', 'UtilityController@dashboard')->name('dashboard');
