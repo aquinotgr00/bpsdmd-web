@@ -35,9 +35,13 @@
                                                 <h3 class="box-title" style="padding-bottom: 6px;background-color: #666666;width:100%;color: #FFFFFF;" id="box-title-one">Jabatan</h3>
                                             </div>
                                             <div class="box-body" id="list-jabatan">
-                                                @foreach($jobTitles as $jobTitle)
-                                                    <div class="list-prodi-item" data-id="{{ $jobTitle->getId() }}">{{ $jobTitle->getName() }}</div>
-                                                @endforeach
+                                                @if(count($jobTitles))
+                                                    @foreach($jobTitles as $jobTitle)
+                                                        <div class="list-prodi-item" data-id="{{ $jobTitle->getId() }}">{{ $jobTitle->getName() }}</div>
+                                                    @endforeach
+                                                @else
+                                                    <span>{{ trans('common.no_data') }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
