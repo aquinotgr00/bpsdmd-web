@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Supply;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
+use App\Services\Domain\LicenseService;
 use App\Services\Domain\ProgramService;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,8 +30,10 @@ class ProgramController extends Controller
         return view('program.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail'));
     }
 
-    public function create(Request $request, ProgramService $programService)
+    public function create(Request $request, ProgramService $programService, LicenseService $licenseService)
     {
+        $licenses = $licenseService->getAsList($request->input('license', []));
+
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
@@ -69,11 +72,13 @@ class ProgramController extends Controller
             return redirect()->route('supply.program.index')->with($alert, $message);
         }
 
-        return view('program.create');
+        return view('program.create', compact('licenses'));
     }
 
-    public function update(Request $request, ProgramService $programService, StudyProgram $data)
+    public function update(Request $request, ProgramService $programService, LicenseService $licenseService, StudyProgram $data)
     {
+        $licenses = $licenseService->getAsList($data->getLicenseStudyProgram());
+
         if ($request->method() == 'POST') {
             $validation = [
                 'name' => 'required',
@@ -109,7 +114,7 @@ class ProgramController extends Controller
             return redirect()->route('supply.program.index')->with($alert, $message);
         }
 
-        return view('program.update', compact('data'));
+        return view('program.update', compact('data', 'licenses'));
     }
 
     public function delete(ProgramService $programService, StudyProgram $data)
