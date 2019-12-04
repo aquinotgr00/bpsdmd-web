@@ -10,6 +10,7 @@ use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Services\Application\LinkMatchService;
 use App\Services\Domain\JobTitleService;
+use App\Services\Domain\LicenseService;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
 use Illuminate\Http\Request;
@@ -180,5 +181,36 @@ class LinkMatchController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function selectSupply(OrgService $orgService) {
+        $page = request()->get('page');
+        $data = $orgService->paginateOrgSupply(request()->get('page'));
+
+        return view('linkMatch.selectSupply', compact('data', 'page'));
+    }
+
+    public function selectProgram(ProgramService $programService, Organization $org) {
+        $page = request()->get('page');
+        $data = $programService->paginateProgram(request()->get('page'), $org);
+
+        return view('linkMatch.selectProgram', compact('data', 'page', 'org'));
+    }
+
+    public function updateData(LicenseService $licenseService, OrgService $orgService, JobTitleService $jobTitleService, Organization $org, StudyProgram $program) {
+        $selectedLicense = [];
+        $selectedLicenseIds = [];
+
+        /** @var LicenseStudyProgram $licenseStudyProgram */
+        foreach ($program->getLicenseStudyProgram() as $licenseStudyProgram) {
+            $selectedLicense[] = $licenseStudyProgram->getLicense();
+            $selectedLicenseIds[] = $licenseStudyProgram->getLicense()->getId();
+        }
+
+        $licenses = $licenseService->getAsList($selectedLicenseIds);
+        $demands = $orgService->getDemandAsList($org->getModa());
+        $jobTitles = $jobTitleService->getJobTitleByLicenses($org->getModa(), $selectedLicenseIds);
+
+        return view('linkMatch.updateData', compact('org', 'program', 'selectedLicense', 'licenses', 'demands', 'jobTitles'));
     }
 }

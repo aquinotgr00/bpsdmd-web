@@ -293,4 +293,38 @@ class JobTitleService
 
         return $licenses;
     }
+
+    /**
+     * Get job title by licenses
+     *
+     * @param $moda
+     * @param array $selectedLicenses
+     * @return array
+     */
+    public function getJobTitleByLicenses($moda, array $selectedLicenses)
+    {
+        if (count($selectedLicenses)) {
+            $jobTitles = [];
+
+            $qb = EntityManager::createQueryBuilder()
+                ->select('jfl')
+                ->from(JobTitleFunctionLicense::class, 'jfl');
+
+            $query = $qb->where($qb->expr()->in('jfl.license', array_unique($selectedLicenses)))
+                ->getQuery();
+
+            $result = $query->getResult();
+
+            /** @var JobTitleFunctionLicense $jfl */
+            foreach ($result as $jfl) {
+                if ($jfl->getJobTitleFunction()->getJobTitle()->getOrg()->getModa() == $moda) {
+                    $jobTitles[$jfl->getJobTitleFunction()->getJobTitle()->getId()] = $jfl->getJobTitleFunction()->getJobTitle();
+                }
+            }
+
+            return $jobTitles;
+        }
+
+        return [];
+    }
 }
