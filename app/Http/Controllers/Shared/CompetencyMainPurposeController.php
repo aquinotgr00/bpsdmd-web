@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Shared;
 
 use App\Entities\CompetencyMainPurpose;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,7 @@ class CompetencyMainPurposeController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.competency_main_purpose'))]);
             }
 
-            return redirect()->route('administrator.competencyMainPurpose.index')->with($alert, $message);
+            return redirect()->route('shared.competencyMainPurpose.index')->with($alert, $message);
         }
 
         return view('cmp.create');
@@ -65,7 +65,7 @@ class CompetencyMainPurposeController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.competency_main_purpose'))]);
             }
 
-            return redirect()->route('administrator.competencyMainPurpose.index')->with($alert, $message);
+            return redirect()->route('shared.competencyMainPurpose.index')->with($alert, $message);
         }
 
         return view('cmp.update', compact('cmp'));
@@ -83,6 +83,6 @@ class CompetencyMainPurposeController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.competency_main_purpose'))]);
         }
 
-        return redirect()->route('administrator.competencyMainPurpose.index')->with($alert, $message);
+        return redirect()->route('shared.competencyMainPurpose.index')->with($alert, $message);
     }
 }

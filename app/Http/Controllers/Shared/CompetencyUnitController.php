@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Shared;
 
 use App\Entities\CompetencyUnit;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,7 @@ class CompetencyUnitController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.competency_unit'))]);
             }
 
-            return redirect()->route('administrator.competencyUnit.index')->with($alert, $message);
+            return redirect()->route('shared.competencyUnit.index')->with($alert, $message);
         }
 
         return view('cu.create');
@@ -65,7 +65,7 @@ class CompetencyUnitController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.competency_unit'))]);
             }
 
-            return redirect()->route('administrator.competencyUnit.index')->with($alert, $message);
+            return redirect()->route('shared.competencyUnit.index')->with($alert, $message);
         }
 
         return view('cu.update', compact('cu'));
@@ -83,6 +83,6 @@ class CompetencyUnitController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.competency_unit'))]);
         }
 
-        return redirect()->route('administrator.competencyUnit.index')->with($alert, $message);
+        return redirect()->route('shared.competencyUnit.index')->with($alert, $message);
     }
 }

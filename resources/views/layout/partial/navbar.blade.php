@@ -45,9 +45,6 @@
                 </li>
             </ul>
         </li>
-    @endif
-
-    @if(checkAuthorization(\App\Entities\User::ROLE_ADMIN))
 
         <li class="treeview">
             <a href="#">
@@ -82,31 +79,31 @@
             </a>
             <ul class="treeview-menu" style="display: none; overflow: hidden;">
                 <li>
-                    <a href="{{ url(route('administrator.competency.index')) }}">
+                    <a href="{{ url(route('shared.competency.index')) }}">
                         <i class="fa fa-list-alt"></i>
                         <span>{{ ucfirst(trans('common.competency')) }}</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url(route('administrator.competencyUnit.index')) }}">
+                    <a href="{{ url(route('shared.competencyUnit.index')) }}">
                         <i class="fa fa-list-alt"></i>
                         <span>{{ ucfirst(trans('common.competency_unit')) }}</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url(route('administrator.competencyMainPurpose.index')) }}">
+                    <a href="{{ url(route('shared.competencyMainPurpose.index')) }}">
                         <i class="fa fa-list-alt"></i>
                         <span>{{ ucfirst(trans('common.competency_main_purpose')) }}</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url(route('administrator.competencyMainFunction.index')) }}">
+                    <a href="{{ url(route('shared.competencyMainFunction.index')) }}">
                         <i class="fa fa-list-alt"></i>
                         <span>{{ ucfirst(trans('common.competency_main_function')) }}</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url(route('administrator.competencyKeyFunction.index')) }}">
+                    <a href="{{ url(route('shared.competencyKeyFunction.index')) }}">
                         <i class="fa fa-list-alt"></i>
                         <span>{{ ucfirst(trans('common.competency_key_function')) }}</span>
                     </a>
@@ -115,7 +112,7 @@
         </li>
 
         <li>
-            <a href="{{ url(route('administrator.license.index')) }}">
+            <a href="{{ url(route('shared.license.index')) }}">
                 <i class="fa fa-file"></i>
                 <span>{{ ucwords(trans('common.license')) }}</span>
             </a>
@@ -150,16 +147,63 @@
                 <span>{{ ucwords(trans('common.study_program')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('supply.student.index') }}">
                 <i class="fa fa-child"></i>
                 <span>{{ ucwords(trans('common.student')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('supply.teacher.index') }}">
                 <i class="fa fa-user"></i>
                 <span>{{ ucwords(trans('common.teacher')) }}</span>
+            </a>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>{{ ucfirst(trans('common.competency')) }}</span>
+            </a>
+            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('shared.competency.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyUnit.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_unit')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyMainPurpose.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_main_purpose')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyMainFunction.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_main_function')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyKeyFunction.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_key_function')) }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{{ url(route('shared.license.index')) }}">
+                <i class="fa fa-file"></i>
+                <span>{{ ucwords(trans('common.license')) }}</span>
             </a>
         </li>
 
@@ -178,36 +222,87 @@
                 <span>{{ ucwords(trans('common.employee')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('demand.jobTitle.index') }}">
                 <i class="fa fa-shield"></i>
                 <span>{{ ucwords(trans('common.job_title')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('demand.jobFunction.index') }}">
                 <i class="fa fa-shield"></i>
                 <span>{{ ucwords(trans('common.job_function')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ url(route('demand.shortCourse.index')) }}">
                 <i class="fa fa-calendar"></i>
                 <span>{{ ucwords(trans('common.short_course')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('demand.certificate.index') }}">
                 <i class="fa fa-envelope"></i>
                 <span>{{ ucwords(trans('common.certificate')) }}</span>
             </a>
         </li>
+
         <li>
             <a href="{{ route('demand.recruitment.index') }}">
                 <i class="fa fa-cart-plus"></i>
                 <span>{{ ucwords(trans('common.recruitment')) }}</span>
             </a>
         </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>{{ ucfirst(trans('common.competency')) }}</span>
+            </a>
+            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('shared.competency.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyUnit.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_unit')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyMainPurpose.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_main_purpose')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyMainFunction.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_main_function')) }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url(route('shared.competencyKeyFunction.index')) }}">
+                        <i class="fa fa-list-alt"></i>
+                        <span>{{ ucfirst(trans('common.competency_key_function')) }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{{ url(route('shared.license.index')) }}">
+                <i class="fa fa-file"></i>
+                <span>{{ ucwords(trans('common.license')) }}</span>
+            </a>
+        </li>
+
         <li>
             <a href="{{ url(route('demand.link-match')) }}">
                 <i class="fa fa-file"></i>
