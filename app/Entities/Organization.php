@@ -19,6 +19,7 @@ class Organization
     const MODA_UDARA = 'udara';
     const MODA_DARAT = 'darat';
     const MODA_KERETA = 'kereta api';
+    const MODA_ASN = 'ASN';
     const ACCREDITATION_A = 'A';
     const ACCREDITATION_B = 'B';
     const ACCREDITATION_C = 'C';
