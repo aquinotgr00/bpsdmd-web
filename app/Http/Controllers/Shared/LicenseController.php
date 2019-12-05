@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Shared;
 
 use App\Entities\License;
 use App\Http\Controllers\Controller;
@@ -17,12 +17,12 @@ class LicenseController extends Controller
         $data = $licenseService->paginateLicense(request()->get('page'));
 
         //build urls
-        $urlCreate = url(route('administrator.license.create'));
+        $urlCreate = url(route('shared.license.create'));
         $urlUpdate = function($id) {
-            return url(route('administrator.license.update', [$id]));
+            return url(route('shared.license.update', [$id]));
         };
         $urlDelete = function($id) {
-            return url(route('administrator.license.delete', [$id]));
+            return url(route('shared.license.delete', [$id]));
         };
 
         return view('license.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete'));
@@ -63,7 +63,7 @@ class LicenseController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.license'))]);
             }
 
-            return redirect()->route('administrator.license.index')->with($alert, $message);
+            return redirect()->route('shared.license.index')->with($alert, $message);
         }
 
         return view('license.create', compact('moda', 'heads', 'competencies'));
@@ -103,7 +103,7 @@ class LicenseController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.license'))]);
             }
 
-            return redirect()->route('administrator.license.index')->with($alert, $message);
+            return redirect()->route('shared.license.index')->with($alert, $message);
         }
 
         return view('license.update', compact('license', 'moda', 'heads', 'competencies'));
@@ -121,7 +121,7 @@ class LicenseController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.license'))]);
         }
 
-        return redirect()->route('administrator.license.index')->with($alert, $message);
+        return redirect()->route('shared.license.index')->with($alert, $message);
     }
 
     public function ajaxDetailLicense(Request $request, License $license)

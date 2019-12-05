@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Shared;
 
 use App\Entities\CompetencyKeyFunction;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,7 @@ class CompetencyKeyFunctionController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.competency_key_function'))]);
             }
 
-            return redirect()->route('administrator.competencyKeyFunction.index')->with($alert, $message);
+            return redirect()->route('shared.competencyKeyFunction.index')->with($alert, $message);
         }
 
         return view('ckf.create');
@@ -65,7 +65,7 @@ class CompetencyKeyFunctionController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.competency_key_function'))]);
             }
 
-            return redirect()->route('administrator.competencyKeyFunction.index')->with($alert, $message);
+            return redirect()->route('shared.competencyKeyFunction.index')->with($alert, $message);
         }
 
         return view('ckf.update', compact('ckf'));
@@ -83,6 +83,6 @@ class CompetencyKeyFunctionController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.competency_key_function'))]);
         }
 
-        return redirect()->route('administrator.competencyKeyFunction.index')->with($alert, $message);
+        return redirect()->route('shared.competencyKeyFunction.index')->with($alert, $message);
     }
 }

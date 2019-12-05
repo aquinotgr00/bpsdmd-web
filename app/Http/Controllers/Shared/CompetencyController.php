@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Shared;
 
 use App\Entities\Competency;
 use App\Entities\CompetencyKeyFunction;
@@ -103,7 +103,7 @@ class CompetencyController extends Controller
             }
 
             if ($messageBag->count() > 0) {
-                return redirect()->route('administrator.competency.create')->withErrors($messageBag);
+                return redirect()->route('shared.competency.create')->withErrors($messageBag);
             }
 
             try {
@@ -116,7 +116,7 @@ class CompetencyController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.competency_unit'))]);
             }
 
-            return redirect()->route('administrator.competency.index')->with($alert, $message);
+            return redirect()->route('shared.competency.index')->with($alert, $message);
         }
 
         $ckf = $ckfService->getRepository()->findAll();
@@ -214,7 +214,7 @@ class CompetencyController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.competency_unit'))]);
             }
 
-            return redirect()->route('administrator.competency.index')->with($alert, $message);
+            return redirect()->route('shared.competency.index')->with($alert, $message);
         }
 
         $ckf = $ckfService->getRepository()->findAll();
@@ -237,7 +237,7 @@ class CompetencyController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.competency_unit'))]);
         }
 
-        return redirect()->route('administrator.competency.index')->with($alert, $message);
+        return redirect()->route('shared.competency.index')->with($alert, $message);
     }
 
     public function ajaxDetailCompetency(Request $request, Competency $competency)

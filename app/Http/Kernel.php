@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticated;
 use App\Http\Middleware\Localization;
 use App\Http\Middleware\UserAdmin;
+use App\Http\Middleware\UserAll;
 use App\Http\Middleware\UserDemand;
 use App\Http\Middleware\UserSupply;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -57,6 +58,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'authenticated' => Authenticated::class,
+        'all_user' => UserAll::class,
         'only_admin' => UserAdmin::class,
         'only_supply' => UserSupply::class,
         'only_demand' => UserDemand::class,

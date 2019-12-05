@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Shared;
 
 use App\Entities\CompetencyMainFunction;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,7 @@ class CompetencyMainFunctionController extends Controller
                 $message = trans('common.create_failed', ['object' => ucfirst(trans('common.competency_main_function'))]);
             }
 
-            return redirect()->route('administrator.competencyMainFunction.index')->with($alert, $message);
+            return redirect()->route('shared.competencyMainFunction.index')->with($alert, $message);
         }
 
         return view('cmf.create');
@@ -65,7 +65,7 @@ class CompetencyMainFunctionController extends Controller
                 $message = trans('common.update_failed', ['object' => ucfirst(trans('common.competency_main_function'))]);
             }
 
-            return redirect()->route('administrator.competencyMainFunction.index')->with($alert, $message);
+            return redirect()->route('shared.competencyMainFunction.index')->with($alert, $message);
         }
 
         return view('cmf.update', compact('cmf'));
@@ -83,6 +83,6 @@ class CompetencyMainFunctionController extends Controller
             $message = trans('common.delete_failed', ['object' => ucfirst(trans('common.competency_main_function'))]);
         }
 
-        return redirect()->route('administrator.competencyMainFunction.index')->with($alert, $message);
+        return redirect()->route('shared.competencyMainFunction.index')->with($alert, $message);
     }
 }

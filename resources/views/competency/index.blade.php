@@ -5,7 +5,7 @@
         <h1>Data {{ ucwords(trans('common.competency')) }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ url(route('administrator.competency.create')) }}">
+                <a href="{{ url(route('shared.competency.create')) }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.competency')) }}
                 </a>
             </li>
@@ -44,8 +44,8 @@
                                     <td>{{ $item->getType() }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewUser" data-competency="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ url(route('administrator.competency.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.competency.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="{{ url(route('shared.competency.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('shared.competency.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php
