@@ -41,7 +41,7 @@ class ProgramController extends Controller
                 'vision' => 'required',
                 'mission' => 'required',
                 'passing_grade_credits' => 'required|numeric',
-                'degree' => 'required|in:'.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
+                'degree' => 'required|in:'.StudyProgram::DEGREE_ND.','.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_D4.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
                 'license' => 'array',
             ];
 
@@ -86,7 +86,7 @@ class ProgramController extends Controller
                 'vision' => 'required',
                 'mission' => 'required',
                 'passing_grade_credits' => 'required|numeric',
-                'degree' => 'required|in:'.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
+                'degree' => 'required|in:'.StudyProgram::DEGREE_ND.','.StudyProgram::DEGREE_D1.','.StudyProgram::DEGREE_D2.','.StudyProgram::DEGREE_D3.','.StudyProgram::DEGREE_D4.','.StudyProgram::DEGREE_S1.','.StudyProgram::DEGREE_S2,
                 'license' => 'array',
             ];
 
