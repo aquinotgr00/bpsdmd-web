@@ -197,9 +197,18 @@ class LinkMatchController extends Controller
         return view('linkMatch.selectProgram', compact('data', 'page', 'org'));
     }
 
-    public function updateData(LicenseService $licenseService, OrgService $orgService, JobTitleService $jobTitleService, Organization $org, StudyProgram $program) {
+    public function updateData(Request $request, LinkMatchService $linkMatchService, LicenseService $licenseService, OrgService $orgService, JobTitleService $jobTitleService, Organization $org, StudyProgram $program) {
         $selectedLicense = [];
         $selectedLicenseIds = [];
+
+        if ($request->method() == 'POST') {
+            $linkMatchService->massUpdate($program, $request->get('license', []), $request->get('job_title', []), $request->get('deleted_job_title', []));
+
+            $alert = 'alert_success';
+            $message = trans('common.update_success', ['object' => 'Link and Match']);
+
+            return redirect()->route('administrator.link-match.update', [$org->getId(), $program->getId()])->with($alert, $message);
+        }
 
         /** @var LicenseStudyProgram $licenseStudyProgram */
         foreach ($program->getLicenseStudyProgram() as $licenseStudyProgram) {
@@ -212,5 +221,16 @@ class LinkMatchController extends Controller
         $jobTitles = $jobTitleService->getJobTitleByLicenses($org->getModa(), $selectedLicenseIds);
 
         return view('linkMatch.updateData', compact('org', 'program', 'selectedLicense', 'licenses', 'demands', 'jobTitles'));
+    }
+
+    public function ajaxListJobTitle(Request $request, JobTitleService $jobTitleService, Organization $organization)
+    {
+        if ($request->ajax()) {
+            $jobTitles = $jobTitleService->getByOrganization($organization);
+
+            return response()->json($jobTitles);
+        }
+
+        return abort(404);
     }
 }

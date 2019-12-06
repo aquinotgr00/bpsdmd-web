@@ -95,8 +95,9 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/supply-by-job-title/{jobTitle}', 'Administrator\LinkMatchController@supplyByJobTitle')->name('administrator.link-match.supply-by-job-title');
 
         Route::group(['prefix' => '/edit', 'middleware' => ['only_admin']], function() {
-            Route::get('{org_supply}/update/{program}', 'Administrator\LinkMatchController@updateData')->name('administrator.link-match.update');
+            Route::any('{org_supply}/update/{program}', 'Administrator\LinkMatchController@updateData')->name('administrator.link-match.update');
             Route::get('{org_supply}/update', 'Administrator\LinkMatchController@selectProgram')->name('administrator.link-match.select-program');
+            Route::get('job-title/{org_demand}', 'Administrator\LinkMatchController@selectProgram')->name('administrator.link-match.job-title');
             Route::get('/', 'Administrator\LinkMatchController@selectSupply')->name('administrator.link-match.edit');
         });
     });

@@ -327,4 +327,79 @@ class JobTitleService
 
         return [];
     }
+
+    /**
+     * Get list Job Title by Org
+     *
+     * @param Organization $organization
+     * @return array
+     */
+    public function getByOrganization(Organization $organization)
+    {
+        $jobTitles = [];
+        $query = $this->createQueryBuilder('jt')
+            ->andWhere('jt.org = :orgId')
+            ->orderBy('jt.id')
+            ->setParameter('orgId', $organization)
+            ->getQuery();
+
+        $result = $query->getResult();
+
+        /** @var JobTitle $item */
+        foreach ($result as $item) {
+            $jobTitles[] = [
+                'id' => $item->getId(),
+                'name' => $item->getName()
+            ];
+        }
+
+        return $jobTitles;
+    }
+
+    /**
+     * Set Licenses for Job Titles
+     *
+     * @param array $jobTitles
+     * @param array $licenses
+     */
+    public function setLicensesForJobTitles(array $jobTitles, array $licenses)
+    {
+        /** @var JobTitleService $jobTitleService */
+        $jobTitleService = app(JobTitleService::class);
+        /** @var JobTitleFunctionService $jobTitleFunctionService */
+        $jobTitleFunctionService = app(JobTitleFunctionService::class);
+
+        /** @var JobTitle $jobTitle */
+        foreach ($jobTitles as $jobTitle) {
+            $jobTitle = $jobTitleService->findById($jobTitle);
+
+            if ($jobTitle instanceof JobTitle) {
+                $jfs = $jobTitle->getJobTitleFunction();
+
+                foreach ($jfs as $jf) {
+                    $jobTitleFunctionService->setLicenses($jf, $licenses, 'update');
+                }
+            }
+        }
+    }
+
+    public function unsetLicensesForJobTitles(array $deletedJobTitle, array $licenses)
+    {
+        $qb = EntityManager::createQueryBuilder()
+            ->select('jfl')
+            ->from(JobTitleFunctionLicense::class, 'jfl');
+
+        $query = $qb->where($qb->expr()->in('jfl.license', array_unique($licenses)))
+            ->getQuery();
+
+        $result = $query->getResult();
+
+        /** @var JobTitleFunctionLicense $item */
+        foreach ($result as $item) {
+            if (in_array($item->getJobTitleFunction()->getJobTitle()->getId(), $deletedJobTitle)) {
+                EntityManager::remove($item);
+                EntityManager::flush();
+            }
+        }
+    }
 }

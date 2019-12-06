@@ -12,8 +12,10 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
+                        @include('layout.partial.alert')
+
                         <form method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="_token" value="2afeDsRvN951yVEvOWxSdVLtgVZcJFxvH24ruefM">
+                            @csrf
 
                             <div class="form-group ">
                                 <div class="row">
@@ -76,6 +78,8 @@
                                                 </li>
                                             @endforeach
                                         </ul>
+
+                                        <div class="deletedJobTitle"></div>
                                     </div>
                                 </div>
                                 <span class="help-block"></span>
@@ -95,26 +99,6 @@
 
 @section('script')
     <script>
-        $('select#demand').live('change', function () {
-            let id = $(this).val();
-
-            if (id > 0) {
-                $.get('/link-match/program/'+id, function(programs, status){
-                    if (status === 'success') {
-                        let html = '';
-
-                        $.each(programs, function( index, data ) {
-                            html = html + '<div class="list-prodi-item" data-id="'+data.id+'">'+data.name+'</div>';
-                        });
-
-                        if (html.length > 0) {
-                            $(listingProdi).html(html);
-                        }
-                    }
-                });
-            }
-        });
-
         $('a.btnChooser').live('click', function () {
             var listing = $('#license-group'),
                 input = $(document).find('select#license option:selected'),
@@ -155,6 +139,28 @@
             $(this).parent().remove();
         });
 
+        $('select#demand').live('change', function () {
+            let id = $(this).val(),
+                listingJobTitle = $('select#jobTitle');
+
+            if (id > 0) {
+                $.get('/link-match/job-title/'+id, function(jobTitles, status){
+                    if (status === 'success') {
+                        let html = '<option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucwords(trans('common.job_title'))])) }}</option>';
+
+                        $.each(jobTitles, function( index, data ) {
+                            html = html + '<option value="'+data.id+'" data-id="'+data.id+'" data-label="'+data.name+'">'+data.name+'</option>';
+                        });
+
+                        if (html.length > 0) {
+                            $(listingJobTitle).html('');
+                            $(listingJobTitle).html(html);
+                        }
+                    }
+                });
+            }
+        });
+
         $('a.btnChooserJobTitle').live('click', function () {
             var listing = $('#jobTitle-group'),
                 input = $(document).find('select#jobTitle option:selected'),
@@ -174,6 +180,8 @@
 
                 listing.append(rendered);
                 input.remove();
+
+                $('div.deletedJobTitle').find('input[value='+input.data('id')+']').remove();
             }
         });
 
@@ -182,7 +190,8 @@
                 id = selector.find('input').val(),
                 label = selector.find('span.name').html(),
                 template = '<option value="" data-id="" data-label=""></option>',
-                input = $('select#jobTitle');
+                input = $('select#jobTitle'),
+                templateDeleted = '<input type="hidden" name="deleted_job_title[]" value="">';
 
             var rendered = $(template);
 
@@ -193,6 +202,12 @@
 
             input.append(rendered);
             $(this).parent().remove();
+
+            var rendered2 = $(templateDeleted);
+
+            rendered2.val(id);
+
+            $('div.deletedJobTitle').append(rendered2);
         });
     </script>
 @endsection
