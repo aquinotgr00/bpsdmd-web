@@ -34,7 +34,8 @@ class OrgController extends Controller
             Organization::MODA_KERETA => ucfirst(Organization::MODA_KERETA),
             Organization::MODA_DARAT => ucfirst(Organization::MODA_DARAT),
             Organization::MODA_LAUT => ucfirst(Organization::MODA_LAUT),
-            Organization::MODA_UDARA => ucfirst(Organization::MODA_UDARA)
+            Organization::MODA_UDARA => ucfirst(Organization::MODA_UDARA),
+            Organization::MODA_ASN => ucfirst(Organization::MODA_ASN)
         ];
         $accreditation = [
             Organization::ACCREDITATION_A => ucfirst(Organization::ACCREDITATION_A),
@@ -99,7 +100,8 @@ class OrgController extends Controller
             Organization::MODA_KERETA => ucfirst(Organization::MODA_KERETA),
             Organization::MODA_DARAT => ucfirst(Organization::MODA_DARAT),
             Organization::MODA_LAUT => ucfirst(Organization::MODA_LAUT),
-            Organization::MODA_UDARA => ucfirst(Organization::MODA_UDARA)
+            Organization::MODA_UDARA => ucfirst(Organization::MODA_UDARA),
+            Organization::MODA_ASN => ucfirst(Organization::MODA_ASN)
         ];
         $accreditation = [
             Organization::ACCREDITATION_A => ucfirst(Organization::ACCREDITATION_A),
