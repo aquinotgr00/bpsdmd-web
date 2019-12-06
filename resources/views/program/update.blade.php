@@ -60,9 +60,11 @@
                             <div class="form-group {{ $errors->has('degree') ? 'has-error' : '' }}">
                                 <label for="degree">{{ ucfirst(trans('common.degree')) }} :</label>
                                 <select id="degree" name="degree" class="form-control">
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_ND }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_ND ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_ND) }}</option>
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_D1 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_D1 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D1) }}</option>
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_D2 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_D2 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D2) }}</option>
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_D3 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_D3 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D3) }}</option>
+                                    <option value="{{ \App\Entities\StudyProgram::DEGREE_D4 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_D4 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_D4) }}</option>
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_S1 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_S1 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S1) }}</option>
                                     <option value="{{ \App\Entities\StudyProgram::DEGREE_S2 }}" {{ $data->getDegree() == \App\Entities\StudyProgram::DEGREE_S2 ? 'selected' : '' }}>{{ ucfirst(\App\Entities\StudyProgram::DEGREE_S2) }}</option>
                                 </select>
