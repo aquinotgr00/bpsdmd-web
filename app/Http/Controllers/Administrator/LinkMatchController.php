@@ -10,6 +10,7 @@ use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Services\Application\LinkMatchService;
 use App\Services\Domain\JobTitleService;
+use App\Services\Domain\LicenseService;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
 use Illuminate\Http\Request;
@@ -177,6 +178,57 @@ class LinkMatchController extends Controller
             }
 
             return response()->json($result);
+        }
+
+        return abort(404);
+    }
+
+    public function selectSupply(OrgService $orgService) {
+        $page = request()->get('page');
+        $data = $orgService->paginateOrgSupply(request()->get('page'));
+
+        return view('linkMatch.selectSupply', compact('data', 'page'));
+    }
+
+    public function selectProgram(ProgramService $programService, Organization $org) {
+        $page = request()->get('page');
+        $data = $programService->paginateProgram(request()->get('page'), $org);
+
+        return view('linkMatch.selectProgram', compact('data', 'page', 'org'));
+    }
+
+    public function updateData(Request $request, LinkMatchService $linkMatchService, LicenseService $licenseService, OrgService $orgService, JobTitleService $jobTitleService, Organization $org, StudyProgram $program) {
+        $selectedLicense = [];
+        $selectedLicenseIds = [];
+
+        if ($request->method() == 'POST') {
+            $linkMatchService->massUpdate($program, $request->get('license', []), $request->get('job_title', []), $request->get('deleted_job_title', []));
+
+            $alert = 'alert_success';
+            $message = trans('common.update_success', ['object' => 'Link and Match']);
+
+            return redirect()->route('administrator.link-match.update', [$org->getId(), $program->getId()])->with($alert, $message);
+        }
+
+        /** @var LicenseStudyProgram $licenseStudyProgram */
+        foreach ($program->getLicenseStudyProgram() as $licenseStudyProgram) {
+            $selectedLicense[] = $licenseStudyProgram->getLicense();
+            $selectedLicenseIds[] = $licenseStudyProgram->getLicense()->getId();
+        }
+
+        $licenses = $licenseService->getAsList($selectedLicenseIds);
+        $demands = $orgService->getDemandAsList($org->getModa());
+        $jobTitles = $jobTitleService->getJobTitleByLicenses($org->getModa(), $selectedLicenseIds);
+
+        return view('linkMatch.updateData', compact('org', 'program', 'selectedLicense', 'licenses', 'demands', 'jobTitles'));
+    }
+
+    public function ajaxListJobTitle(Request $request, JobTitleService $jobTitleService, Organization $organization)
+    {
+        if ($request->ajax()) {
+            $jobTitles = $jobTitleService->getByOrganization($organization);
+
+            return response()->json($jobTitles);
         }
 
         return abort(404);

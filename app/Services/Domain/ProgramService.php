@@ -156,7 +156,7 @@ class ProgramService
      * @param array $licenses
      * @param string $type
      */
-    private function setLicenses(StudyProgram $studyProgram, array $licenses = [], $type = 'create')
+    public function setLicenses(StudyProgram $studyProgram, array $licenses = [], $type = 'create')
     {
         /** @var LicenseService $licenseService */
         $licenseService = app(LicenseService::class);

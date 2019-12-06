@@ -93,6 +93,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/job-title/{org_demand}', 'Administrator\LinkMatchController@jobTitle')->name('administrator.link-match.job-title');
         Route::get('/job-title-license/{jobTitle}', 'Administrator\LinkMatchController@jobTitleLicense')->name('administrator.link-match.job-title-license');
         Route::get('/supply-by-job-title/{jobTitle}', 'Administrator\LinkMatchController@supplyByJobTitle')->name('administrator.link-match.supply-by-job-title');
+
+        Route::group(['prefix' => '/edit', 'middleware' => ['only_admin']], function() {
+            Route::any('{org_supply}/update/{program}', 'Administrator\LinkMatchController@updateData')->name('administrator.link-match.update');
+            Route::get('{org_supply}/update', 'Administrator\LinkMatchController@selectProgram')->name('administrator.link-match.select-program');
+            Route::get('job-title/{org_demand}', 'Administrator\LinkMatchController@selectProgram')->name('administrator.link-match.job-title');
+            Route::get('/', 'Administrator\LinkMatchController@selectSupply')->name('administrator.link-match.edit');
+        });
     });
 
     Route::group(['prefix' => '/user', 'middleware' => ['only_admin']], function() {
@@ -124,20 +131,20 @@ Route::group(['middleware' => ['authenticated']], function() {
         });
     });
 
-    Route::group(['prefix' => '/analytics/lulusan', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@index')->name('administrator.analytics.index');
+    Route::group(['prefix' => '/competency', 'middleware' => ['only_admin']], function() {
+        Route::any('/create', 'Administrator\CompetencyController@create')->name('administrator.competency.create');
+        Route::any('/{competency}/update', 'Administrator\CompetencyController@update')->name('administrator.competency.update');
+        Route::get('/{competency}/delete', 'Administrator\CompetencyController@delete')->name('administrator.competency.delete');
+        Route::get('/{competency}', 'Administrator\CompetencyController@ajaxDetailCompetency')->name('administrator.competency.view');
+        Route::get('/', 'Administrator\CompetencyController@index')->name('administrator.competency.index');
     });
-    Route::group(['prefix' => '/analytics/siswa', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@students')->name('administrator.analytics.students');
-    });
-    Route::group(['prefix' => '/analytics/diklat', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@shortcourse')->name('administrator.analytics.shortcourse');
-    });
-    Route::group(['prefix' => '/analytics/jurusan', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@studyprogram')->name('administrator.analytics.studyprogram');
-    });
-    Route::group(['prefix' => '/analytics/pegawai', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@employee')->name('administrator.analytics.employee');
+
+    Route::group(['prefix' => '/analytics', 'middleware' => ['only_admin']], function() {
+        Route::get('/lulusan', 'Administrator\AnalyticsController@index')->name('administrator.analytics.index');
+        Route::get('/siswa', 'Administrator\AnalyticsController@students')->name('administrator.analytics.students');
+        Route::get('/diklat', 'Administrator\AnalyticsController@shortcourse')->name('administrator.analytics.shortcourse');
+        Route::get('/jurusan', 'Administrator\AnalyticsController@studyprogram')->name('administrator.analytics.studyprogram');
+        Route::get('/pegawai', 'Administrator\AnalyticsController@employee')->name('administrator.analytics.employee');
     });
 
     // supply routes

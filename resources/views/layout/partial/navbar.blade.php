@@ -125,18 +125,32 @@
             </a>
         </li>
 
-        <li>
-            <a href="{{ url(route('administrator.link-match.supply')) }}">
-                <i class="fa fa-file"></i>
-                <span>Link and Match - Supply</span>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>Link and Match</span>
             </a>
-        </li>
+            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('administrator.link-match.supply')) }}">
+                        <i class="fa fa-file"></i>
+                        <span>Supply</span>
+                    </a>
+                </li>
 
-        <li>
-            <a href="{{ url(route('administrator.link-match.demand')) }}">
-                <i class="fa fa-file"></i>
-                <span>Link and Match - Demand</span>
-            </a>
+                <li>
+                    <a href="{{ url(route('administrator.link-match.demand')) }}">
+                        <i class="fa fa-file"></i>
+                        <span>Demand</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url(route('administrator.link-match.edit')) }}">
+                        <i class="fa fa-file"></i>
+                        <span>Update Data</span>
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 
