@@ -7,7 +7,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>
-        Student Dashboard
+        Aplikasi Big Data SIMSDMTRANAS
         -
         BADAN PENGEMBANGAN SDM PERHUBUNGAN
     </title>
@@ -71,7 +71,7 @@
 		<!-- Left side -->
 		<div class="signin-info">
 			<a href="#" class="logo">
-				{{trans('common.application_name')}}
+				BIG DATA {{trans('common.application_name')}}
 			</a> <!-- / .logo -->
 			<div class="slogan">
 				{{trans('common.app_sub_name')}}

@@ -1,6 +1,40 @@
 @extends('layout.main')
 
 @section('content')
+<?php
+$url    = 'https://tableau.bpsdm.dephub.go.id/trusted'; // alamat server tableau
+$myvars = 'username=bpsdm1&target_site=Daun3&client_ip=10.10.8.100'; // username trusted tableau
+
+//$view   = $_GET['view']; // Path/nama view tableau
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $myvars);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    "Content-Type: application/x-www-form-urlencoded;charset=UTF-8"
+));
+
+$instansi_diklat_year = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_Update/Suply_Diklat?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+
+$jenis_diklat = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_Update/Suply_Diklat_Jenis?:embed=yes&:toolbar=no&:tabs=no&:showVizHome=no', curl_exec($ch));
+
+$peserta_diklat = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_Update/Graph_PesertaDiklat?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+
+$peserta_diklat_per_diklat = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_Update/Grap_Peserta_Diklat_Jenisdiklat?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+
+$scatter_plot_trg_realisasi = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_Update/Scattercharttarg_Real_diklat?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+
+$pie_chart_dpm_per_matra = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_ePelaporan/Upt_Dpm?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+
+$pie_chart_dpm_lulus = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_ePelaporan/DPM_PesertaDiklat_Matra2?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+
+$bar_chart_dpm_lulus = sprintf($url . '/%s/t/Daun3/views/BPSDM_DB_LARAVEL_ePelaporan/Chart_DPM_PesertaDiklat_UPT?:embed=yes&:toolbar=no&:tabs=no', curl_exec($ch));
+?>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -12,28 +46,27 @@
                             <i class="fa fa-binoculars"></i> {{ ucfirst(trans('common.short_course_institute')) }}
                         </a>
                     </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <!--<ul class="nav navbar-nav tab-graduates-graphtype">
-                            <li class="active">
-                                <a href="#graduate_status_moda">{{ ucfirst(trans('common.graph_moda')) }}</a>
-                            </li>
-                            <li>
-                                <a href="#graduate_status_jenjang">{{ ucfirst(trans('common.graph_jenjang')) }}</a>
-                            </li>
-                            <li>
-                                <a href="#graduate_status_gender">{{ ucfirst(trans('common.graph_gender')) }}</a>
-                            </li>
-                        </ul> -->
-                    </div><!-- /.navbar-collapse -->
                 </nav>
             </div>
         </div>
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body tab-content">
-                    <script type='text/javascript' src='https://tableau.bpsdm.dephub.go.id/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 960px; height: 520px;'><object class='tableauViz' width='960' height='520' style='display:none;'><param name='host_url' value='https%3A%2F%2Ftableau.bpsdm.dephub.go.id%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;Daun3' /><param name='name' value='BPSDM_DB_Laravel&#47;Suply_Diklat' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /><param name='filter' value='iframeSizedToWindow=true' /></object></div>
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $instansi_diklat_year; ?>" /></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-body">
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $jenis_diklat; ?>" /></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-body">
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $pie_chart_dpm_per_matra; ?>" /></iframe>
                 </div>
             </div>
         </div>
@@ -48,28 +81,45 @@
                             <i class="fa fa-user"></i> {{ ucfirst(trans('common.short_course_participant')) }}
                         </a>
                     </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                        <!--<ul class="nav navbar-nav tab-graduates-graphtype">
-                            <li class="active">
-                                <a href="#graduate_status_moda">{{ ucfirst(trans('common.graph_moda')) }}</a>
-                            </li>
-                            <li>
-                                <a href="#graduate_status_jenjang">{{ ucfirst(trans('common.graph_jenjang')) }}</a>
-                            </li>
-                            <li>
-                                <a href="#graduate_status_gender">{{ ucfirst(trans('common.graph_gender')) }}</a>
-                            </li>
-                        </ul> -->
-                    </div><!-- /.navbar-collapse -->
                 </nav>
             </div>
         </div>
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body tab-content">
-                    <script type='text/javascript' src='https://tableau.bpsdm.dephub.go.id/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 960px; height: 520px;'><object class='tableauViz' width='960' height='520' style='display:none;'><param name='host_url' value='https%3A%2F%2Ftableau.bpsdm.dephub.go.id%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;Daun3' /><param name='name' value='BPSDM_DB_Laravel&#47;Suply_Diklat2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /><param name='filter' value='iframeSizedToWindow=true' /></object></div>
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $peserta_diklat_per_diklat; ?>" /></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $peserta_diklat; ?>" /></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <iframe width="100%" height="380px" frameborder="0" src="<?php echo $scatter_plot_trg_realisasi; ?>" /></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-body">
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $pie_chart_dpm_lulus; ?>" /></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-body">
+                    <iframe width="100%" height="400px" frameborder="0" src="<?php echo $bar_chart_dpm_lulus; ?>" /></iframe>
                 </div>
             </div>
         </div>
