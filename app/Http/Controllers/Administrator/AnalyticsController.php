@@ -11,6 +11,11 @@ class AnalyticsController extends Controller
         return view('analytics.index');
     }
 
+    public function dashboard()
+    {
+        return view('analytics.dashboard');
+    }
+
     public function students()
     {
         return view('analytics.students');

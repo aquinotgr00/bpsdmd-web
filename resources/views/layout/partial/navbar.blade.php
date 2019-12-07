@@ -12,7 +12,13 @@
             <a href="#">
                 <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-codepen"></i> <span>{{ ucfirst(trans('common.graph_data')) }}</span>
             </a>
-            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+            <ul class="treeview-menu" style="display: block; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('administrator.analytics.dashboard')) }}">
+                        <i class="fa fa-table"></i>
+                        <span>{{ ucfirst(trans('common.graph_dash')) }}</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url(route('administrator.analytics.students')) }}">
                         <i class="fa fa-street-view"></i>

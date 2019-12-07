@@ -140,6 +140,7 @@ Route::group(['middleware' => ['authenticated']], function() {
     });
 
     Route::group(['prefix' => '/analytics', 'middleware' => ['only_admin']], function() {
+        Route::get('/dashboard', 'Administrator\AnalyticsController@dashboard')->name('administrator.analytics.dashboard');
         Route::get('/lulusan', 'Administrator\AnalyticsController@index')->name('administrator.analytics.index');
         Route::get('/siswa', 'Administrator\AnalyticsController@students')->name('administrator.analytics.students');
         Route::get('/diklat', 'Administrator\AnalyticsController@shortcourse')->name('administrator.analytics.shortcourse');
