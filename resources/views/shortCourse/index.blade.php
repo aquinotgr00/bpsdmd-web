@@ -33,6 +33,7 @@
                                     <th>{{ ucfirst(trans('common.name')) }}</th>
                                     <th>{{ ucfirst(trans('common.type')) }}</th>
                                     <th>{{ ucfirst(trans('common.institute')) }}</th>
+                                    <th>{{ ucfirst(trans('common.generation')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,7 @@
                                     <td>{{ $item->getName() }}</td>
                                     <td>{{ ucfirst($item->getType()) }}</td>
                                     <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
+                                    <td>{{ ucfirst($item->getShortCourseData(){0}->getGeneration()) }}</td>
                                     <td>
                                         <a href="javascript:void(0)" class="viewShortCourse" data-shortcourse="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
                                         <!-- <a href="{{ url(route('administrator.shortCourse.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> | -->

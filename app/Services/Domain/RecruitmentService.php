@@ -81,7 +81,7 @@ class RecruitmentService
      * @param bool $flush
      * @return Recruitment
      */
-    public function create(Collection $data, $org = false, $student = false, $flush = true)
+    public function create(Collection $data, $org = false, $student = false, $jobTitle = false, $flush = true)
     {
         $recruitment = new Recruitment;
         $recruitment->setStatus($data->get('status'));
@@ -90,6 +90,9 @@ class RecruitmentService
         $recruitment->setIsEmail($data->get('isEmail'));
         // $recruitment->setEmailDate(date_create_from_format('d-m-Y H:i:s', $data->get('emailDate')));
 
+        if ($jobTitle instanceof JobTitle) {
+            $recruitment->setJobTitle($jobTitle);
+        }
         if ($org instanceof Organization) {
             $recruitment->setOrg($org);
         }

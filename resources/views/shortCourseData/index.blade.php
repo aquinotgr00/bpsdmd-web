@@ -36,7 +36,7 @@
                         </span>
                     </div>
                     <div class="panel-body">
-                        <h3>HUMAN FACTOR RECURRENT FOR AIRCRAFT MAINTENANCE 2 {{ $data->getYear() }}</h3>
+                        <h3>{{ $data->getShortCourse()->getName() }} - {{ $data->getYear() }}</h3>
                         <p>
                             {{ $data->getPlace() }}
                         </p>

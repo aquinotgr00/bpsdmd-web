@@ -6,6 +6,7 @@ use App\Entities\Student;
 use App\Entities\Organization;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
+use App\Services\Domain\JobTitleService;
 use App\Services\Domain\StudentService;
 use App\Services\Domain\RecruitmentService;
 use App\Services\Domain\ProgramService;
@@ -15,7 +16,7 @@ use Illuminate\Http\Request;
 
 class RecruitmentController extends Controller
 {
-    public function index(Request $request, RecruitmentService $recruitmentService, OrgService $orgService, StudentService $studentService, ProgramService $programService)
+    public function index(Request $request, RecruitmentService $recruitmentService, OrgService $orgService, StudentService $studentService, ProgramService $programService, JobTitleService $jobTitleService)
     {
         $requestData = null;
         $studyProgram = false;
@@ -28,21 +29,23 @@ class RecruitmentController extends Controller
         $org  = currentUser()->getOrg();
         $page = request()->get('page');
         $data = $studentService->paginateRecruitment(request()->get('page'), collect($requestData), $studyProgram);
+        $jobTitles = $jobTitleService->getRepository()->findBy(['org' => $org]);
 
         $allStudent     = $studentService->getRepository()->findAll();
         $dataProgram 	= $programService->getRepository()->findAll();
         $recruitment    = $recruitmentService->paginateRecruitment(request()->get('page'), $org);
         $urlDetail 		= '/recruitment';
 
-        return view('recruitment.index', compact('data', 'allStudent', 'recruitment', 'dataProgram', 'page', 'urlDetail'));
+        return view('recruitment.index', compact('data', 'allStudent', 'recruitment', 'dataProgram', 'page', 'urlDetail', 'jobTitles'));
     }
 
-    public function create(Request $request, RecruitmentService $recruitmentService, StudentService $studentService, Student $student)
+    public function create(Request $request, RecruitmentService $recruitmentService, StudentService $studentService, Student $student, JobTitleService $jobTitleService)
     {
         $org = currentUser()->getOrg();
         try {
             $requestData = $request->all();
-            $recruitmentService->create(collect($requestData), $org, $student);
+            $jobTitle = $jobTitleService->findById($requestData['jobTitle']);
+            $recruitmentService->create(collect($requestData), $org, $student, $jobTitle);
 
             $alert = 'alert_success';
             $message = trans('common.create_success', ['object' => ucfirst(trans('common.recruitment'))]);
