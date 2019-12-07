@@ -103,7 +103,8 @@ class StudentService
         }
 
         $query = $query->getQuery();
-        $limit = count($query->getResult());
+        // $limit = count($query->getResult());
+        $limit = 10;
 
         return $this->paginate($query, $limit, $page, false);
     }

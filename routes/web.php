@@ -182,6 +182,10 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/demand-by-program/{program}', 'Supply\LinkMatchController@demandByProgram')->name('supply.link-match.demand-by-program');
         Route::get('/', 'Supply\LinkMatchController@supply')->name('supply.link-match');
     });
+    
+    Route::group(['prefix' => '/supply/short-course', 'middleware' => ['only_supply']], function() {
+        Route::get('/', 'Supply\ShortCourseController@index')->name('supply.shortCourse.index');
+    });
 
     // demand routes
     Route::group(['prefix' => '/employee', 'middleware' => ['only_demand']], function() {

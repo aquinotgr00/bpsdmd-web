@@ -233,6 +233,13 @@
                 <span>Link and Match</span>
             </a>
         </li>
+        
+        <li>
+            <a href="{{ url(route('supply.shortCourse.index')) }}">
+                <i class="fa fa-calendar"></i>
+                <span>{{ ucwords(trans('common.short_course')) }}</span>
+            </a>
+        </li>
     @endif
 
     @if(checkAuthorization(\App\Entities\User::ROLE_DEMAND))

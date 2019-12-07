@@ -154,7 +154,7 @@
                         <div class="row">
                             <div class="white-box">
                                 <div class="table-responsive">
-                                    <table id="daftar_taruna" class="table table-striped table-bordered" style="width:100%">
+                                    <table id="daftar_taruna_2" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>{{ ucfirst(trans('common.name')) }}</th>
@@ -192,6 +192,9 @@
                                             @endif
                                         </tbody>
                                     </table>
+                                    <nav>
+                                        {{ $data->links() }}
+                                    </nav>
                                 </div>
                             </div>
                         </div>
@@ -272,9 +275,15 @@
                                     <td class="studentGraduationYear"></td>
                                 </tr>
                             </table>
+                            <label for="job-title">{{ ucwords(trans('common.job_title')) }}</label>
+                            <select name="job-title" id="job-title" class="form-control">
+                                @foreach ($jobTitles as $jobTitle)
+                                    <option value="{{$jobTitle->getId()}}">{{$jobTitle->getName()}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="modal-footer">
-                            <a href="" class="btn btn-info chart" style="width:50px"><i class="fa fa-shopping-cart"></i></a>
+                            <button type="button" data-href="" class="btn btn-info chart chart-submit" style="width:50px"><i class="fa fa-shopping-cart"></i></button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -286,6 +295,21 @@
 
 @section('script')
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    });
+    $('.chart-submit').on('click', (el) => {
+        $.ajax({
+          type: "POST",
+          url: el.currentTarget.getAttribute('data-href'),
+          data: {jobTitle: $('#job-title').val()},
+          success: data => {
+            window.location.reload()
+          },
+        });
+    })
     $('a.viewStudent').on('click', function () {
         let student = $(this).data('student'),
             modalHtml = $('#modalDetailStudent'),
@@ -308,7 +332,7 @@
                 modalHtml.find('.studentIpk').html(student.ipk);
                 modalHtml.find('.studentGraduationYear').html(student.graduation_year);
                 modalHtml.find('.studentPhoto').attr("src",student.photo);
-                modalHtml.find('.chart').attr("href",student.add_chart);
+                modalHtml.find('.chart').attr("data-href",student.add_chart);
                 modalHtml.modal('show');
             }
         });

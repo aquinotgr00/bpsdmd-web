@@ -79,6 +79,17 @@ class ShortCourseService
         return $this->paginate($query, $limit, $page, false);
     }
 
+    public function paginateShortCourseByOrg($page, $org)
+    {
+        $limit = 10;
+        $query = $this->createQueryBuilder('sc')
+            ->where('sc.org = :org')
+            ->setParameter('org', $org)
+            ->getQuery();
+
+        return $this->paginate($query, $limit, $page, false);
+    }
+
     /**
      * Create new ShortCourse
      *
