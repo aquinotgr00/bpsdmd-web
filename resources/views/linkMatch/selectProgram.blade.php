@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="content-header">
-        <h1>Edit Link and Match - <small>{{ ucwords(trans('common.please_choose', ['object' => trans('common.program')])) }}</small></h1>
+        <h1>Edit Link and Match - <small>{{ ucwords(trans('common.please_choose', ['object' => trans('common.study_program')])) }}</small></h1>
     </section>
 
     <!-- Main content -->
