@@ -59,6 +59,7 @@ class OrgService
         $limit = 10;
         $query = $this->createQueryBuilder('o')
             ->where('o.type = :type')
+            ->orderBy('o.name')
             ->setParameter('type', Organization::TYPE_SUPPLY)
             ->getQuery();
 
@@ -76,6 +77,7 @@ class OrgService
         $limit = 10;
         $query = $this->createQueryBuilder('o')
             ->where('o.type = :type')
+            ->orderBy('o.name')
             ->setParameter('type', Organization::TYPE_DEMAND)
             ->getQuery();
 
@@ -308,9 +310,10 @@ class OrgService
     /**
      * Get list demand
      *
+     * @param bool $moda
      * @return array
      */
-    public function getDemandAsList()
+    public function getDemandAsList($moda = false)
     {
         $result = [];
         $qb = $this->createQueryBuilder('org')
@@ -318,13 +321,11 @@ class OrgService
             ->orderBy('org.name')
             ->setParameter('type', Organization::TYPE_DEMAND);
 
-        $demands = $qb->getQuery()->getResult();
-
-        /** @var Organization $demand */
-        foreach ($demands as $demand) {
-            $result[$demand->getId()] = $demand->getName();
+        if ($moda) {
+            $qb->andWhere('org.moda = :moda')
+                ->setParameter('moda', $moda);
         }
 
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 }

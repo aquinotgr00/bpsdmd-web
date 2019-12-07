@@ -35,9 +35,13 @@
                                                 <h3 class="box-title" style="padding-bottom: 6px;background-color: #666666;width:100%;color: #FFFFFF;" id="box-title-one">Program Studi</h3>
                                             </div>
                                             <div class="box-body" id="list-prodi">
-                                                @foreach($programs as $program)
-                                                    <div class="list-prodi-item" data-id="{{ $program->getId() }}">{{ $program->getName() }}</div>
-                                                @endforeach
+                                                @if(count($programs))
+                                                    @foreach($programs as $program)
+                                                        <div class="list-prodi-item" data-id="{{ $program->getId() }}">{{ $program->getName() }}</div>
+                                                    @endforeach
+                                                @else
+                                                    <span>{{ trans('common.no_data') }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

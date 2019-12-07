@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav tab-graduates-graphtype">
             <li class="active">
-                <a href="#graduates_graph_table_view">{{ ucfirst(trans('common.graph_table_view')) }}</a>
+                <a href="#graduates_graph_bar_view">{{ ucfirst(trans('common.graph_bar_view')) }}</a>
             </li>
             <li>
-                <a href="#graduates_graph_bar_view">{{ ucfirst(trans('common.graph_bar_view')) }}</a>
+                <a href="#graduates_graph_table_view">{{ ucfirst(trans('common.graph_table_view')) }}</a>
             </li>
         </ul>
     </div><!-- /.navbar-collapse -->

@@ -93,6 +93,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/job-title/{org_demand}', 'Administrator\LinkMatchController@jobTitle')->name('administrator.link-match.job-title');
         Route::get('/job-title-license/{jobTitle}', 'Administrator\LinkMatchController@jobTitleLicense')->name('administrator.link-match.job-title-license');
         Route::get('/supply-by-job-title/{jobTitle}', 'Administrator\LinkMatchController@supplyByJobTitle')->name('administrator.link-match.supply-by-job-title');
+
+        Route::group(['prefix' => '/edit', 'middleware' => ['only_admin']], function() {
+            Route::any('{org_supply}/update/{program}', 'Administrator\LinkMatchController@updateData')->name('administrator.link-match.update');
+            Route::get('{org_supply}/update', 'Administrator\LinkMatchController@selectProgram')->name('administrator.link-match.select-program');
+            Route::get('job-title/{org_demand}', 'Administrator\LinkMatchController@selectProgram')->name('administrator.link-match.job-title');
+            Route::get('/', 'Administrator\LinkMatchController@selectSupply')->name('administrator.link-match.edit');
+        });
     });
 
     Route::group(['prefix' => '/user', 'middleware' => ['only_admin']], function() {
@@ -104,14 +111,6 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/{user}/disable', 'Administrator\UserController@disable')->name('administrator.user.disable');
         Route::get('/{user}', 'Administrator\UserController@ajaxDetailUser')->name('administrator.user.view');
         Route::get('/', 'Administrator\UserController@index')->name('administrator.user.index');
-    });
-
-    Route::group(['prefix' => '/license', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\LicenseController@create')->name('administrator.license.create');
-        Route::any('/{license}/update', 'Administrator\LicenseController@update')->name('administrator.license.update');
-        Route::get('/{license}/delete', 'Administrator\LicenseController@delete')->name('administrator.license.delete');
-        Route::get('/{license}', 'Administrator\LicenseController@ajaxDetailLicense')->name('administrator.license.view');
-        Route::get('/', 'Administrator\LicenseController@index')->name('administrator.license.index');
     });
 
     Route::group(['prefix' => '/short-course', 'middleware' => ['only_admin']], function() {
@@ -140,55 +139,13 @@ Route::group(['middleware' => ['authenticated']], function() {
         Route::get('/', 'Administrator\CompetencyController@index')->name('administrator.competency.index');
     });
 
-    Route::group(['prefix' => '/analytics/lulusan', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@index')->name('administrator.analytics.index');
-    });
-    Route::group(['prefix' => '/analytics/siswa', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@students')->name('administrator.analytics.students');
-    });
-    Route::group(['prefix' => '/analytics/diklat', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@shortcourse')->name('administrator.analytics.shortcourse');
-    });
-    Route::group(['prefix' => '/analytics/jurusan', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@studyprogram')->name('administrator.analytics.studyprogram');
-    });
-    Route::group(['prefix' => '/analytics/pegawai', 'middleware' => ['only_admin']], function() {
-        Route::get('/', 'Administrator\AnalyticsController@employee')->name('administrator.analytics.employee');
-    });
-
-    Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\CompetencyMainPurposeController@create')->name('administrator.competency.create');
-        Route::any('/{competencyMainPurpose}/update', 'Administrator\CompetencyMainPurposeController@update')->name('administrator.competencyMainPurpose.update');
-        Route::get('/{competencyMainPurpose}/delete', 'Administrator\CompetencyMainPurposeController@delete')->name('administrator.competencyMainPurpose.delete');
-        Route::get('/', 'Administrator\CompetencyMainPurposeController@index')->name('administrator.competencyMainPurpose.index');
-    });
-
-    Route::group(['prefix' => '/competency-key-function', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\CompetencyKeyFunctionController@create')->name('administrator.competencyKeyFunction.create');
-        Route::any('/{competencyKeyFunction}/update', 'Administrator\CompetencyKeyFunctionController@update')->name('administrator.competencyKeyFunction.update');
-        Route::get('/{competencyKeyFunction}/delete', 'Administrator\CompetencyKeyFunctionController@delete')->name('administrator.competencyKeyFunction.delete');
-        Route::get('/', 'Administrator\CompetencyKeyFunctionController@index')->name('administrator.competencyKeyFunction.index');
-    });
-
-    Route::group(['prefix' => '/competency-main-function', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\CompetencyMainFunctionController@create')->name('administrator.competencyMainFunction.create');
-        Route::any('/{competencyMainFunction}/update', 'Administrator\CompetencyMainFunctionController@update')->name('administrator.competencyMainFunction.update');
-        Route::get('/{competencyMainFunction}/delete', 'Administrator\CompetencyMainFunctionController@delete')->name('administrator.competencyMainFunction.delete');
-        Route::get('/', 'Administrator\CompetencyMainFunctionController@index')->name('administrator.competencyMainFunction.index');
-    });
-
-    Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\CompetencyMainPurposeController@create')->name('administrator.competencyMainPurpose.create');
-        Route::any('/{competencyMainPurpose}/update', 'Administrator\CompetencyMainPurposeController@update')->name('administrator.competencyMainPurpose.update');
-        Route::get('/{competencyMainPurpose}/delete', 'Administrator\CompetencyMainPurposeController@delete')->name('administrator.competencyMainPurpose.delete');
-        Route::get('/', 'Administrator\CompetencyMainPurposeController@index')->name('administrator.competencyMainPurpose.index');
-    });
-
-    Route::group(['prefix' => '/competency-unit', 'middleware' => ['only_admin']], function() {
-        Route::any('/create', 'Administrator\CompetencyUnitController@create')->name('administrator.competencyUnit.create');
-        Route::any('/{competencyUnit}/update', 'Administrator\CompetencyUnitController@update')->name('administrator.competencyUnit.update');
-        Route::get('/{competencyUnit}/delete', 'Administrator\CompetencyUnitController@delete')->name('administrator.competencyUnit.delete');
-        Route::get('/', 'Administrator\CompetencyUnitController@index')->name('administrator.competencyUnit.index');
+    Route::group(['prefix' => '/analytics', 'middleware' => ['only_admin']], function() {
+        Route::get('/dashboard', 'Administrator\AnalyticsController@dashboard')->name('administrator.analytics.dashboard');
+        Route::get('/lulusan', 'Administrator\AnalyticsController@index')->name('administrator.analytics.index');
+        Route::get('/siswa', 'Administrator\AnalyticsController@students')->name('administrator.analytics.students');
+        Route::get('/diklat', 'Administrator\AnalyticsController@shortcourse')->name('administrator.analytics.shortcourse');
+        Route::get('/jurusan', 'Administrator\AnalyticsController@studyprogram')->name('administrator.analytics.studyprogram');
+        Route::get('/pegawai', 'Administrator\AnalyticsController@employee')->name('administrator.analytics.employee');
     });
 
     // supply routes
@@ -301,6 +258,58 @@ Route::group(['middleware' => ['authenticated']], function() {
         //     Route::get('/', 'Administrator\ShortCourseDataController@index')->name('administrator.shortCourseData.index');
         //     Route::any('/participant/create', 'Administrator\ShortCourseParticipantController@create')->name('administrator.shortCourseParticipant.create');
         // });
+    });
+
+    // shared routes
+    Route::group(['prefix' => '/competency', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\CompetencyController@create')->name('shared.competency.create');
+        Route::any('/{competency}/update', 'Shared\CompetencyController@update')->name('shared.competency.update');
+        Route::get('/{competency}/delete', 'Shared\CompetencyController@delete')->name('shared.competency.delete');
+        Route::get('/{competency}', 'Shared\CompetencyController@ajaxDetailCompetency')->name('shared.competency.view');
+        Route::get('/', 'Shared\CompetencyController@index')->name('shared.competency.index');
+    });
+
+    Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\CompetencyMainPurposeController@create')->name('shared.competency.create');
+        Route::any('/{competencyMainPurpose}/update', 'Shared\CompetencyMainPurposeController@update')->name('shared.competencyMainPurpose.update');
+        Route::get('/{competencyMainPurpose}/delete', 'Shared\CompetencyMainPurposeController@delete')->name('shared.competencyMainPurpose.delete');
+        Route::get('/', 'Shared\CompetencyMainPurposeController@index')->name('shared.competencyMainPurpose.index');
+    });
+
+    Route::group(['prefix' => '/competency-key-function', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\CompetencyKeyFunctionController@create')->name('shared.competencyKeyFunction.create');
+        Route::any('/{competencyKeyFunction}/update', 'Shared\CompetencyKeyFunctionController@update')->name('shared.competencyKeyFunction.update');
+        Route::get('/{competencyKeyFunction}/delete', 'Shared\CompetencyKeyFunctionController@delete')->name('shared.competencyKeyFunction.delete');
+        Route::get('/', 'Shared\CompetencyKeyFunctionController@index')->name('shared.competencyKeyFunction.index');
+    });
+
+    Route::group(['prefix' => '/competency-main-function', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\CompetencyMainFunctionController@create')->name('shared.competencyMainFunction.create');
+        Route::any('/{competencyMainFunction}/update', 'Shared\CompetencyMainFunctionController@update')->name('shared.competencyMainFunction.update');
+        Route::get('/{competencyMainFunction}/delete', 'Shared\CompetencyMainFunctionController@delete')->name('shared.competencyMainFunction.delete');
+        Route::get('/', 'Shared\CompetencyMainFunctionController@index')->name('shared.competencyMainFunction.index');
+    });
+
+    Route::group(['prefix' => '/competency-main-purpose', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\CompetencyMainPurposeController@create')->name('shared.competencyMainPurpose.create');
+        Route::any('/{competencyMainPurpose}/update', 'Shared\CompetencyMainPurposeController@update')->name('shared.competencyMainPurpose.update');
+        Route::get('/{competencyMainPurpose}/delete', 'Shared\CompetencyMainPurposeController@delete')->name('shared.competencyMainPurpose.delete');
+        Route::get('/', 'Shared\CompetencyMainPurposeController@index')->name('shared.competencyMainPurpose.index');
+    });
+
+    Route::group(['prefix' => '/competency-unit', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\CompetencyUnitController@create')->name('shared.competencyUnit.create');
+        Route::any('/{competencyUnit}/update', 'Shared\CompetencyUnitController@update')->name('shared.competencyUnit.update');
+        Route::get('/{competencyUnit}/delete', 'Shared\CompetencyUnitController@delete')->name('shared.competencyUnit.delete');
+        Route::get('/', 'Shared\CompetencyUnitController@index')->name('shared.competencyUnit.index');
+    });
+
+    Route::group(['prefix' => '/license', 'middleware' => ['all_user']], function() {
+        Route::any('/create', 'Shared\LicenseController@create')->name('shared.license.create');
+        Route::any('/{license}/update', 'Shared\LicenseController@update')->name('shared.license.update');
+        Route::get('/{license}/delete', 'Shared\LicenseController@delete')->name('shared.license.delete');
+        Route::get('/{license}', 'Shared\LicenseController@ajaxDetailLicense')->name('shared.license.view');
+        Route::get('/', 'Shared\LicenseController@index')->name('shared.license.index');
     });
 
     // utils routes

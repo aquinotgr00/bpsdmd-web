@@ -84,7 +84,7 @@ class JobTitleFunctionService
      * @param array $licenses
      * @param string $type
      */
-    private function setLicenses(JobTitleFunction $jobTitleFunction, array $licenses = [], $type = 'create')
+    public function setLicenses(JobTitleFunction $jobTitleFunction, array $licenses = [], $type = 'create')
     {
         /** @var LicenseService $licenseService */
         $licenseService = app(LicenseService::class);

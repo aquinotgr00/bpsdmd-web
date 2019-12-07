@@ -13,9 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class StudyProgram
 {
+    const DEGREE_ND = 'nd';
     const DEGREE_D1 = 'd1';
     const DEGREE_D2 = 'd2';
     const DEGREE_D3 = 'd3';
+    const DEGREE_D4 = 'd4';
     const DEGREE_S1 = 's1';
     const DEGREE_S2 = 's2';
 

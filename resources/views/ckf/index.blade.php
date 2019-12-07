@@ -5,7 +5,7 @@
         <h1>Data {{ ucwords(trans('common.competency_key_function')) }}</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ url(route('administrator.competencyKeyFunction.create')) }}">
+                <a href="{{ url(route('shared.competencyKeyFunction.create')) }}">
                     <i class="fa fa-plus-circle"></i> {{ ucfirst(trans('common.add')) }} {{ ucwords(trans('common.competency_key_function')) }}
                 </a>
             </li>
@@ -41,8 +41,8 @@
                                     <td>{{ $item->getCode() ? $item->getCode() : '-' }}</td>
                                     <td>{{ $item->getKeyFunction() }}</td>
                                     <td>
-                                        <a href="{{ url(route('administrator.competencyKeyFunction.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('administrator.competencyKeyFunction.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                        <a href="{{ url(route('shared.competencyKeyFunction.update', [$item->getId()])) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ url(route('shared.competencyKeyFunction.delete', [$item->getId()])) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
                                     </td>
                                 </tr>
                                 <?php

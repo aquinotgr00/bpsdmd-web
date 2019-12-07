@@ -85,6 +85,7 @@
                                     <option value="{{ \App\Entities\Organization::MODA_UDARA }}" {{ $data->getModa() == \App\Entities\Organization::MODA_UDARA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_UDARA) }}</option>
                                     <option value="{{ \App\Entities\Organization::MODA_DARAT }}" {{ $data->getModa() == \App\Entities\Organization::MODA_DARAT ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_DARAT) }}</option>
                                     <option value="{{ \App\Entities\Organization::MODA_KERETA }}" {{ $data->getModa() == \App\Entities\Organization::MODA_KERETA ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_KERETA) }}</option>
+                                    <option value="{{ \App\Entities\Organization::MODA_ASN }}" {{ $data->getModa() == \App\Entities\Organization::MODA_ASN ? 'selected' : '' }}>{{ ucfirst(\App\Entities\Organization::MODA_ASN) }}</option>
                                 </select>
                                 <span class="help-block">{!! implode('', $errors->get('moda')) !!}</span>
                             </div>
