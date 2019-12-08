@@ -79,8 +79,7 @@ class StudentService
         }
 
         if (Request::has("keyword") && Request::get("keyword") != "") {
-            $query->andWhere("s.nim like CONCAT('%',:keyword,'%')");
-            $query->orWhere("s.name like CONCAT('%',:keyword,'%')");
+            $query->andWhere("LOWER(s.nim) like CONCAT('%',:keyword,'%') OR LOWER(s.name) like CONCAT('%',:keyword,'%')");
             $query->setParameter("keyword", Request::get("keyword"));
         }
 
