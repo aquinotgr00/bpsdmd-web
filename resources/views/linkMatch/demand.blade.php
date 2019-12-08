@@ -37,8 +37,8 @@
                                                     <select name="demand" id="demand-selector" class="form-control">
                                                         <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.company'))])) }}</option>
                                                         @if(!empty($demands))
-                                                            @foreach($demands as $id => $name)
-                                                                <option value="{{ $id }}">{{ $name }}</option>
+                                                            @foreach($demands as $demand)
+                                                                <option value="{{ $demand->getId() }}">{{ $demand->getName() }}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
@@ -161,19 +161,21 @@
                         $.each(programs, function( index, data ) {
                             let htmlProgram = '';
 
-                            $.each(data.program, function( index, dapro ) {
-                                let htmlCompetencies = '';
-
-                                $.each(dapro.competencies, function( index, dacom ) {
-                                    htmlCompetencies = htmlCompetencies + '<li>'+dacom+'</li>';
-                                });
-
-                                htmlProgram = htmlProgram +
-                                    '<div class="lowongan-item"><span>'+dapro.name+'</span>'+
-                                    '<ul class="list-kompetensi">'+
-                                    htmlCompetencies+
-                                    '</ul></div>';
-                            });
+                            console.log('error menampilkan program studi.');
+                            console.log(data);
+                            // $.each(data.program, function( index, dapro ) {
+                            //     let htmlCompetencies = '';
+                            //
+                            //     $.each(dapro.competencies, function( index, dacom ) {
+                            //         htmlCompetencies = htmlCompetencies + '<li>'+dacom+'</li>';
+                            //     });
+                            //
+                            //     htmlProgram = htmlProgram +
+                            //         '<div class="lowongan-item"><span>'+dapro.name+'</span>'+
+                            //         '<ul class="list-kompetensi">'+
+                            //         htmlCompetencies+
+                            //         '</ul></div>';
+                            // });
 
                             html = html + '<div class="box-body" id="demand-list"><div class="row"><div class="col-xs-2 col-md-2" style="margin-left: 10px;"><img src="'+data.logo+'" alt="" class="img-responsive"></div><div class="col-xs-9 col-md-9" style="padding: 10px;"><span style="font-weight: bold">'+data.company+'</span></div><div class="col-xs-12 col-md-12">' +
                                 htmlProgram +

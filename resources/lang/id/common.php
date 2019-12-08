@@ -289,6 +289,7 @@ return [
 
     // Analytics
     'graph_data' => 'Grafik Data',
+    'graph_dash' => 'Dashboard',
     'graduates' => 'Lulusan',
     'grad_graph' => 'Grafik Lulusan',
     'graph_table_view' => 'Tabel',
@@ -311,4 +312,5 @@ return [
     'employee_age_mapping' => 'Persebaran Usia Pegawai',
     'graph_employee_box' => 'Box',
     'graph_employee_bubble' => 'Bubble',
+    'graph_employee_bar' => 'Bar',
 ];

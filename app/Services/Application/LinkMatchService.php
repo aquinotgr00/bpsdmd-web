@@ -50,4 +50,30 @@ class LinkMatchService
 
         return $programs;
     }
+
+    /**
+     * Mass update Relation Link and Match
+     *
+     * @param StudyProgram $program
+     * @param array $licenses
+     * @param array $jobTitles
+     * @param array $deletedJobTitle
+     */
+    public function massUpdate(StudyProgram $program, array $licenses, array $jobTitles, array $deletedJobTitle)
+    {
+        /** @var ProgramService $programService */
+        $programService = app(ProgramService::class);
+        /** @var JobTitleService $jobTitleService */
+        $jobTitleService = app(JobTitleService::class);
+
+        $programService->setLicenses($program, $licenses, 'update');
+
+        if (count($jobTitles)) {
+            $jobTitleService->setLicensesForJobTitles($jobTitles, $licenses);
+        }
+
+        if (count($deletedJobTitle)) {
+            $jobTitleService->unsetLicensesForJobTitles($deletedJobTitle, $licenses);
+        }
+    }
 }

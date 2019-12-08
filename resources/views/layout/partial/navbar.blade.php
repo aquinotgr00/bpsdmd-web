@@ -12,7 +12,13 @@
             <a href="#">
                 <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-codepen"></i> <span>{{ ucfirst(trans('common.graph_data')) }}</span>
             </a>
-            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+            <ul class="treeview-menu" style="display: block; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('administrator.analytics.dashboard')) }}">
+                        <i class="fa fa-table"></i>
+                        <span>{{ ucfirst(trans('common.graph_dash')) }}</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ url(route('administrator.analytics.students')) }}">
                         <i class="fa fa-street-view"></i>
@@ -125,18 +131,32 @@
             </a>
         </li>
 
-        <li>
-            <a href="{{ url(route('administrator.link-match.supply')) }}">
-                <i class="fa fa-file"></i>
-                <span>Link and Match - Supply</span>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa pull-right fa-angle-left"></i> <i class="fa fa-list-alt"></i> <span>Link and Match</span>
             </a>
-        </li>
+            <ul class="treeview-menu" style="display: none; overflow: hidden;">
+                <li>
+                    <a href="{{ url(route('administrator.link-match.supply')) }}">
+                        <i class="fa fa-file"></i>
+                        <span>Supply</span>
+                    </a>
+                </li>
 
-        <li>
-            <a href="{{ url(route('administrator.link-match.demand')) }}">
-                <i class="fa fa-file"></i>
-                <span>Link and Match - Demand</span>
-            </a>
+                <li>
+                    <a href="{{ url(route('administrator.link-match.demand')) }}">
+                        <i class="fa fa-file"></i>
+                        <span>Demand</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url(route('administrator.link-match.edit')) }}">
+                        <i class="fa fa-file"></i>
+                        <span>Update Data</span>
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -211,6 +231,13 @@
             <a href="{{ url(route('supply.link-match')) }}">
                 <i class="fa fa-file"></i>
                 <span>Link and Match</span>
+            </a>
+        </li>
+        
+        <li>
+            <a href="{{ url(route('supply.shortCourse.index')) }}">
+                <i class="fa fa-calendar"></i>
+                <span>{{ ucwords(trans('common.short_course')) }}</span>
             </a>
         </li>
     @endif

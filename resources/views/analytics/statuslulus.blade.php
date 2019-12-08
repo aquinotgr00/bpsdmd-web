@@ -36,7 +36,7 @@
                     <script type='text/javascript' src='https://tableau.bpsdm.dephub.go.id/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 960px; height: 520px;'><object class='tableauViz' width='960' height='520' style='display:none;'><param name='host_url' value='https%3A%2F%2Ftableau.bpsdm.dephub.go.id%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;Daun3' /><param name='name' value='BPSDM_DB_Laravel&#47;Suply_Siswa_instansi_Prodi_strata' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /><param name='filter' value='iframeSizedToWindow=true' /></object></div>
                 </div>
                 <div id="graduate_status_gender" class="tab-pane fade">
-                    <script type='text/javascript' src='https://tableau.bpsdm.dephub.go.id/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1280px; height: 520px;'><object class='tableauViz' width='1280' height='520' style='display:none;'><param name='host_url' value='https%3A%2F%2Ftableau.bpsdm.dephub.go.id%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='&#47;t&#47;Daun3' /><param name='name' value='BPSDM_DB_Laravel&#47;Suply_Siswa_instansi_Prodi' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='showAppBanner' value='false' /><param name='filter' value='iframeSizedToWindow=true' /></object></div>
+                    <iframe width="100%" height="350px" frameborder="0" src="<?php echo $lulus_instansi_gender; ?>" /></iframe>
                 </div>
             </div>
         </div>

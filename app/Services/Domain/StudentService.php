@@ -2,16 +2,18 @@
 
 namespace App\Services\Domain;
 
-use App\Entities\Student;
 use App\Entities\Organization;
+use App\Entities\Student;
 use App\Entities\StudyProgram;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use EntityManager;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use LaravelDoctrine\ORM\Pagination\PaginatesFromParams;
+use Request;
 
 class StudentService
 {
@@ -51,7 +53,7 @@ class StudentService
                 ->select('count(s.id)');
 
             return $qb->getQuery()->getSingleScalarResult();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return 0;
         }
     }
@@ -69,41 +71,53 @@ class StudentService
         $query = $this->createQueryBuilder('s')
             ->andWhere('s.org = :orgId')
             ->orderBy('s.id')
-            ->setParameter('orgId', $org->getId())
-            ->getQuery();
+            ->setParameter('orgId', $org->getId());
 
-        return $this->paginate($query, $limit, $page, false);
+        if (Request::has("prodi") && Request::get("prodi") != "") {
+            $query->andWhere("s.studyProgram = :psId");
+            $query->setParameter("psId", Request::get("prodi"));
+        }
+
+        if (Request::has("keyword") && Request::get("keyword") != "") {
+            $query->andWhere("LOWER(s.nim) like CONCAT('%',:keyword,'%') OR LOWER(s.name) like CONCAT('%',:keyword,'%')");
+            $query->setParameter("keyword", Request::get("keyword"));
+        }
+
+        $query = $query->getQuery();
+
+        return $this->paginate($query, $limit, $page, false)->appends(Request::query());
     }
 
     /**
      * Paginate Recruitment
      *
-     * @param $page\
+     * @param $page
      * @return LengthAwarePaginator
      */
     public function paginateRecruitment($page, Collection $search, $studyProgram = false): LengthAwarePaginator
     {
         $query = $this->createQueryBuilder('s')->leftJoin('s.org', 'o');
-        if($studyProgram instanceof StudyProgram){
+        if ($studyProgram instanceof StudyProgram) {
             $query->andWhere('s.studyProgram = :studyProgramId')->setParameter('studyProgramId', $studyProgram->getId());
         }
-        if(!empty($search->get('ipk'))){
+        if (!empty($search->get('ipk'))) {
             $query->andWhere('s.ipk = :ipk')->setParameter('ipk', $search->get('ipk'));
         }
-        if(!empty($search->get('gender'))){
+        if (!empty($search->get('gender'))) {
             $query->andWhere('s.gender = :gender')->setParameter('gender', $search->get('gender'));
         }
-        if(!empty($search->get('age')) || !empty($search->get('agemax'))){
+        if (!empty($search->get('age')) || !empty($search->get('agemax'))) {
             $minDate = Carbon::today()->subYears($search->get('agemax'));
             $maxDate = Carbon::today()->subYears($search->get('age'))->endOfDay();
             $query->andWhere("s.dateOfBirth BETWEEN :minDate AND :maxDate")->setParameter('minDate', $minDate)->setParameter('maxDate', $maxDate);
         }
-        if(!empty($search->get('accreditation'))){
+        if (!empty($search->get('accreditation'))) {
             $query->andWhere('o.status = :accreditation')->setParameter('accreditation', $search->get('accreditation'));
         }
 
         $query = $query->getQuery();
-        $limit = count($query->getResult());
+        // $limit = count($query->getResult());
+        $limit = 10;
 
         return $this->paginate($query, $limit, $page, false);
     }
@@ -237,7 +251,7 @@ class StudentService
         }
 
         if ($data->get('uploaded_img')) {
-            @unlink(public_path(Student::UPLOAD_PATH).'/'.$student->getPhoto());
+            @unlink(public_path(Student::UPLOAD_PATH) . '/' . $student->getPhoto());
             $student->setPhoto($data->get('uploaded_img'));
         }
 
@@ -260,7 +274,7 @@ class StudentService
     public function delete(Student $student)
     {
         if ($student->getPhoto()) {
-            @unlink(public_path(Student::UPLOAD_PATH).'/'.$student->getPhoto());
+            @unlink(public_path(Student::UPLOAD_PATH) . '/' . $student->getPhoto());
         }
 
         EntityManager::remove($student);
