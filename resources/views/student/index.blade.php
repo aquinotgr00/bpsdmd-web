@@ -95,11 +95,11 @@
                             }
                             ?>
 
-                                @if(!count($data))
-                                    <tr class="even pointer">
-                                        <td colspan="7">{{ ucfirst(trans('common.no_data')) }}</td>
-                                    </tr>
-                                @endif
+                            @if(!count($data))
+                                <tr class="even pointer">
+                                    <td colspan="9">{{ ucfirst(trans('common.no_data')) }}</td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                         <nav>
