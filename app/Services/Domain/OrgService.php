@@ -315,7 +315,6 @@ class OrgService
      */
     public function getDemandAsList($moda = false)
     {
-        $result = [];
         $qb = $this->createQueryBuilder('org')
             ->where('org.type = :type')
             ->orderBy('org.name')
