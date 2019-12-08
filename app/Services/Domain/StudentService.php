@@ -2,7 +2,6 @@
 
 namespace App\Services\Domain;
 
-use;
 use App\Entities\Organization;
 use App\Entities\Student;
 use App\Entities\StudyProgram;
