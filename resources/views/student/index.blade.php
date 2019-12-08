@@ -24,15 +24,43 @@
                     <div class="box-body">
                         @include('layout.partial.alert')
 
+                        <form class="row">
+                            <div class="col-sm-3 col-sm-offset-6">
+                                <select name="prodi" id="prodi" class="select2 form-control">
+                                    <option value="">Pilih Program Studi</option>
+                                    @foreach($studyPrograms as $sp)
+                                        @if(Request::get("prodi") == $sp->id)
+                                            <option selected value="{{ $sp->id }}">{{ $sp->nama }}</option>
+                                        @else
+                                            <option value="{{ $sp->id }}">{{ $sp->nama }}</option>
+                                        @endif
+
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="keyword" name="keyword"
+                                           placeholder="NIM/Nama" value="{{ Request::get("keyword") }}">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br>
+
                         <table class="table table-bordered">
                             <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>{{ ucfirst(trans('common.nim')) }}</th>
-                                    <th>{{ ucfirst(trans('common.name')) }}</th>
-                                    <th>{{ ucfirst(trans('common.institute')) }}</th>
-                                    <th>{{ ucwords(trans('common.study_program')) }}</th>
-                                    <th>{{ strtoupper(trans('common.ipk')) }}</th>
+                            <tr>
+                                <th>No.</th>
+                                <th>{{ ucfirst(trans('common.nim')) }}</th>
+                                <th>{{ ucfirst(trans('common.name')) }}</th>
+                                <th>{{ ucfirst(trans('common.institute')) }}</th>
+                                <th>{{ ucwords(trans('common.study_program')) }}</th>
+                                <th>{{ strtoupper(trans('common.ipk')) }}</th>
                                     <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
                                 </tr>
                             </thead>
@@ -290,17 +318,40 @@
     </section><!-- /.content -->
 @endsection
 
+@section('style')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <style>
+        .select2-selection__rendered {
+            line-height: 31px !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px !important;
+        }
+
+        .select2-selection__arrow {
+            height: 34px !important;
+        }
+    </style>
+@endsection
+
 @section('script')
-<script>
-    $('a.viewStudent').on('click', function () {
-        let student = $(this).data('student'),
-            modalHtml = $('#modalDetailStudent'),
-            url = '{{ $urlDetail }}';
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script !src="">
+        $(function () {
+            $(".select2").select2({width: "100%"});
+        })
+    </script>
+    <script>
+        $('a.viewStudent').on('click', function () {
+            let student = $(this).data('student'),
+                modalHtml = $('#modalDetailStudent'),
+                url = '{{ $urlDetail }}';
 
-        modalHtml.modal('hide');
+            modalHtml.modal('hide');
 
-        $.get(url+'/'+student, function(student, status){
-            if (status === 'success') {
+            $.get(url + '/' + student, function (student, status) {
+                if (status === 'success') {
                 let modalHtml = $('#modalDetailStudent');
 
                 modalHtml.find('.studentNim').html(student.nim);
