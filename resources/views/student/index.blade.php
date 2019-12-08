@@ -60,31 +60,40 @@
                                 <th>{{ ucfirst(trans('common.name')) }}</th>
                                 <th>{{ ucfirst(trans('common.institute')) }}</th>
                                 <th>{{ ucwords(trans('common.study_program')) }}</th>
+                                <th>{{ ucwords(trans('common.period')) }}</th>
+                                <th>{{ ucwords(trans('common.curriculum')) }}</th>
                                 <th>{{ strtoupper(trans('common.ipk')) }}</th>
-                                    <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
-                                </tr>
+                                <th style="text-align: center;">{{ ucfirst(trans('common.action')) }}</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
-                                foreach ($data as $item) {
-                                ?>
-                                <tr class="even pointer">
-                                    <td>{{ $no++ }}.</td>
-                                    <td>{{ $item->getNim() ? $item->getNim() : '-' }}</td>
-                                    <td>{{ $item->getName() }}</td>
-                                    <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
-                                    <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getName() : '-' }}</td>
-                                    <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
-                                    <td>
-                                        <a href="javascript:void(0)" class="viewStudent" data-student="{{ $item->getId() }}"><i class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
-                                        <a href="{{ $urlUpdate($item->getId()) }}"><i class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
-                                        <a onclick="return confirm('{{ trans('common.confirm_delete') }}')" href="{{ $urlDelete($item->getId()) }}" ><i class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
-                                    </td>
-                                </tr>
-                                <?php
-                                }
-                                ?>
+                            <?php
+                            $no = 1 + ($page > 1 ? ($page - 1) * 10 : 0);
+                            foreach ($data as $item) {
+                            ?>
+                            <tr class="even pointer">
+                                <td>{{ $no++ }}.</td>
+                                <td>{{ $item->getNim() ? $item->getNim() : '-' }}</td>
+                                <td>{{ $item->getName() }}</td>
+                                <td>{{ $item->getOrg() instanceof \App\Entities\Organization ? $item->getOrg()->getName() : '-' }}</td>
+                                <td>{{ $item->getStudyProgram() instanceof \App\Entities\StudyProgram ? $item->getStudyProgram()->getName() : '-' }}</td>
+                                <td>{{ $item->getPeriod() ?? "-" }}</td>
+                                <td>{{ $item->getCurriculum() ?? "-" }}</td>
+                                <td>{{ $item->getIpk() ? $item->getIpk() : '-' }}</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="viewStudent"
+                                       data-student="{{ $item->getId() }}"><i
+                                            class="fa fa-eye"></i> {{ ucfirst(trans('common.view')) }}</a> |
+                                    <a href="{{ $urlUpdate($item->getId()) }}"><i
+                                            class="fa fa-pencil"></i> {{ ucfirst(trans('common.edit')) }}</a> |
+                                    <a onclick="return confirm('{{ trans('common.confirm_delete') }}')"
+                                       href="{{ $urlDelete($item->getId()) }}"><i
+                                            class="fa fa-trash"></i> {{ ucfirst(trans('common.delete')) }}</a>
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
 
                                 @if(!count($data))
                                     <tr class="even pointer">
