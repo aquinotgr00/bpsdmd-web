@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\Administrator;
 
-use App\Entities\Student;
 use App\Entities\Organization;
+use App\Entities\Student;
 use App\Entities\StudyProgram;
 use App\Http\Controllers\Controller;
 use App\Imports\StudentImport;
 use App\Services\Application\AuthService;
 use App\Services\Domain\FeederService;
-use App\Services\Domain\StudentService;
 use App\Services\Domain\OrgService;
 use App\Services\Domain\ProgramService;
+use App\Services\Domain\StudentService;
+use DateTime;
+use DB;
 use Exception;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -25,18 +27,20 @@ class StudentController extends Controller
         $data = $studentService->paginateStudent(request()->get('page'), $org);
 
         //build urls
-        $urlCreate   = url(route('administrator.student.create', [$org->getId()]));
-        $urlUpdate   = function($id) use ($org) {
+        $urlCreate = url(route('administrator.student.create', [$org->getId()]));
+        $urlUpdate = function ($id) use ($org) {
             return url(route('administrator.student.update', [$org->getId(), $id]));
         };
-        $urlDelete   = function($id) use ($org) {
+        $urlDelete = function ($id) use ($org) {
             return url(route('administrator.student.delete', [$org->getId(), $id]));
         };
-        $urlDetail   = '/org/'.$org->getId().'/student';
-        $urlTemplate = '/org/'.$org->getId().'/student/download/template';
-        $urlUpload   = url(route('administrator.student.upload', [$org->getId()]));
+        $urlDetail = '/org/' . $org->getId() . '/student';
+        $urlTemplate = '/org/' . $org->getId() . '/student/download/template';
+        $urlUpload = url(route('administrator.student.upload', [$org->getId()]));
 
-        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload'));
+        $studyPrograms = DB::table("program_studi")->where("instansi_id", $org->getId())->select("id", "nama")->get()->toArray();
+
+        return view('student.index', compact('data', 'page', 'urlCreate', 'urlUpdate', 'urlDelete', 'urlDetail', 'urlTemplate', 'urlUpload', 'studyPrograms'));
     }
 
     public function create(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService, Organization $org)
@@ -80,7 +84,7 @@ class StudentController extends Controller
                     $photo = $request->file('photo');
                     $photoName = $photo->hashName();
                     $img = Image::make($photo->getRealPath())->fit(100);
-                    $img->save(public_path(Student::UPLOAD_PATH).'/'.$photoName);
+                    $img->save(public_path(Student::UPLOAD_PATH) . '/' . $photoName);
 
                     $requestData['uploaded_img'] = $photoName;
                 } else {
@@ -99,15 +103,15 @@ class StudentController extends Controller
             return redirect()->route('administrator.student.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
-        $dataOrg            = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
-        $dataStudyProgram   = $programService->getProgramByOrg($org);
+        $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
+        $dataStudyProgram = $programService->getProgramByOrg($org);
 
         return view('student.create', ['dataOrg' => $dataOrg, 'dataStudyProgram' => $dataStudyProgram]);
     }
 
     public function update(Request $request, StudentService $studentService, OrgService $orgService, ProgramService $programService, Organization $org, Student $data)
     {
-        if($org->getId() != $data->getOrg()->getId()){
+        if ($org->getId() != $data->getOrg()->getId()) {
             return abort(404);
         }
         if ($request->method() == 'POST') {
@@ -149,7 +153,7 @@ class StudentController extends Controller
                     $photo = $request->file('photo');
                     $photoName = $photo->hashName();
                     $img = Image::make($photo->getRealPath())->fit(100);
-                    $img->save(public_path(Student::UPLOAD_PATH).'/'.$photoName);
+                    $img->save(public_path(Student::UPLOAD_PATH) . '/' . $photoName);
 
                     $requestData['uploaded_img'] = $photoName;
                 } else {
@@ -167,15 +171,15 @@ class StudentController extends Controller
             return redirect()->route('administrator.student.index', ['org' => $org->getId()])->with($alert, $message);
         }
 
-        $dataOrg            = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
-        $dataStudyProgram   = $programService->getProgramByOrg($org);
+        $dataOrg = $orgService->getOrgByType(Organization::TYPE_SUPPLY);
+        $dataStudyProgram = $programService->getProgramByOrg($org);
 
         return view('student.update', compact('data', 'dataOrg', 'dataStudyProgram'));
     }
 
     public function delete(StudentService $studentService, Organization $org, Student $data)
     {
-        if($org->getId() != $data->getOrg()->getId()){
+        if ($org->getId() != $data->getOrg()->getId()) {
             return abort(404);
         }
         try {
@@ -198,7 +202,7 @@ class StudentController extends Controller
         ]);
 
         $file = $request->file('file');
-        $nama_file = 'fs_'.$org->getId().'_'.rand().'_'.$file->getClientOriginalName();
+        $nama_file = 'fs_' . $org->getId() . '_' . rand() . '_' . $file->getClientOriginalName();
         $file->move(storage_path('excel'), $nama_file);
         try {
             //insert feeder
@@ -208,7 +212,7 @@ class StudentController extends Controller
             $importer = new StudentImport;
             $importer->setOrg($org);
 
-            Excel::import($importer, storage_path('/excel/'.$nama_file));
+            Excel::import($importer, storage_path('/excel/' . $nama_file));
 
             //update status feeder
             $errors = $importer->getErrors();
@@ -232,7 +236,7 @@ class StudentController extends Controller
 
     public function ajaxDetailStudent(Request $request, Organization $org, Student $data)
     {
-        if($org->getId() != $data->getOrg()->getId()){
+        if ($org->getId() != $data->getOrg()->getId()) {
             return abort(404);
         }
         if ($request->ajax()) {
@@ -247,7 +251,7 @@ class StudentController extends Controller
                 'identity_number' => $data->getIdentityNumber() ? $data->getIdentityNumber() : '-',
                 'gender' => $data->getGender() ? ucfirst($data->getGender()) : '-',
                 'place_of_birth' => $data->getPlaceOfBirth() ? $data->getPlaceOfBirth() : '-',
-                'date_of_birth' => $data->getDateOfBirth() instanceof \DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
+                'date_of_birth' => $data->getDateOfBirth() instanceof DateTime ? $data->getDateOfBirth()->format('d F Y') : '-',
                 'address' => $data->getAddress() ? $data->getAddress() : '-',
                 'phone_number' => $data->getPhoneNumber() ? $data->getPhoneNumber() : '-',
                 'mobile_phone_number' => $data->getMobilePhoneNumber() ? $data->getMobilePhoneNumber() : '-',
@@ -258,20 +262,20 @@ class StudentController extends Controller
                 'foreign_citizen' => $data->getForeignCitizen() == 't' ? trans('common.yes') : trans('common.no'),
                 'social_protection_card' => $data->getSocialProtectionCard() == 't' ? trans('common.yes') : trans('common.no'),
                 'occupation_type' => $data->getOccupationType() ? $data->getOccupationType() : '-',
-                'enrollment_date_start' => $data->getEnrollmentDateStart() instanceof \DateTime ? $data->getEnrollmentDateStart()->format('d F Y') : '-',
-                'enrollment_date_end' => $data->getEnrollmentDateEnd() instanceof \DateTime ? $data->getEnrollmentDateEnd()->format('d F Y') : '-',
+                'enrollment_date_start' => $data->getEnrollmentDateStart() instanceof DateTime ? $data->getEnrollmentDateStart()->format('d F Y') : '-',
+                'enrollment_date_end' => $data->getEnrollmentDateEnd() instanceof DateTime ? $data->getEnrollmentDateEnd()->format('d F Y') : '-',
                 'start_semester' => $data->getStartSemester() ? $data->getStartSemester() : '-',
                 'current_semester' => $data->getCurrentSemester() ? $data->getCurrentSemester() : '-',
                 'student_credits' => $data->getStudentCredits() ? $data->getStudentCredits() : '-',
                 'certificate_number' => $data->getCertificateNumber() ? $data->getCertificateNumber() : '-',
-                'graduation_judgement_date' => $data->getGraduationJudgementDate() instanceof \DateTime ? $data->getGraduationJudgementDate()->format('d F Y') : '-',
+                'graduation_judgement_date' => $data->getGraduationJudgementDate() instanceof DateTime ? $data->getGraduationJudgementDate()->format('d F Y') : '-',
                 'enrollment_type' => $data->getEnrollmentType() ? $data->getEnrollmentType() : '-',
                 'graduation_type' => $data->getGraduationType() ? $data->getGraduationType() : '-',
                 'status' => $data->getStatus() ? $data->getStatus() : '-',
                 'class' => $data->getClass() ? $data->getClass() : '-',
                 'ipk' => $data->getIpk() ? $data->getIpk() : '-',
                 'graduation_year' => $data->getGraduationYear() ? $data->getGraduationYear() : '-',
-                'photo' => $data->getPhoto() ? url(url(Student::UPLOAD_PATH.'/'.$data->getPhoto())) : url('img/avatar.png'),
+                'photo' => $data->getPhoto() ? url(url(Student::UPLOAD_PATH . '/' . $data->getPhoto())) : url('img/avatar.png'),
             ];
 
             return response()->json($data);
@@ -282,7 +286,7 @@ class StudentController extends Controller
 
     public function templateDownload()
     {
-        $file = public_path(). "/download/template-siswa.xlsx";
+        $file = public_path() . "/download/template-siswa.xlsx";
         return response()->download($file, 'template.xlsx');
     }
 }

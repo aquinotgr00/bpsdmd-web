@@ -37,8 +37,8 @@
                                                     <select name="demand" id="demand-selector" class="form-control">
                                                         <option value="">{{ ucfirst(trans('common.please_choose', ['object' => ucfirst(trans('common.company'))])) }}</option>
                                                         @if(!empty($demands))
-                                                            @foreach($demands as $id => $name)
-                                                                <option value="{{ $id }}">{{ $name }}</option>
+                                                            @foreach($demands as $demand)
+                                                                <option value="{{ $demand->getId() }}">{{ $demand->getName() }}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
