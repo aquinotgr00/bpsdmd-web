@@ -10,6 +10,9 @@ use App\Services\Domain\JobTitleService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
+use Mail;
+use App\Mail\RecruitmentMail;
+use App\Mail\RecruitmentListMail;
 
 class OfferingController extends Controller
 {
@@ -87,16 +90,23 @@ class OfferingController extends Controller
     public function email(RecruitmentService $recruitmentService, Recruitment $data)
     {
         $org = currentUser()->getOrg();
+        $recruitmentData = $recruitmentService->getRepository()->findBy(['org' => $org]);
+        $allRecruitment = $recruitmentService->getRepository()->findAll();
         try {
-            // $url = env('APP_URL') .'/offering';
-            // Mail::to($data->getStudent()->getEmail())->send(new RecruitmentMail($url));                // send recruitment email
+            $url = env('APP_URL') .'/offering';
+            Mail::to($data->getStudent()->getEmail())->send(new RecruitmentMail($url));                // send recruitment email
+            // Sent mail to bpsdm
+            Mail::to('adminbpsdm@bpsdm.com')->send(new RecruitmentListMail($allRecruitment));
+            if ($org->getEmail() !== null)
+                Mail::to($org->getEmail())->send(new RecruitmentListMail($recruitmentData));
 
             $alert = 'alert_success';
             $message = trans('common.email_success', ['object' => ucfirst(trans('common.recruitment'))]);
         } catch (Exception $e) {
             report($e);
             $alert = 'alert_error';
-            $message = trans('common.email_failed', ['object' => ucfirst(trans('common.recruitment'))]);
+            // $message = trans('common.email_failed', ['object' => ucfirst(trans('common.recruitment'))]);
+            $message = trans('common.email_failed', ['object' => $e->getMessage()]);
         }
 
         return redirect()->route('demand.offering.index', ['org' => $org->getId()])->with($alert, $message);
